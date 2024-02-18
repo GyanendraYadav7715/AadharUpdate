@@ -33,7 +33,7 @@ const Login = () => {
     );
 
     if (matchedUser) {
-      navigate(matchedUser[1].redirect);
+      navigate('/navbar');
     } else {
       setShowAlert(true);
     }

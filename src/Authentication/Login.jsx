@@ -153,8 +153,8 @@ import { LuUser2, LuEye, LuEyeOff } from "react-icons/lu";
 
 // Dummy data for validation
 const validCredentials = {
-  admin: { password: "1234", role: "Admin Login", redirect: "/" },
-  retailer: { password: "1234", role: "Retailer Login", redirect: "/" },
+  admin: { password: "1234", role: "Admin Login", redirect: "/navbar" },
+  retailer: { password: "1234", role: "Retailer Login", redirect: "/navbar" },
   backoffice: { password: "1234", role: "Back Office", redirect: "/" },
 };
 
@@ -191,12 +191,7 @@ const Login = () => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    // Redirect to login page or any other page
-    navigate("/login");
-  };
-
+ 
   const closeAlert = () => {
     setShowAlert(false);
   };
