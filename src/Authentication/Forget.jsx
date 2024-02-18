@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import loginlogo from "../../public/loginlogo.webp"
+import loginlogo from "../../public/loginlogo.webp";
 const Forget = () => {
   const userRef = useRef();
 
