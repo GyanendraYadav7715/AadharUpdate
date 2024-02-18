@@ -1,7 +1,7 @@
 import React from "react";
 import Login from "./Authentication/Login";
 import Forget from "./Authentication/Forget";
-import Navbar from "./Components/Navbar";
+import HeaderNavbar from "./Components/HeaderNabar/HeaderNavbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -10,8 +10,7 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
-     
-          <Route path="/navbar" element={<Navbar />} />
+          <Route path="/headernavbar" element={<HeaderNavbar />} />
           <Route path="/forget" element={<Forget />} />
         </Routes>
       </Router>
