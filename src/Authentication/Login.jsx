@@ -154,7 +154,7 @@ import { LuUser2, LuEye, LuEyeOff } from "react-icons/lu";
 // Dummy data for validation
 const validCredentials = {
   admin: { password: "1234", role: "Admin Login", redirect: "/headernavbar" },
-  retailer: { password: "1234", role: "Retailer Login", redirect: "" },
+  retailer: { password: "1234", role: "Retailer Login", redirect: "/headernavbar" },
   backoffice: { password: "1234", role: "Back Office", redirect: "/" },
 };
 

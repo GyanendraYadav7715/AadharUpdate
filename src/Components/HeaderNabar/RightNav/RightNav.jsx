@@ -4,6 +4,7 @@ import IPAddress from "../InternetProtocol/IPAddress";
 import { CiLogout } from "react-icons/ci";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { IoWifiOutline } from "react-icons/io5";
+
 const RightNav = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -17,7 +18,17 @@ const RightNav = () => {
     localStorage.clear();
     navigate("/");
   };
-  const data = localStorage.getItem("user");
+
+  // Retrieve user data from localStorage
+  const userData = localStorage.getItem("user");
+  let role = "";
+  if (userData) {
+    // Parse JSON string to object
+    const userObj = JSON.parse(userData);
+    // Access the role property
+    role = userObj.role;
+  }
+
   return (
     <>
       <div className="flex items-center">
@@ -46,7 +57,8 @@ const RightNav = () => {
               onMouseLeave={handleMouseLeave}
             >
               <div className="px-5 py-3">
-                <p className="text-base text-gray-900">Admin</p>
+                {/* Display the role */}
+                <p className="text-base text-gray-900">{role}</p>
                 <div className="flex items-center">
                   <IoWifiOutline className="text-red-700" />
                   <IPAddress />
