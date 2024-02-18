@@ -153,9 +153,9 @@ import { LuUser2, LuEye, LuEyeOff } from "react-icons/lu";
 
 // Dummy data for validation
 const validCredentials = {
-  admin: { password: "1234", role: "Admin Login", redirect: "/headernavbar" },
-  retailer: { password: "1234", role: "Retailer Login", redirect: "/headernavbar" },
-  backoffice: { password: "1234", role: "Back Office", redirect: "/" },
+  admin: { password: "1234", role: "Admin", redirect: "/headernavbar" },
+  retailer: { password: "1234", role: "Retailer", redirect: "/headernavbar" },
+  backoffice: { password: "1234", role: "Back Office", redirect: "/headernavbar" },
 };
 
 const Login = () => {
@@ -163,7 +163,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     user: "",
     password: "",
-    role: "Admin Login", // Default role
+    role: "Admin", // Default role
   });
   const [showAlert, setShowAlert] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -261,8 +261,8 @@ const Login = () => {
             id="role"
             required // Make field required
           >
-            <option value="Admin Login">Admin Login</option>
-            <option value="Retailer Login">Retailer Login</option>
+            <option value="Admin ">Admin Login</option>
+            <option value="Retailer">Retailer Login</option>
             <option value="Back Office">Back Office</option>
           </select>
 
