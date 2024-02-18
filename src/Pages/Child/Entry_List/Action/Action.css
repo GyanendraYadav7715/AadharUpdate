@@ -1,0 +1,18 @@
+.pencil {
+    background-color: #71b944;
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 3px;
+}
+
+.Action {
+    display: flex;
+
+}
+
+.Action-text {
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+}

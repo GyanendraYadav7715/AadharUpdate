@@ -1,0 +1,19 @@
+.upload{
+cursor: pointer;
+    border-radius: 2px;
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+   background-color: #71b944;;
+    color: white;
+}
+
+.upload-button{
+    text-align: center;
+ padding: 10px;
+width: 7rem;
+
+   
+}
+
+
+
