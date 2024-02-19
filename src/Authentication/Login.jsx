@@ -199,6 +199,14 @@ const Login = () => {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevents the default form submission behavior
+      console.log("Enter key pressed! Submitting form...");
+      // Your code to handle form submission here
+      document.getElementById("myForm").submit(); // Optional: Trigger form submission explicitly
+    }
+  };
 
   return (
     <div className="max-w-[350px] mx-auto w-screen h-screen">
@@ -208,7 +216,7 @@ const Login = () => {
           className="object-cover w-1/2 h-1/2 mb-[5vh]"
           alt="Logo"
         />
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} id="myForm">
           <div className="relative">
             <label htmlFor="user" className="mb-[1vh]">
               Username
@@ -259,11 +267,12 @@ const Login = () => {
             onChange={handleInputChange}
             className="w-full px-6 py-3 mb-10 border border-slate-600 rounded-lg font-medium "
             id="role"
+           
             required // Make field required
           >
-            <option value="Admin ">Admin Login</option>
-            <option value="Retailer">Retailer Login</option>
-            <option value="Back Office">Back Office</option>
+            <option value="Admin "  onKeyPress={handleKeyPress}>Admin Login</option>
+            <option value="Retailer" onKeyPress={handleKeyPress}>Retailer Login</option>
+            <option value="Back Office" onKeyPress={handleKeyPress}>Back Office</option>
           </select>
 
           <div className="flex justify-between items-center gap-2 mt-2 border-b border-gray-500 pb-[2vh]">

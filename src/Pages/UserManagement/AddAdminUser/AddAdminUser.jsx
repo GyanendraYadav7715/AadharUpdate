@@ -1,5 +1,8 @@
 import React from "react";
-
+import Asidebar from "../../../Components/Asidebar/Asidebar";
+import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
+import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import Footer from "../../../Components/Footer/Footer";
 
 const InputField = ({ label, id, type, placeholder, pattern, required }) => {
   return (
@@ -23,98 +26,127 @@ const InputField = ({ label, id, type, placeholder, pattern, required }) => {
 };
 
 const AddAdminUser = () => {
-  return (
-    <div className="hero-section">
-      <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14 bg-white">
-        <h3 className="text-2xl font-bold ml-10">Add Customer</h3>
-        <form className="m-5 p-6 border-1 shadow-sm rounded-md bg-white">
-          <div className="grid gap-6 mb-6 md:grid-cols-2">
-            <InputField
-              label="Full name"
-              id="full_name"
-              type="text"
-              placeholder="Gyan Yadav"
-              required
-            />
-            <InputField
-              label="Username"
-              id="user_name"
-              type="text"
-              placeholder="UP1D34"
-              required
-            />
-            <InputField
-              label="Email"
-              id="email"
-              type="email"
-              placeholder="gyan@rto.com"
-              required
-            />
-            <InputField
-              label="Phone number"
-              id="phone"
-              type="tel"
-              placeholder="84-84-655-655"
-              pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-              required
-            />
-            <InputField
-              label="Balance"
-              id="balance"
-              type="number"
-              placeholder=""
-              required
-            />
-            <InputField
-              label="Child Token"
-              id="child_token"
-              type="number"
-              placeholder=""
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-900"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder=""
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="select_user"
-              className="block mb-2 text-sm font-medium text-gray-900"
-            >
-              Select Usertype
-            </label>
-            <select
-              id="select_user"
-              className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              required
-            >
-              <option value="Admin Login">Admin Login</option>
-              <option value="Retailer Login">Retailer Login</option>
-              <option value="Back Office">Back Office</option>
-            </select>
-          </div>
+  const userData = localStorage.getItem("user");
+  let role = "";
+  if (userData) {
+    // Parse JSON string to object
+    const userObj = JSON.parse(userData);
+    // Access the role property
+    role = userObj.role;
+  }
 
-          <button
-            type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-8"
-          >
-            Submit
-          </button>
-        </form>
+  const title = " Add User";
+  const links = [
+    { title: "Home", href: "/superadmin" },
+    { title: "Add User", href: "" },
+  ];
+
+  const mylinks = [
+    {
+      to: "/viewuser",
+      text: "View Customer",
+      icon: "ri-team-line text-white text-2xl ",
+    },
+  ];
+  return (
+    <>
+      <Asidebar />
+      <HeaderNavbar />
+
+      <Breadcrumb title={title} links={links} mylinks={mylinks} />
+      <div className="p-4 sm:ml-64 bg-gray-300">
+        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg  bg-white">
+          <h3 className="text-2xl font-bold ml-10">Add Customer</h3>
+          <form className="m-5 p-6 border-1 shadow-sm rounded-md bg-white">
+            <div className="grid gap-6 mb-6 md:grid-cols-2">
+              <InputField
+                label="Full name"
+                id="full_name"
+                type="text"
+                placeholder="Gyan Yadav"
+                required
+              />
+              <InputField
+                label="Username"
+                id="user_name"
+                type="text"
+                placeholder="UP1D34"
+                required
+              />
+              <InputField
+                label="Email"
+                id="email"
+                type="email"
+                placeholder="gyan@rto.com"
+                required
+              />
+              <InputField
+                label="Phone number"
+                id="phone"
+                type="tel"
+                placeholder="84-84-655-655"
+                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                required
+              />
+              <InputField
+                label="Balance"
+                id="balance"
+                type="number"
+                placeholder=""
+                required
+              />
+              <InputField
+                label="Child Token"
+                id="child_token"
+                type="number"
+                placeholder=""
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder=""
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="select_user"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Select Usertype
+              </label>
+              <select
+                id="select_user"
+                className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+              >
+                <option value="Admin Login">Admin Login</option>
+                <option value="Retailer Login">Retailer Login</option>
+                <option value="Back Office">Back Office</option>
+              </select>
+            </div>
+
+            <button
+              type="submit"
+              className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center   mt-8"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

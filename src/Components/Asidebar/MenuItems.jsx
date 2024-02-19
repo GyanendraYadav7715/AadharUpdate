@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
- 
-const MenuItems = ( ) => {
+
+const MenuItems = () => {
   const adminMenuItems = [
     {
-      link: "/dashboard",
+      link: "/superadmin",
       iconClass: "ri-layout-grid-fill",
       label: "Dashboard",
     },
@@ -27,7 +27,7 @@ const MenuItems = ( ) => {
 
   const retailerMenuItems = [
     {
-      link: "/dashboard",
+      link: "/retailer",
       iconClass: "ri-layout-grid-fill",
       label: "Dashboard",
     },
@@ -40,7 +40,7 @@ const MenuItems = ( ) => {
     // Access the role property
     role = userObj.role;
   }
-  const menuItems = role === "Admin Login" ? retailerMenuItems : adminMenuItems;
+  const menuItems = role === "Admin" ? adminMenuItems : retailerMenuItems;
 
   return (
     <>

@@ -1,12 +1,22 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
-import { exportComponentAsPDF } from "react-component-export-image";
-import Asidebar from "../../Asidebar/Asidebar";
-import HeaderNavbar from "../../HeaderNabar/HeaderNavbar";
-import Search from "../../../../components/SearchFilter/Search";
+ 
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import Asidebar from "../../../Components/Asidebar/Asidebar";
+import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
+import SearchElement from "../../../Components/SearchElement/SearchElement";
+import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import Footer from "../../../Components/Footer/Footer";
 
 const ViewRetailerUserList = () => {
+  const title = "View Retailer User Data";
+  const links = [
+    { title: "Home", href: "/superadmin" },
+    { title: "View Retailer User Data", href: "" },
+     
+  ];
   // Define and initialize the tableRef
   const tableRef = useRef(null);
 
@@ -115,6 +125,16 @@ const ViewRetailerUserList = () => {
     document.body.removeChild(el);
   };
 
+  const exportToPDF = () => {
+    html2canvas(tableRef.current).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const imgWidth = 210;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save("history.pdf");
+    });
+  };
   // Function to export table data to Excel
   const exportToExcel = () => {
     try {
@@ -131,10 +151,13 @@ const ViewRetailerUserList = () => {
   };
 
   return (
-   
-     
-   <div className="hero-section">
-        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white mt-14">
+    <>
+    <HeaderNavbar/>
+    <Asidebar/>
+      
+      <Breadcrumb title={title} links={links} />
+      <div className="p-4 sm:ml-64 bg-gray-200">
+        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white ">
           <h3 className="text-2xl font-bold">View Retailer Users Data-ADMIN</h3>
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -160,13 +183,13 @@ const ViewRetailerUserList = () => {
                 </CSVLink>
               </button>
               <button
-                onClick={() => exportComponentAsPDF(tableRef)}
+                onClick={exportToPDF}
                 className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-red-700 "
               >
                 PDF
               </button>
             </div>
-            <Search />
+            <SearchElement />
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table
@@ -240,8 +263,8 @@ const ViewRetailerUserList = () => {
           </div>
         </div>
       </div>
-    
-   
+      <Footer/>
+    </>
   );
 };
 

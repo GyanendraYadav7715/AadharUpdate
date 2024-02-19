@@ -3,8 +3,8 @@ import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 const DashBoard = () => {
   const title = "Dashboard";
   const links = [
-    { title: "Home", href: "/dashboard" },
-    { title: "Dashboard", href: "/dashboard" },
+    { title: "Home", href: "/superadmin" },
+    { title: "Dashboard", href: "/superadmin" },
     { title: "Admin" },
   ];
   const mylinks = [
