@@ -1,9 +1,9 @@
 import React from 'react'
-
+import RetailerLayout from "../../Layout/RetailerLayout"
 const Retailer = () => {
   return (
     <>
-      <h1>we are Reatiler</h1>
+    <RetailerLayout/>
     </>
   )
 }

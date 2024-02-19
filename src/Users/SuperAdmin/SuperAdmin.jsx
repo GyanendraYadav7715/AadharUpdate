@@ -1,11 +1,11 @@
-import React from 'react'
-
+import React from "react";
+import AdminLayout from "../../Layout/AdminLayout";
 const SuperAdmin = () => {
   return (
     <>
-     <h1>We are superadmin.</h1> 
+      <AdminLayout />
     </>
-  )
-}
+  );
+};
 
-export default SuperAdmin
+export default SuperAdmin;

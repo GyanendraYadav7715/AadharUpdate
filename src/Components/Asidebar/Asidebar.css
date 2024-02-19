@@ -1,0 +1,8 @@
+#tomakescrolldisable {
+  overflow-y: auto;
+}
+
+#tomakescrolldisable::-webkit-scrollbar {
+  display: none;
+  background-color: aqua;
+}

@@ -22,7 +22,7 @@ const IPAddressDisplay = () => {
         <div>
         
             {ipAddress ? (
-                <p className="text-base font-medium text-red-700 truncate flex items-center gap-2"><i className="ri-wifi-line  text-black"></i>{ipAddress}
+                <p className="text-base font-medium text-red-700 truncate flex items-center gap-2">{ipAddress}
                 
                 </p>
             ) : (

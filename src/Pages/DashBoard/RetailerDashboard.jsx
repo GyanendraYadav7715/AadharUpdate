@@ -1,46 +1,42 @@
 import React from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
+
 const DashBoard = () => {
   const title = "Dashboard";
   const links = [
-    { title: "Home", href: "/dashboard" },
-    { title: "Dashboard", href: "/dashboard" },
-    { title: "Admin" },
+    { title: "Home", href: "/retailer" },
+    { title: "Dashboard", href: "/retailer" },
+    { title: "Reatiler" },
   ];
   const mylinks = [
     {
       to: "/adduser",
-      text: "Create New User",
+      text: " Mobile Entry",
+      icon: "ri-add-line text-white text-2xl ",
+    },
+    {
+      to: "/adduser",
+      text: " Demographic Enry",
+      icon: "ri-add-line text-white text-2xl ",
+    },
+    {
+      to: "/adduser",
+      text: " Child entry",
       icon: "ri-add-line text-white text-2xl ",
     },
   ];
+
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
+
       <div className="p-1 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
-          {/* Wallent and user */}
-          <div>
-            <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-1">
-              <p className="text-3xl text-black font-bold ">Wallet & Users</p>
-            </div>
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="flex flex-col items-center justify-center rounded  bg-blue-500  h-32  ">
-                <h4 className="text-white">96379796</h4>
-                <p className="text-2xl  text-white ">Main Wallet</p>
-              </div>
-              <div className="flex  flex-col items-center justify-center rounded bg-blue-500  h-32  ">
-                <h4 className="text-white">182</h4>
-                <p className="text-2xl  text-white  ">Total User</p>
-              </div>
-            </div>
-          </div>
-
           {/* Demographic System Management */}
 
           <div>
-            <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-1">
-              <p className="text-3xl  text-black font-bold">
+            <div className="flex items-center justify-center h-24 mb-4 rounded bg-white border-1 shadow-lg">
+              <p className="text-3xl  text-black font-bold underline">
                 Demographic System Management
               </p>
             </div>
@@ -61,8 +57,8 @@ const DashBoard = () => {
           </div>
           {/* Child System Management */}
           <div>
-            <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-b-1">
-              <p className="text-3xl  text-black font-bold  ">
+            <div className="flex items-center justify-center h-24 mb-4 rounded bg-white border-1 shadow-lg">
+              <p className="text-3xl  text-black font-bold underline ">
                 Child System Management
               </p>
             </div>
@@ -84,8 +80,8 @@ const DashBoard = () => {
             </div>
             {/* Mobile System Management */}
             <div>
-              <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-1">
-                <p className="text-3xl  text-black font-semibold  ">
+              <div className="flex items-center justify-center h-24 mb-4 rounded bg-white border-1 shadow-lg">
+                <p className="text-3xl  text-black font-semibold underline ">
                   Mobile System Management
                 </p>
               </div>
