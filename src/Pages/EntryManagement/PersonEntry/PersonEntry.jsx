@@ -1,10 +1,21 @@
 import axios from "axios";
+import React, { useState } from "react";
 import "./PersonEntry.css";
-import { useState } from "react";
-import Box from "../FingerPrint/FingerPrint";
-import { generateContainerStyles } from "../../utils/GenerateContainer";
+import Box from "../../../Components/FingerPrint/FingerPrint";
+import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
+import Asidebar from "../../../Components/Asidebar/Asidebar";
+import Footer from "../../../Components/Footer/Footer";
 
-export const Input = ({ label, type, name, placeholder, onChange, value }) => {
+export const Input = ({
+  label,
+  type,
+  name,
+  placeholder,
+  onChange,
+  value,
+  required,
+}) => {
   return (
     <div className="inputContainer">
       <div className="inputWrapper">
@@ -19,15 +30,40 @@ export const Input = ({ label, type, name, placeholder, onChange, value }) => {
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
+        required={required} // Changed require to required
       />
     </div>
   );
 };
-const PersonEntry = ({collapsed}) => {
-  
-   const containerStyle = generateContainerStyles(collapsed);
-  const imageUrl = require("../../assets/icons/finger.jpg");
-  // State to manage form data
+
+const PersonEntry = () => {
+  const userData = localStorage.getItem("user");
+  let role = "";
+  if (userData) {
+    // Parse JSON string to object
+    const userObj = JSON.parse(userData);
+    // Access the role property
+    role = userObj.role;
+  }
+  const title = "Add Customer";
+  const links =
+    role === "Admin"
+      ? [
+          { title: "Home", href: "/superadmin" },
+          { title: "Add Customer", href: "" },
+        ]
+      : [
+          { title: "Home", href: "/retailer" },
+          { title: "Add Customer", href: "" },
+        ];
+  const mylinks = [
+    {
+      to: "/list",
+      text: "View Customer",
+      icon: "ri-team-line text-white text-2xl ",
+    },
+  ];
+
   const [formData, setFormData] = useState({
     name: "",
     dateofbirth: "",
@@ -36,6 +72,7 @@ const PersonEntry = ({collapsed}) => {
     purpose: "",
     aadhaar: "",
     address: "",
+    fathern: "", // Added fathern property
   });
 
   const formatCurrentDate = () => {
@@ -50,7 +87,6 @@ const PersonEntry = ({collapsed}) => {
     return formattedDate;
   };
 
-  // Function to handle form input changes
   const handleInputChange = (name, value) => {
     console.log(`Handling input for ${name}: ${value}`);
     setFormData({
@@ -60,25 +96,18 @@ const PersonEntry = ({collapsed}) => {
     });
   };
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.purpose || !formData.email || !formData.mobile) {
-      return alert("please filll the blank field first");
+      return alert("Please fill all the required fields");
     }
 
     try {
-      // Define the API endpoint URL
       const apiUrl = "http://localhost:4001/Products";
-
-      // Make a POST request using Axios
       const response = await axios.post(apiUrl, formData);
-
-      // Handle successful response
       console.log("Form submitted successfully:", response.data);
       alert("Form submitted successfully:");
-      // Optionally, reset the form after submission
       setFormData({
         name: "",
         dateofbirth: "",
@@ -87,36 +116,22 @@ const PersonEntry = ({collapsed}) => {
         purpose: "",
         aadhaar: "",
         address: "",
-        fathern: "",
+        fathern: "", // Reset fathern property
       });
     } catch (error) {
-      // Handle submission error
       console.error("Error submitting form:", error.message);
     }
   };
 
   return (
     <>
-      {/* <div className="first-half">
-        <div className="title-section">
-          <p className="dashboard">Add Customer</p>
-          <div className="breadcrumb">
-            <Breadcrumbs />
-          </div>
-        </div>
+      <Asidebar />
+      <HeaderNavbar />
+      <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
-        <div className="button-section">
-          <i class="ri-team-fill plus"></i>
-          <Link to="/list">
-            <button className="custom-button">View Customers</button>
-          </Link>
-        </div>
-      </div>
- */}
-
-      <div className="hero-section" style={containerStyle}>
-        <div className="formContainer">
-          <div className="PurposeGrid ">
+      <div className=" p-3 sm:ml-64 bg-gray-200">
+        <div className="p-2 border-2 rounded-lg shadow-xl bg-white">
+          <div className="PurposeGrid">
             <Input
               onChange={handleInputChange}
               label="Purpose"
@@ -124,7 +139,7 @@ const PersonEntry = ({collapsed}) => {
               name="purpose"
               value={formData.purpose}
               placeholder="Enter Purpose"
-              require
+              required // Removed "require"
             />
           </div>
           <div className="formGrid">
@@ -152,7 +167,6 @@ const PersonEntry = ({collapsed}) => {
               placeholder=""
               value={formData.dateofbirth}
             />
-
             <Input
               onChange={handleInputChange}
               label="Aadhaar No."
@@ -161,7 +175,6 @@ const PersonEntry = ({collapsed}) => {
               placeholder="Aadhaar No."
               value={formData.aadhaar}
             />
-
             <Input
               onChange={handleInputChange}
               label="Mobile No."
@@ -170,7 +183,6 @@ const PersonEntry = ({collapsed}) => {
               placeholder="Mobile No."
               value={formData.mobile}
             />
-
             <Input
               onChange={handleInputChange}
               label="E-mail ID"
@@ -179,7 +191,6 @@ const PersonEntry = ({collapsed}) => {
               placeholder="example@update.com"
               value={formData.email}
             />
-
             <Input
               onChange={handleInputChange}
               label="POI"
@@ -191,7 +202,7 @@ const PersonEntry = ({collapsed}) => {
               onChange={handleInputChange}
               label="POA"
               type="file"
-              name=""
+              name="POA"
               placeholder=""
               value={formData.POA}
             />
@@ -204,7 +215,7 @@ const PersonEntry = ({collapsed}) => {
               value={formData.POB}
             />
           </div>
-          <div className="PurposeGrid Address ">
+          <div className="PurposeGrid Address">
             <Input
               onChange={handleInputChange}
               label="Address"
@@ -215,21 +226,19 @@ const PersonEntry = ({collapsed}) => {
             />
           </div>
 
-          <div className="container">
-            <Box Src={imageUrl} buttonText="Click" />
-            <Box Src={imageUrl} buttonText="Click" />
-            <Box Src={imageUrl} buttonText="Click" />
-            <Box Src={imageUrl} buttonText="Click" />
-            <Box Src={imageUrl} buttonText="Click" />
+          <div className="container grid grid-cols-5">
+            <Box />
+            <Box />
+            <Box />
+            <Box />
+            <Box />
+            <button onClick={handleSubmit} className="Submit-button">
+              <i className="ri-save-fill"></i> Submit
+            </button>
           </div>
-
-          <button onClick={handleSubmit} className="Submit-button">
-            {" "}
-            <i class="ri-save-fill"> </i>
-            Submit
-          </button>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

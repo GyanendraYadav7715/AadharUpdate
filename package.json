@@ -12,9 +12,11 @@
   "dependencies": {
     "antd": "^5.14.1",
     "axios": "^1.6.7",
+    "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.1",
     "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",

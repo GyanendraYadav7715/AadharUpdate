@@ -1,0 +1,17 @@
+
+
+.DownloadFormate-button {
+    color: white;
+    width: 5vw;
+    text-align: center;
+    padding: 6px;
+    border: none;
+    margin: 25px 5px 0px 0px;
+    border-radius: 2px;
+    background-color: #506adb;
+    transition: background-color 0.3s, color 0.3s
+}
+
+.DownloadFormate-button:hover {
+    background-color: #4860c9;
+}
