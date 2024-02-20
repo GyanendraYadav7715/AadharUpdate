@@ -198,10 +198,10 @@ const History = () => {
                     key={index}
                     className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
                   >
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white border ">
+                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border ">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white border">
+                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
                       {product.debitedFrom}
                     </td>
                     <td className="px-6 py-4 border">{product.tranferPoint}</td>
