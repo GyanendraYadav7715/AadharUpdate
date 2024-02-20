@@ -19,6 +19,7 @@ import ViewFingerAndUpdate from "./View/ViewFingerAndUpdate";
 import DeleteData from "./Delete/DeleteData";
 import Upload from "./Upload/Upload";
 import Action from "./Action/Action";
+import SearchElement from "../../../Components/SearchElement/SearchElement";
 
 function ChildEntryList() {
   const userData = localStorage.getItem("user");
@@ -30,13 +31,16 @@ function ChildEntryList() {
     role = userObj.role;
   }
   const title = "View Child Entry";
-  const links =role==="Admin"? [
-    { title: "Home", href: "/superadmin" },
-    { title: "View Child Data", href: "" },
-  ]:[
-    { title: "Home", href: "/retailer" },
-    { title: "View Child Data", href: "" },
-  ]
+  const links =
+    role === "Admin"
+      ? [
+          { title: "Home", href: "/superadmin" },
+          { title: "View Child Data", href: "" },
+        ]
+      : [
+          { title: "Home", href: "/retailer" },
+          { title: "View Child Data", href: "" },
+        ];
   const mylinks = [
     {
       to: "/new-entry",
@@ -78,11 +82,14 @@ function ChildEntryList() {
       {Products ? (
         <div className="p-2 sm:ml-64">
           <div className="p-2 border-2 border-gray-200 border-solid rounded-lg  ">
-            <div className="Download-Button">
-              <CopyButton />
-              <ExcelDownloadButton fileName="myExcel" jsonData={Products} />
-              <CSVDownloadButton />
-              <PDFDownloadButton />
+            <div className="Download-Button flex items-center justify-between">
+              <div>
+                <CopyButton />
+                <ExcelDownloadButton fileName="myExcel" jsonData={Products} />
+                <CSVDownloadButton />
+                <PDFDownloadButton />
+              </div>
+              <SearchElement />
             </div>
             <Table striped bordered hover className="custom-table">
               <thead>

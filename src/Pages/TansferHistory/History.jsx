@@ -137,17 +137,17 @@ const History = () => {
             <div>
               <button
                 onClick={copyToClipboard}
-                className="px-4 py-2 mr-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-blue-700"
+                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-blue-700"
               >
                 Copy
               </button>
               <button
                 onClick={exportToExcel}
-                className="px-4 py-2 mr-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-green-700"
+                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-green-700"
               >
                 Excel
               </button>
-              <button className="px-4 py-2 mr-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-yellow-700">
+              <button className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-yellow-700">
                 <CSVLink
                   data={products}
                   filename={"history.csv"}
@@ -158,7 +158,7 @@ const History = () => {
               </button>
               <button
                 onClick={exportToPDF} // Increase scale if necessary
-                className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-red-700 "
+                className=" px-6 py-3 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-red-700 "
               >
                 PDF
               </button>

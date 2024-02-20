@@ -13,6 +13,7 @@ import Asidebar from "../../../Components/Asidebar/Asidebar";
 import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import Footer from "../../../Components/Footer/Footer";
+import SearchElement from "../../../Components/SearchElement/SearchElement";
 
 function List() {
   const userData = localStorage.getItem("user");
@@ -74,11 +75,14 @@ function List() {
       {Products ? (
         <div className="p-4 sm:ml-64">
           <div className="p-2 border-2 border-gray-200 border-solid rounded-lg ">
-            <div className="Download-Button">
-              <CopyButton />
-              <ExcelDownloadButton fileName="myExcel" jsonData={Products} />
-              <CSVDownloadButton />
-              <PDFDownloadButton />
+            <div className="Download-Button flex items-center justify-between">
+              <div>
+                <CopyButton />
+                <ExcelDownloadButton fileName="myExcel" jsonData={Products} />
+                <CSVDownloadButton />
+                <PDFDownloadButton />
+              </div>
+              <SearchElement />
             </div>
             <Table striped bordered hover className="custom-table">
               <thead>
