@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
- 
+
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import Asidebar from "../../../Components/Asidebar/Asidebar";
@@ -15,7 +15,6 @@ const ViewRetailerUserList = () => {
   const links = [
     { title: "Home", href: "/superadmin" },
     { title: "View Retailer User Data", href: "" },
-     
   ];
   // Define and initialize the tableRef
   const tableRef = useRef(null);
@@ -152,9 +151,9 @@ const ViewRetailerUserList = () => {
 
   return (
     <>
-    <HeaderNavbar/>
-    <Asidebar/>
-      
+      <HeaderNavbar />
+      <Asidebar />
+
       <Breadcrumb title={title} links={links} />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white ">
@@ -235,10 +234,10 @@ const ViewRetailerUserList = () => {
                     key={index}
                     className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
                   >
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white border ">
+                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap   border ">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white border">
+                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap   border">
                       {product.name}
                     </td>
                     <td className="px-6 py-4 border">{product.email}</td>
@@ -263,7 +262,7 @@ const ViewRetailerUserList = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

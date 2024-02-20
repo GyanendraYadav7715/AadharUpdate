@@ -7,6 +7,7 @@ import Asidebar from "../../../Components/HeaderNabar/HeaderNavbar";
 import HeaderNavbar from "../../../Components/Asidebar/Asidebar";
 import Footer from "../../../Components/Footer/Footer";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import SearchElement from "../../../Components/SearchElement/SearchElement";
 
 const MobileData = () => {
   const userData = localStorage.getItem("user");
@@ -99,17 +100,17 @@ const MobileData = () => {
             <div>
               <button
                 onClick={copyToClipboard}
-                className="px-4 py-2 mr-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-blue-700"
+                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-blue-700"
               >
                 Copy
               </button>
               <button
                 onClick={exportToExcel}
-                className="px-4 py-2 mr-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-green-700"
+                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-green-700"
               >
                 Excel
               </button>
-              <button className="px-4 py-2 mr-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-yellow-700">
+              <button className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-yellow-700">
                 <CSVLink
                   data={products}
                   filename={"history.csv"}
@@ -119,13 +120,13 @@ const MobileData = () => {
                 </CSVLink>
               </button>
               <button
-                onClick={exportToPDF}
-                className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-red-700 "
+                onClick={exportToPDF} // Increase scale if necessary
+                className=" px-6 py-3 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-red-700 "
               >
                 PDF
               </button>
             </div>
-             
+            <SearchElement />
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table
@@ -169,10 +170,10 @@ const MobileData = () => {
                     key={index}
                     className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
                   >
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white border ">
+                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap   border ">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white border">
+                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap   border">
                       {product.childName}
                     </td>
                     <td className="px-6 py-4 border">{product.DOB}</td>

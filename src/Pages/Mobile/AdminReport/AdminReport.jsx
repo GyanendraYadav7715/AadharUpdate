@@ -5,8 +5,9 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar"; // Corrected import
 import Asidebar from "../../../Components/Asidebar/Asidebar"; // Corrected import
-import Footer from "../../../Components/Footer/Footer"; 
+import Footer from "../../../Components/Footer/Footer";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import SearchElement from "../../../Components/SearchElement/SearchElement";
 
 const AdminReport = () => {
   const userData = localStorage.getItem("user");
@@ -18,28 +19,30 @@ const AdminReport = () => {
     role = userObj.role;
   }
   const title = "Mobile Update-Report";
-  const links =role==="Admin"? [
-    { title: "Home", href: "/superadmin" },
-    { title: "Mobile Update-Report", href: "" },
-     
-  ]:[
-    { title: "Home", href: "/retailer" },
-    { title: "Mobile Update-Report", href: "" },
-     
-  ]
+  const links =
+    role === "Admin"
+      ? [
+          { title: "Home", href: "/superadmin" },
+          { title: "Mobile Update-Report", href: "" },
+        ]
+      : [
+          { title: "Home", href: "/retailer" },
+          { title: "Mobile Update-Report", href: "" },
+        ];
   const tableRef = useRef(null);
 
   const products = [
     {
       appliedBy: "UP_UID_NS_3203",
-      aadharCardDetails: { // Fixed object structure
+      aadharCardDetails: {
+        // Fixed object structure
         Name: "Kabutari Devi",
         FatherName: "Ramawatar Yadva",
         DOB: "01/01/1962",
         AadhaarNo: "2323-3434-4545",
         MobileNo: "233445667",
         Email: "Ck812@gmail.com",
-        Address: ""
+        Address: "",
       },
       purpose: "Mobile NO Update",
       adminRemark: "", // Corrected spacing
@@ -83,10 +86,9 @@ const AdminReport = () => {
 
   return (
     <>
-    <Asidebar/>
-    <HeaderNavbar/>
-    
-       
+      <Asidebar />
+      <HeaderNavbar />
+
       <Breadcrumb title={title} links={links} />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white mt-14">
@@ -95,17 +97,17 @@ const AdminReport = () => {
             <div>
               <button
                 onClick={copyToClipboard}
-                className="px-4 py-2 mr-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-blue-700"
+                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-blue-700"
               >
                 Copy
               </button>
               <button
                 onClick={exportToExcel}
-                className="px-4 py-2 mr-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-green-700"
+                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-green-700"
               >
                 Excel
               </button>
-              <button className="px-4 py-2 mr-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-yellow-700">
+              <button className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-yellow-700">
                 <CSVLink
                   data={products}
                   filename={"history.csv"}
@@ -115,13 +117,13 @@ const AdminReport = () => {
                 </CSVLink>
               </button>
               <button
-                onClick={exportToPDF}
-                className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-red-700 "
+                onClick={exportToPDF} // Increase scale if necessary
+                className=" px-6 py-3 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-red-700 "
               >
                 PDF
               </button>
             </div>
-             
+            <SearchElement/>
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table
@@ -159,10 +161,10 @@ const AdminReport = () => {
                     key={index}
                     className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
                   >
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white border ">
+                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border ">
                       {index + 1}
                     </td>
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white border">
+                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
                       {product.appliedBy}
                     </td>
                     <td className="px-6 py-4 border">
@@ -210,10 +212,9 @@ const AdminReport = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };
 
 export default AdminReport;
-
