@@ -10,17 +10,17 @@ const DashBoard = () => {
   ];
   const mylinks = [
     {
-      to: "/adduser",
+      to: "/mobileupdate",
       text: " Mobile Entry",
       icon: "ri-add-line text-white text-2xl ",
     },
     {
-      to: "/adduser",
+      to: "/add-customer",
       text: " Demographic Enry",
       icon: "ri-add-line text-white text-2xl ",
     },
     {
-      to: "/adduser",
+      to: "/new-entry",
       text: " Child entry",
       icon: "ri-add-line text-white text-2xl ",
     },
