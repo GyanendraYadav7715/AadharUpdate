@@ -1,0 +1,63 @@
+#Reciept {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0px 10px 0px;
+}
+
+.button {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 2px;
+    margin-right: 10px;
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+}
+
+#Original {
+    background-color: #71b944;
+    color: white;
+}
+
+#Original:hover {
+    background-color: #55893f;
+}
+
+.Progress {
+    background-color: #fdb939;
+    color: white;
+}
+
+.Progress:hover {
+    background-color: #d68c03;
+}
+
+.Ackslip {
+    background-color: #249cec;
+    color: white;
+    float: left;
+    margin-top: 5px;
+}
+
+.Ackslip:hover {
+    background-color: #267bbf;
+}
+
+.pencil {
+    background-color: #71b944;
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 3px;
+}
+
+.Action {
+    display: flex;
+  
+}
+
+.Action-text {
+    margin-top: 10px;
+    font-size: 1rem;
+        font-weight: bold;
+}
