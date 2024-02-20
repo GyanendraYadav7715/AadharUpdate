@@ -3,12 +3,44 @@ import Table from "react-bootstrap/Table";
 // import axios from "axios";
 
 import "./list.css";
-// import CSVDownloadButton from "../../Download/CSVDownloadButton";
+import CSVDownloadButton from "../../Download/CSVDownloadButton";
 import PDFDownloadButton from "../../Download/PDFDownloadButton";
 import ExcelDownloadButton from "../../Download/ExcelDownloadButton";
 import CopyButton from "../../Download/CopyButton";
+import Slip from "../../../Components/Slip/Slip";
+import Products from "../../Child/Entry_List/Products";
+import Asidebar from "../../../Components/Asidebar/Asidebar";
+import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
+import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import Footer from "../../../Components/Footer/Footer";
 
 function List() {
+  const userData = localStorage.getItem("user");
+  let role = "";
+  if (userData) {
+    // Parse JSON string to object
+    const userObj = JSON.parse(userData);
+    // Access the role property
+    role = userObj.role;
+  }
+  const title = "View Entry";
+  const links =
+    role === "Admin"
+      ? [
+          { title: "Home", href: "/superadmin" },
+          { title: "View Entry", href: "" },
+        ]
+      : [
+          { title: "Home", href: "/retailer" },
+          { title: "View Entry", href: "" },
+        ];
+  const mylinks = [
+    {
+      to: "/add-customer",
+      text: "Create New ",
+      icon: "ri-add-line text-white text-2xl ",
+    },
+  ];
   //api data fetch
   const [data, setData] = useState([]);
   const [error, setError] = useState([]);
@@ -35,15 +67,17 @@ function List() {
 
   return (
     <>
+      <HeaderNavbar />
+      <Asidebar />
+      <Breadcrumb title={title} links={links} mylinks={mylinks} />
       {/* data */}
       {Products ? (
-        <section>
-          <div className="hero-section">
-            <Header />
+        <div className="p-4 sm:ml-64">
+          <div className="p-2 border-2 border-gray-200 border-solid rounded-lg ">
             <div className="Download-Button">
               <CopyButton />
               <ExcelDownloadButton fileName="myExcel" jsonData={Products} />
-              
+              <CSVDownloadButton />
               <PDFDownloadButton />
             </div>
             <Table striped bordered hover className="custom-table">
@@ -97,12 +131,15 @@ function List() {
                                 <h3 className="status">
                                   Created On :{" "}
                                   <span
-                                    style={{ color: "blue", fontSize: "15px" }}
+                                    style={{
+                                      color: "blue",
+                                      fontSize: "15px",
+                                    }}
                                   >
                                     {item.createdOn}
                                   </span>
                                 </h3>
-
+                                <Slip />
                                 <h3 className="status">Status</h3>
                               </div>
                             </div>
@@ -121,10 +158,11 @@ function List() {
               </tbody>
             </Table>
           </div>
-        </section>
+        </div>
       ) : (
         <p>Please Wait...</p>
       )}
+      <Footer />
     </>
   );
 }

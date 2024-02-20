@@ -12,10 +12,10 @@ import ViewUser from "./Pages/UserManagement/View User List/ViewUser";
 import ViewRetailerUserList from "./Pages/UserManagement/ViewRetailerUserList/ViewRetailerUserList";
 
 import PersonEntry from "./Pages/EntryManagement/PersonEntry/PersonEntry";
-// import List from "./Pages/EntryManagement/Person-List/List";
+import List from "./Pages/EntryManagement/Person-List/List";
 
 import NewEntry from "./Pages/Child/NewEntry/NewEntry";
-//import ChildEntryList from "./Pages/Child/Entry_List/ChildEntryList";
+import ChildEntryList from "./Pages/Child/Entry_List/ChildEntryList";
 import MobileNoUpdate from "./Pages/Mobile/Mobile-Update/MobileNoUpdate";
 import MobileData from "./Pages/Mobile/MobileData/MobileData";
 import AdminReport from "./Pages/Mobile/AdminReport/AdminReport";
@@ -43,10 +43,10 @@ const App = () => {
           />
 
           <Route path="/add-customer" element={<PersonEntry />} />
-          {/* <Route path="/list" element={<List />} /> */}
+           <Route path="/list" element={<List />} /> 
 
           <Route path="/new-entry" element={<NewEntry />} />
-          {/* <Route path="/child-entry-list" element={<ChildEntryList />} /> */}
+           <Route path="/child-entry-list" element={<ChildEntryList />} /> 
 
           <Route path="/mobileupdate" element={<MobileNoUpdate />} />
           <Route path="/mobiledata" element={<MobileData />} />

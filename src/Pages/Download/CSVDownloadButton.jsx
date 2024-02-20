@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import './downloadformate.css'
-import products from '../Products';
+import Products from '../Child/Entry_List/Products';
 
 const CSVDownloadButton = () => {
     const [data, setData] = useState([]);
@@ -21,7 +21,7 @@ const CSVDownloadButton = () => {
     // }, []);
 
     const handleDownload = () => {
-        const csv = Papa.unparse(products);
+        const csv = Papa.unparse(Products);
         const blob = new Blob([csv], { type: 'text/csv' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);

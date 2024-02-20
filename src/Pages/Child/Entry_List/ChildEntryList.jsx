@@ -2,23 +2,48 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 // import axios from "axios";
-import Breadcrumbs from "../../common/breadcumbs/Breadcrumbs";
+
 import "./EntryList.css";
-import CSVDownloadButton from "../../../pages/Download/CSVDownloadButton";
-import PDFDownloadButton from "../../../pages/Download/PDFDownloadButton";
-import ExcelDownloadButton from "../../../pages/Download/ExcelDownloadButton";
-import CopyButton from "../../../pages/Download/CopyButton";
-import Navbar from "../../Navbar/Navbar";
-import Menubar from "../../../pages/MenuSidebar/Menubar";
-import Products from "../../../pages/Products";
-import Search from "../../SearchFilter/Search";
-import FingerData from "./Authentication/FingerData";
+import CSVDownloadButton from "../../Download/CSVDownloadButton";
+import PDFDownloadButton from "../../Download/PDFDownloadButton";
+import ExcelDownloadButton from "../../Download/ExcelDownloadButton";
+import CopyButton from "../../Download/CopyButton";
+import Products from "./Products";
+import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import Asidebar from "../../../Components/Asidebar/Asidebar";
+import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
+import Footer from "../../../Components/Footer/Footer";
+import Slip from "../../../Components/Slip/Slip";
+import FingerData from "./Auth/FingerData";
 import ViewFingerAndUpdate from "./View/ViewFingerAndUpdate";
 import DeleteData from "./Delete/DeleteData";
 import Upload from "./Upload/Upload";
 import Action from "./Action/Action";
 
 function ChildEntryList() {
+  const userData = localStorage.getItem("user");
+  let role = "";
+  if (userData) {
+    // Parse JSON string to object
+    const userObj = JSON.parse(userData);
+    // Access the role property
+    role = userObj.role;
+  }
+  const title = "View Child Entry";
+  const links =role==="Admin"? [
+    { title: "Home", href: "/superadmin" },
+    { title: "View Child Data", href: "" },
+  ]:[
+    { title: "Home", href: "/retailer" },
+    { title: "View Child Data", href: "" },
+  ]
+  const mylinks = [
+    {
+      to: "/new-entry",
+      text: "Create New ",
+      icon: "ri-add-line text-white text-2xl ",
+    },
+  ];
   //api data fetch
   const [data, setData] = useState([]);
   const [error, setError] = useState([]);
@@ -45,19 +70,19 @@ function ChildEntryList() {
 
   return (
     <>
-     
-    
+      <Asidebar />
+      <HeaderNavbar />
+      <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
       {/* data */}
       {Products ? (
-    
-          <div className="hero-section">
+        <div className="p-2 sm:ml-64">
+          <div className="p-2 border-2 border-gray-200 border-solid rounded-lg  ">
             <div className="Download-Button">
               <CopyButton />
               <ExcelDownloadButton fileName="myExcel" jsonData={Products} />
               <CSVDownloadButton />
               <PDFDownloadButton />
-              <Search />
             </div>
             <Table striped bordered hover className="custom-table">
               <thead>
@@ -103,7 +128,7 @@ function ChildEntryList() {
                                   {" "}
                                   Aadhaar Card Details :{" "}
                                 </h3>
-
+                                <Slip />
                                 <span className="span">Name : {item.name}</span>
                                 <span className="span">
                                   Father Name : {item.dateofbirth}
@@ -134,12 +159,11 @@ function ChildEntryList() {
                                   </span>
                                 </h3>
                                 <div className="Action-container">
-                                
-<Action/>
+                                  <Action />
                                   <FingerData />
                                   <ViewFingerAndUpdate />
                                   <DeleteData />
-                                  <Upload/>
+                                  <Upload />
                                 </div>
                               </div>
                             </div>
@@ -158,10 +182,11 @@ function ChildEntryList() {
               </tbody>
             </Table>
           </div>
-
+        </div>
       ) : (
         <p>Please Wait...</p>
       )}
+      <Footer />
     </>
   );
 }

@@ -84,8 +84,8 @@ const Menudrop = () => {
           title="Child Management"
           items={[
             { label: "Enroll Child", link: "/new-entry" },
-            { label: "View Child Data", link: "/child-entry-list" },
-            { label: "View Child Entry", link: "#" },
+            { label: "View Child Data", link: "" },
+            { label: "View Child Entry", link: "/child-entry-list" },
             { label: "Enrollment Form", link: "public/form.pdf" },
           ]}
           iconClass="ri-open-arm-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
