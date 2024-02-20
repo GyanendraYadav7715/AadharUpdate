@@ -3,6 +3,7 @@ import Login from "./Authentication/Login";
 import Forget from "./Authentication/Forget";
 import SuperAdmin from "./Users/SuperAdmin/SuperAdmin";
 import Retailer from "./Users/Retailer/Retailer";
+import Backoffice from "./Users/BackOffice/Backoffice"
 
 import Balance from "./Pages/Balance/Balance";
 import History from "./Pages/TansferHistory/History";
@@ -31,7 +32,8 @@ const App = () => {
           <Route path="/forget" element={<Forget />} />
           <Route path="/superadmin" element={<SuperAdmin />} />
           <Route path="/retailer" element={<Retailer />} />
-
+          <Route path="/backoffice" element={< Backoffice />} />
+         
           <Route path="/balance" element={<Balance />} />
           <Route path="/history" element={<History />} />
 
@@ -43,10 +45,10 @@ const App = () => {
           />
 
           <Route path="/add-customer" element={<PersonEntry />} />
-           <Route path="/list" element={<List />} /> 
+          <Route path="/list" element={<List />} />
 
           <Route path="/new-entry" element={<NewEntry />} />
-           <Route path="/child-entry-list" element={<ChildEntryList />} /> 
+          <Route path="/child-entry-list" element={<ChildEntryList />} />
 
           <Route path="/mobileupdate" element={<MobileNoUpdate />} />
           <Route path="/mobiledata" element={<MobileData />} />
