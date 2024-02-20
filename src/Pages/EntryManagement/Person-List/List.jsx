@@ -3,14 +3,11 @@ import Table from "react-bootstrap/Table";
 // import axios from "axios";
 
 import "./list.css";
-import CSVDownloadButton from "../../../../pages/Download/CSVDownloadButton";
-import PDFDownloadButton from "../../../../pages/Download/PDFDownloadButton";
-import ExcelDownloadButton from "../../../../pages/Download/ExcelDownloadButton";
-import CopyButton from "../../../../pages/Download/CopyButton";
-import Slip from "../../../Slip/Slip";
-import Products from "../../../../pages/Products";
-import Search from "../../../SearchFilter/Search";
-import Header from "../../../common/Header/Header";
+// import CSVDownloadButton from "../../Download/CSVDownloadButton";
+import PDFDownloadButton from "../../Download/PDFDownloadButton";
+import ExcelDownloadButton from "../../Download/ExcelDownloadButton";
+import CopyButton from "../../Download/CopyButton";
+
 function List() {
   //api data fetch
   const [data, setData] = useState([]);
@@ -38,20 +35,16 @@ function List() {
 
   return (
     <>
-    
-     
-
       {/* data */}
       {Products ? (
         <section>
           <div className="hero-section">
             <Header />
             <div className="Download-Button">
-              <CopyButton  />
+              <CopyButton />
               <ExcelDownloadButton fileName="myExcel" jsonData={Products} />
-              <CSVDownloadButton />
+              
               <PDFDownloadButton />
-              <Search />
             </div>
             <Table striped bordered hover className="custom-table">
               <thead>
@@ -112,8 +105,6 @@ function List() {
 
                                 <h3 className="status">Status</h3>
                               </div>
-
-                              <Slip />
                             </div>
                           </td>
                         </tr>

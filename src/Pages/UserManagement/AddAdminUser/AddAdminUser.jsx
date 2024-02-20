@@ -16,7 +16,7 @@ const InputField = ({ label, id, type, placeholder, pattern, required }) => {
       <input
         type={type}
         id={id}
-        className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        className="bg-white border   text-gray-900 text-sm rounded-sm  block w-full p-2.5 inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
         placeholder={placeholder}
         pattern={pattern}
         required={required}
@@ -113,7 +113,7 @@ const AddAdminUser = () => {
               <input
                 type="password"
                 id="password"
-                className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="bg-white border   text-gray-900 text-sm rounded-sm inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                 placeholder=""
                 required
               />
@@ -127,7 +127,7 @@ const AddAdminUser = () => {
               </label>
               <select
                 id="select_user"
-                className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="bg-white border   text-gray-900 text-sm rounded-sm inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                 required
               >
                 <option value="Admin Login">Admin Login</option>
@@ -136,10 +136,9 @@ const AddAdminUser = () => {
               </select>
             </div>
 
-            <button
-              type="submit"
-              className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center   mt-8"
-            >
+            <button className="Submit-button">
+              
+              <i class="ri-save-fill"> </i>
               Submit
             </button>
           </form>

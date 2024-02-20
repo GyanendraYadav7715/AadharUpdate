@@ -1,7 +1,11 @@
 import axios from "axios";
 import "./mobileUpdate.css";
 import { useState } from "react";
-import Box from "../../../../components/FingerPrint/FingerPrint";
+import Box from "../../../Components/FingerPrint/FingerPrint";
+import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
+import Asidebar from "../../../Components/Asidebar/Asidebar";
+import Footer from "../../../Components/Footer/Footer";
+import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 
 export const Input = ({ label, type, name, placeholder, onChange, value }) => {
   return (
@@ -23,14 +27,40 @@ export const Input = ({ label, type, name, placeholder, onChange, value }) => {
   );
 };
 const MobileNoUpdate = () => {
-  const imageUrl = require("../../../../assets/icons/finger.jpg");
+  const userData = localStorage.getItem("user");
+  let role = "";
+  if (userData) {
+    // Parse JSON string to object
+    const userObj = JSON.parse(userData);
+    // Access the role property
+    role = userObj.role;
+  }
+  const title = "Mobile Update";
+  const links =
+    role === "Admin"
+      ? [
+          { title: "Home", href: "/superadmin" },
+          { title: "Mobile Update", href: "" },
+        ]
+      : [
+          { title: "Home", href: "/retailer" },
+          { title: "Mobile Update", href: "" },
+        ];
+
+  const mylinks = [
+    {
+      to: "/mobileupdate",
+      text: "View Customer",
+      icon: "ri-team-line text-white text-2xl ",
+    },
+  ];
   // State to manage form data
   const [formData, setFormData] = useState({
     name: "",
     dateofbirth: "",
     email: "",
     mobile: "",
- 
+
     aadhaar: "",
     address: "",
   });
@@ -81,7 +111,7 @@ const MobileNoUpdate = () => {
         dateofbirth: "",
         email: "",
         mobile: "",
-  
+
         aadhaar: "",
         address: "",
         fathern: "",
@@ -110,10 +140,11 @@ const MobileNoUpdate = () => {
         </div>
       </div>
  */}
-
-      <div className="hero-section">
-        <div className="formContainer">
-        
+      <HeaderNavbar />
+      <Asidebar />
+      <Breadcrumb title={title} links={links} mylinks={mylinks} />
+      <div className="p-4 sm:ml-64 bg-gray-200">
+        <div className="p-2 border-2 rounded-lg  shadow-xl bg-white">
           <div className="formGrid">
             <Input
               onChange={handleInputChange}
@@ -166,23 +197,22 @@ const MobileNoUpdate = () => {
               placeholder="example@update.com"
               value={formData.email}
             />
-       
           </div>
-          <div className="container">
-            <Box Src={imageUrl} buttonText="Click" />
-            <Box Src={imageUrl} buttonText="Click" />
-            <Box Src={imageUrl} buttonText="Click" />
-            <Box Src={imageUrl} buttonText="Click" />
-            <Box Src={imageUrl} buttonText="Click" />
+          <div className="container grid grid-cols-5 gap-3">
+            <Box />
+            <Box />
+            <Box />
+            <Box />
+            <Box />
+            <button onClick={handleSubmit} className="Submit-button">
+              {" "}
+              <i class="ri-save-fill"> </i>
+              Submit
+            </button>
           </div>
-
-          <button onClick={handleSubmit} className="Submit-button">
-            {" "}
-            <i class="ri-save-fill"> </i>
-            Submit
-          </button>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
