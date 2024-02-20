@@ -17,8 +17,8 @@ import PersonEntry from "./Pages/EntryManagement/PersonEntry/PersonEntry";
 import NewEntry from "./Pages/Child/NewEntry/NewEntry";
 //import ChildEntryList from "./Pages/Child/Entry_List/ChildEntryList";
 import MobileNoUpdate from "./Pages/Mobile/Mobile-Update/MobileNoUpdate";
-//import MobileData from "./Pages/MobileManagement/MobileData/MobileData";
-//import AdminReport from "./Pages/MobileManagement/AdminReport/AdminReport";
+import MobileData from "./Pages/Mobile/MobileData/MobileData";
+import AdminReport from "./Pages/Mobile/AdminReport/AdminReport";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -49,7 +49,8 @@ const App = () => {
           {/* <Route path="/child-entry-list" element={<ChildEntryList />} /> */}
 
           <Route path="/mobileupdate" element={<MobileNoUpdate />} />
-          {/* <Route path="/" element={<ViewUser />} /> */}
+          <Route path="/mobiledata" element={<MobileData />} />
+          <Route path="/adminreport" element={<AdminReport />} />
         </Routes>
       </Router>
     </>

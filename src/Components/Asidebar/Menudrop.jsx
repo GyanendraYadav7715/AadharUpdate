@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+ 
 const Dropdown = ({ title, items, iconClass }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -74,7 +75,7 @@ const Menudrop = () => {
           items={[
             { label: "New Entry", link: "/add-customer" },
             { label: "View Entry", link: "/list" },
-            { label: "Update Form", link: "" },
+            { label: "Update Form", link: "public/form.pdf" },
             { label: "Search Entry Data", link: "#" },
           ]}
           iconClass="ri-add-fill w-5 h-5 text-black transition duration-75   group-hover:text-gray-900  "
@@ -85,7 +86,7 @@ const Menudrop = () => {
             { label: "Enroll Child", link: "/new-entry" },
             { label: "View Child Data", link: "/child-entry-list" },
             { label: "View Child Entry", link: "#" },
-            { label: "Enrollment Form", link: "#" },
+            { label: "Enrollment Form", link: "public/form.pdf" },
           ]}
           iconClass="ri-open-arm-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
         />
