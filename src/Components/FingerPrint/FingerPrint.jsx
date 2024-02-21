@@ -6,7 +6,7 @@ const Box = () => {
   return (
     <div className="box">
       <img className='box-img' src={finger} alt="Box" />
-      <button  className='Box-button'>click</button>
+      <button  className='Box-button'>Click</button>
     </div>
   );
 };
