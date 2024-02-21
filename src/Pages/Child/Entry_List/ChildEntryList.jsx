@@ -10,9 +10,7 @@ import ExcelDownloadButton from "../../Download/ExcelDownloadButton";
 import CopyButton from "../../Download/CopyButton";
 import Products from "./Products";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import Asidebar from "../../../Components/Asidebar/Asidebar";
-import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
-import Footer from "../../../Components/Footer/Footer";
+ 
 import Slip from "../../../Components/Slip/Slip";
 import FingerData from "./Auth/FingerData";
 import ViewFingerAndUpdate from "./View/ViewFingerAndUpdate";
@@ -74,8 +72,7 @@ function ChildEntryList() {
 
   return (
     <>
-      <Asidebar />
-      <HeaderNavbar />
+     
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
       {/* data */}
@@ -193,7 +190,7 @@ function ChildEntryList() {
       ) : (
         <p>Please Wait...</p>
       )}
-      <Footer />
+       
     </>
   );
 }

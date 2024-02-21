@@ -1,8 +1,7 @@
 import React from "react";
-import Asidebar from "../../../Components/Asidebar/Asidebar";
-import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
+ 
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import Footer from "../../../Components/Footer/Footer";
+ 
 import { useState } from "react";
 import axios from "axios";
 import { Local_Url } from "../../../constant/constant";
@@ -129,8 +128,7 @@ const AddAdminUser = () => {
 
   return (
     <>
-      <Asidebar />
-      <HeaderNavbar />
+    
 
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-4 sm:ml-64 bg-gray-300">
@@ -234,7 +232,7 @@ const AddAdminUser = () => {
           </form>
         </div>
       </div>
-      <Footer />
+       
     </>
   );
 };

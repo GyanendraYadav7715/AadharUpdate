@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import HeaderNavbar from "../../Components/HeaderNabar/HeaderNavbar";
-import Footer from "../../Components/Footer/Footer";
-import Asidebar from "../../Components/Asidebar/Asidebar";
+ 
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 
 const Balance = () => {
+  
   const [formData, setFormData] = useState({
     username: "",
     amount: "",
@@ -47,8 +46,7 @@ const Balance = () => {
 
   return (
     <>
-      <Asidebar />
-      <HeaderNavbar />
+      
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-1 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
@@ -106,7 +104,7 @@ const Balance = () => {
           </div>
         </div>
       </div>
-      <Footer />
+       
     </>
   );
 };

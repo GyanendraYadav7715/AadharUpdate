@@ -9,10 +9,9 @@ import ExcelDownloadButton from "../../Download/ExcelDownloadButton";
 import CopyButton from "../../Download/CopyButton";
 import Slip from "../../../Components/Slip/Slip";
 import Products from "../../Child/Entry_List/Products";
-import Asidebar from "../../../Components/Asidebar/Asidebar";
-import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
+ 
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import Footer from "../../../Components/Footer/Footer";
+ 
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 
 function List() {
@@ -68,8 +67,7 @@ function List() {
 
   return (
     <>
-      <HeaderNavbar />
-      <Asidebar />
+       
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       {/* data */}
       {Products ? (
@@ -166,7 +164,7 @@ function List() {
       ) : (
         <p>Please Wait...</p>
       )}
-      <Footer />
+       
     </>
   );
 }

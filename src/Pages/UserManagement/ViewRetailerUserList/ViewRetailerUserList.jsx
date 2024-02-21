@@ -5,11 +5,9 @@ import { CSVLink } from "react-csv";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import Asidebar from "../../../Components/Asidebar/Asidebar";
-import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
-import SearchElement from "../../../Components/SearchElement/SearchElement";
+ 
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import Footer from "../../../Components/Footer/Footer";
-
+ 
 const ViewRetailerUserList = () => {
   const title = "View Retailer User Data";
   const links = [
@@ -151,8 +149,7 @@ const ViewRetailerUserList = () => {
 
   return (
     <>
-      <HeaderNavbar />
-      <Asidebar />
+      
 
       <Breadcrumb title={title} links={links} />
       <div className="p-4 sm:ml-64 bg-gray-200">
@@ -262,7 +259,7 @@ const ViewRetailerUserList = () => {
           </div>
         </div>
       </div>
-      <Footer />
+       
     </>
   );
 };

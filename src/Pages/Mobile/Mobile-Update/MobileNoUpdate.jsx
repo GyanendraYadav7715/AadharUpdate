@@ -2,9 +2,7 @@ import axios from "axios";
 import "./mobileUpdate.css";
 import { useState } from "react";
 import Box from "../../../Components/FingerPrint/FingerPrint";
-import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
-import Asidebar from "../../../Components/Asidebar/Asidebar";
-import Footer from "../../../Components/Footer/Footer";
+ 
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 
 export const Input = ({ label, type, name, placeholder, onChange, value }) => {
@@ -124,24 +122,8 @@ const MobileNoUpdate = () => {
 
   return (
     <>
-      {/* <div className="first-half">
-        <div className="title-section">
-          <p className="dashboard">Add Customer</p>
-          <div className="breadcrumb">
-            <Breadcrumbs />
-          </div>
-        </div>
-
-        <div className="button-section">
-          <i class="ri-team-fill plus"></i>
-          <Link to="/list">
-            <button className="custom-button">View Customers</button>
-          </Link>
-        </div>
-      </div>
- */}
-      <HeaderNavbar />
-      <Asidebar />
+       
+       
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-2 border-2 rounded-lg  shadow-xl bg-white">
@@ -212,7 +194,7 @@ const MobileNoUpdate = () => {
           </div>
         </div>
       </div>
-      <Footer />
+       
     </>
   );
 };

@@ -11,7 +11,7 @@ import CopyButton from "../../../pages/Download/CopyButton";
 import Slip from "../../../components/Slip/Slip";
 import Products from "../../../pages/Products";
 import Search from "../../SearchFilter/Search";
-import Header from "../../../components/common/Header/Header";
+ 
 function ViewChildData() {
   //api data fetch
   const [data, setData] = useState([]);
