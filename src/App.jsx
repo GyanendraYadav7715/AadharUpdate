@@ -20,7 +20,7 @@ import ChildEntryList from "./Pages/Child/Entry_List/ChildEntryList";
 import MobileNoUpdate from "./Pages/Mobile/Mobile-Update/MobileNoUpdate";
 import MobileData from "./Pages/Mobile/MobileData/MobileData";
 import AdminReport from "./Pages/Mobile/AdminReport/AdminReport";
-import Protected from "./ProtectedRoute/Protected";
+import Protected from "./Route/Protected";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
