@@ -227,44 +227,44 @@ const ViewUser = () => {
             </div>
             <SearchElement />
           </div>
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg  ">
             <table
               className="w-full text-sm text-left rtl:text-right text-black shadow-sm"
               ref={tableRef}
             >
               <thead className="text-base text-black  bg-white  ">
                 <tr>
-                  <th scope="col" className="px-2 py-3 border">
+                  <th scope="col" className="px-2 py-3 border whitespace-nowrap">
                     Serial No.
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     Name
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     Mobile Number
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     User Name
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     Password
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Created By
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                    Created By  
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     Balance
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     Child Point
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     Mobile Point
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     Status
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     Action
                   </th>
                 </tr>

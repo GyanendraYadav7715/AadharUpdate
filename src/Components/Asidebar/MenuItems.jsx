@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 
 const MenuItems = () => {
@@ -32,15 +32,18 @@ const MenuItems = () => {
       label: "Dashboard",
     },
   ];
-  const userData = localStorage.getItem("user");
-  let role = "";
-  if (userData) {
-    // Parse JSON string to object
-    const userObj = JSON.parse(userData);
-    // Access the role property
-    role = userObj.role;
-  }
-  const menuItems = role === "Admin" ? adminMenuItems : retailerMenuItems;
+
+  const memoizedRole = useMemo(() => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      const userObj = JSON.parse(userData);
+      return userObj.role;
+    }
+    return "";
+  }, []);
+
+  const menuItems =
+    memoizedRole === "Admin" ? adminMenuItems : retailerMenuItems;
 
   return (
     <>
