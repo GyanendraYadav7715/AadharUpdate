@@ -155,7 +155,11 @@ import { LuUser2, LuEye, LuEyeOff } from "react-icons/lu";
 const validCredentials = {
   admin: { password: "1234", role: "Admin", redirect: "/superadmin" },
   retailer: { password: "1234", role: "Retailer", redirect: "/retailer" },
-  backoffice: { password: "1234", role: "Back Office", redirect: "/backoffice" },
+  backoffice: {
+    password: "1234",
+    role: "Back Office",
+    redirect: "/backoffice",
+  },
 };
 
 const Login = () => {
@@ -191,7 +195,6 @@ const Login = () => {
     }
   };
 
- 
   const closeAlert = () => {
     setShowAlert(false);
   };
@@ -200,7 +203,7 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault(); // Prevents the default form submission behavior
       console.log("Enter key pressed! Submitting form...");
       // Your code to handle form submission here
@@ -267,12 +270,17 @@ const Login = () => {
             onChange={handleInputChange}
             className="w-full px-6 py-3 mb-10 border border-slate-600 rounded-lg font-medium "
             id="role"
-           
             required // Make field required
           >
-            <option value="Admin "  onKeyPress={handleKeyPress}>Admin Login</option>
-            <option value="Retailer" onKeyPress={handleKeyPress}>Retailer Login</option>
-            <option value="Back Office" onKeyPress={handleKeyPress}>Back Office</option>
+            <option value="Admin " onKeyPress={handleKeyPress}>
+              Admin Login
+            </option>
+            <option value="Retailer" onKeyPress={handleKeyPress}>
+              Retailer Login
+            </option>
+            <option value="Back Office" onKeyPress={handleKeyPress}>
+              Back Office
+            </option>
           </select>
 
           <div className="flex justify-between items-center gap-2 mt-2 border-b border-gray-500 pb-[2vh]">
