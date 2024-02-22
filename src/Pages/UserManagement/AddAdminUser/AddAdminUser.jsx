@@ -1,45 +1,23 @@
 import React from "react";
- 
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
- 
 import { useState } from "react";
 import axios from "axios";
 import { Local_Url } from "../../../constant/constant";
-
-const InputField = ({
-  label,
-  name,
-  type,
-  placeholder,
-  pattern,
-  required,
-  value,
-  onChange,
-}) => {
-  return (
-    <div>
-      <label
-        htmlFor={name}
-        className="block mb-2 text-sm font-medium text-gray-900"
-      >
-        {label}
-      </label>
-      <input
-        onChange={(e) => onChange(name, e.target.value)}
-        type={type}
-        value={value}
-        name={name}
-        className="bg-white border text-gray-900 text-sm rounded-sm block w-full p-2.5 inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-        placeholder={placeholder}
-        pattern={pattern}
-        required={required}
-      />
-    </div>
-  );
-};
+import CustomInput from "../../Validation/Vaildation";
 
 const AddAdminUser = () => {
-  // const [selectedUserType, setSelectedUserType] = useState("");
+  const title = " Add User";
+  const links = [
+    { title: "Home", href: "/superadmin" },
+    { title: "Add User", href: "" },
+  ];
+  const mylinks = [
+    {
+      to: "/viewuser",
+      text: "View Customer",
+      icon: "ri-team-line text-white text-2xl ",
+    },
+  ];
   const [formData, setFormData] = useState({
     Name: "",
     Email: "",
@@ -50,29 +28,6 @@ const AddAdminUser = () => {
     Username: "",
     Password: "",
   });
-
-  const userData = localStorage.getItem("user");
-  let role = "";
-  if (userData) {
-    // Parse JSON string to object
-    const userObj = JSON.parse(userData);
-    // Access the role property
-    role = userObj.role;
-  }
-
-  const title = " Add User";
-  const links = [
-    { title: "Home", href: "/superadmin" },
-    { title: "Add User", href: "" },
-  ];
-
-  const mylinks = [
-    {
-      to: "/viewuser",
-      text: "View Customer",
-      icon: "ri-team-line text-white text-2xl ",
-    },
-  ];
 
   // Function to handle form input changes
   const handleInputChange = (name, value) => {
@@ -128,83 +83,91 @@ const AddAdminUser = () => {
 
   return (
     <>
-    
-
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-4 sm:ml-64 bg-gray-300">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg  bg-white">
           <h3 className="text-2xl font-bold ml-10">Add Customer</h3>
           <form className="m-5 p-6 border-1 shadow-sm rounded-md bg-white">
             <div className="grid gap-6 mb-6 md:grid-cols-2">
-              <InputField
+              <CustomInput
                 onChange={handleInputChange}
                 label="Full name"
-                type="text"
+                id="mobile"
                 name="Name"
                 value={formData.Name}
-                placeholder="Gyan Yadav"
-                required
+                type="text"
+                pattern="[A-Z][a-zA-Z]*"
+                errorMessage="Please enter a text with the first letter capitalized."
+                required=""
               />
-              <InputField
+              <CustomInput
                 onChange={handleInputChange}
                 label="Username"
+                id="Username"
                 name="Username"
-                type="text"
                 value={formData.Username}
-                placeholder="UP1D34"
-                required
+                type="text"
+                pattern="[A-Z][a-zA-Z0-9_-]{2,15}"
+                errorMessage="Username must start with a capital letter and be between 3 and 16 characters long, containing only letters, numbers, underscores, and hyphens."
+                required=""
               />
-              <InputField
+              <CustomInput
                 onChange={handleInputChange}
                 label="Email"
-                name="Email"
-                type="email"
+                id="email"
                 value={formData.Email}
-                placeholder="gyan@rto.com"
-                required
+                name="email"
+                type="email"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                errorMessage="Please enter a valid email address."
+                required=""
               />
-              <InputField
+              <CustomInput
                 onChange={handleInputChange}
-                label="Phone number"
+                label="Mobile Number"
+                id="mobile"
                 name="Phone_n"
-                type="number"
                 value={formData.Phone_n}
-                placeholder="84-84-655-655"
-                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                required
+                type="tel"
+                pattern="[0-9]{10}"
+                errorMessage="Please enter a valid 10-digit mobile number."
+                required=""
               />
-              <InputField
+
+              <CustomInput
                 onChange={handleInputChange}
                 label="Balance"
-                name="Balanace"
+                id="Balance"
+                name="Balance"
                 type="number"
                 value={formData.Balanace}
-                placeholder=""
-                required
+                pattern="[0-9]+"
+                errorMessage="Please enter a valid number."
+                required=""
               />
-              <InputField
+              <CustomInput
                 onChange={handleInputChange}
-                label="Child Token"
-                name="Child_token"
-                value={formData.Child_token}
+                label=" Child Token"
+                id=" Child Token"
+                name=" Child Token"
                 type="number"
-                placeholder=""
-                required
+                value={formData.Child_token}
+                pattern="[0-9]+"
+                errorMessage="Please enter a valid number."
+                required=""
               />
             </div>
             <div className="mb-6">
-              <label className="block mb-2 text-sm font-medium text-gray-900">
-                Password
-              </label>
-
-              <InputField
+              <CustomInput
                 onChange={handleInputChange}
-                type="password"
-                name="Password"
+                label="Password"
+                id="password"
                 value={formData.Password}
-                className="bg-white border   text-gray-900 text-sm rounded-sm inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
-                placeholder=""
-                required
+                name="Password"
+                type="password"
+                pattern=".{6,}"
+                errorMessage="Password must be at least 6 characters long."
+                required=""
               />
             </div>
             <div className="mb-6">
@@ -216,9 +179,9 @@ const AddAdminUser = () => {
                 onChange={handleInputChange}
                 name="User_type"
                 value={formData.User_type}
-                className="bg-white border   text-gray-900 text-sm rounded-sm inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
+                className="bg-white border text-gray-900 text-sm rounded-sm inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
               >
-                <option value="">Select User Type</option>
+                <option value="">Select One</option>
                 <option value="Sub Admin">Sub Admin</option>
                 <option value="Retailer">Retailer</option>
                 <option value="Back Office">Back Office</option>
@@ -232,7 +195,6 @@ const AddAdminUser = () => {
           </form>
         </div>
       </div>
-       
     </>
   );
 };

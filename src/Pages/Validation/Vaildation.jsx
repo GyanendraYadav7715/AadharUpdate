@@ -19,8 +19,14 @@ const CustomInput = ({ label, id, name, type, pattern, errorMessage }) => {
 
   return (
     <div>
-      <label htmlFor={id}>{label}:</label>
+      <label
+        htmlFor={id}
+        className="block mb-2 text-sm font-medium text-gray-900"
+      >
+        {label}:
+      </label>
       <input
+        className="bg-white border text-gray-900 text-sm rounded-sm block w-full p-2.5 inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
         type={type}
         id={id}
         name={name}
