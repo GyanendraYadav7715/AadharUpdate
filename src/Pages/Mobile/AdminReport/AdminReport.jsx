@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar"; // Corrected import
-import Asidebar from "../../../Components/Asidebar/Asidebar"; // Corrected import
-import Footer from "../../../Components/Footer/Footer";
+ 
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 
@@ -86,8 +84,7 @@ const AdminReport = () => {
 
   return (
     <>
-      <Asidebar />
-      <HeaderNavbar />
+      
 
       <Breadcrumb title={title} links={links} />
       <div className="p-4 sm:ml-64 bg-gray-200">
@@ -212,7 +209,7 @@ const AdminReport = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      
     </>
   );
 };

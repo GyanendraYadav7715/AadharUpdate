@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import "./PersonEntry.css";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
-import Asidebar from "../../../Components/Asidebar/Asidebar";
-import Footer from "../../../Components/Footer/Footer";
+ 
 
 export const Input = ({
   label,
@@ -125,8 +123,7 @@ const PersonEntry = () => {
 
   return (
     <>
-      <Asidebar />
-      <HeaderNavbar />
+     
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
       <div className=" p-3 sm:ml-64 bg-gray-200">
@@ -238,7 +235,7 @@ const PersonEntry = () => {
           </div>
         </div>
       </div>
-      <Footer />
+     
     </>
   );
 };

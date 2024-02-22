@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 
 const MenuItems = () => {
@@ -32,15 +32,18 @@ const MenuItems = () => {
       label: "Dashboard",
     },
   ];
-  const userData = localStorage.getItem("user");
-  let role = "";
-  if (userData) {
-    // Parse JSON string to object
-    const userObj = JSON.parse(userData);
-    // Access the role property
-    role = userObj.role;
-  }
-  const menuItems = role === "Admin" ? adminMenuItems : retailerMenuItems;
+
+  const memoizedRole = useMemo(() => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      const userObj = JSON.parse(userData);
+      return userObj.role;
+    }
+    return "";
+  }, []);
+
+  const menuItems =
+    memoizedRole === "Admin" ? adminMenuItems : retailerMenuItems;
 
   return (
     <>
@@ -53,7 +56,7 @@ const MenuItems = () => {
               className="flex items-center p-2 text-black rounded-lg hover:bg-gray-200  no-underline hover:text-black"
             >
               <i
-                className={`${item.iconClass} w-5 h-5 text-black transition duration-75   group-hover:text-white `}
+                className={`${item.iconClass} w-5 h-5 text-black hover:text-white `}
               ></i>
               <span className="ms-3">{item.label}</span>
             </Link>

@@ -1,8 +1,7 @@
 import React from "react";
-import Asidebar from "../../../Components/Asidebar/Asidebar";
-import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
+ 
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import Footer from "../../../Components/Footer/Footer";
+ 
 import { useState } from "react";
 import axios from "axios";
 import { Local_Url } from "../../../constant/constant";
@@ -40,18 +39,18 @@ const InputField = ({
 };
 
 const AddAdminUser = () => {
-// const [selectedUserType, setSelectedUserType] = useState("");
-    const [formData, setFormData] = useState({
-      Name: "",
-      Email: "",
-      Phone_n: "",
-      Balanace: "",
-      Child_token: "",
-      User_type: "",
-      Username: "",
-      Password: "",
-    });
-  
+  // const [selectedUserType, setSelectedUserType] = useState("");
+  const [formData, setFormData] = useState({
+    Name: "",
+    Email: "",
+    Phone_n: "",
+    Balanace: "",
+    Child_token: "",
+    User_type: "",
+    Username: "",
+    Password: "",
+  });
+
   const userData = localStorage.getItem("user");
   let role = "";
   if (userData) {
@@ -75,18 +74,17 @@ const AddAdminUser = () => {
     },
   ];
 
-
   // Function to handle form input changes
   const handleInputChange = (name, value) => {
     console.log(`Handling input for ${name}: ${value}`);
-     if (name === "User_type") {
-       setSelectedUserType(value);
-     } else {
-       setFormData({
-         ...formData,
-         [name]: value,
-       });
-     }
+    if (name === "User_type") {
+      setSelectedUserType(value);
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   // Function to handle form submission
@@ -102,11 +100,11 @@ const AddAdminUser = () => {
       const apiUrl = `${Local_Url}/api/v1/admin/add-user`;
 
       // Make a POST request using Axios
-const response = await axios.post(apiUrl, formData, {
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+      const response = await axios.post(apiUrl, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       // Handle successful response
       console.log("Form submitted successfully:", response.data);
@@ -123,7 +121,6 @@ const response = await axios.post(apiUrl, formData, {
         Password: "",
       });
     } catch (error) {
-
       // Handle submission error
       console.error("Error submitting form:", error.message);
     }
@@ -131,8 +128,7 @@ const response = await axios.post(apiUrl, formData, {
 
   return (
     <>
-      <Asidebar />
-      <HeaderNavbar />
+    
 
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-4 sm:ml-64 bg-gray-300">
@@ -208,6 +204,7 @@ const response = await axios.post(apiUrl, formData, {
                 value={formData.Password}
                 className="bg-white border   text-gray-900 text-sm rounded-sm inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                 placeholder=""
+                required
               />
             </div>
             <div className="mb-6">
@@ -215,6 +212,7 @@ const response = await axios.post(apiUrl, formData, {
                 Select Usertype
               </label>
               <select
+                required
                 onChange={handleInputChange}
                 name="User_type"
                 value={formData.User_type}
@@ -234,7 +232,7 @@ const response = await axios.post(apiUrl, formData, {
           </form>
         </div>
       </div>
-      <Footer />
+       
     </>
   );
 };

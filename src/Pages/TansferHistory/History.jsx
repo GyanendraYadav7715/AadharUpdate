@@ -5,10 +5,9 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
 import SearchElement from "../../Components/SearchElement/SearchElement";
-import Asidebar from "../../Components/Asidebar/Asidebar";
-import HeaderNavbar from "../../Components/HeaderNabar/HeaderNavbar";
+ 
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
-import Footer from "../../Components/Footer/Footer";
+ 
 const History = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -128,8 +127,7 @@ const History = () => {
 
   return (
     <>
-      <Asidebar />
-      <HeaderNavbar />
+       
       <Breadcrumb title={title} links={links} />
       <div className="p-4 sm:ml-64 bg-gray-200 mb-20">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white  ">
@@ -215,7 +213,7 @@ const History = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      
     </>
   );
 };

@@ -4,10 +4,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import HeaderNavbar from "../../../Components/HeaderNabar/HeaderNavbar";
-import Asidebar from "../../../Components/Asidebar/Asidebar";
+ 
 import Information from "../../../Components/Information/Information";
-import Footer from "../../../Components/Footer/Footer";
+ 
 
 export const Input = ({ label, type, name, placeholder, onChange, value }) => {
   return (
@@ -159,8 +158,7 @@ const NewEntry = () => {
 
   return (
     <>
-      <Asidebar />
-      <HeaderNavbar />
+     
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
       <div className="p-4 sm:ml-64 bg-gray-200">
@@ -340,7 +338,7 @@ const NewEntry = () => {
           </div>
         </div>
       </div>
-      <Footer />
+       
     </>
   );
 };

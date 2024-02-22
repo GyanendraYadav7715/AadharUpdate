@@ -1,11 +1,9 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+
 import { CSVLink } from "react-csv";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import Asidebar from "../../../Components/HeaderNabar/HeaderNavbar";
-import HeaderNavbar from "../../../Components/Asidebar/Asidebar";
-import Footer from "../../../Components/Footer/Footer";
+
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 
@@ -90,8 +88,6 @@ const MobileData = () => {
   };
   return (
     <>
-      <Asidebar />
-      <HeaderNavbar />
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white  ">
@@ -189,7 +185,6 @@ const MobileData = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

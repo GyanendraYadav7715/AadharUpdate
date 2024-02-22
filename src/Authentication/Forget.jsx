@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import loginlogo from "../../public/loginlogo.webp";
+
 const Forget = () => {
   const userRef = useRef();
 
@@ -26,6 +27,7 @@ const Forget = () => {
                 id="user"
                 ref={userRef}
               />
+
               <i className="ri-user-line absolute right-4 top-1/2 transform -translate-y-1/2"></i>
             </div>
 

@@ -30,7 +30,7 @@ const Breadcrumb = ({ title, links, mylinks }) => {
                     )}
                     {index < links.length - 1 && (
                       <div className="flex items-center">
-                       <CgFormatSlash />
+                        <CgFormatSlash />
                       </div>
                     )}
                   </li>
@@ -44,7 +44,7 @@ const Breadcrumb = ({ title, links, mylinks }) => {
                   <Link
                     key={index}
                     to={link.to}
-                    className=" bg-green-600 no-underline text-white rounded-full border-1 px-3 py-2 hover:bg-green-500 flex items-center justify-center"
+                    className=" bg-[#71B944] no-underline text-white rounded-full border-1 px-3 py-2 hover:bg-green-500 flex items-center justify-center"
                   >
                     <i className={link.icon}></i> {link.text}
                   </Link>
