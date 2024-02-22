@@ -1,9 +1,9 @@
 import React from 'react'
-import RetailerLayout from "../../Layout/RetailerLayout"
+import RetailerDashboard from "../../Pages/DashBoard/RetailerDashboard"
 const Retailer = () => {
   return (
     <>
-    <RetailerLayout/>
+    <RetailerDashboard/>
     </>
   )
 }
