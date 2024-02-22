@@ -47,7 +47,7 @@ function Protected() {
     const currentRoute = window.location.pathname;
     // If the current route is not allowed for the retailer, redirect to home page
     if (!allowedRoutesForRetailer.includes(currentRoute)) {
-      return <Navigate to="/retailerdashboard" />;
+      return <Navigate to="/" />;
     }
   }
 
@@ -56,14 +56,14 @@ function Protected() {
     const currentRoute = window.location.pathname;
     // If the current route is not allowed for the admin, redirect to home page
     if (!allowedRoutesForAdmin.includes(currentRoute)) {
-      return <Navigate to="/dashboard" />;
+      return <Navigate to="/" />;
     }
   }
   if (userRole === "BackOffice") {
     const currentRoute = window.location.pathname;
     // If the current route is not allowed for the admin, redirect to home page
     if (!allowedRoutesForBackoffice.includes(currentRoute)) {
-      return <Navigate to="/backoffice" />;
+      return <Navigate to="/" />;
     }
   }
 
