@@ -22,7 +22,7 @@ const InputField = ({
       <label
         htmlFor={name}
         className="block mb-2 text-sm font-medium text-gray-900"
-      
+      >
         {label}
       </label>
       <input
