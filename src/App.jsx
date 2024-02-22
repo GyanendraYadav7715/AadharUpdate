@@ -44,7 +44,9 @@ function Layout() {
   let location = useLocation();
 
   // Check if the current location is one of the pages where we want to hide the layout components
-  const hideLayout = ["/", "/forget","/backoffice"].includes(location.pathname);
+  const hideLayout = ["/", "/forget", "/backoffice"].includes(
+    location.pathname
+  );
 
   return (
     <div>
@@ -87,6 +89,5 @@ function Layout() {
     </div>
   );
 }
-
 
 export default App;
