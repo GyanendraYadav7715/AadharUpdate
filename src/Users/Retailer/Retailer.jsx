@@ -1,11 +1,11 @@
-import React from 'react'
-import RetailerDashboard from "../../Pages/DashBoard/RetailerDashboard"
+import React from "react";
+import RetailerDashboard from "../../Pages/DashBoard/RetailerDashboard";
 const Retailer = () => {
   return (
     <>
-    <RetailerDashboard/>
+      <RetailerDashboard />
     </>
-  )
-}
+  );
+};
 
-export default Retailer
+export default Retailer;

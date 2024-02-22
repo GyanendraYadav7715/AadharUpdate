@@ -33,6 +33,9 @@ function Protected() {
     "/adminreport",
     "/viewretaileruserlist"
   ];
+  const allowedRoutesForBackoffice=[
+    "/backoffice"
+  ]
 
   // Check if the user is logged in
   if (!userData) {
@@ -44,7 +47,7 @@ function Protected() {
     const currentRoute = window.location.pathname;
     // If the current route is not allowed for the retailer, redirect to home page
     if (!allowedRoutesForRetailer.includes(currentRoute)) {
-      return <Navigate to="/" />;
+      return <Navigate to="/retailerdashboard" />;
     }
   }
 
@@ -53,7 +56,14 @@ function Protected() {
     const currentRoute = window.location.pathname;
     // If the current route is not allowed for the admin, redirect to home page
     if (!allowedRoutesForAdmin.includes(currentRoute)) {
-      return <Navigate to="/" />;
+      return <Navigate to="/dashboard" />;
+    }
+  }
+  if (userRole === "BackOffice") {
+    const currentRoute = window.location.pathname;
+    // If the current route is not allowed for the admin, redirect to home page
+    if (!allowedRoutesForBackoffice.includes(currentRoute)) {
+      return <Navigate to="/backoffice" />;
     }
   }
 

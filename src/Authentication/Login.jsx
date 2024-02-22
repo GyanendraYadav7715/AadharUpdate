@@ -10,7 +10,7 @@ const validCredentials = {
   retailer: { password: "1234", role: "Retailer", redirect: "/retailer" },
   backoffice: {
     password: "1234",
-    role: "Back Office",
+    role: "BackOffice",
     redirect: "/backoffice",
   },
 };
@@ -119,7 +119,7 @@ const Login = () => {
           >
             <option value="Admin">Admin Login</option>
             <option value="Retailer">Retailer Login</option>
-            <option value="Back Office">Back Office</option>
+            <option value="BackOffice">Back Office</option>
           </select>
 
           <div className="flex justify-between items-center gap-2 mt-2 border-b border-gray-500 pb-[2vh]">
