@@ -1,9 +1,9 @@
 import React from "react";
-import AdminLayout from "../../Layout/AdminLayout";
+ import DashBoard from "../../Pages/DashBoard/DashBoard";
 const SuperAdmin = () => {
   return (
     <>
-      <AdminLayout />
+     <DashBoard/> 
     </>
   );
 };

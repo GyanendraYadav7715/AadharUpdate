@@ -1,11 +1,11 @@
-import React from 'react'
-import RetailerLayout from "../../Layout/RetailerLayout"
+import React from "react";
+import RetailerDashboard from "../../Pages/DashBoard/RetailerDashboard";
 const Retailer = () => {
   return (
     <>
-    <RetailerLayout/>
+      <RetailerDashboard />
     </>
-  )
-}
+  );
+};
 
-export default Retailer
+export default Retailer;

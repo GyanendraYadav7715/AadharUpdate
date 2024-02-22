@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import "./PersonEntry.css";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
- 
 
 export const Input = ({
   label,
@@ -123,7 +122,6 @@ const PersonEntry = () => {
 
   return (
     <>
-     
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
       <div className=" p-3 sm:ml-64 bg-gray-200">
@@ -235,7 +233,6 @@ const PersonEntry = () => {
           </div>
         </div>
       </div>
-     
     </>
   );
 };

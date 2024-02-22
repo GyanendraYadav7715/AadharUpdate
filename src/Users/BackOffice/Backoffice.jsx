@@ -1,11 +1,11 @@
-import React from 'react'
-
+import React from "react";
+import Error from "../../Pages/Errors/Error";
 const Backoffice = () => {
   return (
     <>
-     <h1>we are back office</h1> 
+      <Error/> 
     </>
-  )
-}
+  );
+};
 
-export default Backoffice
+export default Backoffice;
