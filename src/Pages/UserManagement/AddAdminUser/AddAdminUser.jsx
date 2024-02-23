@@ -3,9 +3,35 @@ import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { useState } from "react";
 import axios from "axios";
 import { Local_Url } from "../../../constant/constant";
-import CustomInput from "../../Validation/Vaildation";
+
+
+
+
+
+export const CustomInput = ({ label, type, name, placeholder, onChange, value }) => {
+  return (
+    <div className="inputContainer">
+      <div className="inputWrapper">
+        <label htmlFor={name} className="label">
+          {label}
+        </label>
+      </div>
+      <input
+        name={name}
+        type={type}
+        className="inputField"
+        placeholder={placeholder}
+        value={value}
+        required
+        onChange={(e) => onChange(name, e.target.value)}
+      />
+    </div>
+  );
+};
+
 
 const AddAdminUser = () => {
+
   const title = " Add User";
   const links = [
     { title: "Home", href: "/superadmin" },
@@ -22,7 +48,7 @@ const AddAdminUser = () => {
     Name: "",
     Email: "",
     Phone_n: "",
-    Balanace: "",
+    Balance: "",
     Child_token: "",
     User_type: "",
     Username: "",
@@ -32,27 +58,28 @@ const AddAdminUser = () => {
   // Function to handle form input changes
   const handleInputChange = (name, value) => {
     console.log(`Handling input for ${name}: ${value}`);
-    if (name === "User_type") {
-      setSelectedUserType(value);
-    } else {
+  
       setFormData({
         ...formData,
         [name]: value,
       });
-    }
+    
+    
+    
   };
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (!formData.Name || !formData.Email || !formData.Username) {
-    //   return alert("please filll the blank field first");
-    // }
+    if (!formData.Name || !formData.Email || !formData.Username || !formData.Balance || !formData.Phone_n || !formData.Password  || !formData.Child_token) {
+      
+      return alert("please filll the blank field first");
+    }
 
     try {
       // Define the API endpoint URL
-      const apiUrl = `${Local_Url}/api/v1/admin/add-user`;
+      const apiUrl = `${Local_Url}/api/v1/sharedData/add-user`;
 
       // Make a POST request using Axios
       const response = await axios.post(apiUrl, formData, {
@@ -69,7 +96,7 @@ const AddAdminUser = () => {
         Name: "",
         Email: "",
         Phone_n: "",
-        Balanace: "",
+        Balance: "",
         Child_token: "",
         User_type: "",
         Username: "",
@@ -116,7 +143,7 @@ const AddAdminUser = () => {
                 label="Email"
                 id="email"
                 value={formData.Email}
-                name="email"
+                name="Email"
                 type="email"
                 pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                 errorMessage="Please enter a valid email address."
@@ -140,7 +167,7 @@ const AddAdminUser = () => {
                 id="Balance"
                 name="Balance"
                 type="number"
-                value={formData.Balanace}
+                value={formData.Balance}
                 pattern="[0-9]+"
                 errorMessage="Please enter a valid number."
                 required=""
@@ -149,7 +176,7 @@ const AddAdminUser = () => {
                 onChange={handleInputChange}
                 label=" Child Token"
                 id=" Child Token"
-                name=" Child Token"
+                name="Child_token"
                 type="number"
                 value={formData.Child_token}
                 pattern="[0-9]+"
@@ -176,7 +203,7 @@ const AddAdminUser = () => {
               </label>
               <select
                 required
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange("User_type", e.target.value)}
                 name="User_type"
                 value={formData.User_type}
                 className="bg-white border text-gray-900 text-sm rounded-sm inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
