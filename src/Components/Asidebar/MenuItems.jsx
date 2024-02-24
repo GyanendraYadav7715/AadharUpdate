@@ -37,13 +37,13 @@ const MenuItems = () => {
     const userData = localStorage.getItem("user");
     if (userData) {
       const userObj = JSON.parse(userData);
-      return userObj.role;
+      return userObj.User_type;
     }
     return "";
   }, []);
 
   const menuItems =
-    memoizedRole === "Admin" ? adminMenuItems : retailerMenuItems;
+    memoizedRole === "Superadmin" ? adminMenuItems : retailerMenuItems;
 
   return (
     <>

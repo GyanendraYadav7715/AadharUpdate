@@ -6,8 +6,6 @@ import { Local_Url } from "../../../constant/constant";
 
 
 
-
-
 export const CustomInput = ({ label, type, name, placeholder, onChange, value }) => {
   return (
     <div className="inputContainer">

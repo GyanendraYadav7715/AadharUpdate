@@ -194,7 +194,8 @@ const Login = () => {
   const [formData, setFormData] = useState({
     Username: "",
     Password: "",
-    User_type: "", // Default role
+    User_type: "",
+
   });
 
   const [showAlert, setShowAlert] = useState(false);
@@ -209,10 +210,10 @@ const Login = () => {
  const handleLogin = useCallback(
    async (e) => {
      e.preventDefault();
-     const { Username, Password, User_type } = formData;
+     const { Username, User_type } = formData;
 
      try {
-       const apiUrl = `${Local_Url}/api/v1/sharedData/retailer-login`;
+       const apiUrl = `${Local_Url}/api/v1/sharedData/user-login`;
        const response = await axios.post(apiUrl, formData ,{
         headers: {
           "Content-Type": "application/json",
@@ -220,13 +221,16 @@ const Login = () => {
        });
 
        if (response.status === 200) {
+            console.log(response.data);
+         const { redirect } = response.data; 
+         
          localStorage.setItem(
            "user",
-           JSON.stringify({ Username, Password, User_type })
+           JSON.stringify({ Username, User_type })
          );
          alert("Login Success");
          console.log("Response Data:", response.data);
-         navigate("/superadmin");
+         navigate(redirect);
        } else {
          throw new Error(response.data.message || "Login failed");
        }
@@ -307,7 +311,8 @@ const Login = () => {
             id="role"
             required
           >
-            <option value="Admin">Admin Login</option>
+            <option value="">Select Type</option>
+            <option value="Superadmin">Admin Login</option>
             <option value="Retailer">Retailer Login</option>
             <option value="BackOffice">Back Office</option>
           </select>

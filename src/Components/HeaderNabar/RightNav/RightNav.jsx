@@ -22,11 +22,11 @@ const RightNav = () => {
 
   const getUserRole = useMemo(() => {
     const userData = localStorage.getItem("user");
-    return userData ? JSON.parse(userData).role : "";
+    return userData ? JSON.parse(userData).User_type : "";
   }, []);
 
   const role = getUserRole;
-  const link = role === "Admin" ? "/superadmin" : "/retailer";
+  const link = role === "Superadmin" ? "/superadmin" : "/retailer";
 
   return (
     <div className="flex items-center">

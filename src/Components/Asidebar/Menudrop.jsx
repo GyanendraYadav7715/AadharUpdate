@@ -56,9 +56,9 @@ const Menudrop = () => {
     // Parse JSON string to object
     const userObj = JSON.parse(userData);
     // Access the role property
-    role = userObj.role;
+    role = userObj.User_type;
   }
-  if (role === "Admin")
+  if (role === "Superadmin")
     return (
       <>
         <Dropdown
