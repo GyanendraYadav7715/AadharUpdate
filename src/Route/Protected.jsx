@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 function Protected() {
   const userData = JSON.parse(localStorage.getItem("user"));
-  const userRole = userData ? userData.role : null;
+  const userRole = userData ? userData.User_type : null;
 
   // Define routes that are allowed for the "Retailer" role
   const allowedRoutesForRetailer = [
@@ -47,16 +47,16 @@ function Protected() {
     const currentRoute = window.location.pathname;
     // If the current route is not allowed for the retailer, redirect to home page
     if (!allowedRoutesForRetailer.includes(currentRoute)) {
-      return <Navigate to="/" />;
+      return <Navigate to="/retailer" />;
     }
   }
 
   // Check if the user is an "Admin" or "SuperAdmin"
-  if (userRole === "Admin") {
+  if (userRole === "Superadmin") {
     const currentRoute = window.location.pathname;
     // If the current route is not allowed for the admin, redirect to home page
     if (!allowedRoutesForAdmin.includes(currentRoute)) {
-      return <Navigate to="/" />;
+      return <Navigate to="/superadmin" />;
     }
   }
   if (userRole === "BackOffice") {
