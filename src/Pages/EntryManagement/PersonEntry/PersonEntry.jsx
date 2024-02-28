@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import "./PersonEntry.css";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import { Local_Url } from "../../../constant/constant";
 
 export const Input = ({
   label,
@@ -34,6 +35,7 @@ export const Input = ({
 };
 
 const PersonEntry = () => {
+
   const userData = localStorage.getItem("user");
   let role = "";
   if (userData) {
@@ -62,15 +64,17 @@ const PersonEntry = () => {
   ];
 
   const [formData, setFormData] = useState({
-    name: "",
-    dateofbirth: "",
-    email: "",
-    mobile: "",
-    purpose: "",
-    aadhaar: "",
-    address: "",
-    fathern: "", // Added fathern property
+    Name: "",
+    DOB: "",
+    Email: "",
+    MobileNo: "",
+    Purpose: "",
+    AadhaarNo: "",
+    Address: "",
+    FatherName: "",
+
   });
+
 
   const formatCurrentDate = () => {
     const date = new Date();
@@ -84,6 +88,8 @@ const PersonEntry = () => {
     return formattedDate;
   };
 
+
+
   const handleInputChange = (name, value) => {
     console.log(`Handling input for ${name}: ${value}`);
     setFormData({
@@ -94,26 +100,27 @@ const PersonEntry = () => {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
-    if (!formData.purpose || !formData.email || !formData.mobile) {
-      return alert("Please fill all the required fields");
-    }
+    // if (!formData.purpose || !formData.email || !formData.mobile) {
+    //   return alert("Please fill all the required fields");
+    // }
 
     try {
-      const apiUrl = "http://localhost:4001/Products";
+      const apiUrl = `${Local_Url}/api/v1/retailer/create-user`;
       const response = await axios.post(apiUrl, formData);
       console.log("Form submitted successfully:", response.data);
       alert("Form submitted successfully:");
       setFormData({
-        name: "",
-        dateofbirth: "",
-        email: "",
-        mobile: "",
-        purpose: "",
-        aadhaar: "",
-        address: "",
-        fathern: "", // Reset fathern property
+        Name: "",
+        DOB: "",
+        Email: "",
+        MobileNo: "",
+        Purpose: "",
+        AadhaarNo: "",
+        Address: "",
+        FatherName: "", // Reset fathern property
       });
     } catch (error) {
       console.error("Error submitting form:", error.message);
@@ -131,8 +138,8 @@ const PersonEntry = () => {
               onChange={handleInputChange}
               label="Purpose"
               type="text"
-              name="purpose"
-              value={formData.purpose}
+              name="Purpose"
+              value={formData.Purpose}
               placeholder="Enter Purpose"
               required // Removed "require"
             />
@@ -142,49 +149,49 @@ const PersonEntry = () => {
               onChange={handleInputChange}
               label="Full Name"
               type="text"
-              value={formData.name}
-              name="name"
+              value={formData.Name}
+              name="Name"
               placeholder="Enter Name"
             />
             <Input
               onChange={handleInputChange}
               label="Father Name"
               type="text"
-              value={formData.fathern}
-              name="fathern"
+              value={formData.FatherName}
+              name="FatherName"
               placeholder="Father Name"
             />
             <Input
               onChange={handleInputChange}
               label="Date of Birth"
               type="date"
-              name="dateofbirth"
+              name="DOB"
               placeholder=""
-              value={formData.dateofbirth}
+              value={formData.DOB}
             />
             <Input
               onChange={handleInputChange}
               label="Aadhaar No."
               type="number"
-              name="aadhaar"
+              name="AadhaarNo"
               placeholder="Aadhaar No."
-              value={formData.aadhaar}
+              value={formData.AadhaarNo}
             />
             <Input
               onChange={handleInputChange}
               label="Mobile No."
-              type="text"
-              name="mobile"
+              type="number"
+              name="MobileNo"
               placeholder="Mobile No."
-              value={formData.mobile}
+              value={formData.MobileNo}
             />
             <Input
               onChange={handleInputChange}
               label="E-mail ID"
               type="email"
-              name="email"
+              name="Email"
               placeholder="example@update.com"
-              value={formData.email}
+              value={formData.Email}
             />
             <Input
               onChange={handleInputChange}
@@ -215,9 +222,9 @@ const PersonEntry = () => {
               onChange={handleInputChange}
               label="Address"
               type="text"
-              name="address"
+              name="Address"
               placeholder="House No, Village, City Name, District, State"
-              value={formData.address}
+              value={formData.Address}
             />
           </div>
 

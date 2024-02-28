@@ -22,7 +22,7 @@ const RightNav = () => {
 
   const getUserRole = useMemo(() => {
     const userData = localStorage.getItem("user");
-    return userData ? JSON.parse(userData).User_type : "";
+    return userData ? JSON.parse(userData).Username : "";
   }, []);
 
   const role = getUserRole;

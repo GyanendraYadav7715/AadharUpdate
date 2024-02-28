@@ -2,7 +2,7 @@ import React from "react";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { useState } from "react";
 import axios from "axios";
-import { Base_Url } from "../../../constant/constant";
+import { Local_Url} from "../../../constant/constant";
 
 
 
@@ -77,7 +77,7 @@ const AddAdminUser = () => {
 
     try {
       // Define the API endpoint URL
-      const apiUrl = `${Base_Url}/api/v1/sharedData/add-user`;
+      const apiUrl = `${Local_Url}/api/v1/sharedData/add-user`;
 
       // Make a POST request using Axios
       const response = await axios.post(apiUrl, formData, {

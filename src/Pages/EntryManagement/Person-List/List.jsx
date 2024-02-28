@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-// import axios from "axios";
+import axios from "axios";
 
 import "./list.css";
 import CSVDownloadButton from "../../Download/CSVDownloadButton";
@@ -8,13 +8,18 @@ import PDFDownloadButton from "../../Download/PDFDownloadButton";
 import ExcelDownloadButton from "../../Download/ExcelDownloadButton";
 import CopyButton from "../../Download/CopyButton";
 import Slip from "../../../Components/Slip/Slip";
-import Products from "../../Child/Entry_List/Products";
- 
+// import Products from "../../Child/Entry_List/Products";
+
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
- 
+
 import SearchElement from "../../../Components/SearchElement/SearchElement";
+import { Local_Url } from "../../../constant/constant";
 
 function List() {
+  //api data fetch
+  const [data, setData] = useState([]);
+
+  const [selectedRow, setSelectedRow] = useState(null);
   const userData = localStorage.getItem("user");
   let role = "";
   if (userData) {
@@ -41,25 +46,23 @@ function List() {
       icon: "ri-add-line text-white text-2xl ",
     },
   ];
-  //api data fetch
-  const [data, setData] = useState([]);
-  const [error, setError] = useState([]);
-  const [selectedRow, setSelectedRow] = useState(null);
 
-  // useEffect(() => {
-  //     // Define the API endpoint URL
-  //     const apiUrl = 'http://localhost:4001/Products';
+    useEffect(() => {
+    // Define the API endpoint URL
+    const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
 
-  //     // Make a GET request using Axios
-  //     axios.get(apiUrl)
-  //         .then(response => {
-  //             setData(response.data);
-  //         })
-  //         .catch(err => {
-  //             console.log('Something Went Wrong');
-  //             setError(err);
-  //         });
-  // }, []);
+    // Make a GET request using Axios
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        setData(response.data.data);
+        // console.log(response.data.data)
+      })
+      .catch((err) => {
+        console.log("Something Went Wrong");
+        setError(err);
+      });
+  }, []);
 
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
@@ -67,16 +70,14 @@ function List() {
 
   return (
     <>
-       
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
-      {/* data */}
-      {Products ? (
+      {data ? (
         <div className="p-4 sm:ml-64">
           <div className="p-2 border-2 border-gray-200 border-solid rounded-lg ">
             <div className="Download-Button flex items-center justify-between">
               <div>
                 <CopyButton />
-                <ExcelDownloadButton fileName="myExcel" jsonData={Products} />
+                <ExcelDownloadButton fileName="myExcel" />
                 <CSVDownloadButton />
                 <PDFDownloadButton />
               </div>
@@ -87,7 +88,9 @@ function List() {
                 <tr>
                   <th>S.N.</th>
                   <th>Name</th>
+                  <th>Purpose</th>
                   <th>Age</th>
+                  <th>Father Name</th>
                   <th>Aadhaar No.</th>
                   <th>Mobile No.</th>
                   <th>E-mail ID</th>
@@ -95,9 +98,9 @@ function List() {
               </thead>
 
               <tbody>
-                {Products.length > 0 ? (
-                  Products.map((item, index) => (
-                    <React.Fragment key={item._id}>
+                {data.length > 0 ? (
+                  data.map((item, index) => (
+                    <React.Fragment key={index}>
                       <tr>
                         <td>
                           <div
@@ -118,11 +121,13 @@ function List() {
                           </div>
                           {index + 1}
                         </td>
-                        <td>{item.name}</td>
-                        <td>{item.dateofbirth}</td>
-                        <td>{item.aadhaar}</td>
-                        <td>{item.mobile}</td>
-                        <td>{item.email}</td>
+                        <td>{item.Name}</td>
+                        <td>{item.Purpose}</td>
+                        <td>{item.DOB}</td>
+                        <td>{item.FatherName}</td>
+                        <td>{item.AadhaarNo}</td>
+                        <td>{item.MobileNo}</td>
+                        <td>{item.Email}</td>
                       </tr>
                       {selectedRow === index && (
                         <tr>
@@ -164,7 +169,6 @@ function List() {
       ) : (
         <p>Please Wait...</p>
       )}
-       
     </>
   );
 }
