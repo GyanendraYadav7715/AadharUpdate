@@ -1,19 +1,13 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
- 
 import "./list.css";
-import CSVDownloadButton from "../../Download/CSVDownloadButton";
-import PDFDownloadButton from "../../Download/PDFDownloadButton";
-import ExcelDownloadButton from "../../Download/ExcelDownloadButton";
-import CopyButton from "../../Download/CopyButton";
 import Slip from "../../../Components/Slip/Slip";
-// import Products from "../../Child/Entry_List/Products";
-
+import CopyButton from "../../../Components/DownloadAction/CopyButton";
+import PDFButton from "../../../Components/DownloadAction/PDFButton";
+import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
+import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import { Local_Url } from "../../../constant/constant";
 
@@ -50,7 +44,7 @@ function List() {
   ];
   const tableRef = useRef(null);
 
-    useEffect(() => {
+  useEffect(() => {
     // Define the API endpoint URL
     const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
 
@@ -70,16 +64,6 @@ function List() {
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
-  const exportToPDF = () => {
-    html2canvas(tableRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("history.pdf");
-    });
-  };
 
   return (
     <>
@@ -89,10 +73,13 @@ function List() {
           <div className="p-2 border-2 border-gray-200 border-solid rounded-lg ">
             <div className="Download-Button flex items-center justify-between">
               <div>
-                <CopyButton />
-                <ExcelDownloadButton fileName="myExcel" />
-                <CSVDownloadButton />
-                <PDFDownloadButton onClick={exportToPDF} />
+                <CopyButton data={data} />
+                <ExcelButton data={data} filename={"AddCustomerList.xlsx"} />
+                <CSVButton data={data} filename={"AddCustomerList.csv"} />
+                <PDFButton
+                  tableRef={tableRef}
+                  filename={"AddCustomerList.pdf"}
+                />
               </div>
               <SearchElement />
             </div>

@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import { CSVLink } from "react-csv";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
- 
+import CopyButton from "../../../Components/DownloadAction/CopyButton";
+import PDFButton from "../../../Components/DownloadAction/PDFButton";
+import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
+import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 
@@ -48,79 +48,20 @@ const AdminReport = () => {
     },
   ];
 
-  const copyToClipboard = () => {
-    const el = document.createElement("textarea");
-    el.value = products
-      .map((product) => Object.values(product).join("\t"))
-      .join("\n");
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-  };
-
-  const exportToExcel = () => {
-    try {
-      if (tableRef.current && tableRef.current.table) {
-        console.log("Exporting to Excel...");
-        tableRef.current.table.download("xlsx", "history.xlsx");
-      } else {
-        console.error("Table or table ref is not defined");
-      }
-    } catch (error) {
-      console.error("Error exporting to Excel:", error);
-    }
-  };
-  const exportToPDF = () => {
-    html2canvas(tableRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("history.pdf");
-    });
-  };
-
   return (
     <>
-      
-
       <Breadcrumb title={title} links={links} />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <h3 className="text-2xl font-bold">ADMIN</h3>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <button
-                onClick={copyToClipboard}
-                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-blue-700"
-              >
-                Copy
-              </button>
-              <button
-                onClick={exportToExcel}
-                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-green-700"
-              >
-                Excel
-              </button>
-              <button className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-yellow-700">
-                <CSVLink
-                  data={products}
-                  filename={"history.csv"}
-                  className=" no-underline text-white"
-                >
-                  CSV
-                </CSVLink>
-              </button>
-              <button
-                onClick={exportToPDF} // Increase scale if necessary
-                className=" px-6 py-3 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-red-700 "
-              >
-                PDF
-              </button>
+              <CopyButton data={products} />
+              <ExcelButton data={products} filename={"AdminReport.xlsx"} />
+              <CSVButton data={products} filename={"AdminReport.csv"} />
+              <PDFButton tableRef={tableRef} filename={"AdminReport.pdf"} />
             </div>
-            <SearchElement/>
+            <SearchElement />
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table
@@ -209,7 +150,6 @@ const AdminReport = () => {
           </div>
         </div>
       </div>
-      
     </>
   );
 };

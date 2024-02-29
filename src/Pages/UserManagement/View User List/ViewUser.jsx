@@ -1,15 +1,14 @@
-import React, { useRef } from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { CSVLink } from "react-csv";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import Asidebar from "../../../Components/Asidebar/Asidebar";
- import SearchElement from '../../../Components/SearchElement/SearchElement'
+import CopyButton from "../../../Components/DownloadAction/CopyButton";
+import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
+import CSVButton from "../../../Components/DownloadAction/CSVButton";
+import PDFButton from "../../../Components/DownloadAction/PDFButton";
+import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
- 
 
 const ViewUser = () => {
+  //Breadcrumb Data
   const title = "View User Data";
   const links = [
     { title: "Home", href: "/superadmin" },
@@ -139,43 +138,7 @@ const ViewUser = () => {
       status: "Active",
     },
   ]);
-  // Function to copy data to clipboard
-  const copyToClipboard = () => {
-    const el = document.createElement("textarea");
-    el.value = products
-      .map((product) => Object.values(product).join("\t"))
-      .join("\n");
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-  };
 
-  // Function to export table data to Excel
-  const exportToExcel = () => {
-    try {
-      // Check if tableRef and tableRef.current exist before calling the download method
-      if (tableRef.current && tableRef.current.table) {
-        console.log("Exporting to Excel...");
-        tableRef.current.table.download("xlsx", "history.xlsx");
-      } else {
-        console.error("Table or table ref is not defined");
-      }
-    } catch (error) {
-      console.error("Error exporting to Excel:", error);
-    }
-  };
-  // Function to export table as PDF
-  const exportToPDF = () => {
-    html2canvas(tableRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("history.pdf");
-    });
-  };
   // Function to handle deletion of a product
   const deleteProduct = (index) => {
     // Create a copy of the products array
@@ -188,40 +151,16 @@ const ViewUser = () => {
 
   return (
     <>
-     
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white ">
           <h3 className="text-2xl font-bold">View User Data-ADMIN</h3>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <button
-                onClick={copyToClipboard}
-                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-blue-700"
-              >
-                Copy
-              </button>
-              <button
-                onClick={exportToExcel}
-                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-green-700"
-              >
-                Excel
-              </button>
-              <button className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-yellow-700">
-                <CSVLink
-                  data={products}
-                  filename={"history.csv"}
-                  className=" no-underline text-white"
-                >
-                  CSV
-                </CSVLink>
-              </button>
-              <button
-                onClick={exportToPDF} // Increase scale if necessary
-                className=" px-6 py-3 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-red-700 "
-              >
-                PDF
-              </button>
+              <CopyButton data={products} />
+              <ExcelButton data={products} filename={"ViewUser.xlsx"} />
+              <CSVButton data={products} filename={"ViewUser.csv"} />
+              <PDFButton tableRef={tableRef} filename={"ViewUser.pdf"} />
             </div>
             <SearchElement />
           </div>
@@ -232,37 +171,70 @@ const ViewUser = () => {
             >
               <thead className="text-base text-black  bg-white  ">
                 <tr>
-                  <th scope="col" className="px-2 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-2 py-3 border whitespace-nowrap"
+                  >
                     Serial No.
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     Name
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     Mobile Number
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     User Name
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     Password
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
-                    Created By  
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
+                    Created By
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     Balance
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     Child Point
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     Mobile Point
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     Status
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     Action
                   </th>
                 </tr>
@@ -309,7 +281,6 @@ const ViewUser = () => {
           </div>
         </div>
       </div>
-       
     </>
   );
 };

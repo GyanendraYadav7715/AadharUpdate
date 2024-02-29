@@ -1,13 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { CSVLink } from "react-csv";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import * as XLSX from "xlsx";
+import CopyButton from "../../Components/DownloadAction/CopyButton";
+import CSVButton from "../../Components/DownloadAction/CSVButton";
+import PDFButton from "../../Components/DownloadAction/PDFButton";
+import ExcelButton from "../../Components/DownloadAction/ExcelButton";
 import SearchElement from "../../Components/SearchElement/SearchElement";
- 
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
- 
 const History = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,8 +14,6 @@ const History = () => {
   useEffect(() => {
     setFilteredProducts(products);
   }, []);
-
-  // Your existing code
 
   // Function to handle search
   const handleSearch = (query) => {
@@ -38,9 +33,6 @@ const History = () => {
     { title: "View Balance Transfer History", href: "" },
   ];
 
-  // Define and initialize the tableRef
-
-  // Define products array
   const products = [
     {
       debitedFrom: "Admin",
@@ -77,89 +69,19 @@ const History = () => {
       status: "Transfer",
       date: "22/01/2023",
     },
-    // Other product objects...
   ];
-
-  // Function to copy data to clipboard
-  const copyToClipboard = () => {
-    const el = document.createElement("textarea");
-    el.value = products
-      .map((product) => Object.values(product).join("\t"))
-      .join("\n");
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-    alert("Cpoied");
-  };
-
-  // Function to export table data to Excel
-  const exportToExcel = (tableData, fileName) => {
-    try {
-      // Create a new workbook
-      const wb = XLSX.utils.book_new();
-
-      // Convert the table data to a worksheet
-      const ws = XLSX.utils.json_to_sheet(tableData);
-
-      // Add the worksheet to the workbook
-      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-
-      // Save the workbook as an Excel file
-      XLSX.writeFile(wb, fileName);
-
-      console.log("Exporting to Excel successful");
-    } catch (error) {
-      console.error("Error exporting to Excel:", error);
-    }
-  };
-  // Function to export table as PDF
-  const exportToPDF = () => {
-    html2canvas(tableRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("history.pdf");
-    });
-  };
 
   return (
     <>
-       
       <Breadcrumb title={title} links={links} />
       <div className="p-4 sm:ml-64 bg-gray-200 mb-20">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white  ">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <button
-                onClick={copyToClipboard}
-                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-blue-700"
-              >
-                Copy
-              </button>
-              <button
-                onClick={exportToExcel}
-                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-green-700"
-              >
-                Excel
-              </button>
-              <button className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-yellow-700">
-                <CSVLink
-                  data={products}
-                  filename={"history.csv"}
-                  className=" no-underline text-white"
-                >
-                  CSV
-                </CSVLink>
-              </button>
-              <button
-                onClick={exportToPDF} // Increase scale if necessary
-                className=" px-6 py-3 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-red-700 "
-              >
-                PDF
-              </button>
+              <CopyButton data={products} />
+              <ExcelButton data={products} filename={"history.xlsx"} />
+              <CSVButton data={products} filename={"history.csv"} />
+              <PDFButton tableRef={tableRef} filename={"History.pdf"} />
             </div>
             <SearchElement onSearch={handleSearch} />
           </div>
@@ -213,7 +135,6 @@ const History = () => {
           </div>
         </div>
       </div>
-      
     </>
   );
 };

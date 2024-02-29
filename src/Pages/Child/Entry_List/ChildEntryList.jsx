@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React,{ useEffect, useState,useRef } from "react";
 import Table from "react-bootstrap/Table";
-import { Link } from "react-router-dom";
+ 
 // import axios from "axios";
 
 import "./EntryList.css";
-import CSVDownloadButton from "../../Download/CSVDownloadButton";
-import PDFDownloadButton from "../../Download/PDFDownloadButton";
-import ExcelDownloadButton from "../../Download/ExcelDownloadButton";
-import CopyButton from "../../Download/CopyButton";
+import CopyButton from "../../../Components/DownloadAction/CopyButton"
+import PDFButton from "../../../Components/DownloadAction/PDFButton";
+import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
+import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Products from "./Products";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
  
@@ -21,6 +21,7 @@ import SearchElement from "../../../Components/SearchElement/SearchElement";
 
 function ChildEntryList() {
   const userData = localStorage.getItem("user");
+  const tableRef =useRef()
   let role = "";
   if (userData) {
     // Parse JSON string to object
@@ -72,7 +73,6 @@ function ChildEntryList() {
 
   return (
     <>
-     
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
       {/* data */}
@@ -81,14 +81,14 @@ function ChildEntryList() {
           <div className="p-2 border-2 border-gray-200 border-solid rounded-lg  ">
             <div className="Download-Button flex items-center justify-between">
               <div>
-                <CopyButton />
-                <ExcelDownloadButton fileName="myExcel" jsonData={Products} />
-                <CSVDownloadButton />
-                <PDFDownloadButton />
+                <CopyButton data={Products} />
+                <ExcelButton data={Products} filename={"ChildEntyList.xlsx"} />
+                <CSVButton data={Products} filename={"ChildEntyList.csv"} />
+                <PDFButton tableRef={tableRef} filename={"ChildEntyList.pdf"} />
               </div>
               <SearchElement />
             </div>
-            <Table striped bordered hover className="custom-table">
+            <Table striped bordered hover className="custom-table" ref={tableRef}>
               <thead>
                 <tr>
                   <th>S.NO.</th>
@@ -190,7 +190,6 @@ function ChildEntryList() {
       ) : (
         <p>Please Wait...</p>
       )}
-       
     </>
   );
 }

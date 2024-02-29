@@ -1,14 +1,14 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import { CSVLink } from "react-csv";
-
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import Asidebar from "../../../Components/Asidebar/Asidebar";
- import SearchElement from "../../../Components/SearchElement/SearchElement";
+import CopyButton from "../../../Components/DownloadAction/CopyButton";
+import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
+import CSVButton from "../../../Components/DownloadAction/CSVButton";
+import PDFButton from "../../../Components/DownloadAction/PDFButton";
+import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
  
 const ViewRetailerUserList = () => {
+  //Breadcrumb Data
   const title = "View Retailer User Data";
   const links = [
     { title: "Home", href: "/superadmin" },
@@ -110,80 +110,29 @@ const ViewRetailerUserList = () => {
       status: "Active",
     },
   ];
-  // Function to copy data to clipboard
-  const copyToClipboard = () => {
-    const el = document.createElement("textarea");
-    el.value = products
-      .map((product) => Object.values(product).join("\t"))
-      .join("\n");
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-  };
-
-  const exportToPDF = () => {
-    html2canvas(tableRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("history.pdf");
-    });
-  };
-  // Function to export table data to Excel
-  const exportToExcel = () => {
-    try {
-      // Check if tableRef and tableRef.current exist before calling the download method
-      if (tableRef.current && tableRef.current.table) {
-        console.log("Exporting to Excel...");
-        tableRef.current.table.download("xlsx", "history.xlsx");
-      } else {
-        console.error("Table or table ref is not defined");
-      }
-    } catch (error) {
-      console.error("Error exporting to Excel:", error);
-    }
-  };
+   
 
   return (
     <>
-      
-
       <Breadcrumb title={title} links={links} />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white ">
           <h3 className="text-2xl font-bold">View Retailer Users Data-ADMIN</h3>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <button
-                onClick={copyToClipboard}
-                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-blue-700"
-              >
-                Copy
-              </button>
-              <button
-                onClick={exportToExcel}
-                className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-green-700"
-              >
-                Excel
-              </button>
-              <button className=" px-6 py-3 mr-2 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-yellow-700">
-                <CSVLink
-                  data={products}
-                  filename={"history.csv"}
-                  className=" no-underline text-white"
-                >
-                  CSV
-                </CSVLink>
-              </button>
-              <button
-                onClick={exportToPDF} // Increase scale if necessary
-                className=" px-6 py-3 text-sm font-medium text-white bg-[#506ADB] rounded-sm hover:bg-red-700 "
-              >
-                PDF
-              </button>
+              <CopyButton data={products} />
+              <ExcelButton
+                data={products}
+                filename={"ViewRetailerUserList.xlsx"}
+              />
+              <CSVButton
+                data={products}
+                filename={"ViewRetailerUserList.csv"}
+              />
+              <PDFButton
+                tableRef={tableRef}
+                filename={"ViewRetailerUserList.pdf"}
+              />
             </div>
             <SearchElement />
           </div>
@@ -259,7 +208,6 @@ const ViewRetailerUserList = () => {
           </div>
         </div>
       </div>
-       
     </>
   );
 };

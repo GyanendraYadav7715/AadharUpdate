@@ -1,12 +1,9 @@
 import axios from "axios";
 import "./newEntry.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
- 
 import Information from "../../../Components/Information/Information";
- 
 
 export const Input = ({ label, type, name, placeholder, onChange, value }) => {
   return (
@@ -158,7 +155,6 @@ const NewEntry = () => {
 
   return (
     <>
-     
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
       <div className="p-4 sm:ml-64 bg-gray-200">
@@ -338,7 +334,6 @@ const NewEntry = () => {
           </div>
         </div>
       </div>
-       
     </>
   );
 };
