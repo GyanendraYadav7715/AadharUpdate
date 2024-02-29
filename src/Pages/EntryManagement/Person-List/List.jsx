@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+ 
 import "./list.css";
 import CSVDownloadButton from "../../Download/CSVDownloadButton";
 import PDFDownloadButton from "../../Download/PDFDownloadButton";
@@ -46,6 +48,7 @@ function List() {
       icon: "ri-add-line text-white text-2xl ",
     },
   ];
+  const tableRef = useRef(null);
 
     useEffect(() => {
     // Define the API endpoint URL
@@ -67,6 +70,16 @@ function List() {
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
+  const exportToPDF = () => {
+    html2canvas(tableRef.current).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const imgWidth = 210;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save("history.pdf");
+    });
+  };
 
   return (
     <>
@@ -79,11 +92,17 @@ function List() {
                 <CopyButton />
                 <ExcelDownloadButton fileName="myExcel" />
                 <CSVDownloadButton />
-                <PDFDownloadButton />
+                <PDFDownloadButton onClick={exportToPDF} />
               </div>
               <SearchElement />
             </div>
-            <Table striped bordered hover className="custom-table">
+            <Table
+              striped
+              bordered
+              hover
+              className="custom-table"
+              ref={tableRef}
+            >
               <thead>
                 <tr>
                   <th>S.N.</th>

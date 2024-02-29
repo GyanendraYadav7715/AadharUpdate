@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
-const SearchElement = () => {
+const SearchElement = ({ onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+    // Call the onSearch callback with the updated search term
+    onSearch(event.target.value);
+  };
+
   return (
     <form className="max-w-md">
       <label htmlFor="default-search" className="sr-only">
@@ -12,6 +20,8 @@ const SearchElement = () => {
           id="default-search"
           className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
           placeholder="Search Mockups, Logos..."
+          value={searchTerm}
+          onChange={handleChange}
           required
         />
         <svg

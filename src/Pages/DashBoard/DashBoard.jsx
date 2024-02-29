@@ -1,5 +1,6 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
+import axios from "axios";
 const DashBoard = () => {
   const title = "Dashboard";
   const links = [
@@ -14,6 +15,25 @@ const DashBoard = () => {
       icon: "ri-add-line text-white text-2xl ",
     },
   ];
+const [walletBalance, setWalletBalance] = useState(0);
+const [totalUsers, setTotalUsers] = useState(0);
+
+useEffect(() => {
+  fetchData();
+}, []);
+
+const fetchData = async () => {
+  try {
+    const response = await axios.get("/api/superadmin"); // Replace '/api/superadmin' with your actual API endpoint
+    const data = response.data;
+    setWalletBalance(data.walletBalance);
+    setTotalUsers(data.totalUsers);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+ 
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
@@ -26,11 +46,11 @@ const DashBoard = () => {
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col items-center justify-center rounded  bg-blue-500  h-32  ">
-                <h4 className="text-white">96379796</h4>
+                <h4 className="text-white">{walletBalance}</h4>
                 <p className="text-2xl  text-white ">Main Wallet</p>
               </div>
               <div className="flex  flex-col items-center justify-center rounded bg-blue-500  h-32  ">
-                <h4 className="text-white">182</h4>
+                <h4 className="text-white">{totalUsers}</h4>
                 <p className="text-2xl  text-white  ">Total User</p>
               </div>
             </div>
@@ -105,7 +125,7 @@ const DashBoard = () => {
               </div>
               <div className="flex flex-col items-center justify-center rounded bg-red-500  h-32 mb-5 ">
                 <h4 className="text-white">4</h4>
-                <p className="text-2xl  text-white  ">Total Mobile Rejected</p>
+                <p className="text-2xl text-white">Total Mobile Rejected</p>
               </div>
             </div>
           </div>

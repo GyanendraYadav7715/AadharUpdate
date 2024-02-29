@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
+import axios from "axios";
 
 const Balance = () => {
-  
   const [formData, setFormData] = useState({
     username: "",
     amount: "",
@@ -15,21 +14,27 @@ const Balance = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Check if any input field is empty
     if (username.trim() === "" || amount.trim() === "") {
-      alert("Please fill in all fields");
+      alert("Please fill the all fields");
       return;
     }
-    // Add regex pattern validation here if needed
-    // Example: const usernamePattern = /^[a-zA-Z0-9]+$/;
 
-    // If all validations pass, make API POST request
-    // Example: axios.post('/api/your-endpoint', formData);
-    console.log("Form submitted:", formData);
+    try {
+      // Make the API POST request
+      const response = await axios.post("/api/your-endpoint", formData);
+
+      // Handle success
+      console.log("Response:", response.data);
+      alert("Balance Transfered");
+    } catch (error) {
+      // Handle error
+      console.error("Error:", error.message);
+      alert("Something went worng");
+    }
   };
-  //Hello  I am enter
   const title = "Balance Transfer";
   const links = [
     { title: "Home", href: "/superadmin" },
@@ -46,7 +51,6 @@ const Balance = () => {
 
   return (
     <>
-      
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-1 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
@@ -104,7 +108,6 @@ const Balance = () => {
           </div>
         </div>
       </div>
-       
     </>
   );
 };

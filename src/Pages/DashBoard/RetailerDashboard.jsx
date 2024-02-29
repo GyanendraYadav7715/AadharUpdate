@@ -41,18 +41,24 @@ const DashBoard = () => {
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="flex flex-col  items-center justify-center rounded  bg-yellow-500  h-32  ">
+              <div className="flex flex-col  items-center justify-center rounded  bg-blue-500  h-32  ">
                 <h4 className="text-white">102</h4>
-                <p className="text-2xl  text-white ">Total Applications</p>
+                <p className="text-2xl  text-white ">Main Wallet</p>
               </div>
-              <div className="flex flex-col items-center justify-center rounded bg-green-500  h-32  ">
+              <div className="flex flex-col items-center justify-center rounded bg-yellow-500  h-32  ">
                 <h4 className="text-white">0</h4>
-                <p className="text-2xl  text-white ">Total Completed</p>
+                <p className="text-2xl  text-white ">Total Applications </p>
               </div>
             </div>
-            <div className="flex flex-col items-center justify-center rounded bg-red-500  h-32 mb-5 ">
-              <h4 className="text-white">0</h4>
-              <p className="text-2xl  text-white ">Total Rejected</p>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="flex flex-col  items-center justify-center rounded bg-green-500   h-32  ">
+                <h4 className="text-white">102</h4>
+                <p className="text-2xl  text-white ">Total Completed</p>
+              </div>
+              <div className="flex flex-col items-center justify-center rounded  bg-red-500  h-32  ">
+                <h4 className="text-white">0</h4>
+                <p className="text-2xl  text-white ">Total Rejected</p>
+              </div>
             </div>
           </div>
           {/* Child System Management */}

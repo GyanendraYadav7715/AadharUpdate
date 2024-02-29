@@ -30,6 +30,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+import { RiH1 } from "react-icons/ri";
 
 
 // I am Here To Learn About Git 
@@ -46,9 +47,12 @@ function Layout() {
   let location = useLocation();
 
   // Check if the current location is one of the pages where we want to hide the layout components
-  const hideLayout = ["/", "/forget", "/backoffice"].includes(
-    location.pathname
-  );
+  const hideLayout = [
+    "/",
+    "/forget",
+    "/backoffice",
+    "/public/form.pdf",
+  ].includes(location.pathname);
 
   return (
     <div>
@@ -59,6 +63,7 @@ function Layout() {
         </div>
       )}
       <Routes>
+        <Route path="/public/form.pdf" element={ <h1>Form Pdf</h1>} />
         <Route path="/" element={<Login />} />
         <Route path="/forget" element={<Forget />} />
         <Route element={<Protected />}>
@@ -66,7 +71,8 @@ function Layout() {
           <Route path="/retailer" element={<Retailer />} />
           <Route path="/backoffice" element={<Backoffice />} />
 
-          <Route path="/balance" element={<Balance />} />
+          <Route path="/balance_transfer" element={<Balance />} />
+          <Route path="/user_limit" element={<Balance />} />
           <Route path="/history" element={<History />} />
 
           <Route path="/adduser" element={<AddAdminUser />} />

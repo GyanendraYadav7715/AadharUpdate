@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import Form from "../../../public/form.pdf";
 const Dropdown = ({ title, items, iconClass }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -75,8 +75,8 @@ const Menudrop = () => {
           items={[
             { label: "New Entry", link: "/add-customer" },
             { label: "View Entry", link: "/list" },
-            { label: "Update Form", link: "public/form.pdf" },
-            { label: "Search Entry Data", link: "#" },
+            { label: "Update Form", link: Form },
+            { label: "Search Entry Data", link: "" },
           ]}
           iconClass="ri-add-fill w-5 h-5 text-black transition duration-75   group-hover:text-gray-900  "
         />
@@ -86,7 +86,7 @@ const Menudrop = () => {
             { label: "Enroll Child", link: "/new-entry" },
             { label: "View Child Data", link: "" },
             { label: "View Child Entry", link: "/child-entry-list" },
-            { label: "Enrollment Form", link: "public/form.pdf" },
+            { label: "Enrollment Form", link: Form },
           ]}
           iconClass="ri-open-arm-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
         />
@@ -116,12 +116,11 @@ const Menudrop = () => {
   return (
     <>
       <Dropdown
-        title="Entry Management"
+        title="Demographic"
         items={[
           { label: "New Entry", link: "/add-customer" },
           { label: "View Entry", link: "/list" },
-          { label: "Update Form", link: "" },
-          { label: "Search Entry Data", link: "#" },
+          { label: "Update Form", link: Form },
         ]}
         iconClass="ri-add-fill w-5 h-5 text-black transition duration-75   group-hover:text-gray-900  "
       />
@@ -129,9 +128,9 @@ const Menudrop = () => {
         title="Child Management"
         items={[
           { label: "Enroll Child", link: "/new-entry" },
-          { label: "View Child Data", link: "/child-entry-list" },
+
           { label: "View Child Entry", link: "#" },
-          { label: "Enrollment Form", link: "#" },
+          { label: "Enrollment Form", link: Form },
         ]}
         iconClass="ri-open-arm-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
       />
@@ -140,7 +139,7 @@ const Menudrop = () => {
         items={[
           { label: "Mobile Update", link: "/mobileupdate" },
           { label: "Mobile Data", link: "/mobiledata" },
-          { label: "Admin Report", link: "/adminreport" },
+          { label: "Enrollment Form", link: Form },
         ]}
         iconClass="ri-smartphone-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
       />

@@ -22,7 +22,8 @@ function Protected() {
     "/superadmin",
     "/adduser",
     "/viewuser",
-    "/balance",
+    "/balance_transfer",
+    "/user_limit",
     "/history",
     "/add-customer",
     "/list",
@@ -31,7 +32,7 @@ function Protected() {
     "/mobileupdate",
     "/mobiledata",
     "/adminreport",
-    "/viewretaileruserlist"
+    "/viewretaileruserlist",
   ];
   const allowedRoutesForBackoffice=[
     "/backoffice"
@@ -63,7 +64,7 @@ function Protected() {
     const currentRoute = window.location.pathname;
     // If the current route is not allowed for the admin, redirect to home page
     if (!allowedRoutesForBackoffice.includes(currentRoute)) {
-      return <Navigate to="/" />;
+      return <Navigate to="/backoffice" />;
     }
   }
 

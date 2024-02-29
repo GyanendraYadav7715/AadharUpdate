@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
-
+ 
 const MenuItems = () => {
   const adminMenuItems = [
     {
@@ -9,12 +9,12 @@ const MenuItems = () => {
       label: "Dashboard",
     },
     {
-      link: "/balance",
+      link: "/balance_transfer",
       iconClass: "ri-exchange-dollar-fill",
       label: "Token Transfer",
     },
     {
-      link: "/balance",
+      link: "/user_limit",
       iconClass: "ri-hourglass-2-fill",
       label: "User Limit",
     },
@@ -31,6 +31,7 @@ const MenuItems = () => {
       iconClass: "ri-layout-grid-fill",
       label: "Dashboard",
     },
+
   ];
 
   const memoizedRole = useMemo(() => {
@@ -60,6 +61,7 @@ const MenuItems = () => {
               ></i>
               <span className="ms-3">{item.label}</span>
             </Link>
+          
           </li>
         ))}
       </ul>
