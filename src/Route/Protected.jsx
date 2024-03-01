@@ -14,7 +14,7 @@ function Protected() {
     "/child-entry-list",
     "/mobileupdate",
     "/mobiledata",
-    "/adminreport",
+     
   ];
 
   // Define routes that are allowed for the "Admin" and "SuperAdmin" roles
@@ -33,6 +33,9 @@ function Protected() {
     "/mobiledata",
     "/adminreport",
     "/viewretaileruserlist",
+    "/searchentrydata",
+    "/ViewChildData",
+    "/editstatus",
   ];
   const allowedRoutesForBackoffice=[
     "/backoffice"

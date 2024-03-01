@@ -55,7 +55,7 @@ const Balance = () => {
       <div className="p-1 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
           <div className="grid grid-cols-1 gap-4 mb-4 ">
-            <h3 className="text-2xl font-bold">Balance Transfer</h3>
+            <h3 className="text-2xl font-semibold">Balance Transfer</h3>
             <form
               onSubmit={handleSubmit}
               className="flex flex-col items-start w-full border p-9 rounded-sm bg-white"
@@ -97,11 +97,9 @@ const Balance = () => {
                 </div>
               </div>
               <div className="p-6">
-                <button
-                  type="submit"
-                  className="text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-sm text-sm w-full sm:w-auto px-5 py-2.5"
-                >
-                  Submit
+                <button className="Submit-button whitespace-nowrap bg-green-600" type="submit">
+                  <i class="ri-save-fill"> </i>
+                   Submit
                 </button>
               </div>
             </form>

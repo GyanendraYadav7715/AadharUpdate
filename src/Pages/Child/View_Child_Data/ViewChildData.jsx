@@ -1,23 +1,34 @@
+import "./view_child_data.css";
 
-import './view_child_data.css'
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Table from "react-bootstrap/Table";
 // import axios from "axios";
-import CSVDownloadButton from '../../../pages/Download/CSVDownloadButton';
-import PDFDownloadButton from '../../../pages/Download/PDFDownloadButton';
-import ExcelDownloadButton from "../../../pages/Download/ExcelDownloadButton";
-import CopyButton from "../../../pages/Download/CopyButton";
-import Slip from "../../../components/Slip/Slip";
-import Products from "../../../pages/Products";
-import Search from "../../SearchFilter/Search";
- 
+import CopyButton from "../../../Components/DownloadAction/CopyButton";
+import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
+import CSVButton from "../../../Components/DownloadAction/CSVButton";
+import PDFButton from "../../../Components/DownloadAction/PDFButton";
+import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import Slip from "../../../Components/Slip/Slip";
+
 function ViewChildData() {
+  const tableRef = useRef();
   //api data fetch
   const [data, setData] = useState([]);
   const [error, setError] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
+  const title = "View Chid Data";
+  const links = [
+    { title: "Home", href: "/superadmin" },
+    { title: "View Chid Data", href: "" },
+  ];
 
+  const mylinks = [
+    {
+      to: "/child-entry-list",
+      text: "View Customer",
+      icon: "ri-team-line text-white text-2xl ",
+    },
+  ];
   // useEffect(() => {
   //     // Define the API endpoint URL
   //     const apiUrl = 'http://localhost:4001/Products';
@@ -32,26 +43,49 @@ function ViewChildData() {
   //             setError(err);
   //         });
   // }, []);
-
+  const products = [
+    {
+      name: "Priya Sharma",
+      dateofbirth: "2024-02-12",
+      aadhaar: "98765432101234",
+      email: "priya.sharma@example.com",
+      mobile: "9876543210",
+    },
+  ];
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
 
   return (
     <>
+      <Breadcrumb title={title} links={links} mylinks={mylinks} />
       {/* data */}
-      { Products ? (
-        <section>
-          <div className="hero-section">
-            <Header />
+      {products ? (
+        <div className="p-4 sm:ml-64 bg-gray-200">
+          <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
+            <h3 className="text-2xl font-semibold"> View Child Data</h3>
             <div className="Download-Button">
-              <CopyButton />
-              <ExcelDownloadButton fileName="myExcel" jsonData={Products} />
-              <CSVDownloadButton />
-              <PDFDownloadButton />
-              <Search />
+              <CopyButton data={products} />
+              <ExcelButton
+                data={products}
+                filename={"ViewRetailerUserList.xlsx"}
+              />
+              <CSVButton
+                data={products}
+                filename={"ViewRetailerUserList.csv"}
+              />
+              <PDFButton
+                tableRef={tableRef}
+                filename={"ViewRetailerUserList.pdf"}
+              />
             </div>
-            <Table striped bordered hover className="custom-table">
+            <Table
+              striped
+              bordered
+              hover
+              className="custom-table"
+              ref={tableRef}
+            >
               <thead>
                 <tr>
                   <th>S.N.</th>
@@ -64,8 +98,8 @@ function ViewChildData() {
               </thead>
 
               <tbody>
-                {Products.length  < 0 ? (
-                  Products.map((item, index) => (
+                {products.length < 0 ? (
+                  products.map((item, index) => (
                     <React.Fragment key={item._id}>
                       <tr>
                         <td>
@@ -128,7 +162,7 @@ function ViewChildData() {
               </tbody>
             </Table>
           </div>
-        </section>
+        </div>
       ) : (
         <p>Please Wait...</p>
       )}

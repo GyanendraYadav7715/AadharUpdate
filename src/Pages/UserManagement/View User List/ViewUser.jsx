@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef,useEffect } from "react";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
@@ -8,6 +8,23 @@ import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 
 const ViewUser = () => {
+ const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+   useEffect(() => {
+    setFilteredProducts(products);
+  }, []);
+
+  // Function to handle search
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    const filtered = products.filter((product) =>
+      Object.values(product)
+        .join(" ")
+        .toLowerCase()
+        .includes(query.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
   //Breadcrumb Data
   const title = "View User Data";
   const links = [
@@ -23,7 +40,7 @@ const ViewUser = () => {
   ];
   // Define and initialize the tableRef
   const tableRef = useRef(null);
-
+ ;
   // Define products array
   const [products, setProducts] = useState([
     {
@@ -138,6 +155,7 @@ const ViewUser = () => {
       status: "Active",
     },
   ]);
+ 
 
   // Function to handle deletion of a product
   const deleteProduct = (index) => {
@@ -154,15 +172,15 @@ const ViewUser = () => {
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white ">
-          <h3 className="text-2xl font-bold">View User Data-ADMIN</h3>
-          <div className="flex items-center justify-between mb-4">
+          <h3 className="text-2xl font-semibold">View User Data-ADMIN</h3>
+          <div className="flex items-center justify-between mb-4 mt-4">
             <div>
               <CopyButton data={products} />
               <ExcelButton data={products} filename={"ViewUser.xlsx"} />
               <CSVButton data={products} filename={"ViewUser.csv"} />
               <PDFButton tableRef={tableRef} filename={"ViewUser.pdf"} />
             </div>
-            <SearchElement />
+            <SearchElement onSearch={handleSearch} />
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg  ">
             <table
@@ -240,7 +258,7 @@ const ViewUser = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product, index) => (
+                {filteredProducts.map((product, index) => (
                   <tr
                     key={index}
                     className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}

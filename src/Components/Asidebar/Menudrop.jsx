@@ -76,7 +76,7 @@ const Menudrop = () => {
             { label: "New Entry", link: "/add-customer" },
             { label: "View Entry", link: "/list" },
             { label: "Update Form", link: Form },
-            { label: "Search Entry Data", link: "" },
+            { label: "Search Entry Data", link: "/searchentrydata" },
           ]}
           iconClass="ri-add-fill w-5 h-5 text-black transition duration-75   group-hover:text-gray-900  "
         />
@@ -84,7 +84,7 @@ const Menudrop = () => {
           title="Child Management"
           items={[
             { label: "Enroll Child", link: "/new-entry" },
-            { label: "View Child Data", link: "" },
+            { label: "View Child Data", link: "/ViewChildData" },
             { label: "View Child Entry", link: "/child-entry-list" },
             { label: "Enrollment Form", link: Form },
           ]}
@@ -129,7 +129,7 @@ const Menudrop = () => {
         items={[
           { label: "Enroll Child", link: "/new-entry" },
 
-          { label: "View Child Entry", link: "#" },
+          { label: "View Child Entry", link: "/child-entry-list" },
           { label: "Enrollment Form", link: Form },
         ]}
         iconClass="ri-open-arm-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "

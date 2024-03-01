@@ -8,6 +8,7 @@ const SearchElement = ({ onSearch }) => {
     // Call the onSearch callback with the updated search term
     onSearch(event.target.value);
   };
+    
 
   return (
     <form className="max-w-md">

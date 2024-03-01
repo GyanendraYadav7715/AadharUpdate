@@ -117,8 +117,10 @@ const ViewRetailerUserList = () => {
       <Breadcrumb title={title} links={links} />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white ">
-          <h3 className="text-2xl font-bold">View Retailer Users Data-ADMIN</h3>
-          <div className="flex items-center justify-between mb-4">
+          <h3 className="text-2xl font-semibold">
+            View Retailer Users Data-ADMIN
+          </h3>
+          <div className="flex items-center justify-between my-4 ">
             <div>
               <CopyButton data={products} />
               <ExcelButton
@@ -195,7 +197,7 @@ const ViewRetailerUserList = () => {
                     <td className="px-6 py-4 border">{product.status}</td>
                     <td className="px-6 py-4 gap-2 flex items-center justify-between">
                       <Link
-                        to="#"
+                        to="/editstatus"
                         className="font-medium text-white no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                       >
                         Edit Status
