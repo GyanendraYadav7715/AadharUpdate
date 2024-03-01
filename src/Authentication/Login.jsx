@@ -188,7 +188,7 @@ import axios from 'axios'
 import loginlogo from "../../public/loginlogo.webp";
 import { FaRegCopyright } from "react-icons/fa";
 import { RiUser2Line, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
-import { Local_Url } from "../constant/constant";
+import { Base_Url } from "../constant/constant";
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -213,7 +213,7 @@ const Login = () => {
      const { Username, User_type } = formData;
 
      try {
-       const apiUrl = `${Local_Url}/api/v1/sharedData/user-login`;
+       const apiUrl = `${Base_Url}/api/v1/sharedData/user-login`;
        const response = await axios.post(apiUrl, formData ,{
         headers: {
           "Content-Type": "application/json",

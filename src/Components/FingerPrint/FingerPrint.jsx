@@ -1,7 +1,7 @@
 import React from "react";
 import finger from "../../../public/finger.jpg";
 import { CaptureFinger } from "./mfs100";
-import { Local_Url } from "../../constant/constant";
+import { Base_Url } from "../../constant/constant";
 import { useState } from "react";
 
 
@@ -47,7 +47,7 @@ const Box = () => {
     const formData = new FormData();
     formData.append("image", imageBlob, `fingerprint_${Date.now()}.jpg`);
 
-    fetch(`${Local_Url}/api/v1/retailer/reatailer-fingerdata`, {
+    fetch(`${Base_Url}/api/v1/retailer/reatailer-fingerdata`, {
     
       method: "POST",
       body: formData,
