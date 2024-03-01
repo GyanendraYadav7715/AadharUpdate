@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-
 import "./list.css";
 import CSVDownloadButton from "../../Download/CSVDownloadButton";
 import PDFDownloadButton from "../../Download/PDFDownloadButton";
