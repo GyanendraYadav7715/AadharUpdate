@@ -72,7 +72,8 @@ const PersonEntry = () => {
     AadhaarNo: "",
     Address: "",
     FatherName: "",
-
+    userName: "",
+    userType: "",
   });
 
 
@@ -103,14 +104,23 @@ const PersonEntry = () => {
 
     e.preventDefault();
 
-    // if (!formData.purpose || !formData.email || !formData.mobile) {
-    //   return alert("Please fill all the required fields");
-    // }
+     const data = localStorage.getItem("user");
+    const userObj = JSON.parse(data);
+     formData.userName = userObj.Username;
+     formData.userType = userObj.User_type;
+      // Access the role property
+     // role = userObj.User_type;
+    
+
+    if (!formData.Purpose || !formData.Email || !formData.MobileNo) {
+      return alert("Please fill all the required fields");
+    }
+
 
     try {
       const apiUrl = `${Local_Url}/api/v1/retailer/create-user`;
       const response = await axios.post(apiUrl, formData);
-      console.log("Form submitted successfully:", response.data);
+      console.log("Form submitted successfully:", response.data.data);
       alert("Form submitted successfully:");
       setFormData({
         Name: "",
@@ -120,7 +130,7 @@ const PersonEntry = () => {
         Purpose: "",
         AadhaarNo: "",
         Address: "",
-        FatherName: "", // Reset fathern property
+        FatherName: ""
       });
     } catch (error) {
       console.error("Error submitting form:", error.message);

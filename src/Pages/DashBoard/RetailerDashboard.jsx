@@ -10,7 +10,7 @@ const DashBoard = () => {
 
   useEffect(() => {
     // Define the API endpoint URL
-    const apiUrl = `${Local_Url}/api/v1/admin/total-users`;
+    const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
 
     // Make a GET request using Axios
     axios
@@ -57,9 +57,7 @@ const DashBoard = () => {
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
- <div>
-     
-    </div>
+      <div></div>
       <div className="p-1 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
           {/* Demographic System Management */}
@@ -67,7 +65,7 @@ const DashBoard = () => {
             {/* ... rest of your component */}
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col items-center justify-center rounded bg-yellow-500 h-32">
-                <h4 className="text-white">{data.totalApplication}</h4>
+                <h4 className="text-white">{data.getretailerUsers}</h4>
                 <p className="text-2xl text-white">Total Applications</p>
               </div>
               <div className="flex flex-col items-center justify-center rounded bg-green-500 h-32">

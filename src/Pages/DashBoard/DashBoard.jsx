@@ -1,6 +1,13 @@
 import React from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
+import { useState, useEffect } from "react";
+import { Local_Url } from "../../constant/constant";
+import axios from "axios";
+
+
 const DashBoard = () => {
+ const [data, setData] = useState([]);
+
   const title = "Dashboard";
   const links = [
     { title: "Home", href: "/superadmin" },
@@ -14,6 +21,27 @@ const DashBoard = () => {
       icon: "ri-add-line text-white text-2xl ",
     },
   ];
+
+
+
+  
+
+ useEffect(() => {
+   // Define the API endpoint URL
+   const apiUrl = `${Local_Url}/api/v1/admin/total-users`;
+
+   // Make a GET request using Axios
+   axios
+     .get(apiUrl)
+     .then((response) => {
+       setData(response.data);
+       console.log(data);
+     })
+     .catch((err) => {
+       setError(err);
+     });
+ }, []);
+
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
@@ -30,7 +58,7 @@ const DashBoard = () => {
                 <p className="text-2xl  text-white ">Main Wallet</p>
               </div>
               <div className="flex  flex-col items-center justify-center rounded bg-blue-500  h-32  ">
-                <h4 className="text-white">182</h4>
+                <h4 className="text-white">{data.totalApplication}</h4>
                 <p className="text-2xl  text-white  ">Total User</p>
               </div>
             </div>
