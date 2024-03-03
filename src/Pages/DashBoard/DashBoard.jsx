@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
-import { useState, useEffect } from "react";
-import { Local_Url } from "../../constant/constant";
 import axios from "axios";
-
-
 const DashBoard = () => {
- const [data, setData] = useState([]);
-
   const title = "Dashboard";
   const links = [
     { title: "Home", href: "/superadmin" },

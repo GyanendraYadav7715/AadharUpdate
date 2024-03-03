@@ -1,8 +1,3 @@
-
-import React, { useEffect, useState, useRef } from "react";
-import { Local_Url } from "../../../constant/constant";
-import axios from "axios";
-
 import { useState, useRef,useEffect } from "react";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
@@ -10,11 +5,6 @@ import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
-
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import Asidebar from "../../../Components/Asidebar/Asidebar";
- import SearchElement from '../../../Components/SearchElement/SearchElement'
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 
 const ViewUser = () => {
@@ -36,7 +26,6 @@ const ViewUser = () => {
     setFilteredProducts(filtered);
   };
   //Breadcrumb Data
-  const [ data , setData] = useState([])
   const title = "View User Data";
   const links = [
     { title: "Home", href: "/superadmin" },
@@ -53,70 +42,130 @@ const ViewUser = () => {
   const tableRef = useRef(null);
  ;
   // Define products array
-     useEffect(() => {
-       // Define the API endpoint URL
-       const apiUrl = `${Local_Url}/api/v1/admin/all-users`;
+  const [products, setProducts] = useState([
+    {
+      name: "Ashok Singh",
+      mobile: "2223765698",
+      username: "UP_UID_NS_3545",
+      password: "Ashok@889#",
+      createdBy: "Admin",
+      balance: "500",
+      childPoint: "50",
+      mobilePoint: "20",
+      status: "Active",
+    },
 
-       // Make a GET request using Axios
-       axios
-         .get(apiUrl)
-         .then((response) => {
-           setData(response.data.data);
-           console.log(response.data)
-         })
-         .catch((err) => {
-           console.log("Something Went Wrong");
-           setError(err);
-         });
-     }, []);
-  
-  
-  // Function to copy data to clipboard
-  const copyToClipboard = () => {
-    const el = document.createElement("textarea");
-    el.value = products
-      .map((product) => Object.values(product).join("\t"))
-      .join("\n");
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-  };
+    {
+      name: "John Doe",
+      mobile: "1234567890",
+      username: "JD_123",
+      password: "Password123!",
+      createdBy: "Admin",
+      balance: "1000",
+      childPoint: "75",
+      mobilePoint: "30",
+      status: "Active",
+    },
+    {
+      name: "Emma Smith",
+      mobile: "9876543210",
+      username: "ES_456",
+      password: "Emma@Smith456",
+      createdBy: "Admin",
+      balance: "750",
+      childPoint: "60",
+      mobilePoint: "25",
+      status: "Active",
+    },
+    {
+      name: "Lisa Johnson",
+      mobile: "5551234567",
+      username: "LJ_789",
+      password: "LisaPassword789",
+      createdBy: "Admin",
+      balance: "300",
+      childPoint: "40",
+      mobilePoint: "15",
+      status: "Active",
+    },
+    {
+      name: "Michael Brown",
+      mobile: "4447891234",
+      username: "MB_987",
+      password: "Brown@Password987",
+      createdBy: "Admin",
+      balance: "900",
+      childPoint: "80",
+      mobilePoint: "35",
+      status: "Active",
+    },
+    {
+      name: "Sarah Lee",
+      mobile: "3336549872",
+      username: "SL_654",
+      password: "SarahLee!654",
+      createdBy: "Admin",
+      balance: "600",
+      childPoint: "55",
+      mobilePoint: "22",
+      status: "Active",
+    },
+    {
+      name: "David Wilson",
+      mobile: "7774567890",
+      username: "DW_111",
+      password: "DavidWilson111!",
+      createdBy: "Admin",
+      balance: "400",
+      childPoint: "45",
+      mobilePoint: "18",
+      status: "Active",
+    },
+    {
+      name: "Emily Taylor",
+      mobile: "8889876543",
+      username: "ET_222",
+      password: "Taylor@222",
+      createdBy: "Admin",
+      balance: "850",
+      childPoint: "70",
+      mobilePoint: "28",
+      status: "Active",
+    },
+    {
+      name: "James Anderson",
+      mobile: "6667891234",
+      username: "JA_333",
+      password: "Anderson333!",
+      createdBy: "Admin",
+      balance: "700",
+      childPoint: "65",
+      mobilePoint: "26",
+      status: "Active",
+    },
+    {
+      name: "Sophia Martinez",
+      mobile: "9996549872",
+      username: "SM_999",
+      password: "Sophia@999",
+      createdBy: "Admin",
+      balance: "950",
+      childPoint: "90",
+      mobilePoint: "40",
+      status: "Active",
+    },
+  ]);
+ 
 
-  // Function to export table data to Excel
-  const exportToExcel = () => {
-    try {
-      // Check if tableRef and tableRef.current exist before calling the download method
-      if (tableRef.current && tableRef.current.table) {
-        console.log("Exporting to Excel...");
-        tableRef.current.table.download("xlsx", "history.xlsx");
-      } else {
-        console.error("Table or table ref is not defined");
-      }
-    } catch (error) {
-      console.error("Error exporting to Excel:", error);
-    }
+  // Function to handle deletion of a product
+  const deleteProduct = (index) => {
+    // Create a copy of the products array
+    const updatedProducts = [...products];
+    // Remove the product at the specified index
+    updatedProducts.splice(index, 1);
+    // Update the state with the modified array
+    setProducts(updatedProducts);
   };
-  // Function to export table as PDF
-  const exportToPDF = () => {
-    html2canvas(tableRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("history.pdf");
-    });
-  };
-  // // Function to handle deletion of a product
-  // const deleteProduct = (index) => {
-  //   // Create a copy of the products array
-  //   const updatedProducts = [...products];
-  //   // Remove the product at the specified index
-  //   updatedProducts.splice(index, 1);
-  //   // Update the state with the modified array
-  //   setProducts(updatedProducts);
-  // };
 
   return (
     <>
@@ -144,16 +193,8 @@ const ViewUser = () => {
                     scope="col"
                     className="px-2 py-3 border whitespace-nowrap"
                   >
-                  <th
-                    scope="col"
-                    className="px-2 py-3 border whitespace-nowrap"
-                  >
                     Serial No.
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
                   <th
                     scope="col"
                     className="px-6 py-3 border whitespace-nowrap"
@@ -164,26 +205,14 @@ const ViewUser = () => {
                     scope="col"
                     className="px-6 py-3 border whitespace-nowrap"
                   >
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
                     Mobile Number
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 border whitespace-nowrap"
                   >
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
                     User Name
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
                   <th
                     scope="col"
                     className="px-6 py-3 border whitespace-nowrap"
@@ -195,16 +224,7 @@ const ViewUser = () => {
                     className="px-6 py-3 border whitespace-nowrap"
                   >
                     Created By
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
-                    Created By
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
                   <th
                     scope="col"
                     className="px-6 py-3 border whitespace-nowrap"
@@ -215,16 +235,8 @@ const ViewUser = () => {
                     scope="col"
                     className="px-6 py-3 border whitespace-nowrap"
                   >
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
                     Child Point
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
                   <th
                     scope="col"
                     className="px-6 py-3 border whitespace-nowrap"
@@ -235,16 +247,8 @@ const ViewUser = () => {
                     scope="col"
                     className="px-6 py-3 border whitespace-nowrap"
                   >
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
                     Status
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
                   <th
                     scope="col"
                     className="px-6 py-3 border whitespace-nowrap"
@@ -263,14 +267,14 @@ const ViewUser = () => {
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
-                      {product.Name}
+                      {product.name}
                     </td>
-                    <td className="px-6 py-4 border">{product.Phone_n}</td>
-                    <td className="px-6 py-4 border">{product.Username}</td>
-                    <td className="px-6 py-4 border">{product.Password}</td>
-                    <td className="px-6 py-4 border">{product.CreateBy}</td>
-                    <td className="px-6 py-4 border">{product.Balance}</td>
-                    <td className="px-6 py-4 border">{product.Child_token}</td>
+                    <td className="px-6 py-4 border">{product.mobile}</td>
+                    <td className="px-6 py-4 border">{product.username}</td>
+                    <td className="px-6 py-4 border">{product.password}</td>
+                    <td className="px-6 py-4 border">{product.createdBy}</td>
+                    <td className="px-6 py-4 border">{product.balance}</td>
+                    <td className="px-6 py-4 border">{product.childPoint}</td>
                     <td className="px-6 py-4 border">{product.mobilePoint}</td>
                     <td className="px-6 py-4 border">{product.status}</td>
                     <td className="px-6 py-4 gap-2 flex items-center justify-between">
