@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
-import { useState, useEffect } from "react";
+
 import { Local_Url } from "../../constant/constant";
 import axios from "axios";
 
-
 const DashBoard = () => {
- const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
 
   const title = "Dashboard";
   const links = [
@@ -21,27 +20,24 @@ const DashBoard = () => {
       icon: "ri-add-line text-white text-2xl ",
     },
   ];
-const [walletBalance, setWalletBalance] = useState(0);
-const [totalUsers, setTotalUsers] = useState(0);
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
 
-useEffect(() => {
-  fetchData();
-}, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-const fetchData = async () => {
-  try {
-    const response = await axios.get(
-      
-    ); // Replace '/api/superadmin' with your actual API endpoint
-    const data = response.data;
-    setWalletBalance(data.walletBalance);
-    setTotalUsers(data.totalUsers);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(); // Replace '/api/superadmin' with your actual API endpoint
+      const data = response.data;
+      setWalletBalance(data.walletBalance);
+      setTotalUsers(data.totalUsers);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
- 
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
