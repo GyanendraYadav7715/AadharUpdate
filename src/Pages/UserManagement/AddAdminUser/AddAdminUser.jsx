@@ -6,7 +6,7 @@ import { Local_Url} from "../../../constant/constant";
 
 
 
-export const CustomInput = ({ label, type, name, placeholder, onChange, value }) => {
+export const CustomInput = ({ label, type, name, placeholder, onChange, value ,maxLength}) => {
   return (
     <div className="inputContainer">
       <div className="inputWrapper">
@@ -22,6 +22,7 @@ export const CustomInput = ({ label, type, name, placeholder, onChange, value })
         value={value}
         required
         onChange={(e) => onChange(name, e.target.value)}
+        maxLength={maxLength}
       />
     </div>
   );
@@ -157,6 +158,8 @@ const AddAdminUser = () => {
                 pattern="[0-9]{10}"
                 errorMessage="Please enter a valid 10-digit mobile number."
                 required=""
+                maxLength={10}
+                
               />
 
               <CustomInput

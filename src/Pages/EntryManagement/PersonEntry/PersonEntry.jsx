@@ -13,6 +13,7 @@ export const Input = ({
   onChange,
   value,
   required,
+  maxLength,
 }) => {
   return (
     <div className="inputContainer">
@@ -29,6 +30,7 @@ export const Input = ({
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
         required={required} // Changed require to required
+        maxLength={maxLength}
       />
     </div>
   );
@@ -172,18 +174,20 @@ const PersonEntry = () => {
             <Input
               onChange={handleInputChange}
               label="Aadhaar No."
-              type="number"
+              type="tel"
               name="AadhaarNo"
               placeholder="Aadhaar No."
               value={formData.AadhaarNo}
+              maxLength={12}
             />
             <Input
               onChange={handleInputChange}
               label="Mobile No."
-              type="number"
+              type="tel"
               name="MobileNo"
               placeholder="Mobile No."
               value={formData.MobileNo}
+              maxLength={10}
             />
             <Input
               onChange={handleInputChange}
