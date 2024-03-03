@@ -6,9 +6,6 @@ import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import Asidebar from "../../../Components/Asidebar/Asidebar";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Link } from "react-router-dom";
 
@@ -28,7 +25,7 @@ const ViewUser = () => {
       })
       .catch((err) => {
         console.log("Something Went Wrong");
-        setError(err);
+        // Handle error
       });
   }, []);
 
@@ -47,39 +44,9 @@ const ViewUser = () => {
     setFilteredProducts(filtered);
   };
 
-  const copyToClipboard = () => {
-    const el = document.createElement("textarea");
-    el.value = data
-      .map((product) => Object.values(product).join("\t"))
-      .join("\n");
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-  };
-
-  const exportToExcel = () => {
-    try {
-      if (tableRef.current && tableRef.current.table) {
-        console.log("Exporting to Excel...");
-        tableRef.current.table.download("xlsx", "history.xlsx");
-      } else {
-        console.error("Table or table ref is not defined");
-      }
-    } catch (error) {
-      console.error("Error exporting to Excel:", error);
-    }
-  };
-
-  const exportToPDF = () => {
-    html2canvas(tableRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("history.pdf");
-    });
+  const deleteProduct = (index) => {
+    // Implement deletion logic here
+    console.log("Deleting product at index:", index);
   };
 
   return (
@@ -195,14 +162,14 @@ const ViewUser = () => {
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
-                      {product.Name}
+                      {product.name}
                     </td>
-                    <td className="px-6 py-4 border">{product.Phone_n}</td>
-                    <td className="px-6 py-4 border">{product.Username}</td>
-                    <td className="px-6 py-4 border">{product.Password}</td>
-                    <td className="px-6 py-4 border">{product.CreateBy}</td>
-                    <td className="px-6 py-4 border">{product.Balance}</td>
-                    <td className="px-6 py-4 border">{product.Child_token}</td>
+                    <td className="px-6 py-4 border">{product.mobileNumber}</td>
+                    <td className="px-6 py-4 border">{product.username}</td>
+                    <td className="px-6 py-4 border">{product.password}</td>
+                    <td className="px-6 py-4 border">{product.createdBy}</td>
+                    <td className="px-6 py-4 border">{product.balance}</td>
+                    <td className="px-6 py-4 border">{product.childPoint}</td>
                     <td className="px-6 py-4 border">{product.mobilePoint}</td>
                     <td className="px-6 py-4 border">{product.status}</td>
                     <td className="px-6 py-4 gap-2 flex items-center justify-between">
