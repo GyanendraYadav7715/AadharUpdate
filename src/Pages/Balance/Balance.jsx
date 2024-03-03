@@ -1,30 +1,37 @@
 import React, { useState } from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 import axios from "axios";
+import {Local_Url} from "../../constant/constant"
 
 const Balance = () => {
   const [formData, setFormData] = useState({
-    username: "",
+    Username: "",
     amount: "",
   });
 
-  const { username, amount } = formData;
+  const { Username, amount } = formData;
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    const { id, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [id]: value,
+    }));
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Check if any input field is empty
-    if (username.trim() === "" || amount.trim() === "") {
+    if (Username.trim() === "" || amount.trim() === "") {
       alert("Please fill the all fields");
       return;
     }
 
     try {
+      const apiUrl = `${Local_Url}/api/v1/sharedData/transfer-fund`;
       // Make the API POST request
-      const response = await axios.post("/api/your-endpoint", formData);
+      const response = await axios.post(apiUrl, formData);
 
       // Handle success
       console.log("Response:", response.data);
@@ -63,15 +70,15 @@ const Balance = () => {
               <div className="flex justify-between items-center w-full">
                 <div className="mb-5 w-1/2 p-6">
                   <label
-                    htmlFor="username"
+                    htmlFor="Username"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Username
                   </label>
                   <input
                     type="text"
-                    id="username"
-                    value={username}
+                    id="Username"
+                    value={Username}
                     onChange={handleChange}
                     className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Username"

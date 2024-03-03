@@ -5,7 +5,7 @@ import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import Information from "../../../Components/Information/Information";
 
-export const Input = ({ label, type, name, placeholder, onChange, value }) => {
+export const Input = ({ label, type, name, placeholder, onChange, value,maxLength }) => {
   return (
     <div className="inputContainer">
       <div className="inputWrapper">
@@ -20,6 +20,7 @@ export const Input = ({ label, type, name, placeholder, onChange, value }) => {
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
+        maxLength={maxLength}
       />
     </div>
   );

@@ -24,7 +24,9 @@ useEffect(() => {
 
 const fetchData = async () => {
   try {
-    const response = await axios.get("/api/superadmin"); // Replace '/api/superadmin' with your actual API endpoint
+    const response = await axios.get(
+      
+    ); // Replace '/api/superadmin' with your actual API endpoint
     const data = response.data;
     setWalletBalance(data.walletBalance);
     setTotalUsers(data.totalUsers);
