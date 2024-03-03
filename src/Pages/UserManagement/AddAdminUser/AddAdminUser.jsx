@@ -52,6 +52,7 @@ const AddAdminUser = () => {
     User_type: "",
     Username: "",
     Password: "",
+    "superAdminUser":""
   });
 
   // Function to handle form input changes
@@ -75,6 +76,15 @@ const AddAdminUser = () => {
       
       return alert("please filll the blank field first");
     }
+    const userData = localStorage.getItem("user");
+    let userName = "";
+    if (userData) {
+      // Parse JSON string to object
+      const userObj = JSON.parse(userData);
+      userName = userObj.Username;
+    }
+     
+    formData.superAdminUser = userName;
 
     try {
       // Define the API endpoint URL

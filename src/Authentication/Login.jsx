@@ -27,7 +27,7 @@ const Login = () => {
  const handleLogin = useCallback(
    async (e) => {
      e.preventDefault();
-     const { Username, User_type } = formData;
+     const { Username, User_type, loginIDMail } = formData;
 
      try {
        const apiUrl = `${Local_Url}/api/v1/sharedData/user-login`;
@@ -43,7 +43,7 @@ const Login = () => {
          
          localStorage.setItem(
            "user",
-           JSON.stringify({ Username, User_type })
+           JSON.stringify({ Username, User_type, loginIDMail })
          );
          alert("Login Success");
          console.log("Response Data:", response.data);
