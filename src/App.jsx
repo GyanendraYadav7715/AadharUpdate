@@ -33,7 +33,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { RiH1 } from "react-icons/ri";
+ 
 
 
 // I am Here To Learn About Git 
@@ -54,7 +54,7 @@ function Layout() {
     "/",
     "/forget",
     "/backoffice",
-    "/public/form.pdf",
+    
   ].includes(location.pathname);
 
   return (
@@ -66,7 +66,7 @@ function Layout() {
         </div>
       )}
       <Routes>
-        <Route path="/public/form.pdf" element={<h1>Form Pdf</h1>} />
+         
         <Route path="/" element={<Login />} />
         <Route path="/forget" element={<Forget />} />
         <Route element={<Protected />}>
