@@ -177,7 +177,7 @@ const deleteProduct = (userId) => {
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
-                      {product.name}
+                      {product.Name}
                     </td>
                     <td className="px-6 py-4 border">{product.Phone_n}</td>
                     <td className="px-6 py-4 border">{product.Username}</td>
