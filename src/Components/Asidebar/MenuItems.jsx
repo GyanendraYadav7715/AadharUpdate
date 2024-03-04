@@ -44,7 +44,7 @@ const MenuItems = () => {
   }, []);
 
   const menuItems =
-    memoizedRole === "Superadmin" ? adminMenuItems : retailerMenuItems;
+    memoizedRole === "Sub-Admin" ? adminMenuItems : retailerMenuItems;
 
   return (
     <>
