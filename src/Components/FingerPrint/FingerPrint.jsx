@@ -1,35 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import finger from "../../../public/finger.jpg";
 import { CaptureFinger } from "./mfs100";
-import { Base_Url } from "../../constant/constant";
-import { useState } from "react";
-
+import { Local_Url } from "../../constant/constant";
+import Loder from "../../Loder/Loder";
+import axios from "axios";
 
 const Box = () => {
   const [captureCount, setCaptureCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const captureFingerAndUpload = async () => {
-    if (captureCount < 5) {
-      const fingerData = await CaptureFinger();
+    if (captureCount < 5 && !isLoading) {
+      setIsLoading(true);
+      try {
+        const fingerData = await CaptureFinger();
 
-      if (fingerData.httpStatus) {
-        if (fingerData.data && fingerData.data.BitmapData) {
+        if (
+          fingerData.httpStatus &&
+          fingerData.data &&
+          fingerData.data.BitmapData
+        ) {
           const imageBlob = await convertBase64ToBlob(
             fingerData.data.BitmapData
           );
-          uploadToS3(imageBlob);
-
+          await uploadToS3(imageBlob);
           setCaptureCount((prevCount) => prevCount + 1);
           console.log(fingerData.data.BitmapData);
         } else {
-          // Handle the case where finger data is not found
           alert("Finger Not Found");
         }
-      } else {
-        // Handle other errors
-        console.error("Error capturing finger:", fingerData.err);
-        // Optionally, you can reset the count on error
-        // setCaptureCount(0);
+      } catch (error) {
+        console.error("Error capturing finger:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -43,22 +46,19 @@ const Box = () => {
     return new Blob([new Uint8Array(byteNumbers)], { type: "image/jpeg" });
   };
 
-  const uploadToS3 = (imageBlob) => {
+  const uploadToS3 = async (imageBlob) => {
     const formData = new FormData();
     formData.append("image", imageBlob, `fingerprint_${Date.now()}.jpg`);
 
-    fetch(`${Base_Url}/api/v1/retailer/reatailer-fingerdata`, {
-    
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Fingerprint uploaded successfully:", data.imageUrl);
-      })
-      .catch((error) => {
-        console.error("Error uploading fingerprint:", error);
-      });
+    try {
+      const response = await axios.post(
+        `${Local_Url}/api/v1/retailer/reatailer-fingerdata`,
+        formData
+      );
+      console.log("Fingerprint uploaded successfully:", response.data.imageUrl);
+    } catch (error) {
+      console.error("Error uploading fingerprint:", error);
+    }
   };
 
   return (
@@ -70,7 +70,7 @@ const Box = () => {
         onClick={captureFingerAndUpload}
         disabled={captureCount >= 5}
       >
-        Click
+        {isLoading ? <Loder /> : "Capture Finger"}
       </button>
     </div>
   );
