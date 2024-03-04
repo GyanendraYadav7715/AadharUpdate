@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Table from "react-bootstrap/Table";
+import { Local_Url } from "../../../constant/constant";
 import axios from "axios";
 import "./list.css";
 import Slip from "../../../Components/Slip/Slip";
@@ -23,6 +24,7 @@ function List() {
     const userObj = JSON.parse(userData);
     // Access the role property
     role = userObj.role;
+    userName = userObj.Username;
   }
   const title = "View Entry";
   const links =
@@ -64,7 +66,7 @@ function List() {
       })
       .catch((err) => {
         console.log("Something Went Wrong");
-        setError(err);
+        // setError(err);
       });
   }, []);
 
