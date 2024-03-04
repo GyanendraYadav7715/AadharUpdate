@@ -129,7 +129,7 @@ const Login = () => {
             required
           >
             <option value="">Select Type</option>
-            <option value="Superadmin">Admin </option>
+            <option value="Sub-Admin">Admin </option>
             <option value="Retailer">Retailer </option>
             <option value="BackOffice">Back Office</option>
           </select>

@@ -58,7 +58,7 @@ const Menudrop = () => {
     // Access the role property
     role = userObj.User_type;
   }
-  if (role === "Superadmin")
+  if (role === "Sub-Admin" )
     return (
       <>
         <Dropdown
