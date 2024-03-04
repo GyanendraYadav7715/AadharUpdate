@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Form from "../../../public/form.pdf";
+ 
 const Dropdown = ({ title, items, iconClass }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -75,7 +75,10 @@ const Menudrop = () => {
           items={[
             { label: "New Entry", link: "/add-customer" },
             { label: "View Entry", link: "/list" },
-            { label: "Update Form", link: Form },
+            {
+              label: "Update Form",
+              link: "https://ultra.getviewandupdate.in/update.pdf",
+            },
             { label: "Search Entry Data", link: "/searchentrydata" },
           ]}
           iconClass="ri-add-fill w-5 h-5 text-black transition duration-75   group-hover:text-gray-900  "
@@ -86,7 +89,10 @@ const Menudrop = () => {
             { label: "Enroll Child", link: "/new-entry" },
             { label: "View Child Data", link: "/ViewChildData" },
             { label: "View Child Entry", link: "/child-entry-list" },
-            { label: "Enrollment Form", link: Form },
+            {
+              label: "Enrollment Form",
+              link: "https://ultra.getviewandupdate.in/update.pdf",
+            },
           ]}
           iconClass="ri-open-arm-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
         />
@@ -120,7 +126,10 @@ const Menudrop = () => {
         items={[
           { label: "New Entry", link: "/add-customer" },
           { label: "View Entry", link: "/list" },
-          { label: "Update Form", link: Form },
+          {
+            label: "Update Form",
+            link: "https://ultra.getviewandupdate.in/update.pdf",
+          },
         ]}
         iconClass="ri-add-fill w-5 h-5 text-black transition duration-75   group-hover:text-gray-900  "
       />
@@ -130,7 +139,10 @@ const Menudrop = () => {
           { label: "Enroll Child", link: "/new-entry" },
 
           { label: "View Child Entry", link: "/child-entry-list" },
-          { label: "Enrollment Form", link: Form },
+          {
+            label: "Enrollment Form",
+            link: "https://ultra.getviewandupdate.in/update.pdf",
+          },
         ]}
         iconClass="ri-open-arm-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
       />
@@ -139,7 +151,10 @@ const Menudrop = () => {
         items={[
           { label: "Mobile Update", link: "/mobileupdate" },
           { label: "Mobile Data", link: "/mobiledata" },
-          { label: "Enrollment Form", link: Form },
+          {
+            label: "Enrollment Form",
+            link: "https://ultra.getviewandupdate.in/update.pdf",
+          },
         ]}
         iconClass="ri-smartphone-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
       />

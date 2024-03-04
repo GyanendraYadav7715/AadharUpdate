@@ -43,13 +43,26 @@ const ViewUser = () => {
     setFilteredProducts(filtered);
   };
 
-  const deleteProduct = (index) => {
-    // Implement deletion logic here
-    // Remove the product at the specified index from the data array
-    const newData = [...data];
-    newData.splice(index, 1);
-    setData(newData);
-  };
+const deleteProduct = (userId) => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this user?"
+  );
+  if (confirmDelete) {
+    // Send a DELETE request to your server API to delete the user
+    axios
+      .delete(`${Local_Url}/api/v1/admin/users/${userId}`)
+      .then((response) => {
+        // If deletion is successful, update the local data state
+        const updatedData = data.filter((user) => user.id !== userId);
+        setData(updatedData);
+      })
+      .catch((error) => {
+        console.error("Error deleting user:", error);
+        // Handle error
+      });
+  }
+};
+
 
   return (
     <>
@@ -173,17 +186,18 @@ const ViewUser = () => {
                     <td className="px-6 py-4 border">{product.Balance}</td>
                     <td className="px-6 py-4 border">{product.Child_token}</td>
                     <td className="px-6 py-4 border">{product.mobilePoint}</td>
-                    <td className="px-6 py-4 border">{product.isUserblocked
-}</td>
+                    <td className="px-6 py-4 border">
+                      {product.isUserblocked}
+                    </td>
                     <td className="px-6 py-4 gap-2 flex items-center justify-between">
                       <Link
-                        to="#"
+                        // to={`/edituser/${product.id}`}
                         className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                       >
                         <i className="ri-refresh-line text-white"></i>
                       </Link>
                       <button
-                        onClick={() => deleteProduct(index)}
+                        onClick={() => deleteProduct(product.id)}
                         className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
                       >
                         <i className="ri-delete-bin-line text-white"></i>

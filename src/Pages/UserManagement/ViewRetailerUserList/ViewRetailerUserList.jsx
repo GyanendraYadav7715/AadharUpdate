@@ -1,116 +1,76 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
- 
+import { Local_Url } from "../../../constant/constant";
+
 const ViewRetailerUserList = () => {
-  //Breadcrumb Data
+  // Breadcrumb Data
   const title = "View Retailer User Data";
   const links = [
     { title: "Home", href: "/superadmin" },
-    { title: "View Retailer User Data", href: "" },
+    { title: "View Retailer User Data" },
   ];
+
   // Define and initialize the tableRef
   const tableRef = useRef(null);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Define products array
-  const products = [
-    {
-      name: "Ashok Singh",
-      email: "AshokAgmail.com",
-      mobile: "2223765698",
-      createdBy: "Admin",
-      password: "Ashok@889#",
-      balance: "500",
-      status: "Active",
-    },
-    {
-      name: "John Doe",
-      email: "johndoe@gmail.com",
-      mobile: "1234567890",
-      createdBy: "User",
-      password: "johnDoe123!",
-      balance: "1000",
-      status: "Active",
-    },
-    {
-      name: "Jane Smith",
-      email: "janesmith@yahoo.com",
-      mobile: "9876543210",
-      createdBy: "Admin",
-      password: "janeSmith789$",
-      balance: "750",
-      status: "Active",
-    },
-    {
-      name: "Michael Johnson",
-      email: "michaelj@gmail.com",
-      mobile: "5557891234",
-      createdBy: "User",
-      password: "mikeJ123#",
-      balance: "2000",
-      status: "Active",
-    },
-    {
-      name: "Emily Brown",
-      email: "emilyb@hotmail.com",
-      mobile: "1112223333",
-      createdBy: "Admin",
-      password: "emilyBrown456%",
-      balance: "300",
-      status: "Active",
-    },
-    {
-      name: "David Lee",
-      email: "davidlee@gmail.com",
-      mobile: "7778889999",
-      createdBy: "User",
-      password: "davidLee777*",
-      balance: "1200",
-      status: "Active",
-    },
-    {
-      name: "Michelle Martinez",
-      email: "mmartinez@yahoo.com",
-      mobile: "3336669999",
-      createdBy: "Admin",
-      password: "michelleM111*",
-      balance: "900",
-      status: "Active",
-    },
-    {
-      name: "Robert Wilson",
-      email: "robertwilson@hotmail.com",
-      mobile: "4445556666",
-      createdBy: "User",
-      password: "robertW456$",
-      balance: "1500",
-      status: "Active",
-    },
-    {
-      name: "Jessica Davis",
-      email: "jessicadavis@gmail.com",
-      mobile: "6663339999",
-      createdBy: "Admin",
-      password: "jessicaD789%",
-      balance: "600",
-      status: "Active",
-    },
-    {
-      name: "William Thompson",
-      email: "wthompson@yahoo.com",
-      mobile: "9998887777",
-      createdBy: "User",
-      password: "williamT123!",
-      balance: "1800",
-      status: "Active",
-    },
-  ];
-   
+  useEffect(() => {
+    const apiUrl = `${Local_Url}/api/v1/admin/all-users`;
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log("Response data:", response.data);
+        setData(response.data.data);
+        setFilteredProducts(response.data.data);
+      })
+      .catch((err) => {
+        console.log("Something Went Wrong");
+        // Handle error
+      });
+  }, []);
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    const filtered = data.filter((product) =>
+      Object.values(product)
+        .join(" ")
+        .toLowerCase()
+        .includes(query.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
+
+ const handleStatusEdit = (Username, isUserblocked) => {
+   console.log("Username:", Username);
+   axios
+     .post(`${Local_Url}/api/v1/sharedData/block-user`, {
+       username: Username,
+
+       User_type: "Retailer",
+       isUserblocked: isUserblocked,
+     })
+     .then((response) => {
+       // Handle success, maybe show a success message
+     alert(response.data.message);
+       // You may want to update the UI to reflect the new status
+       // For example, you could re-fetch the data or update the status in the local state
+     })
+     .catch((error) => {
+       // Handle error, maybe show an error message
+       console.error("Error updating user status:", error);
+     });
+ };
+
 
   return (
     <>
@@ -122,13 +82,13 @@ const ViewRetailerUserList = () => {
           </h3>
           <div className="flex items-center justify-between my-4 ">
             <div>
-              <CopyButton data={products} />
+              <CopyButton data={filteredProducts} />
               <ExcelButton
-                data={products}
+                data={filteredProducts}
                 filename={"ViewRetailerUserList.xlsx"}
               />
               <CSVButton
-                data={products}
+                data={filteredProducts}
                 filename={"ViewRetailerUserList.csv"}
               />
               <PDFButton
@@ -136,7 +96,7 @@ const ViewRetailerUserList = () => {
                 filename={"ViewRetailerUserList.pdf"}
               />
             </div>
-            <SearchElement />
+            <SearchElement onSearch={handleSearch} />
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table
@@ -177,7 +137,7 @@ const ViewRetailerUserList = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product, index) => (
+                {filteredProducts.map((product, index) => (
                   <tr
                     key={index}
                     className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
@@ -186,22 +146,30 @@ const ViewRetailerUserList = () => {
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap   border">
-                      {product.name}
+                      {product.Name}
                     </td>
                     <td className="px-6 py-4 border">{product.email}</td>
-                    <td className="px-6 py-4 border">{product.mobile}</td>
+                    <td className="px-6 py-4 border">{product.Phone_n}</td>
                     <td className="px-6 py-4 border">{product.createdBy}</td>
-                    <td className="px-6 py-4 border">{product.password}</td>
-                    <td className="px-6 py-4 border">{product.balance}</td>
+                    <td className="px-6 py-4 border">{product.Password}</td>
+                    <td className="px-6 py-4 border">{product.Balance}</td>
 
                     <td className="px-6 py-4 border">{product.status}</td>
                     <td className="px-6 py-4 gap-2 flex items-center justify-between">
-                      <Link
-                        to="/editstatus"
+                      <button
+                        onClick={() => handleStatusEdit(product.Username, "false")}
                         className="font-medium text-white no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                       >
-                        Edit Status
-                      </Link>
+                        Activate
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleStatusEdit(product.Username, "true")
+                        }
+                        className="font-medium text-white no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
+                      >
+                        Deactivate
+                      </button>
                     </td>
                   </tr>
                 ))}
