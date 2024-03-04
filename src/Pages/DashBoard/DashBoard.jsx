@@ -44,7 +44,7 @@ const DashBoard = () => {
           {/* Wallent and user */}
           <div>
             <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-1">
-              <p className="text-3xl text-black font-bold ">Wallet & Users</p>
+              <p className="text-3xl text-black  font-semibold ">Wallet & Users</p>
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col items-center justify-center rounded  bg-blue-500  h-32  ">
@@ -62,7 +62,7 @@ const DashBoard = () => {
 
           <div>
             <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-1">
-              <p className="text-3xl  text-black font-bold">
+              <p className="text-3xl  text-black  font-semibold">
                 Demographic System Management
               </p>
             </div>
@@ -84,7 +84,7 @@ const DashBoard = () => {
           {/* Child System Management */}
           <div>
             <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-b-1">
-              <p className="text-3xl  text-black font-bold  ">
+              <p className="text-3xl  text-black  font-semibold  ">
                 Child System Management
               </p>
             </div>
