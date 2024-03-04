@@ -63,8 +63,6 @@ const AddAdminUser = () => {
         [name]: value,
       });
     
-    
-    
   };
 
   // Function to handle form submission
