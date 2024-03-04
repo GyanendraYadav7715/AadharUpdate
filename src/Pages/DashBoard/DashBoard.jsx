@@ -5,8 +5,6 @@ import { Local_Url } from "../../constant/constant";
 import axios from "axios";
 
 const DashBoard = () => {
-  const [data, setData] = useState([]);
-
   const title = "Dashboard";
   const links = [
     { title: "Home", href: "/superadmin" },
@@ -24,19 +22,19 @@ const DashBoard = () => {
   const [totalUsers, setTotalUsers] = useState(0);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const apiUrl = `${Local_Url}/api/v1/admin/all-users`;
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(); // Replace '/api/superadmin' with your actual API endpoint
-      const data = response.data;
-      setWalletBalance(data.walletBalance);
-      setTotalUsers(data.totalUsers);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        const totalUsers = response.data.data.length;
+        setTotalUsers(totalUsers);
+      })
+      .catch((err) => {
+        console.log("Something Went Wrong");
+        // Handle error
+      });
+  }, []);
 
   return (
     <>

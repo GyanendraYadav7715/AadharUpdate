@@ -21,17 +21,16 @@ const ViewUser = () => {
     axios
       .get(apiUrl)
       .then((response) => {
+        console.log("Response data:", response.data);
         setData(response.data.data);
+
+        setFilteredProducts(response.data.data);
       })
       .catch((err) => {
         console.log("Something Went Wrong");
         // Handle error
       });
   }, []);
-
-  useEffect(() => {
-    setFilteredProducts(data);
-  }, [data]);
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -46,7 +45,10 @@ const ViewUser = () => {
 
   const deleteProduct = (index) => {
     // Implement deletion logic here
-    console.log("Deleting product at index:", index);
+    // Remove the product at the specified index from the data array
+    const newData = [...data];
+    newData.splice(index, 1);
+    setData(newData);
   };
 
   return (
@@ -162,16 +164,17 @@ const ViewUser = () => {
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
-                      {product.name}
+                      {product.Name}
                     </td>
-                    <td className="px-6 py-4 border">{product.mobileNumber}</td>
-                    <td className="px-6 py-4 border">{product.username}</td>
-                    <td className="px-6 py-4 border">{product.password}</td>
-                    <td className="px-6 py-4 border">{product.createdBy}</td>
-                    <td className="px-6 py-4 border">{product.balance}</td>
-                    <td className="px-6 py-4 border">{product.childPoint}</td>
+                    <td className="px-6 py-4 border">{product.Phone_n}</td>
+                    <td className="px-6 py-4 border">{product.Username}</td>
+                    <td className="px-6 py-4 border">{product.Password}</td>
+                    <td className="px-6 py-4 border">{product.createdAt}</td>
+                    <td className="px-6 py-4 border">{product.Balance}</td>
+                    <td className="px-6 py-4 border">{product.Child_token}</td>
                     <td className="px-6 py-4 border">{product.mobilePoint}</td>
-                    <td className="px-6 py-4 border">{product.status}</td>
+                    <td className="px-6 py-4 border">{product.isUserblocked
+}</td>
                     <td className="px-6 py-4 gap-2 flex items-center justify-between">
                       <Link
                         to="#"

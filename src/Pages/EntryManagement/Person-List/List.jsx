@@ -11,7 +11,6 @@ import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 
-
 function List() {
   //api data fetch
   const [data, setData] = useState([]);
@@ -19,7 +18,7 @@ function List() {
   const [selectedRow, setSelectedRow] = useState(null);
   const userData = localStorage.getItem("user");
   let role = "";
-  let userName=""
+  let userName = "";
   if (userData) {
     // Parse JSON string to object
     const userObj = JSON.parse(userData);
@@ -45,11 +44,11 @@ function List() {
       icon: "ri-add-line text-white text-2xl ",
     },
   ];
-    const tableRef = useRef(null);
+  const tableRef = useRef(null);
 
   // Define your query parameters as an object
   const queryParams = {
-    "userName": userName
+    userName: userName,
     // Add more parameters as needed
   };
   useEffect(() => {
@@ -57,11 +56,10 @@ function List() {
     const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
 
     // Make a GET request using Axios
-  
-    
-     console.log("daddss ", queryParams);
+
+    console.log("daddss ", queryParams);
     axios
-      .get(apiUrl,{params : queryParams})
+      .get(apiUrl, { params: queryParams })
       .then((response) => {
         setData(response.data.data);
         // console.log(response.data.data)
