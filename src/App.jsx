@@ -9,6 +9,7 @@ import Retailer from "./Users/Retailer/Retailer";
 import Backoffice from "./Users/BackOffice/Backoffice";
 
 import Balance from "./Pages/Balance/Balance";
+import Userlimit from "./Pages/Userlimit/Userlimit"
 import History from "./Pages/TansferHistory/History";
 
 import AddAdminUser from "./Pages/UserManagement/AddAdminUser/AddAdminUser";
@@ -33,7 +34,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { RiH1 } from "react-icons/ri";
+ 
 
 
 // I am Here To Learn About Git 
@@ -54,7 +55,7 @@ function Layout() {
     "/",
     "/forget",
     "/backoffice",
-    "/public/form.pdf",
+    
   ].includes(location.pathname);
 
   return (
@@ -66,7 +67,6 @@ function Layout() {
         </div>
       )}
       <Routes>
-        <Route path="/public/form.pdf" element={<h1>Form Pdf</h1>} />
         <Route path="/" element={<Login />} />
         <Route path="/forget" element={<Forget />} />
         <Route element={<Protected />}>
@@ -75,7 +75,7 @@ function Layout() {
           <Route path="/backoffice" element={<Backoffice />} />
 
           <Route path="/balance_transfer" element={<Balance />} />
-          <Route path="/user_limit" element={<Balance />} />
+          <Route path="/user_limit" element={<Userlimit />} />
           <Route path="/history" element={<History />} />
 
           <Route path="/adduser" element={<AddAdminUser />} />

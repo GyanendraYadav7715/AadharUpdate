@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
+
+import { Local_Url } from "../../constant/constant";
 import axios from "axios";
+
 const DashBoard = () => {
   const title = "Dashboard";
   const links = [
@@ -15,27 +18,24 @@ const DashBoard = () => {
       icon: "ri-add-line text-white text-2xl ",
     },
   ];
-const [walletBalance, setWalletBalance] = useState(0);
-const [totalUsers, setTotalUsers] = useState(0);
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
 
-useEffect(() => {
-  fetchData();
-}, []);
+  useEffect(() => {
+    const apiUrl = `${Local_Url}/api/v1/admin/all-users`;
 
-const fetchData = async () => {
-  try {
-    const response = await axios.get(
-      
-    ); // Replace '/api/superadmin' with your actual API endpoint
-    const data = response.data;
-    setWalletBalance(data.walletBalance);
-    setTotalUsers(data.totalUsers);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        const totalUsers = response.data.data.length;
+        setTotalUsers(totalUsers);
+      })
+      .catch((err) => {
+        console.log("Something Went Wrong");
+        // Handle error
+      });
+  }, []);
 
- 
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
@@ -44,7 +44,7 @@ const fetchData = async () => {
           {/* Wallent and user */}
           <div>
             <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-1">
-              <p className="text-3xl text-black font-bold ">Wallet & Users</p>
+              <p className="text-3xl text-black  font-semibold ">Wallet & Users</p>
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col items-center justify-center rounded  bg-blue-500  h-32  ">
@@ -62,7 +62,7 @@ const fetchData = async () => {
 
           <div>
             <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-1">
-              <p className="text-3xl  text-black font-bold">
+              <p className="text-3xl  text-black  font-semibold">
                 Demographic System Management
               </p>
             </div>
@@ -84,7 +84,7 @@ const fetchData = async () => {
           {/* Child System Management */}
           <div>
             <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-b-1">
-              <p className="text-3xl  text-black font-bold  ">
+              <p className="text-3xl  text-black  font-semibold  ">
                 Child System Management
               </p>
             </div>

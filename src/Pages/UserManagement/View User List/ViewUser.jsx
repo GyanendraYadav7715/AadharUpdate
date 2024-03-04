@@ -1,23 +1,40 @@
-import { useState, useRef,useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { Local_Url } from "../../../constant/constant";
+import axios from "axios";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import { Link } from "react-router-dom";
 
 const ViewUser = () => {
- const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-   useEffect(() => {
-    setFilteredProducts(products);
+  const [data, setData] = useState([]);
+  const tableRef = useRef(null);
+
+  useEffect(() => {
+    const apiUrl = `${Local_Url}/api/v1/admin/all-users`;
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log("Response data:", response.data);
+        setData(response.data.data);
+
+        setFilteredProducts(response.data.data);
+      })
+      .catch((err) => {
+        console.log("Something Went Wrong");
+        // Handle error
+      });
   }, []);
 
-  // Function to handle search
   const handleSearch = (query) => {
     setSearchQuery(query);
-    const filtered = products.filter((product) =>
+    const filtered = data.filter((product) =>
       Object.values(product)
         .join(" ")
         .toLowerCase()
@@ -25,169 +42,62 @@ const ViewUser = () => {
     );
     setFilteredProducts(filtered);
   };
-  //Breadcrumb Data
-  const title = "View User Data";
-  const links = [
-    { title: "Home", href: "/superadmin" },
-    { title: "View User Data ", href: "" },
-  ];
-  const mylinks = [
-    {
-      to: "/adduser",
-      text: "Create New ",
-      icon: "ri-add-line text-white text-2xl ",
-    },
-  ];
-  // Define and initialize the tableRef
-  const tableRef = useRef(null);
- ;
-  // Define products array
-  const [products, setProducts] = useState([
-    {
-      name: "Ashok Singh",
-      mobile: "2223765698",
-      username: "UP_UID_NS_3545",
-      password: "Ashok@889#",
-      createdBy: "Admin",
-      balance: "500",
-      childPoint: "50",
-      mobilePoint: "20",
-      status: "Active",
-    },
 
-    {
-      name: "John Doe",
-      mobile: "1234567890",
-      username: "JD_123",
-      password: "Password123!",
-      createdBy: "Admin",
-      balance: "1000",
-      childPoint: "75",
-      mobilePoint: "30",
-      status: "Active",
-    },
-    {
-      name: "Emma Smith",
-      mobile: "9876543210",
-      username: "ES_456",
-      password: "Emma@Smith456",
-      createdBy: "Admin",
-      balance: "750",
-      childPoint: "60",
-      mobilePoint: "25",
-      status: "Active",
-    },
-    {
-      name: "Lisa Johnson",
-      mobile: "5551234567",
-      username: "LJ_789",
-      password: "LisaPassword789",
-      createdBy: "Admin",
-      balance: "300",
-      childPoint: "40",
-      mobilePoint: "15",
-      status: "Active",
-    },
-    {
-      name: "Michael Brown",
-      mobile: "4447891234",
-      username: "MB_987",
-      password: "Brown@Password987",
-      createdBy: "Admin",
-      balance: "900",
-      childPoint: "80",
-      mobilePoint: "35",
-      status: "Active",
-    },
-    {
-      name: "Sarah Lee",
-      mobile: "3336549872",
-      username: "SL_654",
-      password: "SarahLee!654",
-      createdBy: "Admin",
-      balance: "600",
-      childPoint: "55",
-      mobilePoint: "22",
-      status: "Active",
-    },
-    {
-      name: "David Wilson",
-      mobile: "7774567890",
-      username: "DW_111",
-      password: "DavidWilson111!",
-      createdBy: "Admin",
-      balance: "400",
-      childPoint: "45",
-      mobilePoint: "18",
-      status: "Active",
-    },
-    {
-      name: "Emily Taylor",
-      mobile: "8889876543",
-      username: "ET_222",
-      password: "Taylor@222",
-      createdBy: "Admin",
-      balance: "850",
-      childPoint: "70",
-      mobilePoint: "28",
-      status: "Active",
-    },
-    {
-      name: "James Anderson",
-      mobile: "6667891234",
-      username: "JA_333",
-      password: "Anderson333!",
-      createdBy: "Admin",
-      balance: "700",
-      childPoint: "65",
-      mobilePoint: "26",
-      status: "Active",
-    },
-    {
-      name: "Sophia Martinez",
-      mobile: "9996549872",
-      username: "SM_999",
-      password: "Sophia@999",
-      createdBy: "Admin",
-      balance: "950",
-      childPoint: "90",
-      mobilePoint: "40",
-      status: "Active",
-    },
-  ]);
- 
+const deleteProduct = (userId) => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this user?"
+  );
+  if (confirmDelete) {
+    // Send a DELETE request to your server API to delete the user
+    axios
+      .delete(`${Local_Url}/api/v1/admin/users/${userId}`)
+      .then((response) => {
+        // If deletion is successful, update the local data state
+        const updatedData = data.filter((user) => user.id !== userId);
+        setData(updatedData);
+      })
+      .catch((error) => {
+        console.error("Error deleting user:", error);
+        // Handle error
+      });
+  }
+};
 
-  // Function to handle deletion of a product
-  const deleteProduct = (index) => {
-    // Create a copy of the products array
-    const updatedProducts = [...products];
-    // Remove the product at the specified index
-    updatedProducts.splice(index, 1);
-    // Update the state with the modified array
-    setProducts(updatedProducts);
-  };
 
   return (
     <>
-      <Breadcrumb title={title} links={links} mylinks={mylinks} />
+      <Breadcrumb
+        title="View User Data"
+        links={[
+          { title: "Home", href: "/superadmin" },
+          { title: "View User Data", href: "" },
+        ]}
+        mylinks={[
+          {
+            to: "/adduser",
+            text: "Create New",
+            icon: "ri-add-line text-white text-2xl",
+          },
+        ]}
+      />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white ">
           <h3 className="text-2xl font-semibold">View User Data-ADMIN</h3>
           <div className="flex items-center justify-between mb-4 mt-4">
             <div>
-              <CopyButton data={products} />
-              <ExcelButton data={products} filename={"ViewUser.xlsx"} />
-              <CSVButton data={products} filename={"ViewUser.csv"} />
+              <CopyButton data={data} />
+              <ExcelButton data={data} filename={"ViewUser.xlsx"} />
+              <CSVButton data={data} filename={"ViewUser.csv"} />
               <PDFButton tableRef={tableRef} filename={"ViewUser.pdf"} />
             </div>
             <SearchElement onSearch={handleSearch} />
           </div>
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg  ">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table
               className="w-full text-sm text-left rtl:text-right text-black shadow-sm"
               ref={tableRef}
             >
-              <thead className="text-base text-black  bg-white  ">
+              <thead className="text-base text-black bg-white">
                 <tr>
                   <th
                     scope="col"
@@ -263,31 +173,32 @@ const ViewUser = () => {
                     key={index}
                     className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
                   >
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap border ">
+                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
                       {product.name}
                     </td>
-                    <td className="px-6 py-4 border">{product.mobile}</td>
-                    <td className="px-6 py-4 border">{product.username}</td>
-                    <td className="px-6 py-4 border">{product.password}</td>
-                    <td className="px-6 py-4 border">{product.createdBy}</td>
-                    <td className="px-6 py-4 border">{product.balance}</td>
-                    <td className="px-6 py-4 border">{product.childPoint}</td>
+                    <td className="px-6 py-4 border">{product.Phone_n}</td>
+                    <td className="px-6 py-4 border">{product.Username}</td>
+                    <td className="px-6 py-4 border">{product.Password}</td>
+                    <td className="px-6 py-4 border">{product.createdAt}</td>
+                    <td className="px-6 py-4 border">{product.Balance}</td>
+                    <td className="px-6 py-4 border">{product.Child_token}</td>
                     <td className="px-6 py-4 border">{product.mobilePoint}</td>
-                    <td className="px-6 py-4 border">{product.status}</td>
+                    <td className="px-6 py-4 border">
+                      {product.isUserblocked}
+                    </td>
                     <td className="px-6 py-4 gap-2 flex items-center justify-between">
                       <Link
-                        to="#"
+                        // to={`/edituser/${product.id}`}
                         className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                       >
-                        <i class="ri-refresh-line text-white"></i>
+                        <i className="ri-refresh-line text-white"></i>
                       </Link>
-                      {/* Add onClick event to delete icon */}
                       <button
-                        onClick={() => deleteProduct(index)}
-                        className="font-medium text-blue-600 no-underline  hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
+                        onClick={() => deleteProduct(product.id)}
+                        className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
                       >
                         <i className="ri-delete-bin-line text-white"></i>
                       </button>

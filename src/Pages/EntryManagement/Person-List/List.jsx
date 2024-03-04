@@ -9,7 +9,6 @@ import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
-import { Local_Url } from "../../../constant/constant";
 
 function List() {
   //api data fetch
@@ -18,6 +17,7 @@ function List() {
   const [selectedRow, setSelectedRow] = useState(null);
   const userData = localStorage.getItem("user");
   let role = "";
+  let userName = "";
   if (userData) {
     // Parse JSON string to object
     const userObj = JSON.parse(userData);
@@ -44,13 +44,20 @@ function List() {
   ];
   const tableRef = useRef(null);
 
+  // Define your query parameters as an object
+  const queryParams = {
+    userName: userName,
+    // Add more parameters as needed
+  };
   useEffect(() => {
     // Define the API endpoint URL
     const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
 
     // Make a GET request using Axios
+
+    console.log("daddss ", queryParams);
     axios
-      .get(apiUrl)
+      .get(apiUrl, { params: queryParams })
       .then((response) => {
         setData(response.data.data);
         // console.log(response.data.data)

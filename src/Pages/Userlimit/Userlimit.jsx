@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 import axios from "axios";
-import {Local_Url} from "../../constant/constant"
+import { Local_Url } from "../../constant/constant";
 
 const Balance = () => {
   const [formData, setFormData] = useState({
@@ -15,10 +15,10 @@ const Balance = () => {
     const { id, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [id]: value,
+        [id]: value,
+      
     }));
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,13 +29,13 @@ const Balance = () => {
     }
 
     try {
-      const apiUrl = `${Local_Url}/api/v1/sharedData/transfer-fund`;
+      const apiUrl = `${Local_Url}/api/v1/sharedData/user_limit`;
       // Make the API POST request
       const response = await axios.post(apiUrl, formData);
 
       // Handle success
       console.log("Response:", response.data);
-      alert("Balance Transfered");
+      alert("User Limit set");
       setFormData({
         Username: "",
         amount: "",
@@ -46,10 +46,10 @@ const Balance = () => {
       alert("Something went worng");
     }
   };
-  const title = "Balance Transfer";
+  const title = "User Limit";
   const links = [
     { title: "Home", href: "/superadmin" },
-    { title: "Balance Transfer", href: "" },
+    { title: "User Limit", href: "" },
   ];
 
   const mylinks = [
@@ -66,7 +66,7 @@ const Balance = () => {
       <div className="p-1 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
           <div className="grid grid-cols-1 gap-4 mb-4 ">
-            <h3 className="text-2xl font-semibold">Balance Transfer</h3>
+            <h3 className="text-2xl font-semibold">Please set the User Limit</h3>
             <form
               onSubmit={handleSubmit}
               className="flex flex-col items-start w-full border p-9 rounded-sm bg-white"
@@ -108,9 +108,12 @@ const Balance = () => {
                 </div>
               </div>
               <div className="p-6">
-                <button className="Submit-button whitespace-nowrap bg-green-600" type="submit">
+                <button
+                  className="Submit-button whitespace-nowrap bg-green-600"
+                  type="submit"
+                >
                   <i class="ri-save-fill"> </i>
-                   Submit
+                  Submit
                 </button>
               </div>
             </form>
