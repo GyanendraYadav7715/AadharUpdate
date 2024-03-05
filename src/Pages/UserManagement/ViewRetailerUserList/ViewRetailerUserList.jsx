@@ -148,7 +148,7 @@ const ViewRetailerUserList = () => {
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap   border">
                       {product.Name}
                     </td>
-                    <td className="px-6 py-4 border">{product.email}</td>
+                    <td className="px-6 py-4 border">{product.Email}</td>
                     <td className="px-6 py-4 border">{product.Phone_n}</td>
                     <td className="px-6 py-4 border">{product.createdBy}</td>
                     <td className="px-6 py-4 border">{product.Password}</td>
