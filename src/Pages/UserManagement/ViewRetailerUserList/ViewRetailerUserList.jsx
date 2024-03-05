@@ -24,7 +24,7 @@ const ViewRetailerUserList = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    const apiUrl = `${Local_Url}/api/v1/admin/all-users`;
+    const apiUrl = `${Local_Url}/api/v1/admin/get-all-retailer`;
 
     axios
       .get(apiUrl)
@@ -148,7 +148,7 @@ const ViewRetailerUserList = () => {
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap   border">
                       {product.Name}
                     </td>
-                    <td className="px-6 py-4 border">{product.email}</td>
+                    <td className="px-6 py-4 border">{product.Email}</td>
                     <td className="px-6 py-4 border">{product.Phone_n}</td>
                     <td className="px-6 py-4 border">{product.createdBy}</td>
                     <td className="px-6 py-4 border">{product.Password}</td>
