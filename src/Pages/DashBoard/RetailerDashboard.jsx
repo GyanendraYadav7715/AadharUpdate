@@ -32,39 +32,35 @@ const DashBoard = () => {
 
       <div className="p-1 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
+          
+
           {/* Demographic System Management */}
 
           <div>
-            <div className="flex items-center justify-center h-24 mb-4 rounded bg-white border-1 shadow-lg">
-              <p className="text-3xl  text-black font-bold underline">
+            <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-1">
+              <p className="text-3xl  text-black  font-semibold">
                 Demographic System Management
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="flex flex-col  items-center justify-center rounded  bg-blue-500  h-32  ">
+              <div className="flex flex-col  items-center justify-center rounded  bg-yellow-500  h-32  ">
                 <h4 className="text-white">102</h4>
-                <p className="text-2xl  text-white ">Main Wallet</p>
+                <p className="text-2xl  text-white ">Total Applications</p>
               </div>
-              <div className="flex flex-col items-center justify-center rounded bg-yellow-500  h-32  ">
+              <div className="flex flex-col items-center justify-center rounded bg-green-500  h-32  ">
                 <h4 className="text-white">0</h4>
-                <p className="text-2xl  text-white ">Total Applications </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="flex flex-col  items-center justify-center rounded bg-green-500   h-32  ">
-                <h4 className="text-white">102</h4>
                 <p className="text-2xl  text-white ">Total Completed</p>
               </div>
-              <div className="flex flex-col items-center justify-center rounded  bg-red-500  h-32  ">
-                <h4 className="text-white">0</h4>
-                <p className="text-2xl  text-white ">Total Rejected</p>
-              </div>
+            </div>
+            <div className="flex flex-col items-center justify-center rounded bg-red-500  h-32 mb-5 ">
+              <h4 className="text-white">0</h4>
+              <p className="text-2xl  text-white ">Total Rejected</p>
             </div>
           </div>
           {/* Child System Management */}
           <div>
-            <div className="flex items-center justify-center h-24 mb-4 rounded bg-white border-1 shadow-lg">
-              <p className="text-3xl  text-black font-bold underline ">
+            <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-b-1">
+              <p className="text-3xl  text-black  font-semibold  ">
                 Child System Management
               </p>
             </div>
@@ -86,8 +82,8 @@ const DashBoard = () => {
             </div>
             {/* Mobile System Management */}
             <div>
-              <div className="flex items-center justify-center h-24 mb-4 rounded bg-white border-1 shadow-lg">
-                <p className="text-3xl  text-black font-semibold underline ">
+              <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-1">
+                <p className="text-3xl  text-black font-semibold  ">
                   Mobile System Management
                 </p>
               </div>
@@ -107,7 +103,7 @@ const DashBoard = () => {
               </div>
               <div className="flex flex-col items-center justify-center rounded bg-red-500  h-32 mb-5 ">
                 <h4 className="text-white">4</h4>
-                <p className="text-2xl  text-white  ">Total Mobile Rejected</p>
+                <p className="text-2xl text-white">Total Mobile Rejected</p>
               </div>
             </div>
           </div>
