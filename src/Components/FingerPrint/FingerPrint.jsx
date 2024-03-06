@@ -52,7 +52,7 @@ const Box = ({ onFingerprintUpload }) => {
 
     try {
       const response = await axios.post(
-        `${Local_Url}/api/v1/retailer/reatailer-fingerdata`,
+        `${Local_Url}/api/v1/retailer/retailer-fingerdata`,
         formData
       );
       console.log("Fingerprint uploaded successfully:", response.data.imageUrl);
