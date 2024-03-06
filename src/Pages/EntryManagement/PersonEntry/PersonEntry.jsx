@@ -208,7 +208,31 @@ const PersonEntry = () => {
               placeholder="example@update.com"
               value={formData.Email}
             />
-            {/* Handle file inputs similarly */}
+            <Input
+              onChange={handleInputChange}
+              label="POI"
+              type="file"
+              name="file"
+              placeholder=""
+            />
+            <Input
+              onChange={handleInputChange}
+              label="POA"
+              type="file"
+              name="POA"
+              placeholder=""
+              value={formData.POA}
+            />
+            <Input
+              onChange={handleInputChange}
+              label="POB"
+              type="file"
+              name="POB"
+              placeholder=""
+              value={formData.POB}
+            />
+          </div>
+          <div className="PurposeGrid Address">
             <Input
               onChange={handleInputChange}
               label="Address"
