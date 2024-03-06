@@ -5,7 +5,7 @@ import { Local_Url } from "../../constant/constant";
 import Loder from "../../Loder/Loder";
 import axios from "axios";
 
-const Box = () => {
+const Box = ({ onFingerprintUpload }) => {
   const [captureCount, setCaptureCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -52,10 +52,13 @@ const Box = () => {
 
     try {
       const response = await axios.post(
-        `${Local_Url}/api/v1/retailer/reatailer-fingerdata`,
+        `${Local_Url}/api/v1/retailer/retailer-fingerdata`,
         formData
       );
       console.log("Fingerprint uploaded successfully:", response.data.imageUrl);
+
+      // Call the callback function with the URL of the uploaded fingerprint image
+      onFingerprintUpload(response.data.imageUrl);
     } catch (error) {
       console.error("Error uploading fingerprint:", error);
     }
@@ -72,6 +75,7 @@ const Box = () => {
       >
         {isLoading ? <Loder /> : "Capture Finger"}
       </button>
+      <p>{`Fingerprints captured: ${captureCount} / 5`}</p>
     </div>
   );
 };

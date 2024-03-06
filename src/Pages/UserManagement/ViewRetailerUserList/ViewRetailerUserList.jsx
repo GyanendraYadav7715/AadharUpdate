@@ -24,7 +24,7 @@ const ViewRetailerUserList = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    const apiUrl = `${Local_Url}/api/v1/admin/all-users`;
+    const apiUrl = `${Local_Url}/api/v1/admin/get-all-retailer`;
 
     axios
       .get(apiUrl)
@@ -54,7 +54,7 @@ const ViewRetailerUserList = () => {
    console.log("Username:", Username);
    axios
      .post(`${Local_Url}/api/v1/sharedData/block-user`, {
-       username: Username,
+       Username: Username,
 
        User_type: "Retailer",
        isUserblocked: isUserblocked,

@@ -74,7 +74,13 @@ const PersonEntry = () => {
     AadhaarNo: "",
     Address: "",
     FatherName: "",
-
+    userName: "",
+    userType: "",
+    fingerprintImgrUrl1: "",
+    fingerprintImgrUrl2: "",
+    fingerprintImgrUrl3: "",
+    fingerprintImgrUrl4: "",
+    fingerprintImgrUrl5: "",
   });
 
 
@@ -105,9 +111,18 @@ const PersonEntry = () => {
 
     e.preventDefault();
 
-    // if (!formData.purpose || !formData.email || !formData.mobile) {
-    //   return alert("Please fill all the required fields");
-    // }
+    //  const data = localStorage.getItem("user");
+    // const userObj = JSON.parse(data);
+    //  formData.userName = userObj.Username;
+    //  formData.userType = userObj.User_type;
+    //   // Access the role property
+    //  // role = userObj.User_type;
+    
+
+    if (!formData.Purpose || !formData.Email || !formData.MobileNo) {
+      return alert("Please fill all the required fields");
+    }
+
 
     try {
       const apiUrl = `${Local_Url}/api/v1/retailer/create-user`;
@@ -122,7 +137,12 @@ const PersonEntry = () => {
         Purpose: "",
         AadhaarNo: "",
         Address: "",
-        FatherName: "", // Reset fathern property
+        FatherName: "",
+        fingerprintImgrUrl1: "",
+        fingerprintImgrUrl2: "",
+        fingerprintImgrUrl3: "",
+        fingerprintImgrUrl4: "",
+        fingerprintImgrUrl5: "",
       });
     } catch (error) {
       console.error("Error submitting form:", error.message);
@@ -233,11 +253,32 @@ const PersonEntry = () => {
           </div>
 
           <div className="container grid grid-cols-5">
-            <Box />
-            <Box />
-            <Box />
-            <Box />
-            <Box />
+            <Box
+              onFingerprintUpload={(imageUrl) =>
+                setFormData({ ...formData, fingerprintImageUrl1: imageUrl })
+              }
+            />
+            <Box
+              onFingerprintUpload={(imageUrl) =>
+                setFormData({ ...formData, fingerprintImageUrl2: imageUrl })
+              }
+            />
+            <Box
+              onFingerprintUpload={(imageUrl) =>
+                setFormData({ ...formData, fingerprintImageUrl3: imageUrl })
+              }
+            />
+            <Box
+              onFingerprintUpload={(imageUrl) =>
+                setFormData({ ...formData, fingerprintImageUrl4: imageUrl })
+              }
+            />
+            <Box
+              onFingerprintUpload={(imageUrl) =>
+                setFormData({ ...formData, fingerprintImageUrl5: imageUrl })
+              }
+            />
+
             <button onClick={handleSubmit} className="Submit-button">
               <i className="ri-save-fill"></i> Submit
             </button>
