@@ -25,7 +25,7 @@ const Box = ({ onFingerprintUpload }) => {
           );
           await uploadToS3(imageBlob);
           setCaptureCount((prevCount) => prevCount + 1);
-          console.log(fingerData.data.BitmapData);
+          console.log(fingerData);
         } else {
           alert("Finger Not Found");
         }

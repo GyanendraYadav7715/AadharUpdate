@@ -1,10 +1,11 @@
 import axios from "axios";
-import React, { useState ,useEffect } from "react";
+import React, { useState } from "react";
 import "./PersonEntry.css";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Local_Url } from "../../../constant/constant";
 
+//custom input define
 export const Input = ({
   label,
   type,
@@ -12,7 +13,7 @@ export const Input = ({
   placeholder,
   onChange,
   value,
-  required,
+  required = false, // Default value set to false
   maxLength,
 }) => {
   return (
@@ -29,61 +30,39 @@ export const Input = ({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
-        required={required} // Changed require to required
+        required={required ? "required" : undefined} // Set required attribute conditionally
         maxLength={maxLength}
       />
     </div>
   );
 };
 
+//MAIN FUNCTION TO COLLECTE FORM DATA
 const PersonEntry = () => {
-
-  const userData = localStorage.getItem("user");
-  let role = "";
-  if (userData) {
-    // Parse JSON string to object
-    const userObj = JSON.parse(userData);
-    // Access the role property
-    role = userObj.role;
-  }
-  const title = "Add Customer";
-  const links =
-    role === "Admin"
-      ? [
-          { title: "Home", href: "/superadmin" },
-          { title: "Add Customer", href: "" },
-        ]
-      : [
-          { title: "Home", href: "/retailer" },
-          { title: "Add Customer", href: "" },
-        ];
-  const mylinks = [
-    {
-      to: "/list",
-      text: "View Customer",
-      icon: "ri-team-line text-white text-2xl ",
-    },
-  ];
-
   const [formData, setFormData] = useState({
-    Name: "",
-    DOB: "",
-    Email: "",
-    MobileNo: "",
     Purpose: "",
-    AadhaarNo: "",
-    Address: "",
+    Name: "",
     FatherName: "",
-    userName: "",
-    userType: "",
-    fingerprintImgrUrl1: "",
-    fingerprintImgrUrl2: "",
-    fingerprintImgrUrl3: "",
-    fingerprintImgrUrl4: "",
-    fingerprintImgrUrl5: "",
+    DOB: "",
+    AadhaarNo: "",
+    MobileNo: "",
+    Email: "",
+    Address: "",
+    Proof: {
+      POI: "",
+      POB: "",
+      POA: "",
+    },
+    FingerPrint: {
+      FingerPrint1: "",
+      FingerPrint2: "",
+      FingerPrint3: "",
+      FingerPrint4: "",
+      FingerPrint5: "",
+    },
   });
 
-
+  //FORM DATA DATE CREATION
   const formatCurrentDate = () => {
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${String(
@@ -96,8 +75,7 @@ const PersonEntry = () => {
     return formattedDate;
   };
 
-
-
+  //HANDLE FORM IN THE CONSOLE
   const handleInputChange = (name, value) => {
     console.log(`Handling input for ${name}: ${value}`);
     setFormData({
@@ -107,51 +85,64 @@ const PersonEntry = () => {
     });
   };
 
+  //SUBMITING THE FORM WITH WHOLE DATA
   const handleSubmit = async (e) => {
-
     e.preventDefault();
-
-    //  const data = localStorage.getItem("user");
-    // const userObj = JSON.parse(data);
-    //  formData.userName = userObj.Username;
-    //  formData.userType = userObj.User_type;
-    //   // Access the role property
-    //  // role = userObj.User_type;
-    
 
     if (!formData.Purpose || !formData.Email || !formData.MobileNo) {
       return alert("Please fill all the required fields");
     }
-
 
     try {
       const apiUrl = `${Local_Url}/api/v1/retailer/create-user`;
       const response = await axios.post(apiUrl, formData);
       console.log("Form submitted successfully:", response.data.data);
       alert("Form submitted successfully:");
+      // Reset form data
       setFormData({
-        Name: "",
-        DOB: "",
-        Email: "",
-        MobileNo: "",
         Purpose: "",
-        AadhaarNo: "",
-        Address: "",
+        Name: "",
         FatherName: "",
-        fingerprintImgrUrl1: "",
-        fingerprintImgrUrl2: "",
-        fingerprintImgrUrl3: "",
-        fingerprintImgrUrl4: "",
-        fingerprintImgrUrl5: "",
+        DOB: "",
+        AadhaarNo: "",
+        MobileNo: "",
+        Email: "",
+        Address: "",
+        Proof: {
+          POI: "",
+          POB: "",
+          POA: "",
+        },
+        FingerPrint: {
+          FingerPrint1: "",
+          FingerPrint2: "",
+          FingerPrint3: "",
+          FingerPrint4: "",
+          FingerPrint5: "",
+        },
       });
     } catch (error) {
       console.error("Error submitting form:", error.message);
+      alert("Error submitting form:", error.message);
     }
   };
 
   return (
     <>
-      <Breadcrumb title={title} links={links} mylinks={mylinks} />
+      <Breadcrumb
+        title="Add Customer"
+        links={[
+          { title: "Home", href: "/superadmin" },
+          { title: "Add Customer", href: "" },
+        ]}
+        mylinks={[
+          {
+            to: "/list",
+            text: "View Customer",
+            icon: "ri-team-line text-white text-2xl ",
+          },
+        ]}
+      />
 
       <div className=" p-3 sm:ml-64 bg-gray-200">
         <div className="p-2 border-2 rounded-lg shadow-xl bg-white">
@@ -163,7 +154,7 @@ const PersonEntry = () => {
               name="Purpose"
               value={formData.Purpose}
               placeholder="Enter Purpose"
-              required // Removed "require"
+              required
             />
           </div>
           <div className="formGrid">
@@ -217,31 +208,7 @@ const PersonEntry = () => {
               placeholder="example@update.com"
               value={formData.Email}
             />
-            <Input
-              onChange={handleInputChange}
-              label="POI"
-              type="file"
-              name="file"
-              placeholder=""
-            />
-            <Input
-              onChange={handleInputChange}
-              label="POA"
-              type="file"
-              name="POA"
-              placeholder=""
-              value={formData.POA}
-            />
-            <Input
-              onChange={handleInputChange}
-              label="POB"
-              type="file"
-              name="POB"
-              placeholder=""
-              value={formData.POB}
-            />
-          </div>
-          <div className="PurposeGrid Address">
+            {/* Handle file inputs similarly */}
             <Input
               onChange={handleInputChange}
               label="Address"
@@ -251,31 +218,60 @@ const PersonEntry = () => {
               value={formData.Address}
             />
           </div>
-
           <div className="container grid grid-cols-5">
             <Box
               onFingerprintUpload={(imageUrl) =>
-                setFormData({ ...formData, fingerprintImageUrl1: imageUrl })
+                setFormData({
+                  ...formData,
+                  FingerPrint: {
+                    ...formData.FingerPrint,
+                    FingerPrint1: imageUrl,
+                  },
+                })
               }
             />
             <Box
               onFingerprintUpload={(imageUrl) =>
-                setFormData({ ...formData, fingerprintImageUrl2: imageUrl })
+                setFormData({
+                  ...formData,
+                  FingerPrint: {
+                    ...formData.FingerPrint,
+                    FingerPrint2: imageUrl,
+                  },
+                })
               }
             />
             <Box
               onFingerprintUpload={(imageUrl) =>
-                setFormData({ ...formData, fingerprintImageUrl3: imageUrl })
+                setFormData({
+                  ...formData,
+                  FingerPrint: {
+                    ...formData.FingerPrint,
+                    FingerPrint3: imageUrl,
+                  },
+                })
               }
             />
             <Box
               onFingerprintUpload={(imageUrl) =>
-                setFormData({ ...formData, fingerprintImageUrl4: imageUrl })
+                setFormData({
+                  ...formData,
+                  FingerPrint: {
+                    ...formData.FingerPrint,
+                    FingerPrint4: imageUrl,
+                  },
+                })
               }
             />
             <Box
               onFingerprintUpload={(imageUrl) =>
-                setFormData({ ...formData, fingerprintImageUrl5: imageUrl })
+                setFormData({
+                  ...formData,
+                  FingerPrint: {
+                    ...formData.FingerPrint,
+                    FingerPrint5: imageUrl,
+                  },
+                })
               }
             />
 
