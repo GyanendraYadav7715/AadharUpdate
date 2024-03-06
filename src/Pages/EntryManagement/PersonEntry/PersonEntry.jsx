@@ -110,7 +110,7 @@ const PersonEntry = () => {
     try {
       const apiUrl = `${Local_Url}/api/v1/retailer/create-user`;
       const response = await axios.post(apiUrl, formData);
-      console.log("Form submitted successfully:", response.data.data);
+      console.log("Form submitted successfully:", response.data);
       alert("Form submitted successfully:");
       // Reset form data
       setFormData({
