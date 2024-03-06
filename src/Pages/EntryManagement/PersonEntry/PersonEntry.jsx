@@ -39,6 +39,14 @@ export const Input = ({
 
 //MAIN FUNCTION TO COLLECTE FORM DATA
 const PersonEntry = () => {
+  const userData = localStorage.getItem("user");
+  let role = "";
+  if (userData) {
+    // Parse JSON string to object
+    const userObj = JSON.parse(userData);
+    // Access the role property
+    role = userObj.role;
+  }
   const [formData, setFormData] = useState({
     Purpose: "",
     Name: "",
@@ -88,6 +96,12 @@ const PersonEntry = () => {
   //SUBMITING THE FORM WITH WHOLE DATA
   const handleSubmit = async (e) => {
     e.preventDefault();
+     const data = localStorage.getItem("user");
+    const userObj = JSON.parse(data);
+     formData.userName = userObj.Username;
+     formData.userType = userObj.User_type;
+      // Access the role property
+     role = userObj.User_type;
 
     if (!formData.Purpose || !formData.Email || !formData.MobileNo) {
       return alert("Please fill all the required fields");
@@ -212,8 +226,9 @@ const PersonEntry = () => {
               onChange={handleInputChange}
               label="POI"
               type="file"
-              name="file"
+              name="POI"
               placeholder=""
+              value={formData.POI}
             />
             <Input
               onChange={handleInputChange}
