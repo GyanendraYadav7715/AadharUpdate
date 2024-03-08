@@ -1,48 +1,10 @@
-import React from "react";
-import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Local_Url} from "../../../constant/constant";
-
-
-
-export const CustomInput = ({ label, type, name, placeholder, onChange, value ,maxLength}) => {
-  return (
-    <div className="inputContainer">
-      <div className="inputWrapper">
-        <label htmlFor={name} className="label">
-          {label}
-        </label>
-      </div>
-      <input
-        name={name}
-        type={type}
-        className="inputField"
-        placeholder={placeholder}
-        value={value}
-        required
-        onChange={(e) => onChange(name, e.target.value)}
-        maxLength={maxLength}
-      />
-    </div>
-  );
-};
-
+import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import CustomInput from "../../../Components/CustomeInput/CustomInput";
+import { Local_Url } from "../../../constant/constant";
 
 const AddAdminUser = () => {
-
-  const title = " Add User";
-  const links = [
-    { title: "Home", href: "/superadmin" },
-    { title: "Add User", href: "" },
-  ];
-  const mylinks = [
-    {
-      to: "/viewuser",
-      text: "View Customer",
-      icon: "ri-team-line text-white text-2xl ",
-    },
-  ];
   const [formData, setFormData] = useState({
     Name: "",
     Email: "",
@@ -52,55 +14,41 @@ const AddAdminUser = () => {
     User_type: "",
     Username: "",
     Password: "",
-    "superAdminUser":""
+    superAdminUser: "",
   });
 
-  // Function to handle form input changes
   const handleInputChange = (name, value) => {
-    console.log(`Handling input for ${name}: ${value}`);
-  
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    
-    
-    
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!formData.Name || !formData.Email || !formData.Username || !formData.Balance || !formData.Phone_n || !formData.Password  || !formData.Child_token) {
-      
-      return alert("please filll the blank field first");
+    const requiredFields = [
+      "Name",
+      "Email",
+      "Username",
+      "Balance",
+      "Phone_n",
+      "Password",
+      "Child_token",
+    ];
+    if (requiredFields.some((field) => !formData[field])) {
+      return alert("Please fill all required fields.");
     }
-    const userData = localStorage.getItem("user");
-    let userName = "";
-    if (userData) {
-      // Parse JSON string to object
-      const userObj = JSON.parse(userData);
-      userName = userObj.Username;
-    }
-     
-    formData.superAdminUser = userName;
+    const userData = JSON.parse(localStorage.getItem("user"));
+    formData.superAdminUser = userData ? userData.Username : "";
 
     try {
-      // Define the API endpoint URL
       const apiUrl = `${Local_Url}/api/v1/sharedData/add-user`;
-
-      // Make a POST request using Axios
       const response = await axios.post(apiUrl, formData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-
-      // Handle successful response
-      console.log("Form submitted successfully:", response.data);
       alert("Form submitted successfully:");
-      // Optionally, reset the form after submission
       setFormData({
         Name: "",
         Email: "",
@@ -112,84 +60,75 @@ const AddAdminUser = () => {
         Password: "",
       });
     } catch (error) {
-      // Handle submission error
       console.error("Error submitting form:", error.message);
     }
   };
 
   return (
     <>
-      <Breadcrumb title={title} links={links} mylinks={mylinks} />
+      <Breadcrumb title={"Add User"} links={[{ title: "Home", href: "/superadmin" }, { title: "Add User" }]} mylinks={[{to: "/viewuser",text: "View Customer",icon: "ri-team-line text-white text-2xl ",},]}/>
       <div className="p-4 sm:ml-64 bg-gray-300">
-        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg  bg-white">
+        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <h3 className="text-2xl font-semibold ml-10">Add Customer</h3>
           <form className="m-5 p-6 border-1 shadow-sm rounded-md bg-white">
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <CustomInput
-                onChange={handleInputChange}
                 label="Full name"
-                id="mobile"
                 name="Name"
                 value={formData.Name}
+                onChange={handleInputChange}
                 type="text"
                 pattern="[A-Z][a-zA-Z]*"
                 errorMessage="Please enter a text with the first letter capitalized."
                 required=""
               />
               <CustomInput
-                onChange={handleInputChange}
                 label="Username"
-                id="Username"
                 name="Username"
                 value={formData.Username}
+                onChange={handleInputChange}
                 type="text"
                 pattern="[A-Z][a-zA-Z0-9_-]{2,15}"
                 errorMessage="Username must start with a capital letter and be between 3 and 16 characters long, containing only letters, numbers, underscores, and hyphens."
                 required=""
               />
               <CustomInput
-                onChange={handleInputChange}
                 label="Email"
-                id="email"
-                value={formData.Email}
                 name="Email"
+                value={formData.Email}
+                onChange={handleInputChange}
                 type="email"
                 pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                 errorMessage="Please enter a valid email address."
                 required=""
               />
               <CustomInput
-                onChange={handleInputChange}
                 label="Mobile Number"
-                id="mobile"
                 name="Phone_n"
                 value={formData.Phone_n}
+                onChange={handleInputChange}
                 type="tel"
                 pattern="[0-9]{10}"
                 errorMessage="Please enter a valid 10-digit mobile number."
                 required=""
                 maxLength={10}
-                
               />
-
               <CustomInput
-                onChange={handleInputChange}
                 label="Balance"
-                id="Balance"
                 name="Balance"
-                type="number"
                 value={formData.Balance}
+                onChange={handleInputChange}
+                type="number"
                 pattern="[0-9]+"
                 errorMessage="Please enter a valid number."
                 required=""
               />
               <CustomInput
-                onChange={handleInputChange}
-                label=" Child Token"
-                id=" Child Token"
+                label="Child Token"
                 name="Child_token"
-                type="number"
                 value={formData.Child_token}
+                onChange={handleInputChange}
+                type="number"
                 pattern="[0-9]+"
                 errorMessage="Please enter a valid number."
                 required=""
@@ -225,9 +164,8 @@ const AddAdminUser = () => {
                 <option value="Back Office">Back Office</option>
               </select>
             </div>
-
             <button className="Submit-button" onClick={handleSubmit}>
-              <i class="ri-save-fill"> </i>
+              <i className="ri-save-fill"></i>
               Submit
             </button>
           </form>
