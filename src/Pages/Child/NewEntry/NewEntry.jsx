@@ -1,70 +1,20 @@
+import React, { useState } from "react";
 import axios from "axios";
-import "./newEntry.css";
-import { useState } from "react";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
+import CustomInput from "../../../Components/CustomeInput/CustomInput";
 import Information from "../../../Components/Information/Information";
-
-export const Input = ({ label, type, name, placeholder, onChange, value,maxLength }) => {
-  return (
-    <div className="inputContainer">
-      <div className="inputWrapper">
-        <label htmlFor={name} className="label">
-          {label}
-        </label>
-      </div>
-      <input
-        name={name}
-        type={type}
-        className="inputField"
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(name, e.target.value)}
-        maxLength={maxLength}
-      />
-    </div>
-  );
-};
-
-//Manage Select Box
-export const Select = ({
-  label,
-  value,
-  options,
-  onChange,
-  name,
-  className,
-}) => {
-  return (
-    <div className="inputContainer">
-      <div className="inputWrapper">
-        <label htmlFor={name} className="label">
-          {label}
-        </label>
-      </div>
-      <select
-        value={value}
-        onChange={onChange}
-        className={className}
-        name={name}
-      >
-        {options.map((option) => (
-          <option value={option.value}>{option.label}</option>
-        ))}
-      </select>
-    </div>
-  );
-};
+import { Select } from "../../../Components/Selection/Select";
+import { Local_Url } from "../../../constant/constant";
 
 const NewEntry = () => {
   const userData = localStorage.getItem("user");
   let role = "";
   if (userData) {
-    // Parse JSON string to object
     const userObj = JSON.parse(userData);
-    // Access the role property
     role = userObj.role;
   }
+
   const title = "Child Enrollment System";
   const links =
     role === "Admin"
@@ -76,42 +26,50 @@ const NewEntry = () => {
           { title: "Home", href: "/retailer" },
           { title: "Child Enrollment System", href: "" },
         ];
+
   const mylinks = [
     {
       to: "/child-entry-list",
       text: "View Customer",
-      icon: "ri-team-line text-white text-2xl ",
+      icon: "ri-team-line text-white text-2xl",
     },
   ];
 
-  // State to manage form data
   const [formData, setFormData] = useState({
-    name: "",
-    dateofbirth: "",
-    email: "",
-    mobile: "",
-    purpose: "",
-    aadhaar: "",
-    address: "",
+    Name: "",
+    SelectedParent: "",
+    ParentName: "",
+    DOB: "",
     Gender: "",
-    Parent_aadhaar: "",
+    Parent_AadhaarNo: "",
+    MobileNo: "",
+    Email: "",
+    Address: "",
+    userName: "",
+    userType: "retailer",
+    Proof: [{ POI: "" }, { POB: "" }, { POA: "" }],
+    FingerPrint: [
+      { FingerPrint1: "" },
+      { FingerPrint2: "" },
+      { FingerPrint3: "" },
+      { FingerPrint4: "" },
+      { FingerPrint5: "" },
+    ],
   });
 
   const formatCurrentDate = () => {
     const date = new Date();
-    const formattedDate = `${date.getFullYear()}-${String(
-      date.getMonth() + 1
-    ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} ${String(
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")} ${String(
       date.getHours()
     ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(
       date.getSeconds()
     ).padStart(2, "0")}`;
-    return formattedDate;
   };
 
-  // Function to handle form input changes
   const handleInputChange = (name, value) => {
-    console.log(`Handling input for ${name}: ${value}`);
     setFormData({
       ...formData,
       [name]: value,
@@ -119,38 +77,48 @@ const NewEntry = () => {
     });
   };
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const data = localStorage.getItem("user");
+    const userObj = JSON.parse(data);
+    formData.userName = userObj.Username;
+    formData.userType = userObj.User_type;
+    role = userObj.User_type;
 
-    if (!formData.purpose || !formData.email || !formData.mobile) {
-      return alert("please filll the blank field first");
+    if (!formData.Name || !formData.Email || !formData.MobileNo) {
+      return alert("Please fill all the required fields.");
     }
 
     try {
-      // Define the API endpoint URL
-      const apiUrl = "http://localhost:4001/Products";
-
-      // Make a POST request using Axios
+      const apiUrl = `${Local_Url}/api/v1/retailer/create-child-user`;
       const response = await axios.post(apiUrl, formData);
-
-      // Handle successful response
       console.log("Form submitted successfully:", response.data);
-      alert("Form submitted successfully:");
-      // Optionally, reset the form after submission
+      alert("Form submitted successfully.");
       setFormData({
-        name: "",
-        dateofbirth: "",
-        email: "",
-        mobile: "",
-        purpose: "",
-        aadhaar: "",
-        address: "",
-        fathern: "",
+        ...formData,
+        Name: "",
+        SelectedParent: "",
+        ParentName: "",
+        DOB: "",
+        Gender: "",
+        Parent_AadhaarNo: "",
+        MobileNo: "",
+        Email: "",
+        Address: "",
+        userName: "",
+        userType: "retailer",
+        Proof: [{ POI: "" }, { POB: "" }, { POA: "" }],
+        FingerPrint: [
+          { FingerPrint1: "" },
+          { FingerPrint2: "" },
+          { FingerPrint3: "" },
+          { FingerPrint4: "" },
+          { FingerPrint5: "" },
+        ],
       });
     } catch (error) {
-      // Handle submission error
       console.error("Error submitting form:", error.message);
+      alert("Error submitting form. Please try again later.");
     }
   };
 
@@ -163,25 +131,25 @@ const NewEntry = () => {
           <Information />
 
           <div className="formGrid">
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Child Name"
               type="text"
-              value={formData.name}
-              name="name"
+              value={formData.Name}
+              name="Name"
               placeholder="Full Name"
             />
 
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Father Name / Mother Name"
               type="text"
-              value={formData.Parent_name}
-              name="Parent_name"
+              value={formData.ParentName}
+              name="ParentName"
               placeholder="Enter Parents Name"
             />
 
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Date of Birth"
               type="date"
@@ -191,7 +159,7 @@ const NewEntry = () => {
             />
 
             {/* Hindi Name  */}
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               type="text"
               value={formData.name_in_hindi}
@@ -199,7 +167,7 @@ const NewEntry = () => {
               placeholder="बच्चे का नाम हिंदी में डालें"
             />
 
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               type="text"
               value={formData.Parent_name_in_hindi}
@@ -209,10 +177,6 @@ const NewEntry = () => {
 
             {/* For Empty Space in  Spacific row */}
             <div className="empty-space"></div>
-
-            {/* Selction Input */}
-
-            {/* Gender Selection */}
 
             <Select
               label="Child Gender"
@@ -237,73 +201,74 @@ const NewEntry = () => {
                 { label: "Father", value: "Father" },
                 { label: "Mother", value: "Mother" },
               ]}
-              name="Parent_aadhaar"
+              name="SelectedParent"
               className="inputField select"
               type="text"
-              value={formData.Parent_aadhaar}
+              value={formData.SelectedParent}
               onChange={handleInputChange}
             />
 
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Father / Mother Aadhaar No"
               type="number"
-              name="Parent_aadhaar"
+              name="Parent_AadhaarNo"
               placeholder="Father / Mother Aadhaar No"
-              value={formData.aadhaar}
+              value={formData.Parent_AadhaarNo}
+              maxLength={12}
             />
 
             {/* Document Upload Inputs */}
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Upload Birth Proof (Only Pdf allow)"
               type="file"
-              name="DOB_Proof"
+              name="POB"
               placeholder=""
-              value={formData.DOB_Proof}
+              value={formData.POB}
             />
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Upload Child Photo Pdf*"
               type="file"
-              name="Child_Photo"
+              name="POI"
               placeholder=""
-              value={formData.Child_Photo}
+              value={formData.POI}
             />
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Upload Form"
               type="file"
-              name="Form"
+              name="POA"
               placeholder=""
-              value={formData.Form}
+              value={formData.POA}
             />
 
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Mobile No."
               type="text"
-              name="mobile"
+              name="MobileNo"
               placeholder="Mobile No."
-              value={formData.mobile}
+              value={formData.MobileNo}
             />
 
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="E-mail ID"
               type="email"
-              name="email"
+              name="Email"
               placeholder="example@update.com"
-              value={formData.email}
+              value={formData.Email}
             />
 
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Address"
               type="text"
-              name="address"
+              name="Address"
               placeholder="House No, Village, City Name, District, State"
-              value={formData.address}
+              value={formData.Address}
             />
 
             {/* For Empty Space in  Spacific row */}
@@ -312,7 +277,7 @@ const NewEntry = () => {
 
             <div className="empty-space"></div>
 
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               type="text"
               name="Address_in_hindi"
@@ -322,13 +287,21 @@ const NewEntry = () => {
           </div>
 
           <div className="container grid grid-cols-5">
-            <Box />
-            <Box />
-            <Box />
-            <Box />
-            <Box />
+            {[...Array(5)].map((_, index) => (
+              <Box
+                key={index}
+                onFingerprintUpload={(imageUrl) =>
+                  setFormData({
+                    ...formData,
+                    FingerPrint: {
+                      ...formData.FingerPrint,
+                      [`FingerPrint${index + 1}`]: imageUrl,
+                    },
+                  })
+                }
+              />
+            ))}
             <button onClick={handleSubmit} className="Submit-button">
-              {" "}
               <i class="ri-save-fill"> </i>
               Submit
             </button>

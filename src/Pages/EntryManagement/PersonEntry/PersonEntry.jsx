@@ -4,38 +4,10 @@ import "./PersonEntry.css";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Local_Url } from "../../../constant/constant";
+import CustomInput from "../../../Components/CustomeInput/CustomInput";
 
-//custom input define
-export const Input = ({
-  label,
-  type,
-  name,
-  placeholder,
-  onChange,
-  value,
-  required = false, // Default value set to false
-  maxLength,
-}) => {
-  return (
-    <div className="inputContainer">
-      <div className="inputWrapper">
-        <label htmlFor={name} className="label">
-          {label}
-        </label>
-      </div>
-      <input
-        name={name}
-        type={type}
-        className="inputField"
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(name, e.target.value)}
-        required={required ? "required" : undefined} // Set required attribute conditionally
-        maxLength={maxLength}
-      />
-    </div>
-  );
-};
+ 
+ 
 
 //MAIN FUNCTION TO COLLECTE FORM DATA
 const PersonEntry = () => {
@@ -161,7 +133,7 @@ const PersonEntry = () => {
       <div className=" p-3 sm:ml-64 bg-gray-200">
         <div className="p-2 border-2 rounded-lg shadow-xl bg-white">
           <div className="PurposeGrid">
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Purpose"
               type="text"
@@ -172,7 +144,7 @@ const PersonEntry = () => {
             />
           </div>
           <div className="formGrid">
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Full Name"
               type="text"
@@ -180,7 +152,7 @@ const PersonEntry = () => {
               name="Name"
               placeholder="Enter Name"
             />
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Father Name"
               type="text"
@@ -188,7 +160,7 @@ const PersonEntry = () => {
               name="FatherName"
               placeholder="Father Name"
             />
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Date of Birth"
               type="date"
@@ -196,7 +168,7 @@ const PersonEntry = () => {
               placeholder=""
               value={formData.DOB}
             />
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Aadhaar No."
               type="tel"
@@ -205,7 +177,7 @@ const PersonEntry = () => {
               value={formData.AadhaarNo}
               maxLength={12}
             />
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Mobile No."
               type="tel"
@@ -214,7 +186,7 @@ const PersonEntry = () => {
               value={formData.MobileNo}
               maxLength={10}
             />
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="E-mail ID"
               type="email"
@@ -222,7 +194,7 @@ const PersonEntry = () => {
               placeholder="example@update.com"
               value={formData.Email}
             />
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="POI"
               type="file"
@@ -230,7 +202,7 @@ const PersonEntry = () => {
               placeholder=""
               value={formData.POI}
             />
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="POA"
               type="file"
@@ -238,7 +210,7 @@ const PersonEntry = () => {
               placeholder=""
               value={formData.POA}
             />
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="POB"
               type="file"
@@ -248,7 +220,7 @@ const PersonEntry = () => {
             />
           </div>
           <div className="PurposeGrid Address">
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Address"
               type="text"
