@@ -21,7 +21,9 @@ function CaptureFinger(quality, timeout) {
         "TimeOut": 10
     };
     var jsondata = JSON.stringify(MFS100Request);
+    console.log(jsondata);
     return PostMFS100Client("capture", jsondata);
+    
 }
 
 // Devyang Muti Finger Capture
