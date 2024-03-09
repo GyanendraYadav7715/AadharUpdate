@@ -9,7 +9,7 @@ function GetMFS100Info() {
 
 function GetMFS100KeyInfo(key) {
     var MFS100Request = {
-        "Key": key,
+        "Key": key, 
     };
     var jsondata = JSON.stringify(MFS100Request);
     return PostMFS100Client("keyinfo", jsondata);
@@ -70,7 +70,7 @@ function GetRbdData(BiometricArray) {
 
 function PostMFS100Client(method, jsonData) {
     var res;
-    $.support.cors = true;
+ //   $.support.cors = true;
     var httpStatus = false; // Corrected the variable name
     $.ajax({
         type: "POST",
@@ -94,7 +94,7 @@ function PostMFS100Client(method, jsonData) {
 
 function GetMFS100Client(method) {
     var res;
-    $.support.cors = true;
+  //  $.support.cors = true;
     var httpStatus = false; // Corrected the variable name
     $.ajax({
         type: "GET",
