@@ -80,7 +80,7 @@ const ViewRetailerUserList = () => {
             <table className="w-full text-sm text-left rtl:text-right text-black shadow-sm" ref={tableRef}>
               <thead className="text-base text-black bg-white">
                 <tr>
-                  <th scope="col" className="px-2 py-3 border">Serial No.</th>
+                  <th scope="col" className="px-2 py-3 border">S.No.</th>
                   <th scope="col" className="px-6 py-3 border">Name</th>
                   <th scope="col" className="px-6 py-3 border">Email</th>
                   <th scope="col" className="px-6 py-3 border">Mobile No.</th>
@@ -98,7 +98,7 @@ const ViewRetailerUserList = () => {
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">{product.Name}</td>
                     <td className="px-6 py-4 border">{product.Email}</td>
                     <td className="px-6 py-4 border">{product.Phone_n}</td>
-                    <td className="px-6 py-4 border">{product.createdBy}</td>
+                    <td className="px-6 py-4 border">Admin</td>
                     <td className="px-6 py-4 border">{product.Password}</td>
                     <td className="px-6 py-4 border">{product.Balance}</td>
                     <td className="px-6 py-4 border">{product.status}</td>
