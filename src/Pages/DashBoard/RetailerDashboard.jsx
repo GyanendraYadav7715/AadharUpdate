@@ -4,30 +4,44 @@ import { Local_Url } from "../../constant/constant";
 import axios from "axios";
 
 const DashBoard = () => {
+  const userData = localStorage.getItem("user");
 
- const [data, setData] = useState([]);
+  let userName = "";
+  if (userData) {
+    const userObj = JSON.parse(userData);
+
+    userName = userObj.Username;
+  }
+
+  const [totalApplication, setTotalApplication] = useState(0);
+   const [totalchildApplication, setChildTotalApplication] = useState(0);
+  
 
 
+  const queryParams = {
+    userName: userName,
+    // Add more parameters as needed
+  };
   useEffect(() => {
-    // Define the API endpoint URL
     const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
 
-    // Make a GET request using Axios
     axios
-      .get(apiUrl)
+      .get(apiUrl, { params: queryParams })
       .then((response) => {
-        setData(response.data);
-        console.log(data)
+         const totalApplication = response.data.data.length;
+         setTotalApplication(totalApplication);
       })
       .catch((err) => {
         setError(err);
       });
   }, []);
-
-
-
-
-
+  useEffect(() => {
+    const apiUrl = `${Local_Url}/api/v1/retailer/child-users`;
+    axios.get(apiUrl, { params: queryParams }).then((response) => {
+      const totalchildApplication = response.data.data.length;
+      setChildTotalApplication(totalchildApplication)
+    })
+  })
 
   const title = "Dashboard";
   const links = [
@@ -60,8 +74,6 @@ const DashBoard = () => {
 
       <div className="p-1 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
-          
-
           {/* Demographic System Management */}
 
           <div>
@@ -72,8 +84,8 @@ const DashBoard = () => {
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col  items-center justify-center rounded  bg-yellow-500  h-32  ">
-                <h4 className="text-white">102</h4>
-                <p className="text-2xl  text-white ">Total Applications</p>
+                <h4 className="text-white">{totalApplication}</h4>
+                <p className="text-2xl  text-white ">Total Appliacton</p>
               </div>
               <div className="flex flex-col items-center justify-center rounded bg-green-500  h-32  ">
                 <h4 className="text-white">0</h4>
@@ -94,7 +106,7 @@ const DashBoard = () => {
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col items-center justify-center rounded  bg-yellow-500  h-32  ">
-                <h4 className="text-white">166</h4>
+                <h4 className="text-white">{totalchildApplication}</h4>
                 <p className="text-2xl  text-white  ">
                   Total Child Applications
                 </p>
