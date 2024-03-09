@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Local_Url } from "../../../constant/constant";
 import axios from "axios";
+import { Local_Url } from "../../../constant/constant";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
@@ -16,21 +16,18 @@ const ViewUser = () => {
   const tableRef = useRef(null);
 
   useEffect(() => {
-    const apiUrl = `${Local_Url}/api/v1/admin/all-users`;
-
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        console.log("Response data:", response.data);
-        setData(response.data.data);
-
-        setFilteredProducts(response.data.data);
-      })
-      .catch((err) => {
-        console.log("Something Went Wrong");
-        // Handle error
-      });
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${Local_Url}/api/v1/admin/all-users`);
+      setData(response.data.data);
+      setFilteredProducts(response.data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -43,26 +40,20 @@ const ViewUser = () => {
     setFilteredProducts(filtered);
   };
 
-const deleteProduct = (userId) => {
-  const confirmDelete = window.confirm(
-    "Are you sure you want to delete this user?"
-  );
-  if (confirmDelete) {
-    // Send a DELETE request to your server API to delete the user
-    axios
-      .delete(`${Local_Url}/api/v1/admin/users/${userId}`)
-      .then((response) => {
-        // If deletion is successful, update the local data state
+  const deleteProduct = async (userId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+    if (confirmDelete) {
+      try {
+        await axios.delete(`${Local_Url}/api/v1/admin/users/${userId}`);
         const updatedData = data.filter((user) => user.id !== userId);
         setData(updatedData);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error deleting user:", error);
-        // Handle error
-      });
-  }
-};
-
+      }
+    }
+  };
 
   return (
     <>
@@ -191,7 +182,7 @@ const deleteProduct = (userId) => {
                     </td>
                     <td className="px-6 py-4 gap-2 flex items-center justify-between">
                       <Link
-                        // to={`/edituser/${product.id}`}
+                         
                         className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                       >
                         <i className="ri-refresh-line text-white"></i>
