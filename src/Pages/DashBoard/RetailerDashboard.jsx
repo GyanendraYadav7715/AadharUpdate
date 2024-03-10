@@ -2,6 +2,50 @@ import React from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 
 const DashBoard = () => {
+  const userData = localStorage.getItem("user");
+
+  let userName = "";
+  if (userData) {
+    const userObj = JSON.parse(userData);
+    userName = userObj.Username;
+  }
+
+  const [totalApplication, setTotalApplication] = useState(0);
+  const [totalchildApplication, setChildTotalApplication] = useState(0);
+  const [totalMobileApplication, setMobileTotalApplication] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const queryParams = { userName };
+        const response1 = await axios.get(
+          `${Local_Url}/api/v1/retailer/retailer-users`,
+          { params: queryParams }
+        );
+        const response2 = await axios.get(
+          `${Local_Url}/api/v1/retailer/child-users`,
+          { params: queryParams }
+        );
+        // const response3 = await axios.get(
+        //   `${Local_Url}/api/v1/retailer/Mobile-users`,
+        //   { params: queryParams }
+        // );
+
+        const totalApplication = response1.data.data.length;
+        setTotalApplication(totalApplication);
+
+        const totalchildApplication = response2.data.data.length;
+        setChildTotalApplication(totalchildApplication);
+        // const totalMobileApplication = response3.data.data.length;
+        // setMobileTotalApplication(totalMobileApplication);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+
+    fetchData();
+  }, [userName]);
+
   const title = "Dashboard";
   const links = [
     { title: "Home", href: "/retailer" },
@@ -32,8 +76,6 @@ const DashBoard = () => {
 
       <div className="p-1 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
-          
-
           {/* Demographic System Management */}
 
           <div>
@@ -44,8 +86,8 @@ const DashBoard = () => {
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col  items-center justify-center rounded  bg-yellow-500  h-32  ">
-                <h4 className="text-white">102</h4>
-                <p className="text-2xl  text-white ">Total Applications</p>
+                <h4 className="text-white">{totalApplication}</h4>
+                <p className="text-2xl  text-white ">Total Appliacton</p>
               </div>
               <div className="flex flex-col items-center justify-center rounded bg-green-500  h-32  ">
                 <h4 className="text-white">0</h4>
@@ -66,7 +108,7 @@ const DashBoard = () => {
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col items-center justify-center rounded  bg-yellow-500  h-32  ">
-                <h4 className="text-white">166</h4>
+                <h4 className="text-white">{totalchildApplication}</h4>
                 <p className="text-2xl  text-white  ">
                   Total Child Applications
                 </p>
@@ -89,7 +131,7 @@ const DashBoard = () => {
               </div>
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="flex flex-col items-center justify-center rounded  bg-yellow-500  h-32  ">
-                  <h4 className="text-white">112</h4>
+                  <h4 className="text-white">68</h4>
                   <p className="text-2xl  text-white  ">
                     Total Mobile Applications
                   </p>
