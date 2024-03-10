@@ -56,8 +56,7 @@ function List() {
     const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
 
     // Make a GET request using Axios
-
-    console.log("daddss ", queryParams);
+ 
     axios
       .get(apiUrl, { params: queryParams })
       .then((response) => {
@@ -77,7 +76,7 @@ function List() {
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
-      {data ? (
+      
         <div className="p-4 sm:ml-64">
           <div className="p-2 border-2 border-gray-200 border-solid rounded-lg ">
             <div className="Download-Button flex items-center justify-between">
@@ -115,7 +114,7 @@ function List() {
               <tbody>
                 {data.length > 0 ? (
                   data.map((item, index) => (
-                    <React.Fragment key={index}>
+                    <React.Fragment key={item.id}>
                       <tr>
                         <td>
                           <div
@@ -181,9 +180,7 @@ function List() {
             </Table>
           </div>
         </div>
-      ) : (
-        <p>Please Wait...</p>
-      )}
+        
     </>
   );
 }
