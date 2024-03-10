@@ -50,17 +50,15 @@ const Box = ({ onFingerprintUpload }) => {
     const formData = new FormData();
     formData.append("image", imageBlob, `fingerprint_${Date.now()}.jpg`);
 
-    const headers = {
-      'Content-Type': 'application/json',
-    };
+  
     
     
 
     try {
       const response = await axios.post(
         `${Local_Url}/api/v1/retailer/retailer-fingerdata`,
-        formData,
-        { headers }
+        formData
+        
       );
       console.log("Fingerprint uploaded successfully:", response.data.imageUrl);
 
