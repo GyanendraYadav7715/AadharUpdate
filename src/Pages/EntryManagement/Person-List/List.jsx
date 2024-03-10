@@ -46,11 +46,7 @@ function List() {
   ];
   const tableRef = useRef(null);
 
-  // Define your query parameters as an object
-  const queryParams = {
-    userName: userName,
-    // Add more parameters as needed
-  };
+   
   useEffect(() => {
     // Define the API endpoint URL
     const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
@@ -58,7 +54,7 @@ function List() {
     // Make a GET request using Axios
  
     axios
-      .get(apiUrl, { params: queryParams })
+      .get(apiUrl, { params: userName })
       .then((response) => {
         setData(response.data.data);
         // console.log(response.data.data)
