@@ -23,7 +23,6 @@ const ViewUser = () => {
     try {
       const response = await axios.get(`${Local_Url}/api/v1/admin/all-users`);
       setData(response.data.data);
-      console.log(response.data)
       setFilteredProducts(response.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -95,7 +94,7 @@ const ViewUser = () => {
                     scope="col"
                     className="px-2 py-3 border whitespace-nowrap"
                   >
-                    S.No.
+                    Serial No.
                   </th>
                   <th
                     scope="col"
@@ -125,7 +124,7 @@ const ViewUser = () => {
                     scope="col"
                     className="px-6 py-3 border whitespace-nowrap"
                   >
-                    Created At
+                    Created By
                   </th>
                   <th
                     scope="col"
@@ -179,7 +178,7 @@ const ViewUser = () => {
                     <td className="px-6 py-4 border">{product.Child_token}</td>
                     <td className="px-6 py-4 border">{product.mobilePoint}</td>
                     <td className="px-6 py-4 border">
-                      {product.isUserblocked?"Inactive":"Active"}
+                      {product.isUserblocked}
                     </td>
                     <td className="px-6 py-4 gap-2 flex items-center justify-between">
                       <Link
