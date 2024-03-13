@@ -4,11 +4,14 @@ import { CaptureFinger } from "./mfs100";
 import { Local_Url } from "../../constant/constant";
 import Loder from "../../Loder/Loder";
 import axios from "axios";
+import green from "../../../public/green-check.png";
 
 const Box = ({ onFingerprintUpload }) => {
   const [captureCount, setCaptureCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [fingerprintCaptured, setFingerprintCaptured] = useState(false);
+  //const [fingerprintCaptured, setFingerprintCaptured] = useState(true);
+  const [image ,setImage]=useState("")
   const captureFingerAndUpload = async () => {
     if (captureCount < 5 && !isLoading) {
       setIsLoading(true);
@@ -25,6 +28,7 @@ const Box = ({ onFingerprintUpload }) => {
           );
           await uploadToS3(imageBlob);
           setCaptureCount((prevCount) => prevCount + 1);
+          setFingerprintCaptured(true); // Update state to indicate fingerprint captured
           console.log(fingerData);
         } else {
           alert("Finger Not Found");
@@ -55,6 +59,8 @@ const Box = ({ onFingerprintUpload }) => {
         `${Local_Url}/api/v1/retailer/retailer-fingerdata`,
         formData
       );
+      const image = response.data.imageUrl;
+      setImage(image);
       console.log("Fingerprint uploaded successfully:", response.data.imageUrl);
 
       // Call the callback function with the URL of the uploaded fingerprint image
@@ -66,16 +72,32 @@ const Box = ({ onFingerprintUpload }) => {
 
   return (
     <div className="m-4 text-center p-6 box-border shadow-lg flex flex-col items-center   border-1">
-      <img className="w-24 h-24 object-cover" src={finger} alt="Box" />
-      <button
-        className="mt-4 px-8 py-1.5 border border-blue-500 text-blue-500 rounded-md transition duration-300 hover:bg-blue-500 hover:text-white"
-        type="button"
-        onClick={captureFingerAndUpload}
-        disabled={captureCount >= 5}
-      >
-        {isLoading ? <Loder /> : "Capture Finger"}
-      </button>
-      <p>{`Fingerprints captured: ${captureCount} / 5`}</p>
+      {fingerprintCaptured ? (
+        <div className="flex flex-col items-center justify-center">
+          <img className="w-24 h-24 object-cover" src={image} alt="Box" />
+          <div
+            className="mt-4 px-8 py-1.5 border border-black- text-black rounded-md transition duration-300 font-bold flex items-center justify-center gap-3 "
+            type="button"
+          >
+            Success
+            <div className="bg-gray-400 h-8 w-8 rounded-full border-1 border-gray-100 grid place-items-center  ">
+              <img src={green} alt="success" />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center  ">
+          <img className="w-24 h-24 object-cover" src={finger} alt="Box" />
+          <button
+            className="mt-4 px-8 py-1.5 border border-blue-500 text-blue-500 rounded-md transition duration-300 hover:bg-blue-500 hover:text-white whitespace-nowrap"
+            type="button"
+            onClick={captureFingerAndUpload}
+            disabled={captureCount >= 5}
+          >
+            {isLoading ? <Loder /> : "Click"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
