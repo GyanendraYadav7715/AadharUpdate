@@ -22,10 +22,10 @@ const DashBoard = () => {
   const [totalUsers, setTotalUsers] = useState(0);
 
   useEffect(() => {
-    const apiUrl = `${Local_Url}/api/v1/admin/all-users`;
+    const apiUrl = `${Local_Url}/api/v1/admin/total-customers`;
 
     axios
-      .get(apiUrl)
+      .get(apiUrl,)
       .then((response) => {
         const totalUsers = response.data.data.length;
         setTotalUsers(totalUsers);

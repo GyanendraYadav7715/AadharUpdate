@@ -13,8 +13,9 @@ import SearchElement from "../../../Components/SearchElement/SearchElement";
 
 function List() {
   //api data fetch
+   const [filteredProducts, setFilteredProducts] = useState([]);
   const [data, setData] = useState([]);
-
+   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
   const userData = localStorage.getItem("user");
   let role = "";
@@ -46,137 +47,134 @@ function List() {
   ];
   const tableRef = useRef(null);
 
-   
   useEffect(() => {
-    // Define the API endpoint URL
     const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
 
-    // Make a GET request using Axios
- 
     axios
-      .get(apiUrl, { params: userName })
+      .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
         setData(response.data.data);
-        // console.log(response.data.data)
+        setFilteredProducts(response.data.data);
       })
       .catch((err) => {
         console.log("Something Went Wrong");
-        // setError(err);
       });
   }, []);
 
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    const filtered = data.filter((product) =>
+      Object.values(product)
+        .join(" ")
+        .toLowerCase()
+        .includes(query.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
+
 
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
-      
-        <div className="p-4 sm:ml-64">
-          <div className="p-2 border-2 border-gray-200 border-solid rounded-lg ">
-            <div className="Download-Button flex items-center justify-between">
-              <div>
-                <CopyButton data={data} />
-                <ExcelButton data={data} filename={"AddCustomerList.xlsx"} />
-                <CSVButton data={data} filename={"AddCustomerList.csv"} />
-                <PDFButton
-                  tableRef={tableRef}
-                  filename={"AddCustomerList.pdf"}
-                />
-              </div>
-              <SearchElement />
-            </div>
-            <Table
-              striped
-              bordered
-              hover
-              className="custom-table"
-              ref={tableRef}
-            >
-              <thead>
-                <tr>
-                  <th>S.N.</th>
-                  <th>Name</th>
-                  <th>Purpose</th>
-                  <th>Age</th>
-                  <th>Father Name</th>
-                  <th>Aadhaar No.</th>
-                  <th>Mobile No.</th>
-                  <th>E-mail ID</th>
-                </tr>
-              </thead>
 
-              <tbody>
-                {data.length > 0 ? (
-                  data.map((item, index) => (
-                    <React.Fragment key={item.id}>
-                      <tr>
-                        <td>
-                          <div
-                            className="DropDown"
-                            onClick={() => handleIconClick(index)}
-                          >
-                            <i
-                              className={
-                                selectedRow === index
-                                  ? "ri-close-fill"
-                                  : "ri-add-fill"
-                              }
-                              style={{
-                                backgroundColor:
-                                  selectedRow === index ? "red" : "blue",
-                              }}
-                            ></i>
-                          </div>
-                          {index + 1}
-                        </td>
-                        <td>{item.Name}</td>
-                        <td>{item.Purpose}</td>
-                        <td>{item.DOB}</td>
-                        <td>{item.FatherName}</td>
-                        <td>{item.AadhaarNo}</td>
-                        <td>{item.MobileNo}</td>
-                        <td>{item.Email}</td>
-                      </tr>
-                      {selectedRow === index && (
-                        <tr>
-                          <td colSpan="6" style={{ backgroundColor: "white" }}>
-                            {/* Dropdown content */}
-                            <div className="dropdown-content">
-                              <div className="dropdown-title">
-                                <h3 className="status">
-                                  Created On :{" "}
-                                  <span
-                                    style={{
-                                      color: "blue",
-                                      fontSize: "15px",
-                                    }}
-                                  >
-                                    {item.createdOn}
-                                  </span>
-                                </h3>
-                                <Slip />
-                                <h3 className="status">Status</h3>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </React.Fragment>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="6">
-                      <h1 className="list-record">Record Not Found😞</h1>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
+      <div className="p-4 sm:ml-64">
+        <div className="p-2 border-2 border-gray-200 border-solid rounded-lg ">
+          <div className="Download-Button flex items-center justify-between">
+            <div>
+              <CopyButton data={data} />
+              <ExcelButton data={data} filename={"AddCustomerList.xlsx"} />
+              <CSVButton data={data} filename={"AddCustomerList.csv"} />
+              <PDFButton tableRef={tableRef} filename={"AddCustomerList.pdf"} />
+            </div>
+            <SearchElement onSearch={handleSearch}
+        />
           </div>
+          <Table striped bordered hover className="custom-table" ref={tableRef}>
+            <thead>
+              <tr>
+                <th>S.N.</th>
+                <th>Name</th>
+                <th>Purpose</th>
+                <th>Age</th>
+                <th>Father Name</th>
+                <th>Aadhaar No.</th>
+                <th>Mobile No.</th>
+                <th>E-mail ID</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((item, index) => (
+                  <React.Fragment key={item.id}>
+                    <tr>
+                      <td>
+                        <div
+                          className="DropDown"
+                          onClick={() => handleIconClick(index)}
+                        >
+                          <i
+                            className={
+                              selectedRow === index
+                                ? "ri-close-fill"
+                                : "ri-add-fill"
+                            }
+                            style={{
+                              backgroundColor:
+                                selectedRow === index ? "red" : "blue",
+                            }}
+                          ></i>
+                        </div>
+                        {index + 1}
+                      </td>
+                      <td>{item.Name}</td>
+                      <td>{item.Purpose}</td>
+                      <td>{item.DOB}</td>
+                      <td>{item.FatherName}</td>
+                      <td>{item.AadhaarNo}</td>
+                      <td>{item.MobileNo}</td>
+                      <td>{item.Email}</td>
+                    </tr>
+                    {selectedRow === index && (
+                      <tr>
+                        <td colSpan="6" style={{ backgroundColor: "white" }}>
+                          {/* Dropdown content */}
+                          <div className="dropdown-content">
+                            <div className="dropdown-title">
+                              <h3 className="status">
+                                Created On :{" "}
+                                <span
+                                  style={{
+                                    color: "blue",
+                                    fontSize: "15px",
+                                  }}
+                                >
+                                  {item.createdOn}
+                                </span>
+                              </h3>
+                              <Slip />
+                              <h3 className="status">Status</h3>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6">
+                    <h1 className="list-record">Record Not Found😞</h1>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
         </div>
-        
+      </div>
     </>
   );
 }

@@ -10,9 +10,9 @@ import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Link } from "react-router-dom";
 
 const ViewUser = () => {
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [data, setData] = useState([]);
+  const [users, setUsers] = useState([]);
   const tableRef = useRef(null);
 
   useEffect(() => {
@@ -21,10 +21,11 @@ const ViewUser = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${Local_Url}/api/v1/admin/all-users`);
-      setData(response.data.data);
-      console.log(response.data)
-      setFilteredProducts(response.data.data);
+      const response = await axios.get(
+        `${Local_Url}/api/v1/admin/all-customers`
+      );
+      setUsers(response.data.data);
+      setFilteredUsers(response.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -32,24 +33,22 @@ const ViewUser = () => {
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-    const filtered = data.filter((product) =>
-      Object.values(product)
-        .join(" ")
-        .toLowerCase()
-        .includes(query.toLowerCase())
+    const filtered = users.filter((user) =>
+      Object.values(user).join(" ").toLowerCase().includes(query.toLowerCase())
     );
-    setFilteredProducts(filtered);
+    setFilteredUsers(filtered);
   };
 
-  const deleteProduct = async (userId) => {
+  const deleteUser = async (userId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this user?"
     );
     if (confirmDelete) {
       try {
         await axios.delete(`${Local_Url}/api/v1/admin/users/${userId}`);
-        const updatedData = data.filter((user) => user.id !== userId);
-        setData(updatedData);
+        const updatedUsers = users.filter((user) => user.id !== userId);
+        setUsers(updatedUsers);
+        setFilteredUsers(updatedUsers);
       } catch (error) {
         console.error("Error deleting user:", error);
       }
@@ -77,9 +76,9 @@ const ViewUser = () => {
           <h3 className="text-2xl font-semibold">View User Data-ADMIN</h3>
           <div className="flex items-center justify-between mb-4 mt-4">
             <div>
-              <CopyButton data={data} />
-              <ExcelButton data={data} filename={"ViewUser.xlsx"} />
-              <CSVButton data={data} filename={"ViewUser.csv"} />
+              <CopyButton data={users} />
+              <ExcelButton data={users} filename={"ViewUser.xlsx"} />
+              <CSVButton data={users} filename={"ViewUser.csv"} />
               <PDFButton tableRef={tableRef} filename={"ViewUser.pdf"} />
             </div>
             <SearchElement onSearch={handleSearch} />
@@ -160,7 +159,7 @@ const ViewUser = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredProducts.map((product, index) => (
+                {filteredUsers.map((user, index) => (
                   <tr
                     key={index}
                     className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
@@ -169,27 +168,27 @@ const ViewUser = () => {
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
-                      {product.Name}
+                      {user.Name}
                     </td>
-                    <td className="px-6 py-4 border">{product.Phone_n}</td>
-                    <td className="px-6 py-4 border">{product.Username}</td>
-                    <td className="px-6 py-4 border">{product.Password}</td>
-                    <td className="px-6 py-4 border">{product.createdAt}</td>
-                    <td className="px-6 py-4 border">{product.Balance}</td>
-                    <td className="px-6 py-4 border">{product.Child_token}</td>
-                    <td className="px-6 py-4 border">{product.mobilePoint}</td>
+                    <td className="px-6 py-4 border">{user.Phone_n}</td>
+                    <td className="px-6 py-4 border">{user.Username}</td>
+                    <td className="px-6 py-4 border">{user.Password}</td>
+                    <td className="px-6 py-4 border">{user.createdAt}</td>
+                    <td className="px-6 py-4 border">{user.Balance}</td>
+                    <td className="px-6 py-4 border">{user.Child_token}</td>
+                    <td className="px-6 py-4 border">{user.mobilePoint}</td>
                     <td className="px-6 py-4 border">
-                      {product.isUserblocked?"Inactive":"Active"}
+                      {user.isUserblocked ? "Inactive" : "Active"}
                     </td>
                     <td className="px-6 py-4 gap-2 flex items-center justify-between">
                       <Link
-                         
+                        to={`/edituser/${user.id}`}
                         className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                       >
                         <i className="ri-refresh-line text-white"></i>
                       </Link>
                       <button
-                        onClick={() => deleteProduct(product.id)}
+                        onClick={() => deleteUser(user.id)}
                         className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
                       >
                         <i className="ri-delete-bin-line text-white"></i>

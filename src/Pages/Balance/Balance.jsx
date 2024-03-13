@@ -7,6 +7,7 @@ const Balance = () => {
   const [formData, setFormData] = useState({
     Username: "",
     amount: "",
+    User_type: "Superadmin",
   });
 
   const { Username, amount } = formData;
@@ -29,7 +30,7 @@ const Balance = () => {
     }
 
     try {
-      const apiUrl = `${Local_Url}/api/v1/sharedData/transfer-fund`;
+      const apiUrl = `${Local_Url}/api/v1/admin/transfer-fund`;
       // Make the API POST request
       const response = await axios.post(apiUrl, formData);
 

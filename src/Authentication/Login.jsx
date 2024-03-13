@@ -30,7 +30,7 @@ const Login = () => {
      const { Username, User_type, loginIDMail } = formData;
 
      try {
-       const apiUrl = `${Local_Url}/api/v1/sharedData/user-login`;
+       const apiUrl = `${Local_Url}/api/v1/admin/login`;
        const response = await axios.post(apiUrl, formData ,{
         headers: {
           "Content-Type": "application/json",

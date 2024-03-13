@@ -17,7 +17,9 @@ const ViewRetailerUserList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${Local_Url}/api/v1/admin/get-all-retailer`);
+        const response = await axios.get(
+          `${Local_Url}/api/v1/admin/get-all-retailer`
+        );
         const responseData = response.data.data.map(user => ({ ...user, status: "Active" }));
         setData(responseData);
         setFilteredProducts(responseData);
@@ -42,11 +44,14 @@ const ViewRetailerUserList = () => {
 
   const handleStatusEdit = async (Username, isUserblocked) => {
     try {
-      const response = await axios.post(`${Local_Url}/api/v1/sharedData/block-user`, {
-        Username,
-        User_type: "Retailer",
-        isUserblocked,
-      });
+      const response = await axios.post(
+        `${Local_Url}/api/v1/admin/block-retailer`,
+        {
+          Username,
+          User_type: "Retailer",
+          isUserblocked,
+        }
+      );
       alert(response.data.message);
 
       const updatedProducts = filteredProducts.map((product) => {
