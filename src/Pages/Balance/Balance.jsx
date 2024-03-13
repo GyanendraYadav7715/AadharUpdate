@@ -29,7 +29,7 @@ const Balance = () => {
     }
 
     try {
-      const apiUrl = `${Local_Url}/api/v1/sharedData/transfer-fund`;
+      const apiUrl = `${Local_Url}/api/v1/admin/transfer-fund`;
       // Make the API POST request
       const response = await axios.post(apiUrl, formData);
 

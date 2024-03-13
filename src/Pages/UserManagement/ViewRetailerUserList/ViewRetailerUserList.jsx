@@ -42,7 +42,7 @@ const ViewRetailerUserList = () => {
 
   const handleStatusEdit = async (Username, isUserblocked) => {
     try {
-      const response = await axios.post(`${Local_Url}/api/v1/sharedData/block-user`, {
+      const response = await axios.post(`${Local_Url}/api/v1/admin/block`, {
         Username,
         User_type: "Retailer",
         isUserblocked,
