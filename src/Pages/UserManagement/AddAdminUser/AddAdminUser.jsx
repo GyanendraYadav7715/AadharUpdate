@@ -42,7 +42,7 @@ const AddAdminUser = () => {
     formData.superAdminUser = userData ? userData.Username : "";
 
     try {
-      const apiUrl = `${Local_Url}/api/v1/sharedData/add-user`;
+      const apiUrl = `${Local_Url}/api/v1/admin/add-customer`;
       const response = await axios.post(apiUrl, formData, {
         headers: {
           "Content-Type": "application/json",

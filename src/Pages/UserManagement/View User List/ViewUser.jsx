@@ -21,7 +21,7 @@ const ViewUser = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${Local_Url}/api/v1/admin/all-users`);
+      const response = await axios.get(`${Local_Url}/api/v1/admin/all-customers`);
       setData(response.data.data);
       setFilteredProducts(response.data.data);
     } catch (error) {
