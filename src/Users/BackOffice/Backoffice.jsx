@@ -1,9 +1,10 @@
 import React from "react";
-import Error from "../../Pages/Errors/Error";
+import BackofficeDashboard from "../../Pages/DashBoard/BackofficeDashboard";
 const Backoffice = () => {
   return (
     <>
-      <Error/> 
+      
+      <BackofficeDashboard />
     </>
   );
 };

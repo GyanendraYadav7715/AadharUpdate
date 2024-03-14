@@ -54,7 +54,7 @@ function Layout() {
   const hideLayout = [
     "/",
     "/forget",
-    "/backoffice",
+    
     
   ].includes(location.pathname);
 

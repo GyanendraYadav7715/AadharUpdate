@@ -104,14 +104,14 @@ const History = () => {
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
-                      {product.debitedFrom}
+                      {product.sender}
                     </td>
                     <td className="px-6 py-4 border">
-                      {product.transferredPoint}
+                      {product.amount}
                     </td>
-                    <td className="px-6 py-4 border">{product.creditedTo}</td>
+                    <td className="px-6 py-4 border">{product.recipient}</td>
                     <td className="px-6 py-4 border">{product.status}</td>
-                    <td className="px-6 py-4 border">{product.date}</td>
+                    <td className="px-6 py-4 border">{product.transferDate}</td>
                   </tr>
                 ))}
               </tbody>
