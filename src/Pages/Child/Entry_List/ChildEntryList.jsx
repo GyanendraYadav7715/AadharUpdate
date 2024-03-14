@@ -55,7 +55,7 @@ const fetchData = async () => {
   try {
     const apiUrl = `${Local_Url}/api/v1/retailer/child-users`;
     const response = await axios.get(apiUrl, {
-      params: { userName: userName },
+      params:userName ,
     });
 
     setData(response.data.data);

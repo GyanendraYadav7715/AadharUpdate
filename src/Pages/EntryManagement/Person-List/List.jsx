@@ -51,7 +51,7 @@ function List() {
     const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
 
     axios
-      .get(apiUrl, { params: { userName: userName } })
+      .get(apiUrl, { params:userName })
       .then((response) => {
         setData(response.data.data);
         setFilteredProducts(response.data.data);
@@ -107,8 +107,8 @@ function List() {
             </thead>
 
             <tbody>
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((item, index) => (
+              { data.length > 0 ? (
+                 data.map((item, index) => (
                   <React.Fragment key={item.id}>
                     <tr>
                       <td>
