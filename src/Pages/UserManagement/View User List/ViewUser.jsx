@@ -98,7 +98,7 @@ const ViewUser = () => {
                     scope="col"
                     className="px-2 py-3 border whitespace-nowrap"
                   >
-                    S.No.
+                    Serial No.
                   </th>
                   <th
                     scope="col"
@@ -128,7 +128,7 @@ const ViewUser = () => {
                     scope="col"
                     className="px-6 py-3 border whitespace-nowrap"
                   >
-                    Created At
+                    Created By
                   </th>
                   <th
                     scope="col"
