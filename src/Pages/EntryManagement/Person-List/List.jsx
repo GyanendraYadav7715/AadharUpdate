@@ -56,7 +56,7 @@ function List() {
     const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
 
     axios
-      .get(apiUrl, { params:userName  })
+      .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
         setData(response.data.data);
         setFilteredProducts(response.data.data);
