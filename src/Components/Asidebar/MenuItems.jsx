@@ -31,8 +31,16 @@ const MenuItems = () => {
       iconClass: "ri-layout-grid-fill",
       label: "Dashboard",
     },
-
   ];
+   const backofficeMenuItems = [
+     {
+       link: "/backoffice",
+       iconClass: "ri-layout-grid-fill",
+       label: "Dashboard",
+     },
+   ];
+  
+
 
   const memoizedRole = useMemo(() => {
     const userData = localStorage.getItem("user");
@@ -44,7 +52,11 @@ const MenuItems = () => {
   }, []);
 
   const menuItems =
-    memoizedRole === "Superadmin" ? adminMenuItems : retailerMenuItems;
+    memoizedRole === "Superadmin"
+      ? adminMenuItems
+      : memoizedRole === "Retailer"
+      ? retailerMenuItems
+      : backofficeMenuItems;
 
   return (
     <>

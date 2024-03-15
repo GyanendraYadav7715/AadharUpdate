@@ -17,6 +17,7 @@ import Action from "./Action/Action";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 
 function ChildEntryList() {
+    const [filteredProducts, setFilteredProducts] = useState([]);
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -50,17 +51,21 @@ function ChildEntryList() {
     },
   ];
 
-  const fetchData = async () => {
-    try {
-      const apiUrl = `${Local_Url}/api/v1/retailer/child-users`;
-      const response = await axios.get(apiUrl, { params: { userName } });
-      
-      setData(response.data.data);
-      console.log(response.data);
-    } catch (error) {
-      setError("Something went wrong");
-    }
-  };
+const fetchData = async () => {
+  try {
+    const apiUrl = `${Local_Url}/api/v1/retailer/child-users`;
+    const response = await axios.get(apiUrl, {
+      params: { userName: userName },
+    });
+
+    setData(response.data.data);
+    setFilteredProducts(response.data.data);
+    console.log(response.data);
+
+  } catch (error) {
+    setError("Something went wrong");
+  }
+};
 
   useEffect(() => {
     fetchData();
@@ -69,6 +74,17 @@ function ChildEntryList() {
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    const filtered = data.filter((product) =>
+      Object.values(product)
+        .join(" ")
+        .toLowerCase()
+        .includes(query.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
+
 
   return (
     <>
@@ -82,7 +98,7 @@ function ChildEntryList() {
               <CSVButton data={data} filename={"ChildEntyList.csv"} />
               <PDFButton tableRef={tableRef} filename={"ChildEntyList.pdf"} />
             </div>
-            <SearchElement />
+            <SearchElement onSearch={handleSearch} />
           </div>
           <Table striped bordered hover className="custom-table" ref={tableRef}>
             <thead>
@@ -92,8 +108,8 @@ function ChildEntryList() {
               </tr>
             </thead>
             <tbody>
-              {data.length > 0 ? (
-                data.map((item, index) => (
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((item, index) => (
                   <React.Fragment key={item._id}>
                     <tr>
                       <td>

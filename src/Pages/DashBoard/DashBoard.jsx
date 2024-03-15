@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 
 import { Local_Url } from "../../constant/constant";
@@ -22,17 +22,17 @@ const DashBoard = () => {
   const [totalUsers, setTotalUsers] = useState(0);
 
   useEffect(() => {
-    const apiUrl = `${Local_Url}/api/v1/admin/all-users`;
+    const apiUrl = `${Local_Url}/api/v1/admin/total-customers`;
 
     axios
       .get(apiUrl)
       .then((response) => {
-        const totalUsers = response.data.data.length;
-        setTotalUsers(totalUsers);
+         
+        const totalUsersCount = response.data.totalApplication; // Assuming response.data.data is an array
+        setTotalUsers(totalUsersCount);
       })
       .catch((err) => {
-        console.log("Something Went Wrong");
-        // Handle error
+        console.log("Something Went Wrong:", err);
       });
   }, []);
 
@@ -44,7 +44,9 @@ const DashBoard = () => {
           {/* Wallent and user */}
           <div>
             <div className="flex items-center justify-center h-20 mb-4 rounded bg-white border-1">
-              <p className="text-3xl text-black  font-semibold ">Wallet & Users</p>
+              <p className="text-3xl text-black  font-semibold ">
+                Wallet & Users
+              </p>
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="flex flex-col items-center justify-center rounded  bg-blue-500  h-32  ">

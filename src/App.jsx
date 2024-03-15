@@ -28,6 +28,11 @@ import MobileNoUpdate from "./Pages/Mobile/Mobile-Update/MobileNoUpdate";
 import MobileData from "./Pages/Mobile/MobileData/MobileData";
 import AdminReport from "./Pages/Mobile/AdminReport/AdminReport";
 import Protected from "./Route/Protected";
+
+import Edit from "./ActionServices/Edit"
+import Finger from "./ActionServices/Finger"
+import EditView from "./ActionServices/EditView"
+import Upload from "./ActionServices/Upload"
 import {
   BrowserRouter as Router,
   Routes,
@@ -51,12 +56,9 @@ function Layout() {
   let location = useLocation();
 
   // Check if the current location is one of the pages where we want to hide the layout components
-  const hideLayout = [
-    "/",
-    "/forget",
-    "/backoffice",
-    
-  ].includes(location.pathname);
+  const hideLayout = ["/", "/forget", "/user-finger", "/akUpload"].includes(
+    location.pathname
+  );
 
   return (
     <div>
@@ -97,6 +99,10 @@ function Layout() {
           <Route path="/mobileupdate" element={<MobileNoUpdate />} />
           <Route path="/mobiledata" element={<MobileData />} />
           <Route path="/adminreport" element={<AdminReport />} />
+          <Route path="/user-edit" element={<Edit />} />
+          <Route path="/user-finger" element={<Finger />} />
+          <Route path="/edit-view" element={<EditView />} />
+          <Route path="/akUpload" element={<Upload />} />
         </Route>
       </Routes>
       {!hideLayout && <Footer />}

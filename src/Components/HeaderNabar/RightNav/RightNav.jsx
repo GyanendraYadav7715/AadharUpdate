@@ -26,7 +26,12 @@ const RightNav = () => {
   }, []);
 
   const role = getUserRole;
-  const link = role === "Superadmin" ? "/superadmin" : "/retailer";
+  const link =
+    role === "Superadmin"
+      ? "/superadmin"
+      : role === "Retailer"
+      ? "/retailer"
+      : "/backoffice";
 
   return (
     <div className="flex items-center">

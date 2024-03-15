@@ -1,24 +1,44 @@
 import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
 import CopyButton from "../../Components/DownloadAction/CopyButton";
 import CSVButton from "../../Components/DownloadAction/CSVButton";
 import PDFButton from "../../Components/DownloadAction/PDFButton";
 import ExcelButton from "../../Components/DownloadAction/ExcelButton";
 import SearchElement from "../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
+import {Local_Url} from "../../constant/constant"
 const History = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [data, setData] = useState([]);
   const tableRef = useRef(null);
+  const userData = localStorage.getItem("user");
 
-  // Initialize filteredProducts with the initial data
+  let userName = "";
+  if (userData) {
+    const userObj = JSON.parse(userData);
+    userName = userObj.Username;
+  }
+
   useEffect(() => {
-    setFilteredProducts(products);
+    const apiUrl = `${Local_Url}/api/v1/admin/transfer-history`;
+
+    axios
+      .get(apiUrl, { params: { username: userName } })
+      .then((response) => {
+        console.log(response.data.data);
+        setData(response.data.data);
+        setFilteredProducts(response.data.data);
+      })
+      .catch((err) => {
+        console.log("Something Went Wrong");
+      });
   }, []);
 
   // Function to handle search
   const handleSearch = (query) => {
     setSearchQuery(query);
-    const filtered = products.filter((product) =>
+    const filtered = data.filter((product) =>
       Object.values(product)
         .join(" ")
         .toLowerCase()
@@ -33,44 +53,6 @@ const History = () => {
     { title: "View Balance Transfer History", href: "" },
   ];
 
-  const products = [
-    {
-      debitedFrom: "Admin",
-      tranferPoint: "500",
-      creditedTo: "Rajesh",
-      status: "Transfer",
-      date: "08/01/2024",
-    },
-    {
-      debitedFrom: "Admin",
-      tranferPoint: "800",
-      creditedTo: "Jitendar",
-      status: "Transfer",
-      date: "03/01/2024",
-    },
-    {
-      debitedFrom: "Admin",
-      tranferPoint: "5000",
-      creditedTo: " Mukesh",
-      status: "Transfer",
-      date: "08/02/2024",
-    },
-    {
-      debitedFrom: "Admin",
-      tranferPoint: "300",
-      creditedTo: "Divakar",
-      status: "Transfer",
-      date: "31/01/2024",
-    },
-    {
-      debitedFrom: "Admin",
-      tranferPoint: "200",
-      creditedTo: "Priyanka",
-      status: "Transfer",
-      date: "22/01/2023",
-    },
-  ];
-
   return (
     <>
       <Breadcrumb title={title} links={links} />
@@ -78,9 +60,9 @@ const History = () => {
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white  ">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <CopyButton data={products} />
-              <ExcelButton data={products} filename={"history.xlsx"} />
-              <CSVButton data={products} filename={"history.csv"} />
+              <CopyButton data={data} />
+              <ExcelButton data={data} filename={"history.xlsx"} />
+              <CSVButton data={data} filename={"history.csv"} />
               <PDFButton tableRef={tableRef} filename={"History.pdf"} />
             </div>
             <SearchElement onSearch={handleSearch} />
@@ -90,7 +72,7 @@ const History = () => {
               className="w-full text-sm text-left rtl:text-right text-black shadow-sm"
               ref={tableRef}
             >
-              <thead className="text-base text-black  bg-white  ">
+              <thead className="bg-white">
                 <tr>
                   <th scope="col" className="px-2 py-3 border">
                     Serial No.
@@ -122,12 +104,14 @@ const History = () => {
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
-                      {product.debitedFrom}
+                      {product.sender}
                     </td>
-                    <td className="px-6 py-4 border">{product.tranferPoint}</td>
-                    <td className="px-6 py-4 border">{product.creditedTo}</td>
+                    <td className="px-6 py-4 border">
+                      {product.amount}
+                    </td>
+                    <td className="px-6 py-4 border">{product.recipient}</td>
                     <td className="px-6 py-4 border">{product.status}</td>
-                    <td className="px-6 py-4 border">{product.date}</td>
+                    <td className="px-6 py-4 border">{product.transferDate}</td>
                   </tr>
                 ))}
               </tbody>
