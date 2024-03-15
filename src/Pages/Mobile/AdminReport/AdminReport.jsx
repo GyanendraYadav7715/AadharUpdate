@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
@@ -6,8 +6,9 @@ import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
-
+import Upload from "../../../ActionServices/Upload"
 const AdminReport = () => {
+  const [showUploadPopup, setShowUploadPopup] = useState(false);
   const userData = localStorage.getItem("user");
   let role = "";
   if (userData) {
@@ -47,6 +48,24 @@ const AdminReport = () => {
       createdOn: "11/12/2012",
     },
   ];
+
+  const handleUploadButtonClick = () => {
+    setShowUploadPopup(true);
+  };
+
+  const handleSubmit = () => {
+    alert(
+      'Thanks'
+    )
+    // Logic to handle form submission goes here
+    // After submission, you may want to close the popup
+    setShowUploadPopup(false);
+  };
+
+  const handleCancel = () => {
+    // Logic to handle cancel action goes here
+    setShowUploadPopup(false);
+  };
 
   return (
     <>
@@ -125,7 +144,7 @@ const AdminReport = () => {
                         <i className="ri-fingerprint-fill text-white"></i>
                       </Link>
                       <Link
-                        to="#"
+                        to="/edit-view"
                         className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                       >
                         <i className="ri-eye-line text-white"></i>
@@ -136,12 +155,12 @@ const AdminReport = () => {
                       >
                         <i className="ri-delete-bin-line text-white"></i>
                       </Link>
-                      <Link
-                        to="/akUpload"
+                      <button
+                        onClick={handleUploadButtonClick}
                         className="font-medium text-white no-underline border-1 bg-green-600 px-6 py-3 rounded-md"
                       >
                         Upload
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -150,6 +169,31 @@ const AdminReport = () => {
           </div>
         </div>
       </div>
+      {/* Upload Popup */}
+      {showUploadPopup && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-8 rounded-lg shadow-md w-1/4">
+            <h2 className="text-xl font-semibold mb-4">
+              Upload Acknowledgement Slip
+            </h2>
+            <Upload />
+            <div className="flex justify-end mt-6">
+              <button
+                onClick={handleCancel}
+                className="px-4 py-2 mr-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmit}
+                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

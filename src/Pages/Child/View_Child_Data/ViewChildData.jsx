@@ -44,13 +44,7 @@ function ViewChildData() {
   //         });
   // }, []);
   const products = [
-    {
-      name: "Priya Sharma",
-      dateofbirth: "2024-02-12",
-      aadhaar: "98765432101234",
-      email: "priya.sharma@example.com",
-      mobile: "9876543210",
-    },
+    
   ];
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
