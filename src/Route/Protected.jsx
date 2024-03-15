@@ -35,7 +35,16 @@ function Protected() {
       "/ViewChildData",
       "/editstatus",
     ],
-    BackOffice: ["/backoffice", "/list", "/ViewChildData", "/adminreport"],
+    BackOffice: [
+      "/backoffice",
+      "/list",
+      "/ViewChildData",
+      "/adminreport",
+      "/user-edit",
+      "/user-finger",
+      "/akUpload",
+      "/edit-view",
+    ],
   };
 
   // Check if the user is logged in

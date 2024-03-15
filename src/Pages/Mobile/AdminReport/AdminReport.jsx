@@ -113,13 +113,13 @@ const AdminReport = () => {
                     <td className="px-6 py-4 border">{product.createdOn}</td>
                     <td className="px-6 py-4 border flex items-center justify-between gap-3">
                       <Link
-                        to="#"
+                        to="/user-edit"
                         className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                       >
                         <i className="ri-edit-box-line text-white"></i>
                       </Link>
                       <Link
-                        to="#"
+                        to="/user-finger"
                         className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                       >
                         <i className="ri-fingerprint-fill text-white"></i>
@@ -137,7 +137,7 @@ const AdminReport = () => {
                         <i className="ri-delete-bin-line text-white"></i>
                       </Link>
                       <Link
-                        to="#"
+                        to="/akUpload"
                         className="font-medium text-white no-underline border-1 bg-green-600 px-6 py-3 rounded-md"
                       >
                         Upload
