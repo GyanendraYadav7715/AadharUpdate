@@ -3,8 +3,8 @@
  class FileUpload extends React.Component {
    // Function to handle file selection
    handleFileSelect = (event) => {
-     const files = event.target.files; // Get the selected files
-     // You can now perform actions with the selected files, such as uploading them to a server or displaying them on the page.
+     const files = event.target.files;  
+     
      console.log(files);
    };
 
@@ -12,25 +12,25 @@
    handleDragOver = (event) => {
      event.preventDefault();
      event.stopPropagation();
-     // Add styles to indicate drag over
-     event.target.classList.add("border-blue-500"); // Add your preferred border color class here
+      
+     event.target.classList.add("border-blue-500");  
    };
 
    // Function to handle drag leave
    handleDragLeave = (event) => {
      event.preventDefault();
      event.stopPropagation();
-     // Remove styles when drag leaves
-     event.target.classList.remove("border-blue-500"); // Remove your preferred border color class here
+      
+     event.target.classList.remove("border-blue-500");  
    };
 
    // Function to handle drop
    handleDrop = (event) => {
      event.preventDefault();
      event.stopPropagation();
-     event.target.classList.remove("border-blue-500"); // Remove your preferred border color class here
-     const files = event.dataTransfer.files; // Get the dropped files
-     // You can now perform actions with the dropped files, such as uploading them to a server or displaying them on the page.
+     event.target.classList.remove("border-blue-500"); 
+     const files = event.dataTransfer.files;  
+      
      console.log(files);
    };
 
