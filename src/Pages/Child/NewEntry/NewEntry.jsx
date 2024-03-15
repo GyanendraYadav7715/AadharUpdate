@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import CustomInput from "../../../Components/CustomeInput/CustomInput";
+import {CustomInput} from "../../../Components/CustomeInput/CustomInput";
 import Information from "../../../Components/Information/Information";
 import { Select } from "../../../Components/Selection/Select";
 import { Local_Url } from "../../../constant/constant";

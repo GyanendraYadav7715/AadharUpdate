@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import CustomInput from "../../../Components/CustomeInput/CustomInput";
+import {CustomInput} from "../../../Components/CustomeInput/CustomInput";
 import { Local_Url } from "../../../constant/constant";
 
 const AddAdminUser = () => {

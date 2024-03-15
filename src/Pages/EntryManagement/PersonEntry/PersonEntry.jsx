@@ -4,7 +4,7 @@ import "./PersonEntry.css";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Local_Url } from "../../../constant/constant";
-import CustomInput from "../../../Components/CustomeInput/CustomInput";
+import {CustomInput} from "../../../Components/CustomeInput/CustomInput";
 
  
  
