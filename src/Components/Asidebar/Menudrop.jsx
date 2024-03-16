@@ -109,11 +109,11 @@ const Menudrop = () => {
           title="Download Drivers"
           items={[
             {
-              label: "Mantra Driver V9.2.0.0",
-              link: "https://download.radiumbox.com/download/MFS100Driver_9.2.0.0.exe",
+              label: " All Mantra Driver",
+              link: "https://fingerprintdata.s3.ap-south-1.amazonaws.com/MantraSetup_and_Certification.rar",
             },
-            { label: "Mantra Client Service V9.0.3.8", link: "#" },
-            { label: "Mantra RD Service V1.0.4", link: "#" },
+           // { label: "Mantra Client Service V9.0.3.8", link: "#" },
+           // { label: "Mantra RD Service V1.0.4", link: "#" },
           ]}
           iconClass="ri-download-cloud-2-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
         />
@@ -141,11 +141,11 @@ const Menudrop = () => {
           title="Download Drivers"
           items={[
             {
-              label: "Mantra Driver V9.2.0.0",
-              link: "https://download.radiumbox.com/download/MFS100Driver_9.2.0.0.exe",
+              label: " All Mantra Driver",
+              link: "https://fingerprintdata.s3.ap-south-1.amazonaws.com/MantraSetup_and_Certification.rar",
             },
-            { label: "Mantra Client Service V9.0.3.8", link: "#" },
-            { label: "Mantra RD Service V1.0.4", link: "#" },
+            // { label: "Mantra Client Service V9.0.3.8", link: "#" },
+            // { label: "Mantra RD Service V1.0.4", link: "#" },
           ]}
           iconClass="ri-download-cloud-2-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
         />
@@ -194,11 +194,11 @@ const Menudrop = () => {
         title="Download Drivers"
         items={[
           {
-            label: "Mantra Driver V9.2.0.0",
-            link: "https://download.radiumbox.com/download/MFS100Driver_9.2.0.0.exe",
+            label: " All Mantra Driver",
+            link: "https://fingerprintdata.s3.ap-south-1.amazonaws.com/MantraSetup_and_Certification.rar",
           },
-          { label: "Mantra Client Service V9.0.3.8", link: "#" },
-          { label: "Mantra RD Service V1.0.4", link: "#" },
+          // { label: "Mantra Client Service V9.0.3.8", link: "#" },
+          // { label: "Mantra RD Service V1.0.4", link: "#" },
         ]}
         iconClass="ri-download-cloud-2-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
       />
