@@ -1,5 +1,5 @@
 //Local Url
-export const Local_Url = "https://aadharupdates.com";
+export const Local_Url = "http://aadharupdates.com";
 
 //export const Local_Url = "http://localhost:5000";
 
