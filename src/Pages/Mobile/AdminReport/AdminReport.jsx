@@ -113,57 +113,67 @@ const AdminReport = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
-                  >
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border ">
-                      {index + 1}
-                    </td>
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
-                      {product.appliedBy}
-                    </td>
-                    <td className="px-6 py-4 border">
-                      {Object.values(product.aadharCardDetails).join(", ")}
-                    </td>
-                    <td className="px-6 py-4 border">{product.purpose}</td>
-                    <td className="px-6 py-4 border">{product.adminRemark}</td>
-                    <td className="px-6 py-4 border">{product.createdOn}</td>
-                    <td className="px-6 py-4 border flex items-center justify-between gap-3">
-                      <Link
-                        to="/user-edit"
-                        className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                      >
-                        <i className="ri-edit-box-line text-white"></i>
-                      </Link>
-                      <Link
-                        to="/user-finger"
-                        className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                      >
-                        <i className="ri-fingerprint-fill text-white"></i>
-                      </Link>
-                      <Link
-                        to="/edit-view"
-                        className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                      >
-                        <i className="ri-eye-line text-white"></i>
-                      </Link>
-                      <Link
-                        to="#"
-                        className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
-                      >
-                        <i className="ri-delete-bin-line text-white"></i>
-                      </Link>
-                      <button
-                        onClick={handleUploadButtonClick}
-                        className="font-medium text-white no-underline border-1 bg-green-600 px-6 py-3 rounded-md"
-                      >
-                        Upload
-                      </button>
+                {products.length <0 ? (
+                  products.map((product, index) => (
+                    <tr
+                      key={index}
+                      className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
+                    >
+                      <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
+                        {index + 1}
+                      </td>
+                      <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
+                        {product.appliedBy}
+                      </td>
+                      <td className="px-6 py-4 border">
+                        {Object.values(product.aadharCardDetails).join(", ")}
+                      </td>
+                      <td className="px-6 py-4 border">{product.purpose}</td>
+                      <td className="px-6 py-4 border">
+                        {product.adminRemark}
+                      </td>
+                      <td className="px-6 py-4 border">{product.createdOn}</td>
+                      <td className="px-6 py-4 border flex items-center justify-between gap-3">
+                        <Link
+                          to="/user-edit"
+                          className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
+                        >
+                          <i className="ri-edit-box-line text-white"></i>
+                        </Link>
+                        <Link
+                          to="/user-finger"
+                          className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
+                        >
+                          <i className="ri-fingerprint-fill text-white"></i>
+                        </Link>
+                        <Link
+                          to="/edit-view"
+                          className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
+                        >
+                          <i className="ri-eye-line text-white"></i>
+                        </Link>
+                        <Link
+                          to="#"
+                          className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
+                        >
+                          <i className="ri-delete-bin-line text-white"></i>
+                        </Link>
+                        <button
+                          onClick={handleUploadButtonClick}
+                          className="font-medium text-white no-underline border-1 bg-green-600 px-6 py-3 rounded-md"
+                        >
+                          Upload
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="7">
+                      <h1 className="list-record text-center text-xl">Record Not Found😞</h1>
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

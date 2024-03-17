@@ -104,25 +104,35 @@ const MobileData = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
-                  >
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap   border ">
-                      {index + 1}
+                {products.length < 0 ? (
+                  products.map((product, index) => (
+                    <tr
+                      key={index}
+                      className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
+                    >
+                      <td className="px-6 py-4 font-medium text-black whitespace-nowrap   border ">
+                        {index + 1}
+                      </td>
+                      <td className="px-6 py-4 font-medium text-black whitespace-nowrap   border">
+                        {product.childName}
+                      </td>
+                      <td className="px-6 py-4 border">{product.DOB}</td>
+                      <td className="px-6 py-4 border">{product.aadhaar}</td>
+                      <td className="px-6 py-4 border">{product.mobile}</td>
+                      <td className="px-6 py-4 border">{product.email}</td>
+                      <td className="px-6 py-4 border">{product.createdOn}</td>
+                      <td className="px-6 py-4 border">{product.status}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="9">
+                      <h1 className="list-record text-center text-xl">
+                        Record Not Found😞
+                      </h1>
                     </td>
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap   border">
-                      {product.childName}
-                    </td>
-                    <td className="px-6 py-4 border">{product.DOB}</td>
-                    <td className="px-6 py-4 border">{product.aadhaar}</td>
-                    <td className="px-6 py-4 border">{product.mobile}</td>
-                    <td className="px-6 py-4 border">{product.email}</td>
-                    <td className="px-6 py-4 border">{product.createdOn}</td>
-                    <td className="px-6 py-4 border">{product.status}</td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>
