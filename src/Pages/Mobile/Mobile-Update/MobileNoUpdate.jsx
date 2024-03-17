@@ -2,7 +2,7 @@ import axios from "axios";
 import "./mobileUpdate.css";
 import { useState } from "react";
 import Box from "../../../Components/FingerPrint/FingerPrint";
- 
+import {CustomInput2} from "../../../Components/CustomeInput/CustomInput"
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 
 export const Input = ({ label, type, name, placeholder, onChange, value }) => {
@@ -55,7 +55,7 @@ const MobileNoUpdate = () => {
   // State to manage form data
   const [formData, setFormData] = useState({
     name: "",
-    dateofbirth: "",
+    dateofapply: "",
     email: "",
     mobile: "",
 
@@ -74,6 +74,7 @@ const MobileNoUpdate = () => {
     ).padStart(2, "0")}`;
     return formattedDate;
   };
+  console.log(formatCurrentDate);
 
   // Function to handle form input changes
   const handleInputChange = (name, value) => {
@@ -122,8 +123,6 @@ const MobileNoUpdate = () => {
 
   return (
     <>
-       
-       
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-2 border-2 rounded-lg  shadow-xl bg-white">
@@ -146,11 +145,11 @@ const MobileNoUpdate = () => {
             />
             <Input
               onChange={handleInputChange}
-              label="Date of Birth"
               type="date"
-              name="dateofbirth"
-              placeholder=""
-              value={formData.dateofbirth}
+              label="Date of Apply"
+              name={formatCurrentDate}
+              placeholder={formatCurrentDate}
+              value={formData.dateofapply}
             />
 
             <Input
@@ -194,7 +193,6 @@ const MobileNoUpdate = () => {
           </div>
         </div>
       </div>
-       
     </>
   );
 };
