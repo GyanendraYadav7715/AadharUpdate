@@ -3,7 +3,7 @@ import axios from "axios";
 import { Local_Url } from "../constant/constant";
 import Breadcrumb from "../Components/BreadCrumb/Breadcrumb";
 import { Select } from "../Components/Selection/Select";
-import CustomInput from "../Components/CustomeInput/CustomInput";
+import {CustomInput} from "../Components/CustomeInput/CustomInput";
 const Edit = () => {
   const [formData, setFormData] = useState({
     Remark: "",
