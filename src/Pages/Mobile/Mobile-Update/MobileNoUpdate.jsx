@@ -1,49 +1,33 @@
 import axios from "axios";
+import React, { useState, useEffect } from "react";
 import "./mobileUpdate.css";
-import { useState } from "react";
+import { Local_Url } from "../../../constant/constant"; 
 import Box from "../../../Components/FingerPrint/FingerPrint";
-import {CustomInput2} from "../../../Components/CustomeInput/CustomInput"
+import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 
-export const Input = ({ label, type, name, placeholder, onChange, value }) => {
-  return (
-    <div className="inputContainer">
-      <div className="inputWrapper">
-        <label htmlFor={name} className="label">
-          {label}
-        </label>
-      </div>
-      <input
-        name={name}
-        type={type}
-        className="inputField"
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(name, e.target.value)}
-      />
-    </div>
-  );
-};
 const MobileNoUpdate = () => {
+
+  const [currentDate, setCurrentDate] = useState("");
+
+  useEffect(() => {
+    // Get the current date in the format YYYY-MM-DD
+    const date = new Date().toISOString().split("T")[0];
+    setCurrentDate(date);
+  }, []);
   const userData = localStorage.getItem("user");
   let role = "";
   if (userData) {
     // Parse JSON string to object
     const userObj = JSON.parse(userData);
     // Access the role property
-    role = userObj.role;
+    role = userObj.userType;
   }
   const title = "Mobile Update";
-  const links =
-    role === "Admin"
-      ? [
-          { title: "Home", href: "/superadmin" },
-          { title: "Mobile Update", href: "" },
-        ]
-      : [
-          { title: "Home", href: "/retailer" },
-          { title: "Mobile Update", href: "" },
-        ];
+  const links = [
+    { title: "Home", href: role === "retailer" ? "/retailer" : "/superadmin" },
+    { title: "Mobile Update", href: "" },
+  ];
 
   const mylinks = [
     {
@@ -52,29 +36,35 @@ const MobileNoUpdate = () => {
       icon: "ri-team-line text-white text-2xl ",
     },
   ];
+
   // State to manage form data
   const [formData, setFormData] = useState({
-    name: "",
-    dateofapply: "",
-    email: "",
-    mobile: "",
-
-    aadhaar: "",
-    address: "",
+    Name: "",
+    FatherName: "",
+    DOA:"",
+    AadhaarNo: "",
+    MobileNo: "",
+    Email: "",
+    userName: "To",
+    userType: "retailer",
+    FingerPrint: [
+      {
+        FingerPrint1: "finger1",
+      },
+      {
+        FingerPrint2: "finger2",
+      },
+      {
+        FingerPrint3: "finger3",
+      },
+      {
+        FingerPrint4: "finger4",
+      },
+      {
+        FingerPrint5: "finger5",
+      },
+    ],
   });
-
-  const formatCurrentDate = () => {
-    const date = new Date();
-    const formattedDate = `${date.getFullYear()}-${String(
-      date.getMonth() + 1
-    ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} ${String(
-      date.getHours()
-    ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(
-      date.getSeconds()
-    ).padStart(2, "0")}`;
-    return formattedDate;
-  };
-  console.log(formatCurrentDate);
 
   // Function to handle form input changes
   const handleInputChange = (name, value) => {
@@ -82,38 +72,52 @@ const MobileNoUpdate = () => {
     setFormData({
       ...formData,
       [name]: value,
-      createdOn: formatCurrentDate(),
     });
   };
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+     const data = localStorage.getItem("user");
+     const userObj = JSON.parse(data);
+     formData.userName = userObj.Username;
+     formData.userType = userObj.User_type;
+     // Access the role property
+     role = userObj.User_type;
+       setFormData((prevFormData) => ({
+         ...prevFormData,
+         DOA: currentDate,
+       }));
 
-    if (!formData.purpose || !formData.email || !formData.mobile) {
-      return alert("please filll the blank field first");
+    if (!formData.Name || !formData.Email || !formData.MobileNo) {
+      return alert("Please fill all the required fields.");
     }
 
     try {
       // Define the API endpoint URL
-      const apiUrl = "http://localhost:4001/Products";
+      const apiUrl = `${Local_Url}/api/v1/retailer/createMobileUser`;
 
-      // Make a POST request using Axios
+      
       const response = await axios.post(apiUrl, formData);
 
-      // Handle successful response
+    
       console.log("Form submitted successfully:", response.data);
-      alert("Form submitted successfully:");
+      alert(response.data.message);
       // Optionally, reset the form after submission
       setFormData({
-        name: "",
-        dateofbirth: "",
-        email: "",
-        mobile: "",
-
-        aadhaar: "",
-        address: "",
-        fathern: "",
+        Name: "",
+        FatherName: "",
+        DOA: "",
+        AadhaarNo: "",
+        MobileNo: "",
+        Email: "",
+        FingerPrint: [
+          { FingerPrint1: "" },
+          { FingerPrint2: "" },
+          { FingerPrint3: "" },
+          { FingerPrint4: "" },
+          { FingerPrint5: "" },
+        ],
       });
     } catch (error) {
       // Handle submission error
@@ -127,67 +131,77 @@ const MobileNoUpdate = () => {
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-2 border-2 rounded-lg  shadow-xl bg-white">
           <div className="formGrid">
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Full Name"
               type="text"
-              value={formData.name}
-              name="name"
+              value={formData.Name}
+              name="Name"
               placeholder="Enter Name"
             />
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Father Name"
               type="text"
-              value={formData.fathern}
-              name="fathern"
+              value={formData.FatherName}
+              name="FatherName"
               placeholder="Father Name"
             />
-            <Input
-              onChange={handleInputChange}
-              type="date"
-              label="Date of Apply"
-              name={formatCurrentDate}
-              placeholder={formatCurrentDate}
-              value={formData.dateofapply}
-            />
+            <div className="inputContainer">
+              <div className="inputWrapper">
+                <label className="label">Date of Apply</label>
+              </div>
+              <input
+                type="date"
+                value={currentDate}
+                disabled
+                onChange={(e) => handleInputChange("DOA", e.target.value)}
+                className="inputField"
+              />
+            </div>
 
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Aadhaar No."
               type="number"
-              name="aadhaar"
+              name="AadhaarNo"
               placeholder="Aadhaar No."
-              value={formData.aadhaar}
+              value={formData.AadhaarNo}
             />
-
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="Mobile No."
               type="text"
-              name="mobile"
+              name="MobileNo"
               placeholder="Mobile No."
-              value={formData.mobile}
+              value={formData.MobileNo}
             />
-
-            <Input
+            <CustomInput
               onChange={handleInputChange}
               label="E-mail ID"
               type="email"
-              name="email"
+              name="Email"
               placeholder="example@update.com"
-              value={formData.email}
+              value={formData.Email}
             />
           </div>
           <div className="container grid grid-cols-5 gap-3">
-            <Box />
-            <Box />
-            <Box />
-            <Box />
-            <Box />
+            {[...Array(5)].map((_, index) => (
+              <Box
+                key={index}
+                onFingerprintUpload={(imageUrl) =>
+                  setFormData({
+                    ...formData,
+                    FingerPrint: {
+                      ...formData.FingerPrint,
+                      [`FingerPrint${index + 1}`]: imageUrl,
+                    },
+                  })
+                }
+              />
+            ))}
             <button onClick={handleSubmit} className="Submit-button">
-              {" "}
-              <i class="ri-save-fill"> </i>
+              <i className="ri-save-fill"></i>
               Submit
             </button>
           </div>

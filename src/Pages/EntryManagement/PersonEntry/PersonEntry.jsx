@@ -28,18 +28,14 @@ const PersonEntry = () => {
     MobileNo: "",
     Email: "",
     Address: "",
-    Proof: {
-      POI: "",
-      POB: "",
-      POA: "",
-    },
-    FingerPrint: {
-      FingerPrint1: "",
-      FingerPrint2: "",
-      FingerPrint3: "",
-      FingerPrint4: "",
-      FingerPrint5: "",
-    },
+    Proof: [{ POI: "" }, { POB: "" }, { POA: "" }],
+    FingerPrint: [
+      { FingerPrint1: "" },
+      { FingerPrint2: "" },
+      { FingerPrint3: "" },
+      { FingerPrint4: "" },
+      { FingerPrint5: "" },
+    ],
   });
 
   //FORM DATA DATE CREATION
@@ -83,7 +79,7 @@ const PersonEntry = () => {
       const apiUrl = `${Local_Url}/api/v1/retailer/create-user`;
       const response = await axios.post(apiUrl, formData);
       console.log("Form submitted successfully:", response.data);
-      alert("Form submitted successfully:");
+      alert(response.data.message);
       // Reset form data
       setFormData({
         Purpose: "",
@@ -94,22 +90,18 @@ const PersonEntry = () => {
         MobileNo: "",
         Email: "",
         Address: "",
-        Proof: {
-          POI: "",
-          POB: "",
-          POA: "",
-        },
-        FingerPrint: {
-          FingerPrint1: "",
-          FingerPrint2: "",
-          FingerPrint3: "",
-          FingerPrint4: "",
-          FingerPrint5: "",
-        },
+        Proof: [{ POI: "ll" }, { POB: "ll" }, { POA: "cdfg" }],
+        FingerPrint: [
+          { FingerPrint1: "cdfg" },
+          { FingerPrint2: "cdfg" },
+          { FingerPrint3: "cdfg" },
+          { FingerPrint4: "cdfg" },
+          { FingerPrint5: "cdfg" },
+        ],
       });
     } catch (error) {
       console.error("Error submitting form:", error.message);
-      alert("Error submitting form:", error.message);
+      alert(error.message);
     }
   };
 
@@ -230,6 +222,7 @@ const PersonEntry = () => {
             />
           </div>
           <div className="container grid grid-cols-5">
+          
             <Box
               onFingerprintUpload={(imageUrl) =>
                 setFormData({

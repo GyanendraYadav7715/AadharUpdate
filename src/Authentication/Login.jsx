@@ -21,7 +21,7 @@ const Login = () => {
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-    console.log(`Handling input for ${name}: ${value}`);
+    // console.log(`Handling input for ${name}: ${value}`);
   }, []);
 
  const handleLogin = useCallback(
