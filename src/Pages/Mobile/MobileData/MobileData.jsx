@@ -33,7 +33,7 @@ const MobileData = () => {
         ];
   const mylinks = [
     {
-      to: "/mobiledata",
+      to: "/mobileupdate",
       text: "Create New",
       icon: "ri-add-line text-white text-2xl ",
     },

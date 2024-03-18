@@ -1,13 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import "./mobileUpdate.css";
-import { Local_Url } from "../../../constant/constant"; 
+import { Local_Url } from "../../../constant/constant";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 
 const MobileNoUpdate = () => {
-
   const [currentDate, setCurrentDate] = useState("");
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const MobileNoUpdate = () => {
 
   const mylinks = [
     {
-      to: "/mobileupdate",
+      to: "/mobiledata",
       text: "View Customer",
       icon: "ri-team-line text-white text-2xl ",
     },
@@ -41,27 +40,26 @@ const MobileNoUpdate = () => {
   const [formData, setFormData] = useState({
     Name: "",
     FatherName: "",
-    DOA:"",
+    DOA: "",
     AadhaarNo: "",
     MobileNo: "",
     Email: "",
-    userName: "To",
-    userType: "retailer",
+
     FingerPrint: [
       {
-        FingerPrint1: "finger1",
+        FingerPrint1: " ",
       },
       {
-        FingerPrint2: "finger2",
+        FingerPrint2: " ",
       },
       {
-        FingerPrint3: "finger3",
+        FingerPrint3: " ",
       },
       {
-        FingerPrint4: "finger4",
+        FingerPrint4: " ",
       },
       {
-        FingerPrint5: "finger5",
+        FingerPrint5: "",
       },
     ],
   });
@@ -78,16 +76,16 @@ const MobileNoUpdate = () => {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-     const data = localStorage.getItem("user");
-     const userObj = JSON.parse(data);
-     formData.userName = userObj.Username;
-     formData.userType = userObj.User_type;
-     // Access the role property
-     role = userObj.User_type;
-       setFormData((prevFormData) => ({
-         ...prevFormData,
-         DOA: currentDate,
-       }));
+    const data = localStorage.getItem("user");
+    const userObj = JSON.parse(data);
+    formData.userName = userObj.Username;
+    formData.userType = userObj.User_type;
+    // Access the role property
+    role = userObj.User_type;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      DOA: currentDate,
+    }));
 
     if (!formData.Name || !formData.Email || !formData.MobileNo) {
       return alert("Please fill all the required fields.");
@@ -97,10 +95,8 @@ const MobileNoUpdate = () => {
       // Define the API endpoint URL
       const apiUrl = `${Local_Url}/api/v1/retailer/createMobileUser`;
 
-      
       const response = await axios.post(apiUrl, formData);
 
-    
       console.log("Form submitted successfully:", response.data);
       alert(response.data.message);
       // Optionally, reset the form after submission
