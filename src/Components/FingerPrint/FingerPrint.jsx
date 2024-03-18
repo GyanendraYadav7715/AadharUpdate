@@ -89,7 +89,7 @@ const Box = ({ onFingerprintUpload }) => {
         <div className="flex flex-col items-center justify-center  ">
           <img className="w-24 h-24 object-cover" src={finger} alt="Box" />
           <button
-            className="mt-4 px-8 py-1.5 border border-blue-500 text-blue-500 rounded-md transition duration-300 hover:bg-blue-500 hover:text-white whitespace-nowrap"
+            className="mt-4 px-8 py-1.5 border border-blue-500 text-blue-500 rounded-md transition duration-300 hover:bg-[#17a2b8] hover:text-white whitespace-nowrap"
             type="button"
             onClick={captureFingerAndUpload}
             disabled={captureCount >= 5}

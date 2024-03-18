@@ -14,7 +14,7 @@ import SearchElement from "../../../Components/SearchElement/SearchElement";
 function List() {
   //api data fetch
   const [filteredProducts, setFilteredProducts] = useState([]);
-   const [check, setCheck] = useState([]);
+    
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
@@ -60,8 +60,8 @@ function List() {
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
         console.log(response.data);
-         const name = response.data.message;
-         setCheck(name);
+          
+         
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -123,7 +123,7 @@ function List() {
               </thead>
 
               <tbody>
-                {check !== "No Data Available for this User" ? (
+                {filteredProducts.length >0 ? (
                   filteredProducts.map((item, index) => (
                     <React.Fragment key={item.id}>
                       <tr>
@@ -224,7 +224,7 @@ function List() {
             </thead>
 
             <tbody>
-              {check !== "No Data Available for this User" ? (
+              {filteredProducts.length>0 ? (
                 filteredProducts.map((item, index) => (
                   <React.Fragment key={item.id}>
                     <tr>
