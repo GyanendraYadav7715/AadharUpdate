@@ -8,6 +8,7 @@ import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Link } from "react-router-dom";
+import { message } from "antd";
 
 const ViewUser = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -27,8 +28,8 @@ const ViewUser = () => {
       setUsers(response.data.data);
       setFilteredUsers(response.data.data);
     } catch (error) {
-      alert("Something wrong has happened. Please try again later.");
-      console.error("Error fetching data:", error);
+      alert(error.message);
+      //console.error("Error fetching data:", error);
     }
   };
 
@@ -49,12 +50,14 @@ const ViewUser = () => {
         await axios.delete(`${Local_Url}/api/v1/admin/delete-customer`, {
           params: { username:deluser },
         });
-        const updatedUsers = users.filter((user) => user.Username !==deluser);
+         
+        const updatedUsers = users.filter((user) => user.Username !== deluser);
+        
         setUsers(updatedUsers);
         setFilteredUsers(updatedUsers);
       } catch (error) {
-        alert("Something wrong has happened. Please try again later.");
-        console.error("Error deleting user:", error);
+        alert(error.message);
+        //console.error("Error deleting user:", error);
       }
     }
   };

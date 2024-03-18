@@ -4,22 +4,7 @@ import { Local_Url } from "../../constant/constant";
 import axios from "axios";
 
 const DashBoard = () => {
-  // const [walletBalance, setWalletBalance] = useState(0);
-  // const [totalUsers, setTotalUsers] = useState(0);
-
-  // useEffect(() => {
-  //   const apiUrl = `${Local_Url}/api/v1/admin/total-customers`;
-
-  //   axios
-  //     .get(apiUrl)
-  //     .then((response) => {
-  //       const totalUsersCount = response.data.totalApplication; // Assuming response.data.data is an array
-  //       setTotalUsers(totalUsersCount);
-  //     })
-  //     .catch((err) => {
-  //       console.log("Something Went Wrong:", err);
-  //     });
-  // }, []);
+  
   const userData = localStorage.getItem("user");
   const [userName, setUserName] = useState("");
   const [statistics, setStatistics] = useState({
@@ -106,7 +91,7 @@ const DashBoard = () => {
             <div className="grid grid-cols-2 gap-4">
               {renderStatistics("Main Wallet", statistics.balance, "blue")}
               {renderStatistics(
-                "Total Applications",
+                "Total Users",
                 statistics.totalUsers,
                 "yellow"
               )}

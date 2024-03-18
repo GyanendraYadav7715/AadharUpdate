@@ -113,7 +113,7 @@ const Dashboard = () => {
               {renderStatistics(
                 "Total Rejected",
                 statistics.totalApplicationRejected,
-                "red"
+                 "red"
               )}
             </div>
           </div>

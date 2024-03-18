@@ -10,7 +10,7 @@ import { Local_Url } from "../../../constant/constant";
 
 const ViewRetailerUserList = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [check,setCheck] =useState([])
+   
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setData] = useState([]);
   const tableRef = useRef();
@@ -21,8 +21,7 @@ const ViewRetailerUserList = () => {
         const response = await axios.get(
           `${Local_Url}/api/v1/admin/get-all-retailer`
         );
-        const name = response.data.data
-        setCheck(name);
+        
         console.log(response.data);
         const responseData = response.data.data.map(user => ({ ...user, status: "Active" }));
         setData(responseData);
@@ -56,6 +55,7 @@ const ViewRetailerUserList = () => {
           isUserblocked,
         }
       );
+      console.log(response.data);
       alert(response.data.message);
 
       const updatedProducts = filteredProducts.map((product) => {
@@ -118,13 +118,13 @@ const ViewRetailerUserList = () => {
                   <th scope="col" className="px-6 py-3 border">
                     Email
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     Mobile No.
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     Created By
                   </th>
-                  <th scope="col" className="px-6 py-3 border">
+                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
                     Password
                   </th>
                   <th scope="col" className="px-6 py-3 border">
@@ -139,7 +139,7 @@ const ViewRetailerUserList = () => {
                 </tr>
               </thead>
               <tbody>
-                {check.length !== 0 ? (
+                {filteredProducts.length > 0 ? (
                   filteredProducts.map((product, index) => (
                     <tr
                       key={index}

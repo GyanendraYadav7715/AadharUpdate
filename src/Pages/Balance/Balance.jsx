@@ -23,7 +23,7 @@ const Balance = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Check if any input field is empty
+     
     if (Username.trim() === "" || amount.trim() === "") {
       alert("Please fill the all fields");
       return;
@@ -31,26 +31,26 @@ const Balance = () => {
 
     try {
       const apiUrl = `${Local_Url}/api/v1/admin/transfer-fund`;
-      // Make the API POST request
+       
       const response = await axios.post(apiUrl, formData);
 
-      // Handle success
-      console.log("Response:", response.data);
-      alert("Balance Transfered");
+       
+       
+      alert(response.data.message);
       setFormData({
         Username: "",
         amount: "",
       });
     } catch (error) {
-      // Handle error
-      console.error("Error:", error.message);
-      alert("Something went worng");
+       
+       
+      alert(error.message);
     }
   };
   const title = "Balance Transfer";
   const links = [
     { title: "Home", href: "/superadmin" },
-    { title: "Balance Transfer", href: "" },
+    { title: "Balance Transfer" },
   ];
 
   const mylinks = [
@@ -64,13 +64,13 @@ const Balance = () => {
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
-      <div className="p-1 sm:ml-64">
-        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
+      <div className="p-4 sm:ml-64">
+        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <div className="grid grid-cols-1 gap-4 mb-4 ">
             <h3 className="text-2xl font-semibold">Balance Transfer</h3>
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col items-start w-full border p-9 rounded-sm bg-white"
+              className="flex flex-col items-start w-full border-[#00000047] border-2 p-9 rounded-md bg-white"
             >
               <div className="flex justify-between items-center w-full">
                 <div className="mb-5 w-1/2 p-6">
@@ -108,10 +108,13 @@ const Balance = () => {
                   />
                 </div>
               </div>
-              <div className="p-6">
-                <button className="Submit-button whitespace-nowrap bg-green-600" type="submit">
+              <div className="pl-3">
+                <button
+                  className="Submit-button whitespace-nowrap bg-[#3f9e04] hover:bg-[#3f9e04d3]"
+                  type="submit"
+                >
                   <i class="ri-save-fill"> </i>
-                   Submit
+                  Submit
                 </button>
               </div>
             </form>

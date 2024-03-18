@@ -48,7 +48,7 @@ const AddAdminUser = () => {
           "Content-Type": "application/json",
         },
       });
-      alert("Form submitted successfully:");
+      alert(response.data.message);
       setFormData({
         Name: "",
         Email: "",
@@ -60,7 +60,8 @@ const AddAdminUser = () => {
         Password: "",
       });
     } catch (error) {
-      console.error("Error submitting form:", error.message);
+      alert(error.message);
+      //console.error("Error submitting form:", error.message);
     }
   };
 
@@ -80,7 +81,8 @@ const AddAdminUser = () => {
                 type="text"
                 pattern="[A-Z][a-zA-Z]*"
                 errorMessage="Please enter a text with the first letter capitalized."
-                required=""
+                placeholder="Full Name"
+               
               />
               <CustomInput
                 label="Username"
@@ -90,7 +92,7 @@ const AddAdminUser = () => {
                 type="text"
                 pattern="[A-Z][a-zA-Z0-9_-]{2,15}"
                 errorMessage="Username must start with a capital letter and be between 3 and 16 characters long, containing only letters, numbers, underscores, and hyphens."
-                required=""
+               placeholder="UP_#$_E1"
               />
               <CustomInput
                 label="Email"
@@ -100,7 +102,7 @@ const AddAdminUser = () => {
                 type="email"
                 pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                 errorMessage="Please enter a valid email address."
-                required=""
+                placeholder="email23@email.com"
               />
               <CustomInput
                 label="Mobile Number"
@@ -110,7 +112,7 @@ const AddAdminUser = () => {
                 type="tel"
                 pattern="[0-9]{10}"
                 errorMessage="Please enter a valid 10-digit mobile number."
-                required=""
+                placeholder="Mobile"
                 maxLength={10}
               />
               <CustomInput
@@ -121,7 +123,7 @@ const AddAdminUser = () => {
                 type="number"
                 pattern="[0-9]+"
                 errorMessage="Please enter a valid number."
-                required=""
+                
               />
               <CustomInput
                 label="Child Token"
@@ -131,7 +133,7 @@ const AddAdminUser = () => {
                 type="number"
                 pattern="[0-9]+"
                 errorMessage="Please enter a valid number."
-                required=""
+                
               />
             </div>
             <div className="mb-6">
@@ -144,7 +146,7 @@ const AddAdminUser = () => {
                 type="password"
                 pattern=".{6,}"
                 errorMessage="Password must be at least 6 characters long."
-                required=""
+                placeholder="Password"
               />
             </div>
             <div className="mb-6">
@@ -164,7 +166,7 @@ const AddAdminUser = () => {
                 <option value="Back Office">Back Office</option>
               </select>
             </div>
-            <button className="Submit-button" onClick={handleSubmit}>
+            <button className="Submit-button " onClick={handleSubmit}>
               <i className="ri-save-fill"></i>
               Submit
             </button>

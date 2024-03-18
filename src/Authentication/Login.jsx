@@ -17,6 +17,7 @@ const Login = () => {
 
   const [showAlert, setShowAlert] = useState(false);//For Showing Alert
   const [showPassword, setShowPassword] = useState(false);//For Showing Password
+  const [save, setsave] = useState("");
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -38,22 +39,24 @@ const Login = () => {
        });
 
        if (response.status === 200) {
-            console.log(response.data);
+             
          const { redirect } = response.data; 
          
          localStorage.setItem(
            "user",
            JSON.stringify({ Username, User_type, loginIDMail })
          );
-         alert("Login Success");
-         console.log("Response Data:", response.data);
+         alert(response.data.message);
+         //console.log("Response Data:", response.data);
          navigate(redirect);
        } else {
          throw new Error(response.data.message || "Login failed");
        }
      } catch (error) {
+       
+        setsave(error.message)
        setShowAlert(true);
-       console.error("Login error:", error);
+       console.error(error);
      }
    },
    [formData, navigate]
@@ -156,7 +159,7 @@ const Login = () => {
         <StyledAlert
           onClose={closeAlert}
           title="Error"
-          message="Oops! Something went wrong. Please check your username, password, and role."
+          message={save}
           buttonText="Dismiss"
         />
       )}

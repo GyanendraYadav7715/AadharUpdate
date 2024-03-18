@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import CopyButton from "../../Components/DownloadAction/CopyButton";
 import CSVButton from "../../Components/DownloadAction/CSVButton";
@@ -6,46 +6,44 @@ import PDFButton from "../../Components/DownloadAction/PDFButton";
 import ExcelButton from "../../Components/DownloadAction/ExcelButton";
 import SearchElement from "../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
-import {Local_Url} from "../../constant/constant"
+import { Local_Url } from "../../constant/constant";
+
 const History = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setData] = useState([]);
   const tableRef = useRef(null);
   const userData = localStorage.getItem("user");
-
-  let userName = "";
-  if (userData) {
-    const userObj = JSON.parse(userData);
-    userName = userObj.Username;
-  }
+  const userName = userData ? JSON.parse(userData).Username : "";
 
   useEffect(() => {
-    const apiUrl = `${Local_Url}/api/v1/admin/transfer-history`;
-
-    axios
-      .get(apiUrl, { params: { username: userName } })
-      .then((response) => {
-        console.log(response.data.data);
+    const fetchData = async () => {
+      try {
+        const apiUrl = `${Local_Url}/api/v1/admin/transfer-history`;
+        const response = await axios.get(apiUrl, {
+          params: { username: userName },
+        });
         setData(response.data.data);
-        setFilteredProducts(response.data.data);
-      })
-      .catch((err) => {
-        console.log("Something Went Wrong");
-      });
-  }, []);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  // Function to handle search
+    fetchData();
+  }, [userName]);
+
   const handleSearch = (query) => {
     setSearchQuery(query);
-    const filtered = data.filter((product) =>
+  };
+
+  const memoizedFilteredProducts = useMemo(() => {
+    return data.filter((product) =>
       Object.values(product)
         .join(" ")
         .toLowerCase()
-        .includes(query.toLowerCase())
+        .includes(searchQuery.toLowerCase())
     );
-    setFilteredProducts(filtered);
-  };
+  }, [data, searchQuery]);
 
   const title = "View Balance Transfer History";
   const links = [
@@ -75,7 +73,7 @@ const History = () => {
               <thead className="bg-white">
                 <tr>
                   <th scope="col" className="px-2 py-3 border">
-                    Serial No.
+                    S.No.
                   </th>
                   <th scope="col" className="px-6 py-3 border">
                     Debited From
@@ -95,20 +93,18 @@ const History = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredProducts.map((product, index) => (
+                {memoizedFilteredProducts.map((product, index) => (
                   <tr
                     key={index}
                     className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
                   >
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border ">
+                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
                       {product.sender}
                     </td>
-                    <td className="px-6 py-4 border">
-                      {product.amount}
-                    </td>
+                    <td className="px-6 py-4 border">{product.amount}</td>
                     <td className="px-6 py-4 border">{product.recipient}</td>
                     <td className="px-6 py-4 border">{product.status}</td>
                     <td className="px-6 py-4 border">{product.transferDate}</td>
