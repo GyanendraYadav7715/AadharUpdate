@@ -61,6 +61,23 @@ const Dashboard = () => {
     { title: "Dashboard", href: "/retailer" },
     { title: "Retailer" },
   ];
+    const mylinks = [
+      {
+        to: "/mobileupdate",
+        text: " Mobile Entry",
+        icon: "ri-add-line text-white text-2xl ",
+      },
+      {
+        to: "/add-customer",
+        text: " Demographic Enry",
+        icon: "ri-add-line text-white text-2xl ",
+      },
+      {
+        to: "/new-entry",
+        text: " Child entry",
+        icon: "ri-add-line text-white text-2xl ",
+      },
+    ];
 
   const renderStatistics = (title, value, color) => (
     <div
@@ -73,7 +90,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Breadcrumb title={title} links={links} />
+      <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
       <div className="p-4 sm:ml-64 ">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">

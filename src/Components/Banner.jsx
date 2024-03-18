@@ -14,7 +14,10 @@ function Banner() {
       </p>
       <p className="text-lg text-white mt-2">
         लेटेस्ट ड्राइवर यहां से डाउनलोड करें{" "}
-        <a href="" className="text-black underline">
+        <a
+          href="https://fingerprintdata.s3.ap-south-1.amazonaws.com/MantraSetup_and_Certification.rar"
+          className="text-black underline"
+        >
           Download Driver
         </a>
       </p>
