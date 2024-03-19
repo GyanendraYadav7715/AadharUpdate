@@ -61,23 +61,23 @@ const Dashboard = () => {
     { title: "Dashboard", href: "/retailer" },
     { title: "Retailer" },
   ];
-    const mylinks = [
-      {
-        to: "/mobileupdate",
-        text: " Mobile Entry",
-        icon: "ri-add-line text-white text-2xl ",
-      },
-      {
-        to: "/add-customer",
-        text: " Demographic Enry",
-        icon: "ri-add-line text-white text-2xl ",
-      },
-      {
-        to: "/new-entry",
-        text: " Child entry",
-        icon: "ri-add-line text-white text-2xl ",
-      },
-    ];
+  const mylinks = [
+    {
+      to: "/mobileupdate",
+      text: " Mobile Entry",
+      icon: "ri-add-line text-white text-2xl ",
+    },
+    {
+      to: "/add-customer",
+      text: " Demographic Entry",
+      icon: "ri-add-line text-white text-2xl ",
+    },
+    {
+      to: "/new-entry",
+      text: " Child Entry",
+      icon: "ri-add-line text-white text-2xl ",
+    },
+  ];
 
   const renderStatistics = (title, value, color) => (
     <div
@@ -103,7 +103,7 @@ const Dashboard = () => {
               {renderStatistics(
                 "Total Applications",
                 statistics.totalApplication,
-                "yellow"
+                "pink"
               )}
               {renderStatistics(
                 "Total Completed",
@@ -113,11 +113,11 @@ const Dashboard = () => {
               {renderStatistics(
                 "Total Rejected",
                 statistics.totalApplicationRejected,
-                 "red"
+                "blue"
               )}
             </div>
           </div>
-          <div className="mb-8">
+          <div className="mb-8 bg-">
             <h2 className="text-2xl font-semibold mb-4 border-b border-black pb-4">
               Child System Management
             </h2>
@@ -125,7 +125,7 @@ const Dashboard = () => {
               {renderStatistics(
                 "Total Child Applications",
                 statistics.totalChildApplication,
-                "yellow"
+                "pink"
               )}
               {renderStatistics(
                 "Total Child Completed",
@@ -135,7 +135,7 @@ const Dashboard = () => {
               {renderStatistics(
                 "Total Child Rejected",
                 statistics.totalChildApplicationRejected,
-                "red"
+                "blue"
               )}
             </div>
           </div>
@@ -147,7 +147,7 @@ const Dashboard = () => {
               {renderStatistics(
                 "Total Mobile Applications",
                 statistics.totalMobileApplication,
-                "yellow"
+                "pink"
               )}
               {renderStatistics(
                 "Total Mobile Completed",
@@ -157,7 +157,7 @@ const Dashboard = () => {
               {renderStatistics(
                 "Total Mobile Rejected",
                 statistics.totalMobileApplicationRejected,
-                "red"
+                "blue"
               )}
             </div>
           </div>

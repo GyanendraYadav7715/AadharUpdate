@@ -4,7 +4,6 @@ import { Local_Url } from "../../constant/constant";
 import axios from "axios";
 
 const DashBoard = () => {
-  
   const userData = localStorage.getItem("user");
   const [userName, setUserName] = useState("");
   const [statistics, setStatistics] = useState({
@@ -81,7 +80,7 @@ const DashBoard = () => {
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
-      <div className="p-4 sm:ml-64 ">
+      <div className="p-4 sm:ml-64  ">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <div className="mb-8">
             <h2 className="text-2xl font-semibold mb-4 border-b border-black pb-4">
@@ -90,11 +89,7 @@ const DashBoard = () => {
 
             <div className="grid grid-cols-2 gap-4">
               {renderStatistics("Main Wallet", statistics.balance, "blue")}
-              {renderStatistics(
-                "Total Users",
-                statistics.totalUsers,
-                "yellow"
-              )}
+              {renderStatistics("Total Users", statistics.totalUsers, "blue")}
             </div>
           </div>
           <div className="mb-8">
@@ -105,7 +100,7 @@ const DashBoard = () => {
               {renderStatistics(
                 "Total Applications",
                 statistics.totalApplication,
-                "yellow"
+                "pink"
               )}
               {renderStatistics(
                 "Total Completed",
@@ -115,7 +110,7 @@ const DashBoard = () => {
               {renderStatistics(
                 "Total Rejected",
                 statistics.totalApplicationRejected,
-                "red"
+                "blue"
               )}
             </div>
           </div>
@@ -127,7 +122,7 @@ const DashBoard = () => {
               {renderStatistics(
                 "Total Child Applications",
                 statistics.totalChildApplication,
-                "yellow"
+                "pink"
               )}
               {renderStatistics(
                 "Total Child Completed",
@@ -137,7 +132,7 @@ const DashBoard = () => {
               {renderStatistics(
                 "Total Child Rejected",
                 statistics.totalChildApplicationRejected,
-                "red"
+                "blue"
               )}
             </div>
           </div>
@@ -149,7 +144,7 @@ const DashBoard = () => {
               {renderStatistics(
                 "Total Mobile Applications",
                 statistics.totalMobileApplication,
-                "yellow"
+                "pink"
               )}
               {renderStatistics(
                 "Total Mobile Completed",
@@ -159,7 +154,7 @@ const DashBoard = () => {
               {renderStatistics(
                 "Total Mobile Rejected",
                 statistics.totalMobileApplicationRejected,
-                "red"
+                "blue"
               )}
             </div>
           </div>
