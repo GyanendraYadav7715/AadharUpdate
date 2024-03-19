@@ -9,7 +9,7 @@ import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 import { Local_Url } from "../../constant/constant";
 
 const History = () => {
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  //const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setData] = useState([]);
   const tableRef = useRef(null);
@@ -54,7 +54,7 @@ const History = () => {
   return (
     <>
       <Breadcrumb title={title} links={links} />
-      <div className="p-4 sm:ml-64 bg-gray-200 mb-20">
+      <div className="p-4 sm:ml-64 mb-20">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white  ">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -93,23 +93,33 @@ const History = () => {
                 </tr>
               </thead>
               <tbody>
-                {memoizedFilteredProducts.map((product, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
-                  >
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
-                      {index + 1}
+                { data.length > 0 ? (
+                  memoizedFilteredProducts.map((product, index) => (
+                    <tr
+                      key={index}
+                      className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
+                    >
+                      <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
+                        {index + 1}
+                      </td>
+                      <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
+                        {product.sender}
+                      </td>
+                      <td className="px-6 py-4 border">{product.amount}</td>
+                      <td className="px-6 py-4 border">{product.recipient}</td>
+                      <td className="px-6 py-4 border">{product.status}</td>
+                      <td className="px-6 py-4 border">
+                        {product.transferDate}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6">
+                      <h1 className="list-record text-center text-xl">Record Not Found😞</h1>
                     </td>
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
-                      {product.sender}
-                    </td>
-                    <td className="px-6 py-4 border">{product.amount}</td>
-                    <td className="px-6 py-4 border">{product.recipient}</td>
-                    <td className="px-6 py-4 border">{product.status}</td>
-                    <td className="px-6 py-4 border">{product.transferDate}</td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

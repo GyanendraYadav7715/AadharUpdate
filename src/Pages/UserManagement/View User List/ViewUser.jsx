@@ -8,7 +8,6 @@ import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Link } from "react-router-dom";
-import { message } from "antd";
 
 const ViewUser = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -48,11 +47,11 @@ const ViewUser = () => {
     if (confirmDelete) {
       try {
         await axios.delete(`${Local_Url}/api/v1/admin/delete-customer`, {
-          params: { username:deluser },
+          params: { username: deluser },
         });
-         
+
         const updatedUsers = users.filter((user) => user.Username !== deluser);
-        
+
         setUsers(updatedUsers);
         setFilteredUsers(updatedUsers);
       } catch (error) {
@@ -78,7 +77,7 @@ const ViewUser = () => {
           },
         ]}
       />
-      <div className="p-4 sm:ml-64 bg-gray-200">
+      <div className="p-4 sm:ml-64  ">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white ">
           <h3 className="text-2xl font-semibold">View User Data-ADMIN</h3>
           <div className="flex items-center justify-between mb-4 mt-4">
@@ -188,10 +187,7 @@ const ViewUser = () => {
                       {user.isUserblocked ? "Inactive" : "Active"}
                     </td>
                     <td className="px-6 py-4 gap-2 flex items-center justify-between">
-                      <Link
-                        
-                        className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                      >
+                      <Link className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md">
                         <i className="ri-refresh-line text-white"></i>
                       </Link>
                       <button

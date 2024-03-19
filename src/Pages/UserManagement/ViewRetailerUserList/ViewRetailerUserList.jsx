@@ -10,7 +10,6 @@ import { Local_Url } from "../../../constant/constant";
 
 const ViewRetailerUserList = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
-   
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setData] = useState([]);
   const tableRef = useRef();
@@ -21,9 +20,11 @@ const ViewRetailerUserList = () => {
         const response = await axios.get(
           `${Local_Url}/api/v1/admin/get-all-retailer`
         );
-        
         console.log(response.data);
-        const responseData = response.data.data.map(user => ({ ...user, status: "Active" }));
+        const responseData = response.data.data.map((user) => ({
+          ...user,
+          status: "Active",
+        }));
         setData(responseData);
         setFilteredProducts(responseData);
       } catch (error) {
@@ -34,16 +35,15 @@ const ViewRetailerUserList = () => {
     fetchData();
   }, []);
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
+  useEffect(() => {
     const filtered = data.filter((product) =>
       Object.values(product)
         .join(" ")
         .toLowerCase()
-        .includes(query.toLowerCase())
+        .includes(searchQuery.toLowerCase())
     );
     setFilteredProducts(filtered);
-  };
+  }, [searchQuery, data]);
 
   const handleStatusEdit = async (Username, isUserblocked) => {
     try {
@@ -60,7 +60,10 @@ const ViewRetailerUserList = () => {
 
       const updatedProducts = filteredProducts.map((product) => {
         if (product.Username === Username) {
-          product.status = isUserblocked === "true" ? "Inactive" : "Active";
+          return {
+            ...product,
+            status: isUserblocked === "true" ? "Inactive" : "Active",
+          };
         }
         return product;
       });
@@ -79,7 +82,7 @@ const ViewRetailerUserList = () => {
           { title: "View Retailer User Data" },
         ]}
       />
-      <div className="p-4 sm:ml-64 bg-gray-200">
+      <div className="p-4 sm:ml-64  ">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white ">
           <h3 className="text-2xl font-semibold">
             View Retailer Users Data-ADMIN
@@ -100,7 +103,7 @@ const ViewRetailerUserList = () => {
                 filename={"ViewRetailerUserList.pdf"}
               />
             </div>
-            <SearchElement onSearch={handleSearch} />
+            <SearchElement onSearch={setSearchQuery} />
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table
@@ -118,13 +121,22 @@ const ViewRetailerUserList = () => {
                   <th scope="col" className="px-6 py-3 border">
                     Email
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     Mobile No.
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     Created By
                   </th>
-                  <th scope="col" className="px-6 py-3 border whitespace-nowrap">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border whitespace-nowrap"
+                  >
                     Password
                   </th>
                   <th scope="col" className="px-6 py-3 border">

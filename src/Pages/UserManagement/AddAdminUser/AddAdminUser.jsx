@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import {CustomInput} from "../../../Components/CustomeInput/CustomInput";
+import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import { Local_Url } from "../../../constant/constant";
 
 const AddAdminUser = () => {
@@ -67,11 +67,21 @@ const AddAdminUser = () => {
 
   return (
     <>
-      <Breadcrumb title={"Add User"} links={[{ title: "Home", href: "/superadmin" }, { title: "Add User" }]} mylinks={[{to: "/viewuser",text: "View Customer",icon: "ri-team-line text-white text-2xl ",},]}/>
+      <Breadcrumb
+        title={"Add User"}
+        links={[{ title: "Home", href: "/superadmin" }, { title: "Add User" }]}
+        mylinks={[
+          {
+            to: "/viewuser",
+            text: "View Customer",
+            icon: "ri-team-line text-white text-2xl ",
+          },
+        ]}
+      />
       <div className="p-4 sm:ml-64 bg-gray-300">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
-          <h3 className="text-2xl font-semibold ml-10">Add Customer</h3>
-          <form className="m-5 p-6 border-1 shadow-sm rounded-md bg-white">
+          <h3 className="text-2xl font-semibold ml-3 mb-3">Add Customer</h3>
+          <form className="m-2 p-6  shadow-sm rounded-md bg-white border-[#00000047] border-2 h-[80vh]">
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <CustomInput
                 label="Full name"
@@ -82,7 +92,6 @@ const AddAdminUser = () => {
                 pattern="[A-Z][a-zA-Z]*"
                 errorMessage="Please enter a text with the first letter capitalized."
                 placeholder="Full Name"
-               
               />
               <CustomInput
                 label="Username"
@@ -92,7 +101,7 @@ const AddAdminUser = () => {
                 type="text"
                 pattern="[A-Z][a-zA-Z0-9_-]{2,15}"
                 errorMessage="Username must start with a capital letter and be between 3 and 16 characters long, containing only letters, numbers, underscores, and hyphens."
-               placeholder="UP_#$_E1"
+                placeholder="UP_#$_E1"
               />
               <CustomInput
                 label="Email"
@@ -123,7 +132,6 @@ const AddAdminUser = () => {
                 type="number"
                 pattern="[0-9]+"
                 errorMessage="Please enter a valid number."
-                
               />
               <CustomInput
                 label="Child Token"
@@ -133,7 +141,6 @@ const AddAdminUser = () => {
                 type="number"
                 pattern="[0-9]+"
                 errorMessage="Please enter a valid number."
-                
               />
             </div>
             <div className="mb-6">
@@ -166,10 +173,17 @@ const AddAdminUser = () => {
                 <option value="Back Office">Back Office</option>
               </select>
             </div>
-            <button className="Submit-button " onClick={handleSubmit}>
-              <i className="ri-save-fill"></i>
-              Submit
-            </button>
+             
+            <div className="">
+              <button
+                className="Submit-button whitespace-nowrap bg-[#3f9e04] hover:bg-[#3f9e04d3]"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                <i class="ri-save-fill"> </i>
+                Submit
+              </button>
+            </div>
           </form>
         </div>
       </div>

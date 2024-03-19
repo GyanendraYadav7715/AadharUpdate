@@ -38,8 +38,8 @@ const Balance = () => {
         amount: "",
       });
     } catch (error) {
-      console.error("Error:", error.message);
-      alert("Something went wrong");
+      //console.error("Error:", error.message);
+      alert(error.message);
     }
   };
 

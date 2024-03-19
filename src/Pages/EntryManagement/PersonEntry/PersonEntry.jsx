@@ -90,13 +90,13 @@ const PersonEntry = () => {
         MobileNo: "",
         Email: "",
         Address: "",
-        Proof: [{ POI: "ll" }, { POB: "ll" }, { POA: "cdfg" }],
+        Proof: [{ POI: "" }, { POB: "" }, { POA: "" }],
         FingerPrint: [
-          { FingerPrint1: "cdfg" },
-          { FingerPrint2: "cdfg" },
-          { FingerPrint3: "cdfg" },
-          { FingerPrint4: "cdfg" },
-          { FingerPrint5: "cdfg" },
+          { FingerPrint1: "" },
+          { FingerPrint2: "" },
+          { FingerPrint3: "" },
+          { FingerPrint4: "" },
+          { FingerPrint5: "" },
         ],
       });
     } catch (error) {
@@ -122,166 +122,126 @@ const PersonEntry = () => {
         ]}
       />
 
-      <div className=" p-3 sm:ml-64 bg-gray-200">
-        <div className="p-2 border-2 rounded-lg shadow-xl bg-white">
-          <div className="PurposeGrid">
-            <CustomInput
-              onChange={handleInputChange}
-              label="Purpose"
-              type="text"
-              name="Purpose"
-              value={formData.Purpose}
-              placeholder="Enter Purpose"
-              required
-            />
-          </div>
-          <div className="formGrid">
-            <CustomInput
-              onChange={handleInputChange}
-              label="Full Name"
-              type="text"
-              value={formData.Name}
-              name="Name"
-              placeholder="Enter Name"
-            />
-            <CustomInput
-              onChange={handleInputChange}
-              label="Father Name"
-              type="text"
-              value={formData.FatherName}
-              name="FatherName"
-              placeholder="Father Name"
-            />
-            <CustomInput
-              onChange={handleInputChange}
-              label="Date of Birth"
-              type="date"
-              name="DOB"
-              placeholder=""
-              value={formData.DOB}
-            />
-            <CustomInput
-              onChange={handleInputChange}
-              label="Aadhaar No."
-              type="tel"
-              name="AadhaarNo"
-              placeholder="Aadhaar No."
-              value={formData.AadhaarNo}
-              maxLength={12}
-            />
-            <CustomInput
-              onChange={handleInputChange}
-              label="Mobile No."
-              type="tel"
-              name="MobileNo"
-              placeholder="Mobile No."
-              value={formData.MobileNo}
-              maxLength={10}
-            />
-            <CustomInput
-              onChange={handleInputChange}
-              label="E-mail ID"
-              type="email"
-              name="Email"
-              placeholder="example@update.com"
-              value={formData.Email}
-            />
-            <CustomInput
-              onChange={handleInputChange}
-              label="POI"
-              type="file"
-              name="POI"
-              placeholder=""
-              value={formData.POI}
-            />
-            <CustomInput
-              onChange={handleInputChange}
-              label="POA"
-              type="file"
-              name="POA"
-              placeholder=""
-              value={formData.POA}
-            />
-            <CustomInput
-              onChange={handleInputChange}
-              label="POB"
-              type="file"
-              name="POB"
-              placeholder=""
-              value={formData.POB}
-            />
-          </div>
-          <div className="PurposeGrid Address">
-            <CustomInput
-              onChange={handleInputChange}
-              label="Address"
-              type="text"
-              name="Address"
-              placeholder="House No, Village, City Name, District, State"
-              value={formData.Address}
-            />
-          </div>
-          <div className="container grid grid-cols-5">
-          
-            <Box
-              onFingerprintUpload={(imageUrl) =>
-                setFormData({
-                  ...formData,
-                  FingerPrint: {
-                    ...formData.FingerPrint,
-                    FingerPrint1: imageUrl,
-                  },
-                })
-              }
-            />
-            <Box
-              onFingerprintUpload={(imageUrl) =>
-                setFormData({
-                  ...formData,
-                  FingerPrint: {
-                    ...formData.FingerPrint,
-                    FingerPrint2: imageUrl,
-                  },
-                })
-              }
-            />
-            <Box
-              onFingerprintUpload={(imageUrl) =>
-                setFormData({
-                  ...formData,
-                  FingerPrint: {
-                    ...formData.FingerPrint,
-                    FingerPrint3: imageUrl,
-                  },
-                })
-              }
-            />
-            <Box
-              onFingerprintUpload={(imageUrl) =>
-                setFormData({
-                  ...formData,
-                  FingerPrint: {
-                    ...formData.FingerPrint,
-                    FingerPrint4: imageUrl,
-                  },
-                })
-              }
-            />
-            <Box
-              onFingerprintUpload={(imageUrl) =>
-                setFormData({
-                  ...formData,
-                  FingerPrint: {
-                    ...formData.FingerPrint,
-                    FingerPrint5: imageUrl,
-                  },
-                })
-              }
-            />
-
-            <button onClick={handleSubmit} className="Submit-button">
-              <i className="ri-save-fill"></i> Submit
-            </button>
+      <div className=" p-3 sm:ml-64 ">
+        <div className="p-4 border-2 rounded-lg shadow-xl bg-white">
+          <h3 className="text-2xl font-semibold ml-3 mb-3">Add Customer</h3>
+          <div className="px-6 py-4 m-2  shadow-sm rounded-md bg-white border-[#00000047] border-2 ">
+            <div className="PurposeGrid">
+              <CustomInput
+                onChange={handleInputChange}
+                label="Purpose"
+                type="text"
+                name="Purpose"
+                value={formData.Purpose}
+                placeholder="Enter Purpose"
+                required
+              />
+            </div>
+            <div className="formGrid">
+              <CustomInput
+                onChange={handleInputChange}
+                label="Full Name"
+                type="text"
+                value={formData.Name}
+                name="Name"
+                placeholder="Enter Name"
+              />
+              <CustomInput
+                onChange={handleInputChange}
+                label="Father Name"
+                type="text"
+                value={formData.FatherName}
+                name="FatherName"
+                placeholder="Father Name"
+              />
+              <CustomInput
+                onChange={handleInputChange}
+                label="Date of Birth"
+                type="date"
+                name="DOB"
+                placeholder=""
+                value={formData.DOB}
+              />
+              <CustomInput
+                onChange={handleInputChange}
+                label="Aadhaar No."
+                type="tel"
+                name="AadhaarNo"
+                placeholder="Aadhaar No."
+                value={formData.AadhaarNo}
+                maxLength={12}
+              />
+              <CustomInput
+                onChange={handleInputChange}
+                label="Mobile No."
+                type="tel"
+                name="MobileNo"
+                placeholder="Mobile No."
+                value={formData.MobileNo}
+                maxLength={10}
+              />
+              <CustomInput
+                onChange={handleInputChange}
+                label="E-mail ID"
+                type="email"
+                name="Email"
+                placeholder="example@update.com"
+                value={formData.Email}
+              />
+              <CustomInput
+                onChange={handleInputChange}
+                label="POI"
+                type="file"
+                name="POI"
+                placeholder=""
+                value={formData.POI}
+              />
+              <CustomInput
+                onChange={handleInputChange}
+                label="POA"
+                type="file"
+                name="POA"
+                placeholder=""
+                value={formData.POA}
+              />
+              <CustomInput
+                onChange={handleInputChange}
+                label="POB"
+                type="file"
+                name="POB"
+                placeholder=""
+                value={formData.POB}
+              />
+            </div>
+            <div className="PurposeGrid Address">
+              <CustomInput
+                onChange={handleInputChange}
+                label="Address"
+                type="text"
+                name="Address"
+                placeholder="House No, Village, City Name, District, State"
+                value={formData.Address}
+              />
+            </div>
+            <div className="container grid grid-cols-5">
+              {[...Array(5)].map((_, index) => (
+                <Box
+                  key={index}
+                  onFingerprintUpload={(imageUrl) =>
+                    setFormData((prevFormData) => ({
+                      ...prevFormData,
+                      FingerPrint: {
+                        ...prevFormData.FingerPrint,
+                        [`FingerPrint${index + 1}`]: imageUrl,
+                      },
+                    }))
+                  }
+                />
+              ))}
+              <button onClick={handleSubmit} className="Submit-button">
+                <i className="ri-save-fill"></i> Submit
+              </button>
+            </div>
           </div>
         </div>
       </div>
