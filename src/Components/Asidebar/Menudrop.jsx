@@ -100,7 +100,7 @@ const Menudrop = () => {
           title="Mobile Management"
           items={[
             { label: "Mobile Update", link: "/mobileupdate" },
-            { label: "Mobile Data", link: "/mobiledata" },
+            { label: "Mobile Data", link: "/mobile-list" },
             { label: "Admin Report", link: "/adminreport" },
           ]}
           iconClass="ri-smartphone-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
@@ -112,7 +112,6 @@ const Menudrop = () => {
               label: " All Mantra Driver",
               link: "https://fingerprintdata.s3.ap-south-1.amazonaws.com/MantraSetup_and_Certification.rar",
             },
-
           ]}
           iconClass="ri-download-cloud-2-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
         />
@@ -128,7 +127,7 @@ const Menudrop = () => {
         />
         <Dropdown
           title="Child Management"
-          items={[{ label: "View Child Data", link: "/ViewChildData" }]}
+          items={[{ label: "View Child Entry", link: "/child-entry-list" }]}
           iconClass="ri-open-arm-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
         />
         <Dropdown
@@ -143,7 +142,6 @@ const Menudrop = () => {
               label: " All Mantra Driver",
               link: "https://fingerprintdata.s3.ap-south-1.amazonaws.com/MantraSetup_and_Certification.rar",
             },
-
           ]}
           iconClass="ri-download-cloud-2-fill w-5 h-5  text-black transition duration-75   group-hover:text-gray-900  "
         />
@@ -169,7 +167,8 @@ const Menudrop = () => {
           items={[
             { label: "Enroll Child", link: "/new-entry" },
 
-            { label: "View Child Entry", link: "/child-entry-list" },
+            { label: "View Child Data", link: "/ViewChildData" },
+
             {
               label: "Enrollment Form",
               link: "https://ultra.getviewandupdate.in/update.pdf",
@@ -181,7 +180,7 @@ const Menudrop = () => {
           title="Mobile Management"
           items={[
             { label: "Mobile Update", link: "/mobileupdate" },
-            { label: "Mobile Data", link: "/mobiledata" },
+            { label: "Mobile List", link: "/mobile-list" },
             {
               label: "Enrollment Form",
               link: "https://ultra.getviewandupdate.in/update.pdf",

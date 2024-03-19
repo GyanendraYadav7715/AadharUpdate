@@ -12,8 +12,8 @@ function Protected() {
       "/add-customer",
       "/list",
       "/new-entry",
-      "/child-entry-list",
-      "/mobileupdate",
+      "/ViewChildData",
+      "/mobile-list",
       "/mobiledata",
     ],
     Superadmin: [
@@ -28,7 +28,7 @@ function Protected() {
       "/new-entry",
       "/child-entry-list",
       "/mobileupdate",
-      "/mobiledata",
+      "/mobile-list",
       "/adminreport",
       "/viewretaileruserlist",
       "/searchentrydata",
@@ -38,7 +38,7 @@ function Protected() {
     BackOffice: [
       "/backoffice",
       "/list",
-      "/ViewChildData",
+      "/child-entry-list",
       "/adminreport",
       "/user-edit",
       "/user-finger",

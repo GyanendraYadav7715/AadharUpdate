@@ -14,7 +14,7 @@ import SearchElement from "../../../Components/SearchElement/SearchElement";
 function List() {
   //api data fetch
   const [filteredProducts, setFilteredProducts] = useState([]);
-    
+
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
@@ -28,7 +28,7 @@ function List() {
     role = userObj.role;
     userName = userObj.Username;
   }
-  const title = role === "BackOffice" ? "View Customers Data":"View Entry";
+  const title = role === "BackOffice" ? "View Customers Data" : "View Entry";
   const links =
     role === "Admin"
       ? [
@@ -60,8 +60,7 @@ function List() {
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
         console.log(response.data);
-          
-         
+
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -123,7 +122,7 @@ function List() {
               </thead>
 
               <tbody>
-                {filteredProducts.length >0 ? (
+                {filteredProducts.length > 0 ? (
                   filteredProducts.map((item, index) => (
                     <React.Fragment key={item.id}>
                       <tr>
@@ -182,7 +181,7 @@ function List() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6">
+                    <td colSpan="8">
                       <h1 className="list-record">Record Not Found😞</h1>
                     </td>
                   </tr>
@@ -224,7 +223,7 @@ function List() {
             </thead>
 
             <tbody>
-              {filteredProducts.length>0 ? (
+              {filteredProducts.length > 0 ? (
                 filteredProducts.map((item, index) => (
                   <React.Fragment key={item.id}>
                     <tr>
@@ -283,7 +282,7 @@ function List() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6">
+                  <td colSpan="8">
                     <h1 className="list-record">Record Not Found😞</h1>
                   </td>
                 </tr>

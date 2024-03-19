@@ -27,6 +27,7 @@ import ViewChildData from "./Pages/Child/View_Child_Data/ViewChildData";
 import MobileNoUpdate from "./Pages/Mobile/Mobile-Update/MobileNoUpdate";
 import MobileData from "./Pages/Mobile/MobileData/MobileData";
 import AdminReport from "./Pages/Mobile/AdminReport/AdminReport";
+import MobileEntryList from "./Pages/Mobile/Mobile-No-Entry/MobileEntryList"
 import Protected from "./Route/Protected";
 
 import Edit from "./ActionServices/Edit"
@@ -99,6 +100,7 @@ function Layout() {
           <Route path="/mobileupdate" element={<MobileNoUpdate />} />
           <Route path="/mobiledata" element={<MobileData />} />
           <Route path="/adminreport" element={<AdminReport />} />
+          <Route path="/mobile-list" element={<MobileEntryList />} />
           <Route path="/user-edit" element={<Edit />} />
           <Route path="/user-finger" element={<Finger />} />
           <Route path="/edit-view" element={<EditView />} />
