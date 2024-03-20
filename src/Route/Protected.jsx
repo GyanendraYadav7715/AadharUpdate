@@ -15,6 +15,7 @@ function Protected() {
       "/ViewChildData",
       "/mobile-list",
       "/mobiledata",
+      "/mobileupdate",
     ],
     Superadmin: [
       "/superadmin",

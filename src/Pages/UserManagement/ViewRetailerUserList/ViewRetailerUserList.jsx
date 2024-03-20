@@ -172,7 +172,7 @@ const ViewRetailerUserList = () => {
                       <td className="px-6 py-4 gap-2 flex items-center justify-between">
                         <button
                           onClick={() =>
-                            handleStatusEdit(product.Username, "false")
+                            handleStatusEdit(product.Username, "false" )
                           }
                           className="font-medium text-white no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                         >

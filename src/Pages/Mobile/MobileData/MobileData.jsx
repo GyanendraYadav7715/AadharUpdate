@@ -7,6 +7,7 @@ import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import { Local_Url } from "../../../constant/constant";
 import axios from "axios";
+
  
 const MobileData = () => {
   const userData = localStorage.getItem("user");
