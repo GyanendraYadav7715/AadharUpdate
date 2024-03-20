@@ -10,6 +10,7 @@ import { Local_Url } from "../../../constant/constant";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Slip from "../../../Components/Slip/Slip"
+import  './mobileList.css'
 
 function ViewChildData() {
   const [data, setData] = useState([]);
@@ -145,7 +146,7 @@ const [searchQuery, setSearchQuery] = useState("");
                               <h3 className="status">Status</h3>
                             </div>
 
-                            <Slip />
+                            <Slip mobileUserData={item} />
                           </div>
                         </td>
                       </tr>

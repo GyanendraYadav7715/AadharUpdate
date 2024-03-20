@@ -7,13 +7,14 @@ import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 
 const MobileNoUpdate = () => {
-  const [currentDate, setCurrentDate] = useState("");
+  //const [currentDate, setCurrentDate] = useState("");
 
-  useEffect(() => {
-    // Get the current date in the format YYYY-MM-DD
-    const date = new Date().toISOString().split("T")[0];
-    setCurrentDate(date);
-  }, []);
+  // useEffect(() => {
+  //   // Get the current date in the format YYYY-MM-DD
+  //   const date = new Date().toISOString().split("T")[0];
+  //   setCurrentDate(date);
+  // }, []);
+
   const userData = localStorage.getItem("user");
   let role = "";
   if (userData) {
@@ -84,7 +85,7 @@ const MobileNoUpdate = () => {
     role = userObj.User_type;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      DOA: currentDate,
+      // DOA: currentDate,
     }));
 
     if (!formData.Name || !formData.Email || !formData.MobileNo) {
@@ -143,18 +144,29 @@ const MobileNoUpdate = () => {
               name="FatherName"
               placeholder="Father Name"
             />
-            <div className="inputContainer">
+            {/* <div className="inputContainer">
               <div className="inputWrapper">
                 <label className="label">Date of Apply</label>
               </div>
               <input
                 type="date"
-                value={currentDate}
-                disabled
-                onChange={(e) => handleInputChange("DOA", e.target.value)}
+                value={formData.DOA}
+                // disabled
+                name="DOA"
+             //   onChange={(e) => handleInputChange("DOA", e.target.value)}
                 className="inputField"
               />
-            </div>
+            </div> */}
+
+            <CustomInput
+              onChange={handleInputChange}
+              label="Date of Apply"
+              type='datetime-local'
+              name="DOA"
+            
+              value={formData.DOA}
+            />
+            
 
             <CustomInput
               onChange={handleInputChange}
