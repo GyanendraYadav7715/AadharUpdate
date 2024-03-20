@@ -271,8 +271,8 @@ function List() {
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              <Slip />
                               <h3 className="status">Status</h3>
+                              <Slip />
                             </div>
                           </div>
                         </td>

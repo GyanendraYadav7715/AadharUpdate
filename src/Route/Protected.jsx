@@ -14,7 +14,7 @@ function Protected() {
       "/new-entry",
       "/ViewChildData",
       "/mobile-list",
-      "/mobiledata",
+      "/mobileupdate",
     ],
     Superadmin: [
       "/superadmin",
@@ -34,6 +34,7 @@ function Protected() {
       "/searchentrydata",
       "/ViewChildData",
       "/editstatus",
+      "/mobile-list",
     ],
     BackOffice: [
       "/backoffice",
