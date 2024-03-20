@@ -93,7 +93,7 @@ const History = () => {
                 </tr>
               </thead>
               <tbody>
-                { data.length > 0 ? (
+                {data.length > 0 ? (
                   memoizedFilteredProducts.map((product, index) => (
                     <tr
                       key={index}
@@ -116,7 +116,9 @@ const History = () => {
                 ) : (
                   <tr>
                     <td colSpan="6">
-                      <h1 className="list-record text-center text-xl">Record Not Found😞</h1>
+                      <h1 className="list-record text-center text-3xl">
+                        Record Not Found😞
+                      </h1>
                     </td>
                   </tr>
                 )}

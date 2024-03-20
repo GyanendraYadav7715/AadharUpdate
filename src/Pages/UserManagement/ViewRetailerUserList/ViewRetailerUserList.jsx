@@ -192,7 +192,7 @@ const ViewRetailerUserList = () => {
                 ) : (
                   <tr>
                     <td colSpan="9">
-                      <h1 className="list-record text-center text-xl">
+                      <h1 className="list-record text-center text-3xl">
                         Record Not Found😞
                       </h1>
                     </td>
