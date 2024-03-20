@@ -6,6 +6,7 @@ import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import Information from "../../../Components/Information/Information";
 import { Select } from "../../../Components/Selection/Select";
 import { Local_Url } from "../../../constant/constant";
+import FileUpload from "../../../Components/FileUpload/FileUpload";
 
 const NewEntry = () => {
   const userData = localStorage.getItem("user");
@@ -219,40 +220,44 @@ const NewEntry = () => {
                 value={formData.Parent_AadhaarNo}
                 maxLength={12}
               />
-
-              {/* Document Upload Inputs */}
-              <CustomInput
-                onChange={handleInputChange}
-                label="Upload Birth Proof (Only Pdf allow)"
-                type="file"
-                name="POB"
-                placeholder=""
-                value={formData.POB}
-              />
-              <CustomInput
-                onChange={handleInputChange}
-                label="Upload Child Photo Pdf*"
-                type="file"
+              <FileUpload
+                title="Upload Child Photo Pdf*"
                 name="POI"
-                placeholder=""
-                value={formData.POI}
+                onFileUpload={(imageUrl) =>
+                  setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    Proof: {
+                      ...prevFormData.Proof,
+                      POI: imageUrl,
+                    },
+                  }))
+                }
               />
-              <CustomInput
-                onChange={handleInputChange}
-                label="Upload Form"
-                type="file"
+              <FileUpload
+                title="Upload Birth Proof (Only Pdf allow)"
+                name="POB"
+                onFileUpload={(imageUrl) =>
+                  setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    Proof: {
+                      ...prevFormData.Proof,
+                      POB: imageUrl,
+                    },
+                  }))
+                }
+              />
+              <FileUpload
+                title="Upload Form"
                 name="POA"
-                placeholder=""
-                value={formData.POA}
-              />
-
-              <CustomInput
-                onChange={handleInputChange}
-                label="Mobile No."
-                type="text"
-                name="MobileNo"
-                placeholder="Mobile No."
-                value={formData.MobileNo}
+                onFileUpload={(imageUrl) =>
+                  setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    Proof: {
+                      ...prevFormData.Proof,
+                      POA: imageUrl,
+                    },
+                  }))
+                }
               />
 
               <CustomInput
@@ -273,13 +278,8 @@ const NewEntry = () => {
                 value={formData.Address}
               />
 
-              {/* For Empty Space in  Spacific row */}
-
-              <div className="empty-space"></div>
-
-              <div className="empty-space"></div>
-
               <CustomInput
+                label="Address"
                 onChange={handleInputChange}
                 type="text"
                 name="Address_in_hindi"
