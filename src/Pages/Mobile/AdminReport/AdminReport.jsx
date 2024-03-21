@@ -7,8 +7,7 @@ import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
-import Upload from "../../../ActionServices/Upload";
-import Slip from "../../../Components/Slip/Slip";
+
 const AdminReport = () => {
   const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);

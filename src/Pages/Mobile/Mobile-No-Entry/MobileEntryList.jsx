@@ -91,7 +91,7 @@ function ViewChildData() {
               <tr>
                 <th>S.N.</th>
                 <th>Name</th>
-                <th>Age</th>
+                <th>DOA</th>
                 <th>Aadhaar No.</th>
                 <th>Mobile No.</th>
                 <th>E-mail ID</th>

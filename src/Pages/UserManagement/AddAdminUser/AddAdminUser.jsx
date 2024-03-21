@@ -3,7 +3,8 @@ import axios from "axios";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import { Local_Url } from "../../../constant/constant";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AddAdminUser = () => {
   const [formData, setFormData] = useState({
     Name: "",
@@ -36,7 +37,7 @@ const AddAdminUser = () => {
       "Child_token",
     ];
     if (requiredFields.some((field) => !formData[field])) {
-      return alert("Please fill all required fields.");
+      return toast.error("Please fill all the fields");
     }
     const userData = JSON.parse(localStorage.getItem("user"));
     formData.superAdminUser = userData ? userData.Username : "";
@@ -48,7 +49,7 @@ const AddAdminUser = () => {
           "Content-Type": "application/json",
         },
       });
-      alert(response.data.message);
+      toast.success(response.data.message);
       setFormData({
         Name: "",
         Email: "",
@@ -60,8 +61,7 @@ const AddAdminUser = () => {
         Password: "",
       });
     } catch (error) {
-      alert(error.message);
-      //console.error("Error submitting form:", error.message);
+      toast.error(error.message);
     }
   };
 
@@ -173,7 +173,7 @@ const AddAdminUser = () => {
                 <option value="Back Office">Back Office</option>
               </select>
             </div>
-             
+
             <div className="">
               <button
                 className="Submit-button whitespace-nowrap bg-[#3f9e04] hover:bg-[#3f9e04d3]"
