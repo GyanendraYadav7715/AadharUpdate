@@ -72,152 +72,8 @@ const AdminReport = () => {
    const handleIconClick = (index) => {
      setSelectedRow(selectedRow === index ? null : index);
    };
-  if (role === "Retailer")
-    return (
-      <>
-        <Breadcrumb title={title} links={links} />
-        <div className="p-4 sm:ml-64 bg-gray-200">
-          <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
-            <h3 className="text-2xl font-semibold">ADMIN</h3>
-            <div className="flex items-center justify-between my-4">
-              <div>
-                <CopyButton data={products} />
-                <ExcelButton data={products} filename={"AdminReport.xlsx"} />
-                <CSVButton data={products} filename={"AdminReport.csv"} />
-                <PDFButton tableRef={tableRef} filename={"AdminReport.pdf"} />
-              </div>
-              <SearchElement />
-            </div>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-              <table
-                className="w-full text-sm text-left rtl:text-right text-black shadow-sm"
-                ref={tableRef}
-              >
-                <thead className="text-base text-black  bg-white  ">
-                  <tr>
-                    <th scope="col" className="px-2 py-3 border">
-                      Serial No.
-                    </th>
-                    <th scope="col" className="px-6 py-3 border">
-                      Applied By
-                    </th>
-                    <th scope="col" className="px-6 py-3 border">
-                      Aadhar Card Details
-                    </th>
-                    <th scope="col" className="px-6 py-3 border">
-                      Purpose & Status
-                    </th>
-                    <th scope="col" className="px-6 py-3 border">
-                      Admin Remark
-                    </th>
-                    <th scope="col" className="px-6 py-3 border">
-                      Created On
-                    </th>
-                    <th scope="col" className="px-6 py-3 border">
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.length > 0 ? (
-                    products.map((product, index) => (
-                      <tr
-                        key={index}
-                        className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
-                      >
-                        <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
-                          {index + 1}
-                        </td>
-                        <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
-                          {product.appliedBy}
-                        </td>
-                        <td className="px-6 py-4 border">
-                          {Object.values(product.aadharCardDetails).join(", ")}
-                        </td>
-                        <td className="px-6 py-4 border">{product.purpose}</td>
-                        <td className="px-6 py-4 border">
-                          {product.adminRemark}
-                        </td>
-                        <td className="px-6 py-4 border">
-                          {product.createdOn}
-                        </td>
-                        <td className="px-6 py-4 border flex items-center justify-between gap-3">
-                          <Link
-                            to="/user-edit"
-                            className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                          >
-                            <i className="ri-edit-box-line text-white"></i>
-                          </Link>
-                          <Link
-                            to="/user-finger"
-                            className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                          >
-                            <i className="ri-fingerprint-fill text-white"></i>
-                          </Link>
-                          <Link
-                            to="/edit-view"
-                            className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                          >
-                            <i className="ri-eye-line text-white"></i>
-                          </Link>
-                          <Link
-                            to="#"
-                            className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
-                          >
-                            <i className="ri-delete-bin-line text-white"></i>
-                          </Link>
-                          <button
-                            onClick={handleUploadButtonClick}
-                            className="font-medium text-white no-underline border-1 bg-green-600 px-6 py-3 rounded-md"
-                          >
-                            Upload
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="7">
-                        <h1 className="list-record text-center text-xl">
-                          Record Not Found😞
-                        </h1>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        {/* Upload Popup */}
-        {showUploadPopup && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-8 rounded-lg shadow-md w-1/4">
-              <h2 className="text-xl font-semibold mb-4">
-                Upload Acknowledgement Slip
-              </h2>
-              <Upload />
-              <div className="flex justify-end mt-6">
-                <button
-                  onClick={handleCancel}
-                  className="px-4 py-2 mr-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleSubmit}
-                  className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </>
-    );
-  else
-    return (
+ 
+return (
       <>
         <Breadcrumb title={title} links={links} />
         <div className="p-2 sm:ml-64">
@@ -246,7 +102,7 @@ const AdminReport = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.length < 0 ? (
+                {products.length > 0 ? (
                   products.map((item, index) => (
                     <React.Fragment key={item._id}>
                       <tr>

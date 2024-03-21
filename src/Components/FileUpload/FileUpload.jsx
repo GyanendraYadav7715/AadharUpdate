@@ -5,7 +5,7 @@ import { Local_Url } from "../../constant/constant";
 const FileUpload = ({ title, name, onFileUpload }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [fileUploaded, setFileUploaded] = useState(false);
-
+  const [captureCount, setCaptureCount] = useState(0);
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     console.log(file)
@@ -20,12 +20,13 @@ const FileUpload = ({ title, name, onFileUpload }) => {
       alert("File size exceeds 5MB. Please select a smaller file.");
       return;
     }
-    if (captureCount < 5 && !isLoading) setIsLoading(true);
+    if (captureCount < 3 && !isLoading) setIsLoading(true);
     try {
       const imageUrl = await uploadToS3(file);
       console.log(imageUrl);
       setFileUploaded(true);
       onFileUpload(imageUrl);
+      setCaptureCount((prevCount) => prevCount + 1);
     } catch (error) {
       console.error("Error uploading file:", error);
     } finally {
@@ -65,6 +66,7 @@ const FileUpload = ({ title, name, onFileUpload }) => {
             accept=".pdf"
             onChange={handleFileUpload}
             className="hidden"
+            disabled={captureCount >= 3}
             id="fileInput"
             max="5000" // Max size in KB, 5000 KB = 5 MB
           />
