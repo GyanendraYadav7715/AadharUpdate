@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 import axios from "axios";
 import { Local_Url } from "../../constant/constant";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Balance = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -23,7 +24,7 @@ const Balance = () => {
     e.preventDefault();
 
     if (username.trim() === "" || amount.trim() === "") {
-      alert("Please fill all fields");
+      toast.error("Please fill all the fields");
       return;
     }
 
@@ -32,14 +33,13 @@ const Balance = () => {
 
       const response = await axios.post(apiUrl, formData);
 
-      alert(response.data.message);
+      toast.success(response.data.message);
       setFormData({
         username: "",
         amount: "",
       });
     } catch (error) {
-      //console.error("Error:", error.message);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 

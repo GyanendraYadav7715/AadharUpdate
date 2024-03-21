@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 import axios from "axios";
-import {Local_Url} from "../../constant/constant"
+import { Local_Url } from "../../constant/constant";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Balance = () => {
   const [formData, setFormData] = useState({
@@ -20,31 +22,26 @@ const Balance = () => {
     }));
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-     
+
     if (Username.trim() === "" || amount.trim() === "") {
-      alert("Please fill the all fields");
+      toast.error("Please fill all the fields");
       return;
     }
 
     try {
       const apiUrl = `${Local_Url}/api/v1/admin/transfer-fund`;
-       
+
       const response = await axios.post(apiUrl, formData);
 
-       
-       
-      alert(response.data.message);
+      toast.success(response.data.message);
       setFormData({
         Username: "",
         amount: "",
       });
     } catch (error) {
-       
-       
-      alert(error.message);
+      toast.error(error.message);
     }
   };
   const title = "Balance Transfer";

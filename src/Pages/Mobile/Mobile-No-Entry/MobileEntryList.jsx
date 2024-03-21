@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from "react";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
@@ -9,11 +8,12 @@ import SearchElement from "../../../Components/SearchElement/SearchElement";
 import { Local_Url } from "../../../constant/constant";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
-import Slip from "../../../Components/Slip/Slip"
+import Slip from "../../../Components/Slip/Slip";
+ 
 
 function ViewChildData() {
   const [data, setData] = useState([]);
-const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
 
   const userData = localStorage.getItem("user");
@@ -69,14 +69,15 @@ const [searchQuery, setSearchQuery] = useState("");
     );
     setFilteredUsers(filtered);
   };
+ 
 
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-4 sm:ml-64 bg-gray-200">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white  ">
-          <h2 className="text-2xl font-semibold">ADMIN</h2>
-          <div className="flex items-center justify-between my-4">
+          <h2 className="text-2xl font-semibold pl-7">ADMIN</h2>
+          <div className="flex items-center justify-between my-4 px-8">
             <div>
               <CopyButton data={data} />
               <ExcelButton data={data} filename={"MobileDataList.xlsx"} />
@@ -90,7 +91,7 @@ const [searchQuery, setSearchQuery] = useState("");
               <tr>
                 <th>S.N.</th>
                 <th>Name</th>
-                <th>Age</th>
+                <th>DOA</th>
                 <th>Aadhaar No.</th>
                 <th>Mobile No.</th>
                 <th>E-mail ID</th>
@@ -145,7 +146,7 @@ const [searchQuery, setSearchQuery] = useState("");
                               <h3 className="status">Status</h3>
                             </div>
 
-                            <Slip />
+                            <Slip/>
                           </div>
                         </td>
                       </tr>

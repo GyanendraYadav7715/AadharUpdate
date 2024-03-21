@@ -11,7 +11,6 @@ import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 
-
 function List() {
   //api data fetch
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -31,7 +30,7 @@ function List() {
   }
   const title = role === "BackOffice" ? "View Customers Data" : "View Entry";
   const links =
-    role === "Admin"
+    role === "Superadmin"
       ? [
           { title: "Home", href: "/superadmin" },
           { title: "View Entry", href: "" },
@@ -83,10 +82,10 @@ function List() {
     );
     setFilteredProducts(filtered);
   };
-  if (role === "BackOffice")
+  // if (role === "Retailer")
     return (
       <>
-        <Breadcrumb title={title} links={links} />
+        <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
         <div className="p-4 sm:ml-64">
           <div className="p-2 border-2 border-gray-200 border-solid rounded-lg ">
@@ -171,8 +170,8 @@ function List() {
                                     {item.createdOn}
                                   </span>
                                 </h3>
-                                <Slip />
                                 <h3 className="status">Status</h3>
+                                <Slip  />
                               </div>
                             </div>
                           </td>
@@ -193,107 +192,119 @@ function List() {
         </div>
       </>
     );
+//   else if(role==="Backoffice" && role==="Superadmin")
+//     return (
+//       <>
+//         <Breadcrumb title={title} links={links} />
 
-  return (
-    <>
-      <Breadcrumb title={title} links={links} mylinks={mylinks} />
-
-      <div className="p-4 sm:ml-64">
-        <div className="p-2 border-2 border-gray-200 border-solid rounded-lg ">
-          <div className="Download-Button flex items-center justify-between">
-            <div>
-              <CopyButton data={data} />
-              <ExcelButton data={data} filename={"AddCustomerList.xlsx"} />
-              <CSVButton data={data} filename={"AddCustomerList.csv"} />
-              <PDFButton tableRef={tableRef} filename={"AddCustomerList.pdf"} />
-            </div>
-            <SearchElement onSearch={handleSearch} />
-          </div>
-          <Table striped bordered hover className="custom-table" ref={tableRef}>
-            <thead>
-              <tr>
-                <th>S.N.</th>
-                <th>Name</th>
-                <th>Purpose</th>
-                <th>Age</th>
-                <th>Father Name</th>
-                <th>Aadhaar No.</th>
-                <th>Mobile No.</th>
-                <th>E-mail ID</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((item, index) => (
-                  <React.Fragment key={item.id}>
-                    <tr>
-                      <td>
-                        <div
-                          className="DropDown"
-                          onClick={() => handleIconClick(index)}
-                        >
-                          <i
-                            className={
-                              selectedRow === index
-                                ? "ri-close-fill"
-                                : "ri-add-fill"
-                            }
-                            style={{
-                              backgroundColor:
-                                selectedRow === index ? "red" : "blue",
-                            }}
-                          ></i>
-                        </div>
-                        {index + 1}
-                      </td>
-                      <td>{item.Name}</td>
-                      <td>{item.Purpose}</td>
-                      <td>{item.DOB}</td>
-                      <td>{item.FatherName}</td>
-                      <td>{item.AadhaarNo}</td>
-                      <td>{item.MobileNo}</td>
-                      <td>{item.Email}</td>
-                    </tr>
-                    {selectedRow === index && (
-                      <tr>
-                        <td colSpan="6" style={{ backgroundColor: "white" }}>
-                          {/* Dropdown content */}
-                          <div className="dropdown-content">
-                            <div className="dropdown-title">
-                              <h3 className="status">
-                                Created On :{" "}
-                                <span
-                                  style={{
-                                    color: "blue",
-                                    fontSize: "15px",
-                                  }}
-                                >
-                                  {item.createdOn}
-                                </span>
-                              </h3>
-                              <h3 className="status">Status</h3>
-                              <Slip />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    )}
-                  </React.Fragment>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="8">
-                    <h1 className="list-record">Record Not Found😞</h1>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
-        </div>
-      </div>
-    </>
-  );
+//         <div className="p-2 sm:ml-64">
+//           <div className="p-2 border-2 border-gray-200 border-solid rounded-lg">
+//             <div className="Download-Button flex items-center justify-between">
+//               <div>
+//                 <CopyButton data={data} />
+//                 <ExcelButton data={data} filename={"ChildEntyList.xlsx"} />
+//                 <CSVButton data={data} filename={"ChildEntyList.csv"} />
+//                 <PDFButton tableRef={tableRef} filename={"ChildEntyList.pdf"} />
+//               </div>
+//               <SearchElement onSearch={handleSearch} />
+//             </div>
+//             <Table
+//               striped
+//               bordered
+//               hover
+//               className="custom-table"
+//               ref={tableRef}
+//             >
+//               <thead>
+//                 <tr>
+//                   <th>S.NO.</th>
+//                   <th>Applied By</th>
+//                 </tr>
+//               </thead>
+//               <tbody>
+//                 {filteredProducts.length > 0 ? (
+//                   filteredProducts.map((item, index) => (
+//                     <React.Fragment key={item._id}>
+//                       <tr>
+//                         <td>
+//                           <div
+//                             className="DropDown"
+//                             onClick={() => handleIconClick(index)}
+//                           >
+//                             <i
+//                               className={
+//                                 selectedRow === index
+//                                   ? "ri-close-fill child"
+//                                   : "ri-add-fill child"
+//                               }
+//                             ></i>{" "}
+//                             {index + 1}
+//                           </div>
+//                         </td>
+//                         <td>{userName}</td>
+//                       </tr>
+//                       {selectedRow === index && (
+//                         <tr>
+//                           <td colSpan="6">
+//                             <div className="dropdown-content">
+//                               <div className="dropdown-title">
+//                                 <h3 className="status">
+//                                   Aadhaar Card Details:
+//                                 </h3>
+                               
+//                                 <span className="span">Name: {item.Name}</span>
+//                                 <span className="span">
+//                                   Father Name: {item.ParentName}
+//                                 </span>
+//                                 <span className="span">
+//                                   Aadhaar No: {item.Parent_AadhaarNo}
+//                                 </span>
+//                                 <span className="span">
+//                                   Mobile No: {item.MobileNo}
+//                                 </span>
+//                                 <span className="span">
+//                                   E-mail: {item.Email}
+//                                 </span>
+//                                 <span className="span">
+//                                   Address: {item.Address}
+//                                 </span>
+//                                 <h3 className="status">Purpose & Status</h3>
+//                                 <h3 className="status">Admin Remark</h3>
+//                                 <h3 className="status">
+//                                   Created On:
+//                                   <span
+//                                     style={{ color: "blue", fontSize: "15px" }}
+//                                   >
+//                                     {item.createdOn}
+//                                   </span>
+//                                 </h3>
+//                                 <div className="Action-container">
+//                                   <Action />
+//                                   <FingerData />
+//                                   <ViewFingerAndUpdate />
+//                                   <DeleteData />
+//                                   <Upload />
+//                                 </div>
+//                               </div>
+//                             </div>
+//                           </td>
+//                         </tr>
+//                       )}
+//                     </React.Fragment>
+//                   ))
+//                 ) : (
+//                   <tr>
+//                     <td colSpan="6">
+//                       <h1 className="list-record">Record Not Found 😞</h1>
+//                     </td>
+//                   </tr>
+//                 )}
+//               </tbody>
+//             </Table>
+//           </div>
+//         </div>
+//       </>
+//     );
 }
 
 export default List;

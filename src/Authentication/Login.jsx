@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import StyledAlert from "./StyledAlert";
-import axios from 'axios'
+import axios from "axios";
 import loginlogo from "../../public/loginlogo.webp";
 import { FaRegCopyright } from "react-icons/fa";
 import { RiUser2Line, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
@@ -12,11 +12,10 @@ const Login = () => {
     Username: "",
     Password: "",
     User_type: "",
-
   });
 
-  const [showAlert, setShowAlert] = useState(false);//For Showing Alert
-  const [showPassword, setShowPassword] = useState(false);//For Showing Password
+  const [showAlert, setShowAlert] = useState(false); //For Showing Alert
+  const [showPassword, setShowPassword] = useState(false); //For Showing Password
   const [save, setsave] = useState("");
 
   const handleInputChange = useCallback((e) => {
@@ -25,42 +24,40 @@ const Login = () => {
     // console.log(`Handling input for ${name}: ${value}`);
   }, []);
 
- const handleLogin = useCallback(
-   async (e) => {
-     e.preventDefault();
-     const { Username, User_type, loginIDMail } = formData;
+  const handleLogin = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const { Username, User_type, loginIDMail } = formData;
 
-     try {
-       const apiUrl = `${Local_Url}/api/v1/admin/login`;
-       const response = await axios.post(apiUrl, formData ,{
-        headers: {
-          "Content-Type": "application/json",
-        },
-       });
+      try {
+        const apiUrl = `${Local_Url}/api/v1/admin/login`;
+        const response = await axios.post(apiUrl, formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-       if (response.status === 200) {
-             
-         const { redirect } = response.data; 
-         
-         localStorage.setItem(
-           "user",
-           JSON.stringify({ Username, User_type, loginIDMail })
-         );
-         alert(response.data.message);
-         //console.log("Response Data:", response.data);
-         navigate(redirect);
-       } else {
-         throw new Error(response.data.message || "Login failed");
-       }
-     } catch (error) {
-       
-        setsave(error.message)
-       setShowAlert(true);
-       console.error(error);
-     }
-   },
-   [formData, navigate]
- );
+        if (response.status === 200) {
+          const { redirect } = response.data;
+
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ Username, User_type, loginIDMail })
+          );
+          alert(response.data.message);
+          //console.log("Response Data:", response.data);
+          navigate(redirect);
+        } else {
+          throw new Error(response.data.message || "Login failed");
+        }
+      } catch (error) {
+        setsave(error.message);
+        setShowAlert(true);
+        console.error(error);
+      }
+    },
+    [formData, navigate]
+  );
 
   const closeAlert = useCallback(() => {
     setShowAlert(false);
