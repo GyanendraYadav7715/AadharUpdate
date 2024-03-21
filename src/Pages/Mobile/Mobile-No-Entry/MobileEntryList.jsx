@@ -57,7 +57,7 @@ function ViewChildData() {
       .catch((err) => {
         console.log("Something Went Wrong");
       });
-  });
+  },[]);
 
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
