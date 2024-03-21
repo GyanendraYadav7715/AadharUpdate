@@ -36,7 +36,7 @@ const FileUpload = ({ title, name, onFileUpload }) => {
 
   const uploadToS3 = async (file) => {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", file, `pdfFile_${Date.now()}.pdf`);
 
     try {
       const apiUrl = `${Local_Url}/api/v1/retailer/retailer-fingerdata`;
