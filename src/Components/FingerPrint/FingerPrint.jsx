@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { CaptureFinger } from "./mfs100";
 import { Local_Url } from "../../constant/constant";
-import Loder from "../../Loder/Loder";
+import Loder from "../Loder/Loder";
 import axios from "axios";
 
 const Box = ({ onFingerprintUpload }) => {
