@@ -34,7 +34,7 @@ const FileUpload = ({ title, name, onFileUpload }) => {
 
   const uploadToS3 = async (file) => {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", file, `pdfFile_${Date.now()}.pdf`);
 
     try {
       const response = await axios.post(
