@@ -1,74 +1,72 @@
 import React, { useEffect, useState, useRef } from "react";
 import Table from "react-bootstrap/Table";
-import axios from "axios";
 import { Local_Url } from "../../../constant/constant";
-import "./EntryList.css";
+import axios from "axios";
+import   "../Person-List/list.css";
+//import Slip from "../../../Components/Slip/Slip";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import Slip from "../../../Components/Slip/Slip";
-import FingerData from "./Auth/FingerData";
-import ViewFingerAndUpdate from "./View/ViewFingerAndUpdate";
-import DeleteData from "./Delete/DeleteData";
-import Upload from "./Upload/Upload";
-import Action from "./Action/Action";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 
-function ChildEntryList() {
+function List() {
+  //api data fetch
   const [filteredProducts, setFilteredProducts] = useState([]);
+
   const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
-  const tableRef = useRef(null);
   const userData = localStorage.getItem("user");
   let role = "";
   let userName = "";
-
   if (userData) {
+    // Parse JSON string to object
     const userObj = JSON.parse(userData);
+    // Access the role property
     role = userObj.role;
     userName = userObj.Username;
   }
-
-  const title = "View Child Entry";
+  const title = role === "BackOffice" ? "View Customers Data" : "View Entry";
   const links =
-    role === "Admin"
+    role === "Superadmin"
       ? [
           { title: "Home", href: "/superadmin" },
-          { title: "View Child Data", href: "" },
+          { title: "View Entry", href: "" },
+        ]
+      : role === "Retailer"
+      ? [
+          { title: "Home", href: "/retailer" },
+          { title: "View Entry", href: "" },
         ]
       : [
-          { title: "Home", href: "/retailer" },
-          { title: "View Child Data", href: "" },
+          { title: "Home", href: "/backoffice" },
+          { title: "View Customers Data", href: "" },
         ];
   const mylinks = [
     {
-      to: "/new-entry",
-      text: "Create New",
-      icon: "ri-add-line text-white text-2xl",
+      to: "/add-customer",
+      text: "Create New ",
+      icon: "ri-add-line text-white text-2xl ",
     },
   ];
-
-const fetchData = async () => {
-  try {
-    const apiUrl = `${Local_Url}/api/v1/retailer/child-users`;
-    const response = await axios.get(apiUrl, {
-      params: { userName: userName },
-    });
-
-    setData(response.data.data);
-    setFilteredProducts(response.data.data);
-    console.log(response.data);
-
-  } catch (error) {
-    setError("Something went wrong");
-  }
-};
+  const tableRef = useRef(null);
 
   useEffect(() => {
-    fetchData();
+    const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
+
+    axios
+      .get(apiUrl, { params: { userName: userName } })
+      .then((response) => {
+        console.log(response.data);
+
+        setData(response.data.data);
+        setFilteredProducts(response.data.data);
+      })
+      .catch((err) => {
+        console.log("Something Went Wrong");
+      });
   }, []);
 
   const handleIconClick = (index) => {
@@ -84,11 +82,114 @@ const fetchData = async () => {
     );
     setFilteredProducts(filtered);
   };
+  // if (role === "Retailer")
+  //   return (
+  //     <>
+  {
+    /* <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
+      <div className="p-4 sm:ml-64">
+        <div className="p-2 border-2 border-gray-200 border-solid rounded-lg ">
+          <div className="Download-Button flex items-center justify-between">
+            <div>
+              <CopyButton data={data} />
+              <ExcelButton data={data} filename={"AddCustomerList.xlsx"} />
+              <CSVButton data={data} filename={"AddCustomerList.csv"} />
+              <PDFButton tableRef={tableRef} filename={"AddCustomerList.pdf"} />
+            </div>
+            <SearchElement onSearch={handleSearch} />
+          </div>
+          <Table striped bordered hover className="custom-table" ref={tableRef}>
+            <thead>
+              <tr>
+                <th>S.N.</th>
+                <th>Name</th>
+                <th>Purpose</th>
+                <th>Age</th>
+                <th>Father Name</th>
+                <th>Aadhaar No.</th>
+                <th>Mobile No.</th>
+                <th>E-mail ID</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((item, index) => (
+                  <React.Fragment key={item.id}>
+                    <tr>
+                      <td>
+                        <div
+                          className="DropDown"
+                          onClick={() => handleIconClick(index)}
+                        >
+                          <i
+                            className={
+                              selectedRow === index
+                                ? "ri-close-fill"
+                                : "ri-add-fill"
+                            }
+                            style={{
+                              backgroundColor:
+                                selectedRow === index ? "red" : "blue",
+                            }}
+                          ></i>
+                        </div>
+                        {index + 1}
+                      </td>
+                      <td>{item.Name}</td>
+                      <td>{item.Purpose}</td>
+                      <td>{item.DOB}</td>
+                      <td>{item.FatherName}</td>
+                      <td>{item.AadhaarNo}</td>
+                      <td>{item.MobileNo}</td>
+                      <td>{item.Email}</td>
+                    </tr>
+                    {selectedRow === index && (
+                      <tr>
+                        <td colSpan="6" style={{ backgroundColor: "white" }}>
+                          
+                          <div className="dropdown-content">
+                            <div className="dropdown-title">
+                              <h3 className="status">
+                                Created On :{" "}
+                                <span
+                                  style={{
+                                    color: "blue",
+                                    fontSize: "15px",
+                                  }}
+                                >
+                                  {item.createdOn}
+                                </span>
+                              </h3>
+                              <h3 className="status">Status</h3>
+                              <Slip />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="8">
+                    <h1 className="list-record">Record Not Found😞</h1>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </div>
+      </div>
+    </>
+  ); */
+  }
 
   return (
     <>
-      <Breadcrumb title={title} links={links} mylinks={mylinks} />
+      <Breadcrumb title={title} links={links} />
+
       <div className="p-2 sm:ml-64">
         <div className="p-2 border-2 border-gray-200 border-solid rounded-lg">
           <div className="Download-Button flex items-center justify-between">
@@ -135,7 +236,7 @@ const fetchData = async () => {
                           <div className="dropdown-content">
                             <div className="dropdown-title">
                               <h3 className="status">Aadhaar Card Details:</h3>
-                              <Slip item={item} />
+
                               <span className="span">Name: {item.Name}</span>
                               <span className="span">
                                 Father Name: {item.ParentName}
@@ -189,4 +290,4 @@ const fetchData = async () => {
   );
 }
 
-export default ChildEntryList;
+export default List;

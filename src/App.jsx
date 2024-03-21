@@ -18,7 +18,9 @@ import ViewRetailerUserList from "./Pages/UserManagement/ViewRetailerUserList/Vi
 import EditStatus from "./Pages/EditStatus/EditStatus";
 import PersonEntry from "./Pages/EntryManagement/PersonEntry/PersonEntry";
 import List from "./Pages/EntryManagement/Person-List/List";
+import List2 from "./Pages/EntryManagement/Person-List2/List2";
 import SearchEntrydata from "./Pages/EntryManagement/SearchEntrydata";
+
 
 import NewEntry from "./Pages/Child/NewEntry/NewEntry";
 import ChildEntryList from "./Pages/Child/Entry_List/ChildEntryList";
@@ -91,6 +93,7 @@ function Layout() {
 
           <Route path="/add-customer" element={<PersonEntry />} />
           <Route path="/list" element={<List />} />
+          <Route path="/list2" element={<List2 />} />
           <Route path="/searchentrydata" element={<SearchEntrydata />} />
 
           <Route path="/new-entry" element={<NewEntry />} />

@@ -4,10 +4,8 @@ import "./PersonEntry.css";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Local_Url } from "../../../constant/constant";
-import {CustomInput} from "../../../Components/CustomeInput/CustomInput";
+import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import FileUpload from "../../../Components/FileUpload/FileUpload";
- 
- 
 
 //MAIN FUNCTION TO COLLECTE FORM DATA
 const PersonEntry = () => {
@@ -19,7 +17,7 @@ const PersonEntry = () => {
     // Access the role property
     role = userObj.role;
   }
-  
+
   const [formData, setFormData] = useState({
     Purpose: "",
     Name: "",
@@ -65,12 +63,12 @@ const PersonEntry = () => {
   //SUBMITING THE FORM WITH WHOLE DATA
   const handleSubmit = async (e) => {
     e.preventDefault();
-     const data = localStorage.getItem("user");
+    const data = localStorage.getItem("user");
     const userObj = JSON.parse(data);
-     formData.userName = userObj.Username;
-     formData.userType = userObj.User_type;
-      // Access the role property
-     role = userObj.User_type;
+    formData.userName = userObj.Username;
+    formData.userType = userObj.User_type;
+    // Access the role property
+    role = userObj.User_type;
 
     if (!formData.Purpose || !formData.Email || !formData.MobileNo) {
       return alert("Please fill all the required fields");
@@ -189,45 +187,47 @@ const PersonEntry = () => {
                 placeholder="example@update.com"
                 value={formData.Email}
               />
-              <FileUpload
-                title="POI"
-                name="POI"
-                onFileUpload={(imageUrl) =>
-                  setFormData((prevFormData) => ({
-                    ...prevFormData,
-                    Proof: {
-                      ...prevFormData.Proof,
-                      POI: imageUrl,
-                    },
-                  }))
-                }
-              />
-              <FileUpload
-                title="POB"
-                name="POB"
-                onFileUpload={(imageUrl) =>
-                  setFormData((prevFormData) => ({
-                    ...prevFormData,
-                    Proof: {
-                      ...prevFormData.Proof,
-                      POB: imageUrl,
-                    },
-                  }))
-                }
-              />
-              <FileUpload
-                title="POA"
-                name="POA"
-                onFileUpload={(imageUrl) =>
-                  setFormData((prevFormData) => ({
-                    ...prevFormData,
-                    Proof: {
-                      ...prevFormData.Proof,
-                      POA: imageUrl,
-                    },
-                  }))
-                }
-              />
+               
+                <FileUpload
+                  title="POI"
+                  name="POI"
+                  onFileUpload={(imageUrl) =>
+                    setFormData((prevFormData) => ({
+                      ...prevFormData,
+                      Proof: {
+                        ...prevFormData.Proof,
+                        POI: imageUrl,
+                      },
+                    }))
+                  }
+                />
+                <FileUpload
+                  title="POB"
+                  name="POB"
+                  onFileUpload={(imageUrl) =>
+                    setFormData((prevFormData) => ({
+                      ...prevFormData,
+                      Proof: {
+                        ...prevFormData.Proof,
+                        POB: imageUrl,
+                      },
+                    }))
+                  }
+                />
+                <FileUpload
+                  title="POA"
+                  name="POA"
+                  onFileUpload={(imageUrl) =>
+                    setFormData((prevFormData) => ({
+                      ...prevFormData,
+                      Proof: {
+                        ...prevFormData.Proof,
+                        POA: imageUrl,
+                      },
+                    }))
+                  }
+                />
+             
             </div>
             <div className="PurposeGrid Address">
               <CustomInput
@@ -239,7 +239,7 @@ const PersonEntry = () => {
                 value={formData.Address}
               />
             </div>
-            <div className="container grid grid-cols-5">
+            <div className="container grid grid-cols-5 p-5">
               {[...Array(5)].map((_, index) => (
                 <Box
                   key={index}

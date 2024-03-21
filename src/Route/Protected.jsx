@@ -35,6 +35,7 @@ function Protected() {
       "/ViewChildData",
       "/editstatus",
       "/mobile-list",
+      "/list2",
     ],
     BackOffice: [
       "/backoffice",
@@ -45,6 +46,7 @@ function Protected() {
       "/user-finger",
       "/akUpload",
       "/edit-view",
+      "/list2",
     ],
   };
 

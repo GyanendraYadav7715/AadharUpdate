@@ -14,6 +14,7 @@ const ViewUser = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [users, setUsers] = useState([]);
   const tableRef = useRef(null);
+  
 
   useEffect(() => {
     fetchData();
@@ -165,40 +166,50 @@ const ViewUser = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredUsers.map((user, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
-                  >
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
-                      {index + 1}
-                    </td>
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
-                      {user.Name}
-                    </td>
-                    <td className="px-6 py-4 border">{user.Phone_n}</td>
-                    <td className="px-6 py-4 border">{user.Username}</td>
-                    <td className="px-6 py-4 border">{user.Password}</td>
-                    <td className="px-6 py-4 border">{user.createdAt}</td>
-                    <td className="px-6 py-4 border">{user.Balance}</td>
-                    <td className="px-6 py-4 border">{user.Child_token}</td>
-                    <td className="px-6 py-4 border">{user.mobilePoint}</td>
-                    <td className="px-6 py-4 border">
-                      {user.isUserblocked ? "Inactive" : "Active"}
-                    </td>
-                    <td className="px-6 py-4 gap-2 flex items-center justify-between">
-                      <Link className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md">
-                        <i className="ri-refresh-line text-white"></i>
-                      </Link>
-                      <button
-                        onClick={() => deleteUser(user.Username)}
-                        className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 hover:bg-red-800 hover: px-3 py-3 rounded-md"
-                      >
-                        <i className="ri-delete-bin-line text-white"></i>
-                      </button>
+                {filteredUsers.length > 0 ? (
+                  filteredUsers.map((user, index) => (
+                    <tr
+                      key={index}
+                      className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
+                    >
+                      <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
+                        {index + 1}
+                      </td>
+                      <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
+                        {user.Name}
+                      </td>
+                      <td className="px-6 py-4 border">{user.Phone_n}</td>
+                      <td className="px-6 py-4 border">{user.Username}</td>
+                      <td className="px-6 py-4 border">{user.Password}</td>
+                      <td className="px-6 py-4 border">{user.createdAt}</td>
+                      <td className="px-6 py-4 border">{user.Balance}</td>
+                      <td className="px-6 py-4 border">{user.Child_token}</td>
+                      <td className="px-6 py-4 border">0</td>
+                      <td className="px-6 py-4 border">
+                        {user.isUserblocked ? "Inactive" : "Active"}
+                      </td>
+                      <td className="px-6 py-4 gap-2 flex items-center justify-between">
+                        <Link className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md">
+                          <i className="ri-refresh-line text-white"></i>
+                        </Link>
+                        <button
+                          onClick={() => deleteUser(user.Username)}
+                          className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 hover:bg-red-800 hover: px-3 py-3 rounded-md"
+                        >
+                          <i className="ri-delete-bin-line text-white"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="11">
+                      <h1 className="list-record text-center text-3xl">
+                        Record Not Found😞
+                      </h1>
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

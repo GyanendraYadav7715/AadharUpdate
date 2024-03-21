@@ -74,7 +74,7 @@ const Menudrop = () => {
           title="Entry Management"
           items={[
             { label: "New Entry", link: "/add-customer" },
-            { label: "View Entry", link: "/list" },
+            { label: "View Entry", link: "/list2" },
             {
               label: "Update Form",
               link: "https://ultra.getviewandupdate.in/update.pdf",
@@ -122,7 +122,7 @@ const Menudrop = () => {
       <>
         <Dropdown
           title="Demographic"
-          items={[{ label: "View Entry", link: "/list" }]}
+          items={[{ label: "View Entry", link: "/list2" }]}
           iconClass="ri-add-fill w-5 h-5 text-black transition duration-75   group-hover:text-gray-900  "
         />
         <Dropdown

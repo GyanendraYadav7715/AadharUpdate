@@ -40,8 +40,8 @@ function ViewChildData() {
 
   const mylinks = [
     {
-      to: "/child-entry-list",
-      text: "View Customer",
+      to: "/new-entry",
+      text: "Enroll Child",
       icon: "ri-team-line text-white text-2xl ",
     },
   ];
@@ -89,11 +89,13 @@ function ViewChildData() {
             <thead>
               <tr>
                 <th>S.N.</th>
-                <th>Name</th>
-                <th>Age</th>
+                <th> Child Name</th>
+                <th>DOB</th>
                 <th>Aadhaar No.</th>
                 <th>Mobile No.</th>
                 <th>E-mail ID</th>
+                {/* <th>CreatedOn</th>
+                <th>Status</th> */}
               </tr>
             </thead>
 
@@ -126,15 +128,17 @@ function ViewChildData() {
                       <td>{item.Parent_AadhaarNo}</td>
                       <td>{item.MobileNo}</td>
                       <td>{item.Email}</td>
+                      {/* <td>{CreatedOn}</td>
+                      <td>{Status}</td> */}
                     </tr>
                     {selectedRow === index && (
                       <tr>
                         <td colSpan="6" style={{ backgroundColor: "white" }}>
-                          {/* Dropdown content */}
+                         
                           <div className="dropdown-content">
                             <div className="dropdown-title">
                               <h3 className="status">
-                                Created On :{" "}
+                                Created On :
                                 <span
                                   style={{ color: "blue", fontSize: "15px" }}
                                 >

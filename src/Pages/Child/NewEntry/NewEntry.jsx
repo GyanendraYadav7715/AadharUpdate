@@ -30,8 +30,8 @@ const NewEntry = () => {
 
   const mylinks = [
     {
-      to: "/child-entry-list",
-      text: "View Customer",
+      to: "/ViewChildData",
+      text: "View Child",
       icon: "ri-team-line text-white text-2xl",
     },
   ];
@@ -288,7 +288,7 @@ const NewEntry = () => {
               />
             </div>
 
-            <div className="container grid grid-cols-5">
+            <div className="container grid grid-cols-5 p-5">
               {[...Array(5)].map((_, index) => (
                 <Box
                   key={index}

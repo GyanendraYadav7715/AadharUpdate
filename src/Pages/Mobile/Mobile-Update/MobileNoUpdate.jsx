@@ -14,6 +14,14 @@ const MobileNoUpdate = () => {
     const date = new Date().toISOString().split("T")[0];
     setCurrentDate(date);
   }, []);
+
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      DOA: currentDate,
+    }));
+  }, [currentDate]);
+
   const userData = localStorage.getItem("user");
   let role = "";
   if (userData) {
@@ -30,7 +38,7 @@ const MobileNoUpdate = () => {
 
   const mylinks = [
     {
-      to: "/mobiledata",
+      to: "/mobile-list",
       text: "View Customer",
       icon: "ri-team-line text-white text-2xl ",
     },
@@ -40,26 +48,26 @@ const MobileNoUpdate = () => {
   const [formData, setFormData] = useState({
     Name: "",
     FatherName: "",
-    DOA: "",
+    DOA: currentDate,
     AadhaarNo: "",
     MobileNo: "",
     Email: "",
 
     FingerPrint: [
       {
-        FingerPrint1: " ",
+        FingerPrint1: " gggg",
       },
       {
-        FingerPrint2: " ",
+        FingerPrint2: " gggg",
       },
       {
-        FingerPrint3: " ",
+        FingerPrint3: " ggg",
       },
       {
-        FingerPrint4: " ",
+        FingerPrint4: "fgf ",
       },
       {
-        FingerPrint5: "",
+        FingerPrint5: "ggg",
       },
     ],
   });
@@ -86,6 +94,12 @@ const MobileNoUpdate = () => {
       ...prevFormData,
       DOA: currentDate,
     }));
+    console.log(
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        DOA: currentDate,
+      }))
+    );
 
     if (!formData.Name || !formData.Email || !formData.MobileNo) {
       return alert("Please fill all the required fields.");
@@ -151,7 +165,7 @@ const MobileNoUpdate = () => {
                 type="date"
                 value={currentDate}
                 disabled
-                onChange={(e) => handleInputChange("DOA", e.target.value)}
+                onChange={(e) => setCurrentDate(e.target.value)}
                 className="inputField"
               />
             </div>
@@ -181,7 +195,7 @@ const MobileNoUpdate = () => {
               value={formData.Email}
             />
           </div>
-          <div className="container grid grid-cols-5 gap-3">
+          <div className="container grid grid-cols-5 p-5">
             {[...Array(5)].map((_, index) => (
               <Box
                 key={index}
