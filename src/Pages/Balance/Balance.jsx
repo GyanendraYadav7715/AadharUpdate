@@ -41,7 +41,8 @@ const Balance = () => {
         amount: "",
       });
     } catch (error) {
-      toast.error(error.message);
+      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
   const title = "Balance Transfer";
