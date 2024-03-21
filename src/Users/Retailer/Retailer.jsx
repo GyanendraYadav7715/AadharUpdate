@@ -4,6 +4,7 @@ const Retailer = () => {
   return (
     <>
       <RetailerDashboard />
+      {/* <h1>hii</h1> */}
     </>
   );
 };
