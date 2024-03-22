@@ -7,10 +7,13 @@ import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Local_Url } from "../../../constant/constant";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ViewRetailerUserList = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  
   const [data, setData] = useState([]);
   const tableRef = useRef();
 
@@ -56,7 +59,12 @@ const ViewRetailerUserList = () => {
         }
       );
       console.log(response.data);
-      alert(response.data.message);
+        
+       const toastMessage =
+         isUserblocked === "true"
+           ? "User is Deactivated successfully"
+           : "User is Activated successfully";
+       toast.success(toastMessage);
 
       const updatedProducts = filteredProducts.map((product) => {
         if (product.Username === Username) {
