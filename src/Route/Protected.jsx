@@ -14,6 +14,7 @@ function Protected() {
       "/ViewChildData",
       "/mobile-list",
       "/mobileupdate",
+      "/edit-customer",
     ],
     Superadmin: [
       "/superadmin",
@@ -35,6 +36,7 @@ function Protected() {
       "/user-edit",
       "/user-finger",
       "/edit-view",
+      "/edit-customer",
     ],
     BackOffice: [
       "/backoffice",

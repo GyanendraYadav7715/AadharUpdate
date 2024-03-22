@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Slip.css";
 
 function Slip() {
@@ -17,9 +18,9 @@ function Slip() {
 
         <div className="Action">
           <h4 className="Action-text">Action</h4>
-          <button className="button">
+          <Link to="/edit-customer" className="button">
             <i className="ri-edit-2-fill pencil"></i>
-          </button>
+          </Link>
         </div>
       </div>
     </>
