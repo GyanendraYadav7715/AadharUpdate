@@ -90,7 +90,7 @@ const AdminReport = () => {
               </tr>
             </thead>
             <tbody>
-              {products.length > 0 ? (
+              {products.length < 0 ? (
                 products.map((item, index) => (
                   <React.Fragment key={item._id}>
                     <tr>
