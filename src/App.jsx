@@ -51,9 +51,9 @@ import MobileEntryList from "./Pages/Mobile/Mobile-No-Entry/MobileEntryList";
 
 //    --------------------------- BACKOFFICE WORK WITH ADMIN POWER ROUTE-------------------------------
 
-import Edit from "./ActionServices/Edit";
-import Finger from "./ActionServices/Finger";
-import EditView from "./ActionServices/EditView";
+import Edit from "./Components/ActionServices/Edit";
+import Finger from "./Components/ActionServices/Finger";
+import EditView from "./Components/ActionServices/EditView";
 
 const App = () => {
   return (

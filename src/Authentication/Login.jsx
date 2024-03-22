@@ -6,6 +6,9 @@ import loginlogo from "../../public/loginlogo.webp";
 import { FaRegCopyright } from "react-icons/fa";
 import { RiUser2Line, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { Local_Url } from "../constant/constant";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -44,7 +47,7 @@ const Login = () => {
             "user",
             JSON.stringify({ Username, User_type, loginIDMail })
           );
-          alert(response.data.message);
+           toast.success(response.data.message);
           //console.log("Response Data:", response.data);
           navigate(redirect);
         } else {

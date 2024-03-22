@@ -81,7 +81,7 @@ const AddAdminUser = () => {
       <div className="p-4 sm:ml-64 bg-gray-300">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <h3 className="text-2xl font-semibold ml-3 mb-3">Add Customer</h3>
-          <form className="m-2 p-6  shadow-sm rounded-md bg-white border-[#00000047] border-2 h-[80vh]">
+          <form className="m-2 p-6  shadow-sm rounded-md bg-white border-[#00000047] border-2 min-h-[80vh]">
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <CustomInput
                 label="Full name"
@@ -174,7 +174,7 @@ const AddAdminUser = () => {
               </select>
             </div>
 
-            <div className="">
+            
               <button
                 className="Submit-button whitespace-nowrap bg-[#3f9e04] hover:bg-[#3f9e04d3]"
                 type="submit"
@@ -183,7 +183,7 @@ const AddAdminUser = () => {
                 <i class="ri-save-fill"> </i>
                 Submit
               </button>
-            </div>
+            
           </form>
         </div>
       </div>

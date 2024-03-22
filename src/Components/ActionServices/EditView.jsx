@@ -1,6 +1,6 @@
 import React from "react";
-import Breadcrumb from "../Components/BreadCrumb/Breadcrumb";
-import{ CustomInput2} from "../Components/CustomeInput/CustomInput";
+import Breadcrumb from "../BreadCrumb/Breadcrumb";
+import{ CustomInput2} from "../CustomeInput/CustomInput";
 const EditView = () => {
   const title = "Edit Customer";
   const links = [
