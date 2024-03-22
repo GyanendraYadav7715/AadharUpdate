@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import {CustomInput} from "../../../Components/CustomeInput/CustomInput";
+import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import { Local_Url } from "../../../constant/constant";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AddAdminUser = () => {
   const [formData, setFormData] = useState({
     Name: "",
@@ -36,7 +37,7 @@ const AddAdminUser = () => {
       "Child_token",
     ];
     if (requiredFields.some((field) => !formData[field])) {
-      return alert("Please fill all required fields.");
+      return toast.error("Please fill all the fields");
     }
     const userData = JSON.parse(localStorage.getItem("user"));
     formData.superAdminUser = userData ? userData.Username : "";
@@ -48,7 +49,7 @@ const AddAdminUser = () => {
           "Content-Type": "application/json",
         },
       });
-      alert("Form submitted successfully:");
+      toast.success(response.data.message);
       setFormData({
         Name: "",
         Email: "",
@@ -60,17 +61,27 @@ const AddAdminUser = () => {
         Password: "",
       });
     } catch (error) {
-      console.error("Error submitting form:", error.message);
+      toast.error(error.message);
     }
   };
 
   return (
     <>
-      <Breadcrumb title={"Add User"} links={[{ title: "Home", href: "/superadmin" }, { title: "Add User" }]} mylinks={[{to: "/viewuser",text: "View Customer",icon: "ri-team-line text-white text-2xl ",},]}/>
+      <Breadcrumb
+        title={"Add User"}
+        links={[{ title: "Home", href: "/superadmin" }, { title: "Add User" }]}
+        mylinks={[
+          {
+            to: "/viewuser",
+            text: "View Customer",
+            icon: "ri-team-line text-white text-2xl ",
+          },
+        ]}
+      />
       <div className="p-4 sm:ml-64 bg-gray-300">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
-          <h3 className="text-2xl font-semibold ml-10">Add Customer</h3>
-          <form className="m-5 p-6 border-1 shadow-sm rounded-md bg-white">
+          <h3 className="text-2xl font-semibold ml-3 mb-3">Add Customer</h3>
+          <form className="m-2 p-6  shadow-sm rounded-md bg-white border-[#00000047] border-2 min-h-[80vh]">
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <CustomInput
                 label="Full name"
@@ -80,7 +91,7 @@ const AddAdminUser = () => {
                 type="text"
                 pattern="[A-Z][a-zA-Z]*"
                 errorMessage="Please enter a text with the first letter capitalized."
-                required=""
+                placeholder="Full Name"
               />
               <CustomInput
                 label="Username"
@@ -90,7 +101,7 @@ const AddAdminUser = () => {
                 type="text"
                 pattern="[A-Z][a-zA-Z0-9_-]{2,15}"
                 errorMessage="Username must start with a capital letter and be between 3 and 16 characters long, containing only letters, numbers, underscores, and hyphens."
-                required=""
+                placeholder="UP_#$_E1"
               />
               <CustomInput
                 label="Email"
@@ -100,7 +111,7 @@ const AddAdminUser = () => {
                 type="email"
                 pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                 errorMessage="Please enter a valid email address."
-                required=""
+                placeholder="email23@email.com"
               />
               <CustomInput
                 label="Mobile Number"
@@ -110,7 +121,7 @@ const AddAdminUser = () => {
                 type="tel"
                 pattern="[0-9]{10}"
                 errorMessage="Please enter a valid 10-digit mobile number."
-                required=""
+                placeholder="Mobile"
                 maxLength={10}
               />
               <CustomInput
@@ -121,7 +132,6 @@ const AddAdminUser = () => {
                 type="number"
                 pattern="[0-9]+"
                 errorMessage="Please enter a valid number."
-                required=""
               />
               <CustomInput
                 label="Child Token"
@@ -131,7 +141,6 @@ const AddAdminUser = () => {
                 type="number"
                 pattern="[0-9]+"
                 errorMessage="Please enter a valid number."
-                required=""
               />
             </div>
             <div className="mb-6">
@@ -144,7 +153,7 @@ const AddAdminUser = () => {
                 type="password"
                 pattern=".{6,}"
                 errorMessage="Password must be at least 6 characters long."
-                required=""
+                placeholder="Password"
               />
             </div>
             <div className="mb-6">
@@ -164,10 +173,17 @@ const AddAdminUser = () => {
                 <option value="Back Office">Back Office</option>
               </select>
             </div>
-            <button className="Submit-button" onClick={handleSubmit}>
-              <i className="ri-save-fill"></i>
-              Submit
-            </button>
+
+            
+              <button
+                className="Submit-button whitespace-nowrap bg-[#3f9e04] hover:bg-[#3f9e04d3]"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                <i class="ri-save-fill"> </i>
+                Submit
+              </button>
+            
           </form>
         </div>
       </div>

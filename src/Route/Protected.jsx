@@ -5,54 +5,52 @@ function Protected() {
   const userData = JSON.parse(localStorage.getItem("user"));
   const userRole = userData ? userData.User_type : null;
 
-  // Define routes allowed for different roles
   const allowedRoutes = {
     Retailer: [
       "/retailer",
       "/add-customer",
       "/list",
       "/new-entry",
-      "/child-entry-list",
+      "/ViewChildData",
+      "/mobile-list",
       "/mobileupdate",
-      "/mobiledata",
     ],
     Superadmin: [
       "/superadmin",
-      "/adduser",
-      "/viewuser",
       "/balance_transfer",
       "/user_limit",
       "/history",
+      "/adduser",
+      "/viewuser",
+      "/viewretaileruserlist",
       "/add-customer",
-      "/list",
+      "/list2",
+      "/searchentrydata",
       "/new-entry",
       "/child-entry-list",
+      "/ViewChildData",
       "/mobileupdate",
-      "/mobiledata",
-      "/adminreport",
-      "/viewretaileruserlist",
-      "/searchentrydata",
-      "/ViewChildData",
-      "/editstatus",
-    ],
-    BackOffice: [
-      "/backoffice",
-      "/list",
-      "/ViewChildData",
+      "/mobile-list",
       "/adminreport",
       "/user-edit",
       "/user-finger",
-      "/akUpload",
+      "/edit-view",
+    ],
+    BackOffice: [
+      "/backoffice",
+      "/list2",
+      "/child-entry-list",
+      "/adminreport",
+      "/user-edit",
+      "/user-finger",
       "/edit-view",
     ],
   };
 
-  // Check if the user is logged in
   if (!userData) {
     return <Navigate to="/" />;
   }
 
-  // Check if the current route is allowed for the user's role
   const allowedRoutesForUserRole = allowedRoutes[userRole];
   const currentRoute = window.location.pathname;
 
@@ -64,7 +62,6 @@ function Protected() {
     return <Navigate to={`/${userRole.toLowerCase()}`} />;
   }
 
-  // Render the protected routes
   return <Outlet />;
 }
 

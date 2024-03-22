@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Local_Url } from "../constant/constant";
-import Breadcrumb from "../Components/BreadCrumb/Breadcrumb";
-import { Select } from "../Components/Selection/Select";
-import {CustomInput} from "../Components/CustomeInput/CustomInput";
+import { Local_Url } from "../../constant/constant";
+import Breadcrumb from "../BreadCrumb/Breadcrumb";
+import { Select } from "../Selection/Select";
+import {CustomInput} from "../CustomeInput/CustomInput";
 const Edit = () => {
   const [formData, setFormData] = useState({
     Remark: "",
@@ -88,8 +88,8 @@ const Edit = () => {
                   name="SelectedParent"
                   className="inputField select"
                   type="text"
-                  value={formData.Status}
-                  onChange={handleChange}
+                  value={formData.SelectedParent}
+                  onChange={(e) => handleChange(SelectedParent, e.target.value)}
                 />
               </div>
               <div className="p-3">

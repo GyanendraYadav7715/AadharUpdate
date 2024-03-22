@@ -13,27 +13,21 @@
 }
 
 .label {
-
   color: #575962;
-
-
 }
 
 .inputField {
   width: 100%;
-  padding:.40rem;
+  padding: 0.4rem;
   border: 1px solid slategray;
-  border-radius: 0.10rem;
-
+  border-radius: 0.1rem;
 }
 
-.inputField::placeholder{
-
-  color: #7e858b
+.inputField::placeholder {
+  color: #7e858b;
 }
 
-
-.inputField:focus{
+.inputField:focus {
   border: 1px solid #007bff;
   /* Example border color when focused */
   outline: none;
@@ -41,8 +35,6 @@
   box-shadow: 0 0 2px rgba(0, 123, 255, 0.5);
   /* Example box shadow when focused */
 }
-
-
 
 .formContainer {
   max-width: 100%;
@@ -59,29 +51,26 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-
-.PurposeGrid{
-padding: 2rem 2rem 0rem 2rem;
+.PurposeGrid {
+  padding: 2rem 2rem 0rem 2rem;
 }
 
-.Address{
+.Address {
   padding: 0rem 2rem 2rem 2rem;
 }
 
-.Submit-button  {
-
-        border-radius: 2px;
-          margin-left: 10px;
-          background-color: #71b944;
-          color: white;
-          padding: 8px;
-          width: 7vw;
-          margin: 1rem;
-          float: left;
-            transition: background-color 0.3s, color 0.3s
+.Submit-button {
+  border-radius: 2px;
+  margin-left: 10px;
+  background-color: #71b944;
+  color: white;
+  padding: 8px;
+  width: 7vw;
+  margin: 1rem;
+  float: left;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.Submit-button:hover{
-        background-color: #3f9e04;
+.Submit-button:hover {
+  background-color: #3f9e04;
 }
-

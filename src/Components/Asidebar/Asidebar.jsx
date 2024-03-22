@@ -8,7 +8,7 @@ const Asidebar = () => {
   const navigate = useNavigate();
 
   const handlelogout = () => {
-    // clearCookie("jwtoken");
+    
     localStorage.clear();
     navigate("/");
   };

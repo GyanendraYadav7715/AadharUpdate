@@ -1,67 +1,61 @@
 import React, { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import StyledAlert from "./StyledAlert";
-import axios from 'axios'
+import axios from "axios";
 import loginlogo from "../../public/loginlogo.webp";
 import { FaRegCopyright } from "react-icons/fa";
 import { RiUser2Line, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { Local_Url } from "../constant/constant";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     Username: "",
     Password: "",
     User_type: "",
-
   });
 
-  const [showAlert, setShowAlert] = useState(false);//For Showing Alert
-  const [showPassword, setShowPassword] = useState(false);//For Showing Password
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-    console.log(`Handling input for ${name}: ${value}`);
+    // console.log(`Handling input for ${name}: ${value}`);
   }, []);
 
- const handleLogin = useCallback(
-   async (e) => {
-     e.preventDefault();
-     const { Username, User_type } = formData;
+  const handleLogin = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const { Username, User_type, loginIDMail } = formData;
 
-     try {
-       const apiUrl = `${Local_Url}/api/v1/admin/login`;
-       const response = await axios.post(apiUrl, formData ,{
-        headers: {
-          "Content-Type": "application/json",
-        },
-       });
+      try {
+        const apiUrl = `${Local_Url}/api/v1/admin/login`;
+        const response = await axios.post(apiUrl, formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-       if (response.status === 200) {
-            console.log(response.data);
-         const { redirect } = response.data; 
-         
-         localStorage.setItem(
-           "user",
-           JSON.stringify({ Username, User_type })
-         );
-         alert("Login Success");
-         console.log("Response Data:", response.data);
-         navigate(redirect);
-       } else {
-         throw new Error(response.data.message || "Login failed");
-       }
-     } catch (error) {
-       setShowAlert(true);
-       console.error("Login error:", error);
-     }
-   },
-   [formData, navigate]
- );
+        if (response.status === 200) {
+          const { redirect } = response.data;
 
-  const closeAlert = useCallback(() => {
-    setShowAlert(false);
-  }, []);
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ Username, User_type, loginIDMail })
+          );
+          toast.success(response.data.message);
+
+          navigate(redirect);
+        } else {
+          throw new Error(response.data.message || "Login failed");
+        }
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
+    },
+    [formData, navigate]
+  );
 
   const toggleShowPassword = useCallback(() => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -152,14 +146,6 @@ const Login = () => {
           <FaRegCopyright /> 2022 newupdateseva
         </p>
       </div>
-      {showAlert && (
-        <StyledAlert
-          onClose={closeAlert}
-          title="Error"
-          message="Oops! Something went wrong. Please check your username, password, and role."
-          buttonText="Dismiss"
-        />
-      )}
     </div>
   );
 };

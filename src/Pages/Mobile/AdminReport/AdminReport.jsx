@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
@@ -6,15 +7,15 @@ import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
-import Upload from "../../../ActionServices/Upload"
+import Upload from "../../../Components/ActionServices/Upload";
 const AdminReport = () => {
   const [showUploadPopup, setShowUploadPopup] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
   const userData = localStorage.getItem("user");
+
   let role = "";
   if (userData) {
-    // Parse JSON string to object
     const userObj = JSON.parse(userData);
-    // Access the role property
     role = userObj.role;
   }
   const title = "Mobile Update-Report";
@@ -34,7 +35,6 @@ const AdminReport = () => {
     {
       appliedBy: "UP_UID_NS_3203",
       aadharCardDetails: {
-        // Fixed object structure
         Name: "Kabutari Devi",
         FatherName: "Ramawatar Yadva",
         DOB: "01/01/1962",
@@ -44,7 +44,7 @@ const AdminReport = () => {
         Address: "",
       },
       purpose: "Mobile NO Update",
-      adminRemark: "", // Corrected spacing
+      adminRemark: "",
       createdOn: "11/12/2012",
     },
   ];
@@ -54,122 +54,158 @@ const AdminReport = () => {
   };
 
   const handleSubmit = () => {
-    alert(
-      'Thanks'
-    )
+    alert("Thanks");
     // Logic to handle form submission goes here
-    // After submission, you may want to close the popup
-    setShowUploadPopup(false);
+    setShowUploadPopup(false); // Close the popup after submission
   };
 
   const handleCancel = () => {
-    // Logic to handle cancel action goes here
-    setShowUploadPopup(false);
+    setShowUploadPopup(false); // Close the popup when cancel is clicked
+  };
+
+  const handleIconClick = (index) => {
+    setSelectedRow(selectedRow === index ? null : index);
   };
 
   return (
     <>
       <Breadcrumb title={title} links={links} />
-      <div className="p-4 sm:ml-64 bg-gray-200">
-        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
-          <h3 className="text-2xl font-semibold">ADMIN</h3>
-          <div className="flex items-center justify-between my-4">
+      <div className="p-2 sm:ml-64">
+        <div className="p-2 border-2 border-gray-200 border-solid rounded-lg">
+          <div className="Download-Button flex items-center justify-between">
             <div>
               <CopyButton data={products} />
-              <ExcelButton data={products} filename={"AdminReport.xlsx"} />
-              <CSVButton data={products} filename={"AdminReport.csv"} />
-              <PDFButton tableRef={tableRef} filename={"AdminReport.pdf"} />
+              <ExcelButton data={products} filename={"ChildEntyList.xlsx"} />
+
+              <CSVButton data={products} filename={"ChildEntyList.csv"} />
+              <PDFButton tableRef={tableRef} filename={"ChildEntyList.pdf"} />
             </div>
             <SearchElement />
           </div>
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table
-              className="w-full text-sm text-left rtl:text-right text-black shadow-sm"
-              ref={tableRef}
-            >
-              <thead className="text-base text-black  bg-white  ">
+          <Table striped bordered hover className="custom-table" ref={tableRef}>
+            <thead>
+              <tr>
+                <th>S.NO.</th>
+                <th>Applied By</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.length > 0 ? (
+                products.map((item, index) => (
+                  <React.Fragment key={item._id}>
+                    <tr>
+                      <td>
+                        <div
+                          className="DropDown"
+                          onClick={() => handleIconClick(index)}
+                        >
+                          <i
+                            className={
+                              selectedRow === index
+                                ? "ri-close-fill child"
+                                : "ri-add-fill child"
+                            }
+                          ></i>{" "}
+                          {index + 1}
+                        </div>
+                      </td>
+                      <td>userName</td>
+                    </tr>
+                    {selectedRow === index && (
+                      <tr>
+                        <td colSpan="6">
+                          <div className="dropdown-content">
+                            <div className="dropdown-title">
+                              <h3 className="status">Aadhaar Card Details:</h3>
+
+                              <span className="span">Name: {item.Name}</span>
+                              <span className="span">
+                                Father Name: {item.ParentName}
+                              </span>
+                              <span className="span">
+                                Aadhaar No: {item.Parent_AadhaarNo}
+                              </span>
+                              <span className="span">
+                                Mobile No: {item.MobileNo}
+                              </span>
+                              <span className="span">E-mail: {item.Email}</span>
+                              <span className="span">
+                                Address: {item.Address}
+                              </span>
+                              <h3 className="status">Purpose & Status</h3>
+                              <span className="text-white font-semibold  bg-yellow-500 p-1 rounded-md">
+                                Complete
+                              </span>
+                              <h3 className="status">Admin Remark</h3>
+                              <h3 className="status">
+                                Created On:
+                                <span
+                                  style={{ color: "blue", fontSize: "15px" }}
+                                >
+                                  {item.createdOn}
+                                </span>
+                              </h3>
+                              <div className=" flex items-center justify-center gap-3">
+                                <h3 className="status">Action</h3>
+                                <div className="px-6 py-4 border flex items-center justify-between gap-3">
+                                  <Link
+                                    to="/user-edit"
+                                    className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
+                                  >
+                                    <i className="ri-edit-box-line text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to="/user-finger"
+                                    className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
+                                  >
+                                    <i className="ri-fingerprint-fill text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to="/edit-view"
+                                    className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
+                                  >
+                                    <i className="ri-eye-line text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to="#"
+                                    className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
+                                  >
+                                    <i className="ri-delete-bin-line text-white"></i>
+                                  </Link>
+                                  <button
+                                    onClick={handleUploadButtonClick}
+                                    className="font-medium text-white no-underline border-1 bg-green-600 px-6 py-3 rounded-md"
+                                  >
+                                    Upload
+                                  </button>
+                                </div>
+                              </div>
+
+                              {/* <div className="Action-container">
+                                  <Action />
+                                  <FingerData />
+                                  <ViewFingerAndUpdate />
+                                  <DeleteData />
+                                  <Upload />
+                                </div> */}
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                ))
+              ) : (
                 <tr>
-                  <th scope="col" className="px-2 py-3 border">
-                    Serial No.
-                  </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Applied By
-                  </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Aadhar Card Details
-                  </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Purpose & Status
-                  </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Admin Remark
-                  </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Created On
-                  </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Action
-                  </th>
+                  <td colSpan="6">
+                    <h1 className="list-record">Record Not Found 😞</h1>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {products.map((product, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
-                  >
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border ">
-                      {index + 1}
-                    </td>
-                    <td className="px-6 py-4 font-medium text-black whitespace-nowrap  border">
-                      {product.appliedBy}
-                    </td>
-                    <td className="px-6 py-4 border">
-                      {Object.values(product.aadharCardDetails).join(", ")}
-                    </td>
-                    <td className="px-6 py-4 border">{product.purpose}</td>
-                    <td className="px-6 py-4 border">{product.adminRemark}</td>
-                    <td className="px-6 py-4 border">{product.createdOn}</td>
-                    <td className="px-6 py-4 border flex items-center justify-between gap-3">
-                      <Link
-                        to="/user-edit"
-                        className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                      >
-                        <i className="ri-edit-box-line text-white"></i>
-                      </Link>
-                      <Link
-                        to="/user-finger"
-                        className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                      >
-                        <i className="ri-fingerprint-fill text-white"></i>
-                      </Link>
-                      <Link
-                        to="/edit-view"
-                        className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                      >
-                        <i className="ri-eye-line text-white"></i>
-                      </Link>
-                      <Link
-                        to="#"
-                        className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
-                      >
-                        <i className="ri-delete-bin-line text-white"></i>
-                      </Link>
-                      <button
-                        onClick={handleUploadButtonClick}
-                        className="font-medium text-white no-underline border-1 bg-green-600 px-6 py-3 rounded-md"
-                      >
-                        Upload
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              )}
+            </tbody>
+          </Table>
         </div>
       </div>
-      {/* Upload Popup */}
       {showUploadPopup && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-8 rounded-lg shadow-md w-1/4">

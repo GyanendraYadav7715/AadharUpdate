@@ -2,50 +2,47 @@ import React, { useState } from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 import axios from "axios";
 import { Local_Url } from "../../constant/constant";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Balance = () => {
   const [formData, setFormData] = useState({
-    Username: "",
+    username: "",
     amount: "",
   });
 
-  const { Username, amount } = formData;
+  const { username, amount } = formData;
 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-        [id]: value,
-      
+      [id]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Check if any input field is empty
-    if (Username.trim() === "" || amount.trim() === "") {
-      alert("Please fill the all fields");
+
+    if (username.trim() === "" || amount.trim() === "") {
+      toast.error("Please fill all the fields");
       return;
     }
 
     try {
       const apiUrl = `${Local_Url}/api/v1/sharedData/user_limit`;
-      // Make the API POST request
+
       const response = await axios.post(apiUrl, formData);
 
-      // Handle success
-      console.log("Response:", response.data);
-      alert("User Limit set");
+      toast.success(response.data.message);
       setFormData({
-        Username: "",
+        username: "",
         amount: "",
       });
     } catch (error) {
-      // Handle error
-      console.error("Error:", error.message);
-      alert("Something went worng");
+      toast.error(error.message);
     }
   };
+
   const title = "User Limit";
   const links = [
     { title: "Home", href: "/superadmin" },
@@ -63,53 +60,26 @@ const Balance = () => {
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
-      <div className="p-1 sm:ml-64">
-        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
+      <div className="p-4 sm:ml-64">
+        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <div className="grid grid-cols-1 gap-4 mb-4 ">
-            <h3 className="text-2xl font-semibold">Please set the User Limit</h3>
+            <h3 className="text-2xl font-semibold">
+              Please set the User Limit
+            </h3>
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col items-start w-full border p-9 rounded-sm bg-white"
+              className="flex flex-col items-start w-full border-[#00000063] p-9 rounded-md bg-white border-2"
             >
               <div className="flex justify-between items-center w-full">
-                <div className="mb-5 w-1/2 p-6">
-                  <label
-                    htmlFor="Username"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    id="Username"
-                    value={Username}
-                    onChange={handleChange}
-                    className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="Username"
-                    required
-                  />
-                </div>
-                <div className="mb-5 w-1/2 p-6">
-                  <label
-                    htmlFor="amount"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
-                    Amount
-                  </label>
-                  <input
-                    type="number"
-                    id="amount"
-                    value={amount}
-                    onChange={handleChange}
-                    className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="Amount"
-                    required
-                  />
-                </div>
+                <UsernameInput
+                  username={username}
+                  handleChange={handleChange}
+                />
+                <AmountInput amount={amount} handleChange={handleChange} />
               </div>
-              <div className="p-6">
+              <div className="pl-3">
                 <button
-                  className="Submit-button whitespace-nowrap bg-green-600"
+                  className="Submit-button whitespace-nowrap bg-[#3f9e04] hover:bg-[#3f9e04d3]"
                   type="submit"
                 >
                   <i class="ri-save-fill"> </i>
@@ -123,5 +93,45 @@ const Balance = () => {
     </>
   );
 };
+
+const UsernameInput = ({ username, handleChange }) => (
+  <div className="mb-5 w-1/2 p-6">
+    <label
+      htmlFor="Username"
+      className="block mb-2 text-sm font-medium text-gray-900"
+    >
+      Username
+    </label>
+    <input
+      type="text"
+      id="username"
+      value={username}
+      onChange={handleChange}
+      className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      placeholder="Username"
+      required
+    />
+  </div>
+);
+
+const AmountInput = ({ amount, handleChange }) => (
+  <div className="mb-5 w-1/2 p-6">
+    <label
+      htmlFor="amount"
+      className="block mb-2 text-sm font-medium text-gray-900"
+    >
+      Amount
+    </label>
+    <input
+      type="number"
+      id="amount"
+      value={amount}
+      onChange={handleChange}
+      className="bg-white border border-black text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      placeholder="Amount"
+      required
+    />
+  </div>
+);
 
 export default Balance;
