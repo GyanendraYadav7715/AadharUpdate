@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import StyledAlert from "./StyledAlert";
 import axios from "axios";
 import loginlogo from "../../public/loginlogo.webp";
 import { FaRegCopyright } from "react-icons/fa";
@@ -17,9 +16,7 @@ const Login = () => {
     User_type: "",
   });
 
-  const [showAlert, setShowAlert] = useState(false); //For Showing Alert
-  const [showPassword, setShowPassword] = useState(false); //For Showing Password
-  const [save, setsave] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -47,24 +44,18 @@ const Login = () => {
             "user",
             JSON.stringify({ Username, User_type, loginIDMail })
           );
-           toast.success(response.data.message);
-          //console.log("Response Data:", response.data);
+          toast.success(response.data.message);
+
           navigate(redirect);
         } else {
           throw new Error(response.data.message || "Login failed");
         }
       } catch (error) {
-        setsave(error.message);
-        setShowAlert(true);
-        console.error(error);
+        toast.error(error.response.data.message);
       }
     },
     [formData, navigate]
   );
-
-  const closeAlert = useCallback(() => {
-    setShowAlert(false);
-  }, []);
 
   const toggleShowPassword = useCallback(() => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -155,14 +146,6 @@ const Login = () => {
           <FaRegCopyright /> 2022 newupdateseva
         </p>
       </div>
-      {showAlert && (
-        <StyledAlert
-          onClose={closeAlert}
-          title="Error"
-          message={save}
-          buttonText="Dismiss"
-        />
-      )}
     </div>
   );
 };

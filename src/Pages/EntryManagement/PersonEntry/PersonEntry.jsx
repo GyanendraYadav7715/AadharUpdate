@@ -71,14 +71,14 @@ const PersonEntry = () => {
     role = userObj.User_type;
 
     if (!formData.Purpose || !formData.Email || !formData.MobileNo) {
-      return alert("Please fill all the required fields");
+      return  toast.error("Please fill all the required fields");
     }
 
     try {
       const apiUrl = `${Local_Url}/api/v1/retailer/create-user`;
       const response = await axios.post(apiUrl, formData);
-      console.log("Form submitted successfully:", response.data);
-      alert(response.data.message);
+      //console.log("Form submitted successfully:", response.data);
+       toast.success(response.data.message);
       // Reset form data
       setFormData({
         Purpose: "",
@@ -99,8 +99,8 @@ const PersonEntry = () => {
         ],
       });
     } catch (error) {
-      console.error("Error submitting form:", error.message);
-      alert(error.message);
+      //console.error("Error submitting form:", error.message);
+      toast.error(error.response.data.message);
     }
   };
 

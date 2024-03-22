@@ -7,6 +7,8 @@ import Information from "../../../Components/Information/Information";
 import { Select } from "../../../Components/Selection/Select";
 import { Local_Url } from "../../../constant/constant";
 import FileUpload from "../../../Components/FileUpload/FileUpload";
+ import { toast } from "react-toastify";
+ import "react-toastify/dist/ReactToastify.css";
 
 const NewEntry = () => {
   const userData = localStorage.getItem("user");
@@ -46,8 +48,7 @@ const NewEntry = () => {
     MobileNo: "",
     Email: "",
     Address: "",
-    userName: "",
-    userType: "retailer",
+    
     Proof: [{ POI: "" }, { POB: "" }, { POA: "" }],
     FingerPrint: [
       { FingerPrint1: "" },
@@ -87,14 +88,14 @@ const NewEntry = () => {
     role = userObj.User_type;
 
     if (!formData.Name || !formData.Email || !formData.MobileNo) {
-      return alert("Please fill all the required fields.");
+      return toast.error("Please fill all the required fields.");
     }
 
     try {
       const apiUrl = `${Local_Url}/api/v1/retailer/create-child-user`;
       const response = await axios.post(apiUrl, formData);
       //console.log("Form submitted successfully:", response.data);
-      alert(response.data.message);
+      toast.success(response.data.message);
       setFormData({
         ...formData,
         Name: "",
@@ -118,8 +119,8 @@ const NewEntry = () => {
         ],
       });
     } catch (error) {
-      console.error("Error submitting form:", error.message);
-      alert(error.message);
+     // console.error("Error submitting form:", error.message);
+       toast.error(error.response.data.message);
     }
   };
 

@@ -5,7 +5,8 @@ import { Local_Url } from "../../../constant/constant";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const MobileNoUpdate = () => {
   const [currentDate, setCurrentDate] = useState("");
 
@@ -55,19 +56,19 @@ const MobileNoUpdate = () => {
 
     FingerPrint: [
       {
-        FingerPrint1: " gggg",
+        FingerPrint1: " ",
       },
       {
-        FingerPrint2: " gggg",
+        FingerPrint2: " ",
       },
       {
-        FingerPrint3: " ggg",
+        FingerPrint3: " ",
       },
       {
-        FingerPrint4: "fgf ",
+        FingerPrint4: " ",
       },
       {
-        FingerPrint5: "ggg",
+        FingerPrint5: "",
       },
     ],
   });
@@ -102,7 +103,7 @@ const MobileNoUpdate = () => {
     );
 
     if (!formData.Name || !formData.Email || !formData.MobileNo) {
-      return alert("Please fill all the required fields.");
+      return toast.error("Please fill all the required fields.");
     }
 
     try {
@@ -111,8 +112,8 @@ const MobileNoUpdate = () => {
 
       const response = await axios.post(apiUrl, formData);
 
-      console.log("Form submitted successfully:", response.data);
-      alert(response.data.message);
+      //console.log("Form submitted successfully:", response.data);
+      toast.success(response.data.message);
       // Optionally, reset the form after submission
       setFormData({
         Name: "",
@@ -131,7 +132,8 @@ const MobileNoUpdate = () => {
       });
     } catch (error) {
       // Handle submission error
-      console.error("Error submitting form:", error.message);
+      //console.error("Error submitting form:", error.message);
+      toast.error(error.response.data.message)
     }
   };
 
