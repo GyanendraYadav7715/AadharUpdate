@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import "./PersonEntry.css";
+import { toast } from "react-toastify";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Local_Url } from "../../../constant/constant";

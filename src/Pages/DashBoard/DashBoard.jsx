@@ -32,21 +32,22 @@ const DashBoard = () => {
       try {
         const queryParams = { userName };
         const response = await axios.get(
-          `${Local_Url}/api/v1/admin/total-customers`,
+          `${Local_Url}/api/v1/admin/adminDashboard`,
           { params: queryParams }
         );
         setStatistics({
-          // balance: response.data.Balance,
-          totalUsers: response.data.totalApplication,
-          // totalApplication: response.data.dtotalApplication,
-          // totalApplicationCompleted: response.data.dcompleted,
-          // totalApplicationRejected: response.data.drejectApl,
-          // totalChildApplication: response.data.ctotalApplication,
-          // totalChildApplicationCompleted: response.data.ccompleted,
-          // totalChildApplicationRejected: response.data.crejectApl,
-          // totalMobileApplication: response.data.mtotalApplication,
-          // totalMobileApplicationCompleted: response.data.mcompleted,
-          // totalMobileApplicationRejected: response.data.mrejectApl,
+
+          balance: response.data.data.Balance,
+          totalUsers: response.data.data.totalApplication,
+          totalApplication: response.data.data.dtotalApplication,
+          totalApplicationCompleted: response.data.data.dcompleted,
+          totalApplicationRejected: response.data.data.drejectApl,
+          totalChildApplication: response.data.data.ctotalApplication,
+          totalChildApplicationCompleted: response.data.data.ccompleted,
+          totalChildApplicationRejected: response.data.data.crejectApl,
+          totalMobileApplication: response.data.data.mtotalApplication,
+          totalMobileApplicationCompleted: response.data.data.mcompleted,
+          totalMobileApplicationRejected: response.data.data.mrejectApl,
         });
       } catch (error) {
         console.error("Error fetching data: ", error);

@@ -51,7 +51,7 @@ const Box = ({ onFingerprintUpload }) => {
 
   const uploadToS3 = async (imageBlob) => {
     const formData = new FormData();
-    formData.append("image", imageBlob, `fingerprint_${Date.now()}.jpg`);
+    formData.append("document", imageBlob, `fingerprint_${Date.now()}.jpg`);
 
     try {
       const response = await axios.post(

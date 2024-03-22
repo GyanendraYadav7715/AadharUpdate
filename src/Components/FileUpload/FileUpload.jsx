@@ -36,12 +36,12 @@ const FileUpload = ({ title, name, onFileUpload }) => {
 
   const uploadToS3 = async (file) => {
     const formData = new FormData();
-    formData.append("file", file, `pdfFile_${Date.now()}.pdf`);
+    formData.append("document", file, `pdfFile_${Date.now()}.pdf`);
 
     try {
       const apiUrl = `${Local_Url}/api/v1/retailer/retailer-fingerdata`;
       const response = await axios.post(apiUrl, formData);
-      console.log("File uploaded successfully:", response.data.imageUrl);
+      // console.log("File uploaded successfully:", response.data.imageUrl);
       return response.data.imageUrl;
     } catch (error) {
       console.error("Error uploading file:", error);
