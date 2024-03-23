@@ -87,7 +87,7 @@ const NewEntry = () => {
     formData.userType = userObj.User_type;
     role = userObj.User_type;
 
-    if (!formData.Name || !formData.Email || !formData.MobileNo) {
+    if (!formData.Name || !formData.Parent_AadhaarNo || !formData.Email || !formData.MobileNo) {
       return toast.error("Please fill all the required fields.");
     }
 
