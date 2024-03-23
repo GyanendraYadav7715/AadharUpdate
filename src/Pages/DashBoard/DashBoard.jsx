@@ -7,17 +7,17 @@ const DashBoard = () => {
   const userData = localStorage.getItem("user");
   const [userName, setUserName] = useState("");
   const [statistics, setStatistics] = useState({
-    // balance: 0,
+    balance: 0,
     totalUsers: 0,
-    // totalApplication: 0,
-    // totalApplicationCompleted: 0,
-    // totalApplicationRejected: 0,
-    // totalChildApplication: 0,
-    // totalChildApplicationCompleted: 0,
-    // totalChildApplicationRejected: 0,
-    // totalMobileApplication: 0,
-    // totalMobileApplicationCompleted: 0,
-    // totalMobileApplicationRejected: 0,
+    totalApplication: 0,
+    totalApplicationCompleted: 0,
+    totalApplicationRejected: 0,
+    totalChildApplication: 0,
+    totalChildApplicationCompleted: 0,
+    totalChildApplicationRejected: 0,
+    totalMobileApplication: 0,
+    totalMobileApplicationCompleted: 0,
+    totalMobileApplicationRejected: 0,
   });
 
   useEffect(() => {
