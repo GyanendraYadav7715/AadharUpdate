@@ -15,7 +15,7 @@ import DeleteData from "./Delete/DeleteData";
 import Upload from "./Upload/Upload";
 import Action from "./Action/Action";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
-import { toast } from "react-toastify";
+//import { toast } from "react-toastify";
 
 function ChildEntryList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -42,7 +42,7 @@ function ChildEntryList() {
   ];
 
   const fetchData = async () => {
-    const apiUrl = `${Local_Url}api/v1/admin/cAllAdminData`;
+    const apiUrl = `${Local_Url}/api/v1/admin/cAllAdminData`;
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
