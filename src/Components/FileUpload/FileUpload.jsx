@@ -6,6 +6,17 @@ const FileUpload = ({ title, name, onFileUpload }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [fileUploaded, setFileUploaded] = useState(false);
   const [captureCount, setCaptureCount] = useState(0);
+
+  // check userName 
+  const userData = localStorage.getItem("user");
+  let userName = "";
+
+  if (userData) {
+    const userObj = JSON.parse(userData);
+    userName = userObj.Username;
+  }
+
+
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     console.log(file)
@@ -39,7 +50,7 @@ const FileUpload = ({ title, name, onFileUpload }) => {
     formData.append("document", file, `pdfFile_${Date.now()}.pdf`);
 
     try {
-      const apiUrl = `${Local_Url}/api/v1/retailer/retailer-fingerdata`;
+      const apiUrl = `${Local_Url}/api/v1/retailer/retailer-fingerdata?userName=${userName}`;
       const response = await axios.post(apiUrl, formData);
       // console.log("File uploaded successfully:", response.data.imageUrl);
       return response.data.imageUrl;

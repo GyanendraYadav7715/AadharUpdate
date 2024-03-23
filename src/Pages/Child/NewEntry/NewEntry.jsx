@@ -87,9 +87,9 @@ const NewEntry = () => {
     formData.userType = userObj.User_type;
     role = userObj.User_type;
 
-    // if (!formData.Name || !formData.Parent_AadhaarNo || formData.Email || !formData.MobileNo) {
-    //   return toast.error("Please fill all the required fields.");
-    // }
+    if (!formData.Name || !formData.Parent_AadhaarNo || !formData.Email || !formData.MobileNo) {
+      return toast.error("Please fill all the required fields.");
+    }
 
     try {
       const apiUrl = `${Local_Url}/api/v1/retailer/create-child-user`;
