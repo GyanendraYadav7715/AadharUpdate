@@ -50,10 +50,18 @@ const History = () => {
     { title: "Home", href: "/superadmin" },
     { title: "View Balance Transfer History", href: "" },
   ];
+   const mylinks = [
+     {
+       to: "/balance_transfer",
+       text: "Token Transfer",
+       icon: "ri-money-rupee-circle-line text-2xl ",
+     },
+     
+   ];
 
   return (
     <>
-      <Breadcrumb title={title} links={links} />
+      <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-4 sm:ml-64 mb-20">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white  ">
           <div className="flex items-center justify-between mb-4">

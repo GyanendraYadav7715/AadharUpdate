@@ -9,11 +9,12 @@ import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Local_Url } from "../../../constant/constant";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Table from "react-bootstrap/Table";
 
 const ViewRetailerUserList = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  
+  const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
   const tableRef = useRef();
 
@@ -59,12 +60,12 @@ const ViewRetailerUserList = () => {
         }
       );
       console.log(response.data);
-        
-       const toastMessage =
-         isUserblocked === "true"
-           ? "User is Deactivated successfully"
-           : "User is Activated successfully";
-       toast.success(toastMessage);
+
+      const toastMessage =
+        isUserblocked === "true"
+          ? "User is Deactivated successfully"
+          : "User is Activated successfully";
+      toast.success(toastMessage);
 
       const updatedProducts = filteredProducts.map((product) => {
         if (product.Username === Username) {
@@ -79,6 +80,9 @@ const ViewRetailerUserList = () => {
     } catch (error) {
       console.error("Error updating user status:", error);
     }
+  };
+  const handleIconClick = (index) => {
+    setSelectedRow(selectedRow === index ? null : index);
   };
 
   return (
@@ -95,7 +99,7 @@ const ViewRetailerUserList = () => {
           <h3 className="text-2xl font-semibold">
             View Retailer Users Data-ADMIN
           </h3>
-          <div className="flex items-center justify-between my-4 ">
+          <div className="flex items-center justify-between my-4 px-8">
             <div>
               <CopyButton data={filteredProducts} />
               <ExcelButton
@@ -113,102 +117,105 @@ const ViewRetailerUserList = () => {
             </div>
             <SearchElement onSearch={setSearchQuery} />
           </div>
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table
-              className="w-full text-sm text-left rtl:text-right text-black shadow-sm"
-              ref={tableRef}
-            >
-              <thead className="text-base text-black bg-white">
-                <tr>
-                  <th scope="col" className="px-2 py-3 border">
-                    S.No.
-                  </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Name
-                  </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Email
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
-                    Mobile No.
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
-                    Created By
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 border whitespace-nowrap"
-                  >
-                    Password
-                  </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Balance
-                  </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Status
-                  </th>
-                  <th scope="col" className="px-6 py-3 border">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredProducts.length > 0 ? (
-                  filteredProducts.map((product, index) => (
-                    <tr
-                      key={index}
-                      className={index % 2 === 0 ? "bg-gray-400" : "bg-white"}
-                    >
-                      <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
+          <Table striped bordered hover className="custom-table" ref={tableRef}>
+            <thead>
+              <tr>
+                <th>S.No.</th>
+                <th>Name</th>
+                <th> Email</th>
+                <th>Mobile No.</th>
+                <th>Created By</th>
+                <th> Password</th>
+
+                <th> Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((product, index) => (
+                  <React.Fragment key={product.id}>
+                    <tr>
+                      <td>
+                        <div
+                          className="DropDown"
+                          onClick={() => handleIconClick(index)}
+                        >
+                          <i
+                            className={
+                              selectedRow === index
+                                ? "ri-close-fill"
+                                : "ri-add-fill"
+                            }
+                            style={{
+                              backgroundColor:
+                                selectedRow === index ? "red" : "blue",
+                            }}
+                          ></i>
+                        </div>
                         {index + 1}
                       </td>
-                      <td className="px-6 py-4 font-medium text-black whitespace-nowrap border">
-                        {product.Name}
-                      </td>
-                      <td className="px-6 py-4 border">{product.Email}</td>
-                      <td className="px-6 py-4 border">{product.Phone_n}</td>
-                      <td className="px-6 py-4 border">Admin</td>
-                      <td className="px-6 py-4 border">{product.Password}</td>
-                      <td className="px-6 py-4 border">{product.Balance}</td>
-                      <td className="px-6 py-4 border">{product.status}</td>
-                      <td className="px-6 py-4 gap-2 flex items-center justify-between">
-                        <button
-                          onClick={() =>
-                            handleStatusEdit(product.Username, "false")
-                          }
-                          className="font-medium text-white no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                        >
-                          Activate
-                        </button>
-                        <button
-                          onClick={() =>
-                            handleStatusEdit(product.Username, "true")
-                          }
-                          className="font-medium text-white no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
-                        >
-                          Deactivate
-                        </button>
-                      </td>
+                      <td>{product.Name}</td>
+                      <td>{product.Email}</td>
+                      <td>{product.Phone_n}</td>
+                      <td>Admin</td>
+                      <td>{product.Password}</td>
+                      <td>{product.Balance}</td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="9">
-                      <h1 className="list-record text-center text-3xl">
-                        Record Not Found😞
-                      </h1>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                    {selectedRow === index && (
+                      <tr>
+                        <td colSpan="6" style={{ backgroundColor: "white" }}>
+                          {/* Dropdown content */}
+                          <div className="dropdown-content">
+                            <div className="dropdown-title">
+                              <h3 className="status">
+                                Status
+                                <span
+                                  style={{
+                                    color: "blue",
+                                    fontSize: "15px",
+                                  }}
+                                >
+                                  {product.status}
+                                </span>
+                              </h3>
+                              <h3 className="status">Action</h3>
+
+                              <div className="px-6 py-4 gap-2 flex items-center justify-between">
+                                <button
+                                  onClick={() =>
+                                    handleStatusEdit(product.Username, "false")
+                                  }
+                                  className="font-medium text-white no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
+                                >
+                                  Activate
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    handleStatusEdit(product.Username, "true")
+                                  }
+                                  className="font-medium text-white no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
+                                >
+                                  Deactivate
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="9">
+                    <h1 className="list-record text-center text-3xl">
+                      Record Not Found😞
+                    </h1>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
         </div>
       </div>
     </>

@@ -37,11 +37,11 @@ function ChildEntryList() {
     role === "Admin"
       ? [
           { title: "Home", href: "/superadmin" },
-          { title: "View Child Data", href: "" },
+          { title: "View Child Data"  },
         ]
       : [
           { title: "Home", href: "/retailer" },
-          { title: "View Child Data", href: "" },
+          { title: "View Child Data"  },
         ];
   const mylinks = [
     {

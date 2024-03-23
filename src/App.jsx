@@ -54,6 +54,7 @@ import MobileEntryList from "./Pages/Mobile/Mobile-No-Entry/MobileEntryList";
 import Edit from "./Components/ActionServices/Edit";
 import Finger from "./Components/ActionServices/Finger";
 import EditView from "./Components/ActionServices/EditView";
+import EditCustomer from "./Pages/EditCustomer/EditCustomer";
 
 const App = () => {
   return (
@@ -122,6 +123,7 @@ function Layout() {
           <Route path="/user-edit" element={<Edit />} />
           <Route path="/user-finger" element={<Finger />} />
           <Route path="/edit-view" element={<EditView />} />
+          <Route path="/edit-customer" element={<EditCustomer />} />
         </Route>
         {/* --------------------------------PROTECTED ROUTES ----------------------------------------------- */}
       </Routes>

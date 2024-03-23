@@ -138,7 +138,7 @@ const NewEntry = () => {
               <CustomInput
                 onChange={handleInputChange}
                 label="Child Name"
-                type="text"
+                type="fullname"
                 value={formData.Name}
                 name="Name"
                 placeholder="Full Name"
@@ -147,7 +147,7 @@ const NewEntry = () => {
               <CustomInput
                 onChange={handleInputChange}
                 label="Father Name / Mother Name"
-                type="text"
+                type="fullname"
                 value={formData.ParentName}
                 name="ParentName"
                 placeholder="Enter Parents Name"
@@ -215,7 +215,7 @@ const NewEntry = () => {
               <CustomInput
                 onChange={handleInputChange}
                 label="Father / Mother Aadhaar No"
-                type="number"
+                type="aadhar"
                 name="Parent_AadhaarNo"
                 placeholder="Father / Mother Aadhaar No"
                 value={formData.Parent_AadhaarNo}
@@ -268,6 +268,7 @@ const NewEntry = () => {
                 name="Email"
                 placeholder="example@update.com"
                 value={formData.Email}
+                maxLength={50}
               />
 
               <CustomInput

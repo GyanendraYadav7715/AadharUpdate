@@ -53,9 +53,9 @@ const Balance = () => {
 
   const mylinks = [
     {
-      to: "/viewuser",
-      text: "View Customer",
-      icon: "ri-team-line text-white text-2xl ",
+      to: "/history",
+      text: "Transfer History",
+      icon: "ri-history-fill text-2xl ",
     },
   ];
 

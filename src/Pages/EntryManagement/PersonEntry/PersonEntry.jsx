@@ -7,14 +7,14 @@ import { Local_Url } from "../../../constant/constant";
 import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import FileUpload from "../../../Components/FileUpload/FileUpload";
 
-//MAIN FUNCTION TO COLLECTE FORM DATA
+ 
 const PersonEntry = () => {
   const userData = localStorage.getItem("user");
   let role = "";
   if (userData) {
-    // Parse JSON string to object
+    
     const userObj = JSON.parse(userData);
-    // Access the role property
+    
     role = userObj.role;
   }
 
@@ -140,7 +140,7 @@ const PersonEntry = () => {
               <CustomInput
                 onChange={handleInputChange}
                 label="Full Name"
-                type="text"
+                type="fullname"
                 value={formData.Name}
                 name="Name"
                 placeholder="Enter Name"
@@ -148,7 +148,7 @@ const PersonEntry = () => {
               <CustomInput
                 onChange={handleInputChange}
                 label="Father Name"
-                type="text"
+                type="fullname"
                 value={formData.FatherName}
                 name="FatherName"
                 placeholder="Father Name"
@@ -164,7 +164,7 @@ const PersonEntry = () => {
               <CustomInput
                 onChange={handleInputChange}
                 label="Aadhaar No."
-                type="tel"
+                type="aadhar"
                 name="AadhaarNo"
                 placeholder="Aadhaar No."
                 value={formData.AadhaarNo}
