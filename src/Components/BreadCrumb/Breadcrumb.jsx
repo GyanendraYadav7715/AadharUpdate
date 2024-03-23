@@ -44,9 +44,12 @@ const Breadcrumb = ({ title, links, mylinks }) => {
                   <Link
                     key={index}
                     to={link.to}
-                    className=" bg-[#71B944] no-underline text-white rounded-full border-1 px-3 py-2 hover:bg-green-500 flex items-center justify-center"
+                    className=" bg-[#6baf40] no-underline text-white rounded-full border-1  hover:ring-[#5c9439] focus:ring-2 flex items-center justify-center hover:shadow-[#5c9439]"
                   >
-                    <i className={link.icon}></i> {link.text}
+                    <div className="bg-[#5b9239] rounded-l-full px-2 py-1">
+                      <i className={link.icon}></i>
+                    </div>
+                    <div className="px-2  py-1">{link.text}</div>
                   </Link>
                 ))}
             </div>

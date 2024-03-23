@@ -7,14 +7,14 @@ import { Local_Url } from "../../../constant/constant";
 import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import FileUpload from "../../../Components/FileUpload/FileUpload";
 
-//MAIN FUNCTION TO COLLECTE FORM DATA
+ 
 const PersonEntry = () => {
   const userData = localStorage.getItem("user");
   let role = "";
   if (userData) {
-    // Parse JSON string to object
+    
     const userObj = JSON.parse(userData);
-    // Access the role property
+    
     role = userObj.role;
   }
 
