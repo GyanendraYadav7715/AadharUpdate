@@ -107,7 +107,7 @@ const MobileNoUpdate = () => {
     }
 
     try {
-      // Define the API endpoint URL
+      
       const apiUrl = `${Local_Url}/api/v1/retailer/createMobileUser`;
 
       const response = await axios.post(apiUrl, formData);
@@ -146,7 +146,7 @@ const MobileNoUpdate = () => {
             <CustomInput
               onChange={handleInputChange}
               label="Full Name"
-              type="text"
+              type="fullname"
               value={formData.Name}
               name="Name"
               placeholder="Enter Name"
@@ -154,7 +154,7 @@ const MobileNoUpdate = () => {
             <CustomInput
               onChange={handleInputChange}
               label="Father Name"
-              type="text"
+              type="fullname"
               value={formData.FatherName}
               name="FatherName"
               placeholder="Father Name"
@@ -175,18 +175,20 @@ const MobileNoUpdate = () => {
             <CustomInput
               onChange={handleInputChange}
               label="Aadhaar No."
-              type="number"
+              type="aadhar"
               name="AadhaarNo"
               placeholder="Aadhaar No."
               value={formData.AadhaarNo}
+              maxLength={12}
             />
             <CustomInput
               onChange={handleInputChange}
               label="Mobile No."
-              type="text"
+              type="tel"
               name="MobileNo"
               placeholder="Mobile No."
               value={formData.MobileNo}
+              maxLength={10}
             />
             <CustomInput
               onChange={handleInputChange}
@@ -195,6 +197,7 @@ const MobileNoUpdate = () => {
               name="Email"
               placeholder="example@update.com"
               value={formData.Email}
+              maxLength={50}
             />
           </div>
           <div className="container grid grid-cols-5 p-5">
