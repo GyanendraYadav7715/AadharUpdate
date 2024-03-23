@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
@@ -8,16 +9,17 @@ import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Upload from "../../../Components/ActionServices/Upload";
+import { Local_Url } from "../../../constant/constant";
+ 
 const AdminReport = () => {
   const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  const userData = localStorage.getItem("user");
-
-  let role = "";
-  if (userData) {
-    const userObj = JSON.parse(userData);
-    role = userObj.role;
-  }
+   const [filteredProducts, setFilteredProducts] = useState([]);
+   const [data, setData] = useState([]);
+  const userData = JSON.parse(localStorage.getItem("user"));
+  let role = userData.User_type;
+  let userName = userData.Username;
+  
   const title = "Mobile Update-Report";
   const links =
     role === "Admin"
@@ -31,24 +33,21 @@ const AdminReport = () => {
         ];
   const tableRef = useRef(null);
 
-  const products = [
-    {
-      appliedBy: "UP_UID_NS_3203",
-      aadharCardDetails: {
-        Name: "Kabutari Devi",
-        FatherName: "Ramawatar Yadva",
-        DOB: "01/01/1962",
-        AadhaarNo: "2323-3434-4545",
-        MobileNo: "233445667",
-        Email: "Ck812@gmail.com",
-        Address: "",
-      },
-      purpose: "Mobile NO Update",
-      adminRemark: "",
-      createdOn: "11/12/2012",
-    },
-  ];
+   useEffect(() => {
+     const apiUrl = `${Local_Url}/api/v1/admin/mAllAdminData`;
 
+     axios
+       .get(apiUrl, { params: { userName: userName } })
+       .then((response) => {
+         console.log(response.data);
+
+         setData(response.data.data);
+         setFilteredProducts(response.data.data);
+       })
+       .catch((err) => {
+         console.log("Something Went Wrong");
+       });
+   }, []);
   const handleUploadButtonClick = () => {
     setShowUploadPopup(true);
   };
@@ -66,6 +65,16 @@ const AdminReport = () => {
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
+   const handleSearch = (query) => {
+     setSearchQuery(query);
+     const filtered = data.filter((product) =>
+       Object.values(product)
+         .join(" ")
+         .toLowerCase()
+         .includes(query.toLowerCase())
+     );
+     setFilteredProducts(filtered);
+   };
 
   return (
     <>
@@ -74,13 +83,13 @@ const AdminReport = () => {
         <div className="p-2 border-2 border-gray-200 border-solid rounded-lg">
           <div className="Download-Button flex items-center justify-between">
             <div>
-              <CopyButton data={products} />
-              <ExcelButton data={products} filename={"ChildEntyList.xlsx"} />
+              <CopyButton data={data} />
+              <ExcelButton data={data} filename={"ChildEntyList.xlsx"} />
 
-              <CSVButton data={products} filename={"ChildEntyList.csv"} />
+              <CSVButton data={data} filename={"ChildEntyList.csv"} />
               <PDFButton tableRef={tableRef} filename={"ChildEntyList.pdf"} />
             </div>
-            <SearchElement />
+            <SearchElement onSearch={handleSearch} />
           </div>
           <Table striped bordered hover className="custom-table" ref={tableRef}>
             <thead>
@@ -90,8 +99,8 @@ const AdminReport = () => {
               </tr>
             </thead>
             <tbody>
-              {products.length > 0 ? (
-                products.map((item, index) => (
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((item, index) => (
                   <React.Fragment key={item._id}>
                     <tr>
                       <td>
@@ -109,7 +118,7 @@ const AdminReport = () => {
                           {index + 1}
                         </div>
                       </td>
-                      <td>userName</td>
+                      <td>{item.AppliedBy}</td>
                     </tr>
                     {selectedRow === index && (
                       <tr>
@@ -134,7 +143,7 @@ const AdminReport = () => {
                               </span>
                               <h3 className="status">Purpose & Status</h3>
                               <span className="text-white font-semibold  bg-yellow-500 p-1 rounded-md">
-                                Complete
+                                {item.status}
                               </span>
                               <h3 className="status">Admin Remark</h3>
                               <h3 className="status">

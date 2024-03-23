@@ -89,7 +89,7 @@ function ViewChildData() {
             <thead>
               <tr>
                 <th>S.N.</th>
-                <th> Child Name</th>
+                <th>Child Name</th>
                 <th>DOB</th>
                 <th>Aadhaar No.</th>
                 <th>Mobile No.</th>
@@ -124,7 +124,7 @@ function ViewChildData() {
                         {index + 1}
                       </td>
                       <td>{item.Name}</td>
-                      <td>{item.dateofbirth}</td>
+                      <td>{item.DOB}</td>
                       <td>{item.Parent_AadhaarNo}</td>
                       <td>{item.MobileNo}</td>
                       <td>{item.Email}</td>

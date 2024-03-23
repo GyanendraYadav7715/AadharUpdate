@@ -27,11 +27,11 @@ const MobileNoUpdate = () => {
     Email: "",
     FingerPrint: [
       {
-        FingerPrint1: "cbbc",
-        FingerPrint2: "cbbc",
-        FingerPrint3: "cbbc",
-        FingerPrint4: "cbbc",
-        FingerPrint5: "cbbc",
+        FingerPrint1: "",
+        FingerPrint2: "",
+        FingerPrint3: "",
+        FingerPrint4: "",
+        FingerPrint5: "",
       },
     ],
   });

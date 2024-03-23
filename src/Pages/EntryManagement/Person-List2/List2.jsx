@@ -52,7 +52,7 @@ function List() {
   const tableRef = useRef(null);
 
   useEffect(() => {
-    const apiUrl = `${Local_Url}/api/v1/retailer/retailer-users`;
+    const apiUrl = `${Local_Url}/api/v1/admin/dGraphyAllAdminData`;
 
     axios
       .get(apiUrl, { params: { userName: userName } })
@@ -83,7 +83,7 @@ function List() {
 
   return (
     <>
-      <Breadcrumb title={title} links={links} />
+      <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
       <div className="p-2 sm:ml-64">
         <div className="p-2 border-2 border-gray-200 border-solid rounded-lg">
@@ -134,10 +134,10 @@ function List() {
 
                               <span className="span">Name: {item.Name}</span>
                               <span className="span">
-                                Father Name: {item.ParentName}
+                                Father Name: {item.FatherName}
                               </span>
                               <span className="span">
-                                Aadhaar No: {item.Parent_AadhaarNo}
+                                Aadhaar No: {item.AadhaarNo}
                               </span>
                               <span className="span">
                                 Mobile No: {item.MobileNo}
@@ -147,21 +147,23 @@ function List() {
                                 Address: {item.Address}
                               </span>
                               <h3 className="status">Purpose & Status</h3>
+                              <span className="span">{item.Purpose}</span>
                               <h3 className="status">Admin Remark</h3>
-                              <h3 className="status">
+                              <span className="span">{item.Purpose}</span>
+                              <h3 className="status ">
                                 Created On:
-                                <span
-                                  style={{ color: "blue", fontSize: "15px" }}
-                                >
+                                <span className="text-blue-600 ">
                                   {item.createdOn}
                                 </span>
                               </h3>
+                              <h3 className="status">Status</h3>
+                              <span className="span">{item.status}</span>
                               <div className="Action-container">
-                                <Action />
+                                {/* <Action />
                                 <FingerData />
                                 <ViewFingerAndUpdate />
                                 <DeleteData />
-                                <Upload />
+                                <Upload /> */}
                               </div>
                             </div>
                           </div>

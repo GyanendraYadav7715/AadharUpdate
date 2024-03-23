@@ -15,34 +15,24 @@ import DeleteData from "./Delete/DeleteData";
 import Upload from "./Upload/Upload";
 import Action from "./Action/Action";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
+import { toast } from "react-toastify";
 
 function ChildEntryList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
   const tableRef = useRef(null);
-  const userData = localStorage.getItem("user");
-  let role = "";
-  let userName = "";
+  const [searchQuery, setSearchQuery] = useState("");
 
-  if (userData) {
-    const userObj = JSON.parse(userData);
-    role = userObj.role;
-    userName = userObj.Username;
-  }
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const role = userData.User_type;
+  const userName = userData.Username;
 
   const title = "View Child Entry";
   const links =
-    role === "Admin"
-      ? [
-          { title: "Home", href: "/superadmin" },
-          { title: "View Child Data"  },
-        ]
-      : [
-          { title: "Home", href: "/retailer" },
-          { title: "View Child Data"  },
-        ];
+    role === "Superadmin"
+      ? [{ title: "Home", href: "/superadmin" }, { title: "View Child Data" }]
+      : [{ title: "Home", href: "/backoffice" }, { title: "View Child Data" }];
   const mylinks = [
     {
       to: "/new-entry",
@@ -51,21 +41,20 @@ function ChildEntryList() {
     },
   ];
 
-const fetchData = async () => {
-  try {
-    const apiUrl = `${Local_Url}/api/v1/retailer/child-users`;
-    const response = await axios.get(apiUrl, {
-      params: { userName: userName },
-    });
+  const fetchData = async () => {
+    const apiUrl = `${Local_Url}api/v1/admin/cAllAdminData`;
+    axios
+      .get(apiUrl, { params: { userName: userName } })
+      .then((response) => {
+        console.log(response.data);
 
-    setData(response.data.data);
-    setFilteredProducts(response.data.data);
-    console.log(response.data);
-
-  } catch (error) {
-    setError("Something went wrong");
-  }
-};
+        setData(response.data.data);
+        setFilteredProducts(response.data.data);
+      })
+      .catch((err) => {
+        console.log("Something Went Wrong");
+      });
+  };
 
   useEffect(() => {
     fetchData();
@@ -74,6 +63,7 @@ const fetchData = async () => {
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
+
   const handleSearch = (query) => {
     setSearchQuery(query);
     const filtered = data.filter((product) =>
@@ -85,7 +75,6 @@ const fetchData = async () => {
     setFilteredProducts(filtered);
   };
 
-
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
@@ -94,9 +83,9 @@ const fetchData = async () => {
           <div className="Download-Button flex items-center justify-between">
             <div>
               <CopyButton data={data} />
-              <ExcelButton data={data} filename={"ChildEntyList.xlsx"} />
-              <CSVButton data={data} filename={"ChildEntyList.csv"} />
-              <PDFButton tableRef={tableRef} filename={"ChildEntyList.pdf"} />
+              <ExcelButton data={data} filename={"ChildEntryList.xlsx"} />
+              <CSVButton data={data} filename={"ChildEntryList.csv"} />
+              <PDFButton tableRef={tableRef} filename={"ChildEntryList.pdf"} />
             </div>
             <SearchElement onSearch={handleSearch} />
           </div>
@@ -131,7 +120,7 @@ const fetchData = async () => {
                     </tr>
                     {selectedRow === index && (
                       <tr>
-                        <td colSpan="6">
+                        <td colSpan="2">
                           <div className="dropdown-content">
                             <div className="dropdown-title">
                               <h3 className="status">Aadhaar Card Details:</h3>
@@ -176,7 +165,7 @@ const fetchData = async () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6">
+                  <td colSpan="2">
                     <h1 className="list-record">Record Not Found 😞</h1>
                   </td>
                 </tr>
