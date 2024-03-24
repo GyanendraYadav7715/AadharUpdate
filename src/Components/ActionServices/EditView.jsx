@@ -1,9 +1,13 @@
 import React from "react";
 import Breadcrumb from "../BreadCrumb/Breadcrumb";
-import{ CustomInput2} from "../CustomeInput/CustomInput";
-const EditView = (props) => {
-  const { userData } = props.location.state;
-  console.log(userData);
+import { CustomInput2 } from "../CustomeInput/CustomInput";
+import { useLocation } from "react-router-dom";
+const EditView = () => {
+
+   const location = useLocation();
+   const searchParams = new URLSearchParams(location.search);
+   
+ 
   const title = "Edit Customer";
   const links = [
     { title: "Home", href: "/backoffice" },

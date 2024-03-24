@@ -5,55 +5,61 @@ import { Local_Url } from "../../constant/constant";
 import Breadcrumb from "../BreadCrumb/Breadcrumb";
 import { Select } from "../Selection/Select";
 import { CustomInput } from "../CustomeInput/CustomInput";
+import { toast } from "react-toastify";
+
 const Edit = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const entrytype = searchParams.get("entrytype");
+  const apply = searchParams.get("apply");
+  const time = searchParams.get("time");
+  const type = searchParams.get("type");
+
   const [formData, setFormData] = useState({
-    Remark: "",
-    Status: "",
-    User_type: "",
+    appliedBy: apply,
+    timestamp: time,
+    User_type: type,
+    entryType: entrytype,
+    status: "",
+    remarks: "",
   });
 
-   const location = useLocation();
-   const [aadhar, setAadhar] = useState("");
+  const { remarks, status } = formData;
 
-   useEffect(() => {
-     const searchParams = new URLSearchParams(location.search);
-     const aadharParam = searchParams.get("aadhar");
-     if (aadharParam) {
-       setAadhar(aadharParam);
-     }
-   }, [location.search]);
-  const { Remark, Status } = formData;
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [id]: value,
-    }));
+  const handleInputChange = (name, value) => {
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Check if any input field is empty
-    if (Remark.trim() === "" || Status.trim() === "") {
-      alert("Please fill the all fields");
+
+    if (remarks.trim() === "" || status.trim() === "") {
+      alert("Please fill in all fields");
       return;
     }
 
     try {
-      const apiUrl = `${Local_Url} `;
+      const apiUrl = `${Local_Url}/api/v1/admin/aplStatus`;
 
-      await axios.post(apiUrl, formData);
-
+      const response = await axios.post(apiUrl, formData);
+      toast.success(response.data.message);
       setFormData({
-        Username: "",
-        amount: "",
+        appliedBy: "",
+        timestamp: "",
+        User_type: "",
+        entryType: "",
+        status: "",
+        remarks: "",
       });
     } catch (error) {
       console.error("Error:", error.message);
-      alert("Something went worng");
+      alert("Something went wrong");
     }
   };
+
   const title = "Edit Customer";
   const links = [
     { title: "Home", href: "/backoffice" },
@@ -64,9 +70,10 @@ const Edit = () => {
     {
       to: "/viewuser",
       text: "View Customer",
-      icon: "ri-team-line text-white text-2xl ",
+      icon: "ri-team-line text-white text-2xl",
     },
   ];
+
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
@@ -80,25 +87,24 @@ const Edit = () => {
             >
               <div className="flex justify-between items-center w-full gap-3 p-6">
                 <CustomInput
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   label="Remark"
                   type="text"
-                  value={formData.Remark}
-                  name="Remark"
-                  placeholder={aadhar}
+                  value={formData.remarks}
+                  name="remarks"
                 />
+
                 <Select
                   label="Status"
                   options={[
                     { label: "Select Status", value: "No Status Selected" },
                     { label: "Rejected", value: "Rejected" },
-                    { label: "Compeleted", value: "Compeleted" },
+                    { label: "Completed", value: "Completed" },
                   ]}
-                  name="SelectedParent"
+                  name="status"
                   className="inputField select"
-                  type="text"
-                  value={formData.SelectedParent}
-                  onChange={handleChange}
+                  value={formData.status}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="p-3">
@@ -106,7 +112,7 @@ const Edit = () => {
                   className="Submit-button whitespace-nowrap bg-green-600"
                   type="submit"
                 >
-                  <i class="ri-save-fill"> </i>
+                  <i className="ri-save-fill"> </i>
                   Submit
                 </button>
               </div>

@@ -157,6 +157,7 @@ const AdminReport = () => {
                               </span>
                               <h3 className="status border-b-2">
                                 Admin Remark
+                                <span>{item.remarks}</span>
                               </h3>
                               <h3 className="status border-b-2">
                                 Created On:
@@ -170,22 +171,20 @@ const AdminReport = () => {
                                 <h3 className="status">Action</h3>
                                 <div className="px-6 py-4 border flex items-center justify-between gap-3">
                                   <Link
-                                    to={`/user-edit?aadhar=${item.AadhaarNo}`}
+                                    to={`/user-edit?entrytype=M&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
                                     className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                                   >
                                     <i className="ri-edit-box-line text-white"></i>
                                   </Link>
+
                                   <Link
-                                    to={`/user-finger?finger=${item.FingerPrint}`}
+                                    to={`/user-finger?aadhar=${item.AadhaarNo}`}
                                     className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                                   >
                                     <i className="ri-fingerprint-fill text-white"></i>
                                   </Link>
                                   <Link
-                                    to={{
-                                      pathname: `/edit-view`,
-                                      state: { userData: item }, // Pass the user data as props
-                                    }}
+                                    to={`/edit-view?`}
                                     className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                                   >
                                     <i className="ri-eye-line text-white"></i>

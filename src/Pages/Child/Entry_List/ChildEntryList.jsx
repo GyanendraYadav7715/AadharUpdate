@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import { Local_Url } from "../../../constant/constant";
@@ -8,14 +9,8 @@ import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
- 
-import FingerData from "./Auth/FingerData";
-import ViewFingerAndUpdate from "./View/ViewFingerAndUpdate";
-import DeleteData from "./Delete/DeleteData";
-import Upload from "./Upload/Upload";
-import Action from "./Action/Action";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
-//import { toast } from "react-toastify";
+ 
 
 function ChildEntryList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -147,10 +142,10 @@ function ChildEntryList() {
                           <div className="dropdown-content bg-white">
                             <div className="dropdown-title">
                               <h3 className="status border-b-2 border-t-2">
-                                Purpose & Status
+                                Purpose & Status: <span>{item.status}</span>
                               </h3>
                               <h3 className="status border-b-2">
-                                Admin Remark
+                                Admin Remark: <span>{item.remarks}</span>
                               </h3>
                               <h3 className="status border-b-2">
                                 Created On:
@@ -160,12 +155,16 @@ function ChildEntryList() {
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              <div className="Action-container border-b-2">
-                                <Action />
-                                <FingerData />
-                                <ViewFingerAndUpdate />
-                                <DeleteData />
-                                <Upload />
+                              <div className=" flex items-center justify-center gap-3 border-b-2">
+                                <h3 className="status">Action</h3>
+                                <div className="px-6 py-4 flex items-center justify-between gap-3">
+                                  <Link
+                                    to={`/user-edit?entrytype=C&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
+                                    className="font-medium text-blue-600 no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-md"
+                                  >
+                                    <i className="ri-edit-box-line text-white"></i>
+                                  </Link>
+                                </div>
                               </div>
                             </div>
                           </div>

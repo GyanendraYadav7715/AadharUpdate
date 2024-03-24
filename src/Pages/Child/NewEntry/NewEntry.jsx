@@ -25,11 +25,11 @@ const ChlidEntry = () => {
     Proof: [{ POI: "", POB: "", POA: "" }],
     FingerPrint: [
       {
-        FingerPrint1: "",
-        FingerPrint2: "",
-        FingerPrint3: "",
-        FingerPrint4: "",
-        FingerPrint5: "",
+        FingerPrint1: "HH",
+        FingerPrint2: "HH",
+        FingerPrint3: "HH",
+        FingerPrint4: "HH",
+        FingerPrint5: "HH",
       },
     ],
   });

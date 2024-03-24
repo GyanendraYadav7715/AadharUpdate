@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 import { Local_Url } from "../../../constant/constant";
 import axios from "axios";
 import "../Person-List/list.css";
-//import Slip from "../../../Components/Slip/Slip";
+import { Link } from "react-router-dom";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
@@ -160,7 +160,7 @@ function List() {
                           <div className="dropdown-content">
                             <div className="dropdown-title">
                               <h3 className="status border-b-2 m-1">
-                                Admin Remark
+                                Admin Remark: <span>{item.remarks}</span>
                               </h3>
                               <h3 className="status border-b-2 m-1">
                                 Applied on
@@ -174,6 +174,18 @@ function List() {
                                   {item.status}
                                 </span>
                               </h3>
+                              <div className=" flex items-center justify-center gap-3 border-b-2">
+                                <h3 className="status">Action</h3>
+                                <div className="px-6 py-4 flex items-center justify-between gap-3">
+                                  <Link
+                                    to={`/user-edit?entrytype=D&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
+                                    className="font-medium text-blue-600 no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-md"
+                                  >
+                                    <i className="ri-edit-box-line text-white"></i>
+                                  </Link>
+                                  
+                                </div>
+                              </div>
 
                               <div className="Action-container gap-1 ml-1">
                                 <Action />
