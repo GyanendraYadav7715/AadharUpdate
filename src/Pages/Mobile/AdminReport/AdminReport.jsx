@@ -10,16 +10,16 @@ import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Upload from "../../../Components/ActionServices/Upload";
 import { Local_Url } from "../../../constant/constant";
- 
+
 const AdminReport = () => {
   const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-   const [filteredProducts, setFilteredProducts] = useState([]);
-   const [data, setData] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [data, setData] = useState([]);
   const userData = JSON.parse(localStorage.getItem("user"));
   let role = userData.User_type;
   let userName = userData.Username;
-  
+
   const title = "Mobile Update-Report";
   const links =
     role === "Admin"
@@ -33,21 +33,21 @@ const AdminReport = () => {
         ];
   const tableRef = useRef(null);
 
-   useEffect(() => {
-     const apiUrl = `${Local_Url}/api/v1/admin/mAllAdminData`;
+  useEffect(() => {
+    const apiUrl = `${Local_Url}/api/v1/admin/mAllAdminData`;
 
-     axios
-       .get(apiUrl, { params: { userName: userName } })
-       .then((response) => {
-         console.log(response.data);
+    axios
+      .get(apiUrl, { params: { userName: userName } })
+      .then((response) => {
+        console.log(response.data);
 
-         setData(response.data.data);
-         setFilteredProducts(response.data.data);
-       })
-       .catch((err) => {
-         console.log("Something Went Wrong");
-       });
-   }, []);
+        setData(response.data.data);
+        setFilteredProducts(response.data.data);
+      })
+      .catch((err) => {
+        console.log("Something Went Wrong");
+      });
+  }, []);
   const handleUploadButtonClick = () => {
     setShowUploadPopup(true);
   };
@@ -65,16 +65,16 @@ const AdminReport = () => {
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
-   const handleSearch = (query) => {
-     setSearchQuery(query);
-     const filtered = data.filter((product) =>
-       Object.values(product)
-         .join(" ")
-         .toLowerCase()
-         .includes(query.toLowerCase())
-     );
-     setFilteredProducts(filtered);
-   };
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    const filtered = data.filter((product) =>
+      Object.values(product)
+        .join(" ")
+        .toLowerCase()
+        .includes(query.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
 
   return (
     <>
@@ -96,6 +96,8 @@ const AdminReport = () => {
               <tr>
                 <th>S.NO.</th>
                 <th>Applied By</th>
+                <th>Aadhaar Card Details</th>
+                <th>Purpose</th>
               </tr>
             </thead>
             <tbody>
@@ -119,34 +121,44 @@ const AdminReport = () => {
                         </div>
                       </td>
                       <td>{item.AppliedBy}</td>
+                      <td>
+                        <div className="text-left">
+                          <span className="span">Name: {item.Name}</span>
+                          <br />
+                          <span className="span">
+                            Father Name: {item.ParentName}
+                          </span>
+                          <br />
+                          <span className="span">
+                            Aadhaar No: {item.AadhaarNo}
+                          </span>
+                          <br />
+                          <span className="span">
+                            Mobile No: {item.MobileNo}
+                          </span>
+                          <br />
+                          <span className="span">E-mail: {item.Email}</span>
+                          <br />
+                          <span className="span">Address: {item.Address}</span>
+                        </div>
+                      </td>
+                      <td></td>
                     </tr>
                     {selectedRow === index && (
                       <tr>
-                        <td colSpan="6">
+                        <td colSpan="4">
                           <div className="dropdown-content">
                             <div className="dropdown-title">
-                              <h3 className="status">Aadhaar Card Details:</h3>
-
-                              <span className="span">Name: {item.Name}</span>
-                              <span className="span">
-                                Father Name: {item.ParentName}
-                              </span>
-                              <span className="span">
-                                Aadhaar No: {item.Parent_AadhaarNo}
-                              </span>
-                              <span className="span">
-                                Mobile No: {item.MobileNo}
-                              </span>
-                              <span className="span">E-mail: {item.Email}</span>
-                              <span className="span">
-                                Address: {item.Address}
-                              </span>
-                              <h3 className="status">Purpose & Status</h3>
+                              <h3 className="status border-b-2 border-t-2">
+                                Status
+                              </h3>
                               <span className="text-white font-semibold  bg-yellow-500 p-1 rounded-md">
                                 {item.status}
                               </span>
-                              <h3 className="status">Admin Remark</h3>
-                              <h3 className="status">
+                              <h3 className="status border-b-2">
+                                Admin Remark
+                              </h3>
+                              <h3 className="status border-b-2">
                                 Created On:
                                 <span
                                   style={{ color: "blue", fontSize: "15px" }}
@@ -154,17 +166,17 @@ const AdminReport = () => {
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              <div className=" flex items-center justify-center gap-3">
+                              <div className=" flex items-center justify-center gap-3 border-b-2">
                                 <h3 className="status">Action</h3>
                                 <div className="px-6 py-4 border flex items-center justify-between gap-3">
                                   <Link
-                                    to="/user-edit"
+                                    to={`/user-edit?aadhar=${item.AadhaarNo}`}
                                     className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                                   >
                                     <i className="ri-edit-box-line text-white"></i>
                                   </Link>
                                   <Link
-                                    to="/user-finger"
+                                    to={`/user-finger?aadhar=${item.FingerPrint}`}
                                     className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                                   >
                                     <i className="ri-fingerprint-fill text-white"></i>
@@ -190,7 +202,7 @@ const AdminReport = () => {
                                 </div>
                               </div>
 
-                              {/* <div className="Action-container">
+                              {/* <div className="Action-container border-b-2">
                                   <Action />
                                   <FingerData />
                                   <ViewFingerAndUpdate />

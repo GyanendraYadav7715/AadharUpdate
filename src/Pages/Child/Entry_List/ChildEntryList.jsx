@@ -94,6 +94,7 @@ function ChildEntryList() {
               <tr>
                 <th>S.NO.</th>
                 <th>Applied By</th>
+                <th>Aadhaar Card Details</th>
               </tr>
             </thead>
             <tbody>
@@ -116,32 +117,42 @@ function ChildEntryList() {
                           {index + 1}
                         </div>
                       </td>
-                      <td>{userName}</td>
+                      <td>{item.AppliedBy}</td>
+                      <td>
+                        <div className="text-left">
+                          <span className="span">Name: {item.Name}</span>
+                          <br />
+                          <span className="span">
+                            Father Name: {item.ParentName}
+                          </span>
+                          <br />
+                          <span className="span">
+                            Aadhaar No: {item.Parent_AadhaarNo}
+                          </span>
+                          <br />
+                          <span className="span">
+                            Mobile No: {item.MobileNo}
+                          </span>
+                          <br />
+                          <span className="span">E-mail: {item.Email}</span>
+                          <br />
+                          <span className="span">Address: {item.Address}</span>
+                        </div>
+                      </td>
+                      <td>{}</td>
                     </tr>
                     {selectedRow === index && (
                       <tr>
-                        <td colSpan="2">
-                          <div className="dropdown-content">
+                        <td colSpan="3">
+                          <div className="dropdown-content bg-white">
                             <div className="dropdown-title">
-                              <h3 className="status">Aadhaar Card Details:</h3>
-                              <Slip item={item} />
-                              <span className="span">Name: {item.Name}</span>
-                              <span className="span">
-                                Father Name: {item.ParentName}
-                              </span>
-                              <span className="span">
-                                Aadhaar No: {item.Parent_AadhaarNo}
-                              </span>
-                              <span className="span">
-                                Mobile No: {item.MobileNo}
-                              </span>
-                              <span className="span">E-mail: {item.Email}</span>
-                              <span className="span">
-                                Address: {item.Address}
-                              </span>
-                              <h3 className="status">Purpose & Status</h3>
-                              <h3 className="status">Admin Remark</h3>
-                              <h3 className="status">
+                              <h3 className="status border-b-2 border-t-2">
+                                Purpose & Status
+                              </h3>
+                              <h3 className="status border-b-2">
+                                Admin Remark
+                              </h3>
+                              <h3 className="status border-b-2">
                                 Created On:
                                 <span
                                   style={{ color: "blue", fontSize: "15px" }}
@@ -149,7 +160,7 @@ function ChildEntryList() {
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              <div className="Action-container">
+                              <div className="Action-container border-b-2">
                                 <Action />
                                 <FingerData />
                                 <ViewFingerAndUpdate />

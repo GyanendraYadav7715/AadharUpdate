@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
-
 import { Local_Url } from "../../../constant/constant";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
@@ -9,7 +8,6 @@ import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ConfirmationDialog from "../../../Components/ConfirmationDialog/ConfirmationDialog";
@@ -17,10 +15,12 @@ import ConfirmationDialog from "../../../Components/ConfirmationDialog/Confirmat
 const ViewUser = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-   const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
   const [users, setUsers] = useState([]);
   const tableRef = useRef(null);
 
+
+  //geting dtat from api
   useEffect(() => {
     fetchData();
   }, []);
@@ -37,6 +37,7 @@ const ViewUser = () => {
     }
   };
 
+  //handle the serach
   const handleSearch = (query) => {
     setSearchQuery(query);
     const filtered = users.filter((user) =>
@@ -44,7 +45,8 @@ const ViewUser = () => {
     );
     setFilteredUsers(filtered);
   };
-
+  
+  //For deteting the user 
   const deleteUser = async (deluser) => {
     toast.info(
       <ConfirmationDialog
@@ -154,32 +156,40 @@ const ViewUser = () => {
                     </tr>
                     {selectedRow === index && (
                       <tr>
-                        <td colSpan="6" style={{ backgroundColor: "white" }}>
+                        <td colSpan="9" style={{ backgroundColor: "white" }}>
                           <div className="dropdown-content">
                             <div className="dropdown-title">
-                              <h3 className="status">
-                                Status
+                              {/* Status Handaler in the Dropdown */}
+                              <h3 className="status border-b-2 border-t-2 flex items-center  gap-3">
+                                <span className="font-bold text-lg">
+                                  Status
+                                </span>
                                 <span
-                                  style={{
-                                    color: "blue",
-                                    fontSize: "15px",
-                                  }}
+                                  className="text-white hover:bg-[#77b652] border-1 bg-[#88d05e] px-2 py-1  rounded-sm "
+                                  style={{ fontsize: "15px" }}
                                 >
                                   {user.isUserblocked ? "Inactive" : "Active"}
                                 </span>
                               </h3>
-                              <h3 className="status">Action</h3>
-                              <div className="px-6 py-4 gap-2 flex users-center justify-between">
-                                <Link className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md">
-                                  <i className="ri-refresh-line text-white"></i>
-                                </Link>
-                                <button
-                                  onClick={() => deleteUser(user.Username)}
-                                  className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 hover:bg-red-800 hover: px-3 py-3 rounded-md"
-                                >
-                                  <i className="ri-delete-bin-line text-white"></i>
-                                </button>
-                              </div>
+
+                              {/* Action manegement in the dropdown */}
+                              <h3 className="status font-bold text-lg flex justify-center items-center  border-b-2 ">
+                                Action
+                                <div className="px-6 py-4 gap-2 flex users-center justify-between">
+                                  <button
+                                    className="font-medium  no-underline  border-1 hover:bg-[#77b652] border-1 bg-[#88d05e] px-3 py-2 rounded-sm"
+                                    onClick={() => resetUser(user.Username)}
+                                  >
+                                    <i className="ri-refresh-line text-white"></i>
+                                  </button>
+                                  <button
+                                    onClick={() => deleteUser(user.Username)}
+                                    className="font-medium  no-underline   hover:bg-[#d45469] border-1 bg-[#f5627a] px-3 py-2 rounded-sm"
+                                  >
+                                    <i className="ri-delete-bin-line text-white"></i>
+                                  </button>
+                                </div>
+                              </h3>
                             </div>
                           </div>
                         </td>

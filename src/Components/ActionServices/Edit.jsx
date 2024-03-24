@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Local_Url } from "../../constant/constant";
 import Breadcrumb from "../BreadCrumb/Breadcrumb";
 import { Select } from "../Selection/Select";
-import {CustomInput} from "../CustomeInput/CustomInput";
+import { CustomInput } from "../CustomeInput/CustomInput";
 const Edit = () => {
   const [formData, setFormData] = useState({
     Remark: "",
@@ -11,7 +12,17 @@ const Edit = () => {
     User_type: "",
   });
 
-  const {Remark,Status } = formData;
+   const location = useLocation();
+   const [aadhar, setAadhar] = useState("");
+
+   useEffect(() => {
+     const searchParams = new URLSearchParams(location.search);
+     const aadharParam = searchParams.get("aadhar");
+     if (aadharParam) {
+       setAadhar(aadharParam);
+     }
+   }, [location.search]);
+  const { Remark, Status } = formData;
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -31,16 +42,14 @@ const Edit = () => {
 
     try {
       const apiUrl = `${Local_Url} `;
-       
-        await axios.post(apiUrl, formData);
 
-    
+      await axios.post(apiUrl, formData);
+
       setFormData({
         Username: "",
         amount: "",
       });
     } catch (error) {
-       
       console.error("Error:", error.message);
       alert("Something went worng");
     }
@@ -76,7 +85,7 @@ const Edit = () => {
                   type="text"
                   value={formData.Remark}
                   name="Remark"
-                  placeholder=""
+                  placeholder={aadhar}
                 />
                 <Select
                   label="Status"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
-import Banner from "../../Components/Banner";
+import Banner from "../../Components/Banner/Banner";
 import axios from "axios";
 import { Local_Url } from "../../constant/constant";
 

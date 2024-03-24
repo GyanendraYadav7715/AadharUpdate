@@ -10,20 +10,22 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  // State variables
   const [formData, setFormData] = useState({
     Username: "",
     Password: "",
     User_type: "",
   });
-
   const [showPassword, setShowPassword] = useState(false);
 
+  // Handle input change
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-    // console.log(`Handling input for ${name}: ${value}`);
   }, []);
 
+  // Handle login form submission
   const handleLogin = useCallback(
     async (e) => {
       e.preventDefault();
@@ -57,6 +59,7 @@ const Login = () => {
     [formData, navigate]
   );
 
+  // Toggle password visibility
   const toggleShowPassword = useCallback(() => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   }, []);
@@ -70,6 +73,7 @@ const Login = () => {
           alt="Logo"
         />
         <form onSubmit={handleLogin} id="myForm">
+          {/* Username Input */}
           <div className="relative">
             <label htmlFor="user" className="mb-[1vh]">
               Username
@@ -89,6 +93,7 @@ const Login = () => {
             </div>
           </div>
 
+          {/* Password Input */}
           <div className="relative">
             <label htmlFor="password" className="mb-[1vh]">
               Password
@@ -111,6 +116,7 @@ const Login = () => {
             </div>
           </div>
 
+          {/* Role Selection */}
           <label htmlFor="role" className="mb-[1vh]">
             Role
           </label>
@@ -128,6 +134,7 @@ const Login = () => {
             <option value="BackOffice">Back Office</option>
           </select>
 
+          {/* Login and Forgot Password Buttons */}
           <div className="flex justify-between items-center gap-2 mt-2 border-b border-gray-500 pb-[2vh]">
             <Link
               to="/forget"
@@ -141,7 +148,8 @@ const Login = () => {
           </div>
         </form>
 
-        <p className="bg-blue-500 flex items-center justify-center   text-white p-3 mt-[5vh] w-[90%] text-center rounded-lg text-lg    tracking-wide">
+        {/* Copyright */}
+        <p className="bg-blue-500 flex items-center justify-center text-white p-3 mt-[5vh] w-[90%] text-center rounded-lg text-lg tracking-wide">
           Copyright
           <FaRegCopyright /> 2022 newupdateseva
         </p>
