@@ -1,7 +1,9 @@
 import React from "react";
 import Breadcrumb from "../BreadCrumb/Breadcrumb";
 import{ CustomInput2} from "../CustomeInput/CustomInput";
-const EditView = () => {
+const EditView = (props) => {
+  const { userData } = props.location.state;
+  console.log(userData);
   const title = "Edit Customer";
   const links = [
     { title: "Home", href: "/backoffice" },
@@ -24,13 +26,13 @@ const EditView = () => {
     link.click();
     document.body.removeChild(link);
   };
-   const images = [
-     "https://via.placeholder.com/150",
-     "https://via.placeholder.com/150",
-     "https://via.placeholder.com/150",
-     "https://via.placeholder.com/150",
-     "https://via.placeholder.com/150",
-   ];
+  const images = [
+    "https://via.placeholder.com/150",
+    "https://via.placeholder.com/150",
+    "https://via.placeholder.com/150",
+    "https://via.placeholder.com/150",
+    "https://via.placeholder.com/150",
+  ];
 
   return (
     <>
@@ -70,20 +72,20 @@ const EditView = () => {
                 label="Full Name"
                 type="text"
                 name="Name"
-                placeholder="Enter Name"
+                placeholder={userData.Name}
                 disabled
               />
               <CustomInput2
                 label="Father Name"
                 type="text"
                 name="FatherName"
-                placeholder="Father Name"
+                placeholder={userData.FatherName}
               />
               <CustomInput2
                 label="Date of Birth"
                 type="date"
                 name="DOB"
-                placeholder=""
+                placeholder={userData.DOA}
               />
               <CustomInput2
                 label="Purpose"
@@ -97,7 +99,7 @@ const EditView = () => {
                 label="Aadhaar No."
                 type="tel"
                 name="AadhaarNo"
-                placeholder="Aadhaar No."
+                placeholder={userData.AadhaarNo}
                 maxLength={12}
               />
 
@@ -105,14 +107,14 @@ const EditView = () => {
                 label="Mobile No."
                 type="tel"
                 name="MobileNo"
-                placeholder="Mobile No."
+                placeholder={userData.MobileNo}
                 maxLength={10}
               />
               <CustomInput2
                 label="E-mail ID"
                 type="email"
                 name="Email"
-                placeholder="example@update.com"
+                placeholder={userData.Email}
               />
             </div>
 

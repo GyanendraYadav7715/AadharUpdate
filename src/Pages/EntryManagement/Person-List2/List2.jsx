@@ -10,6 +10,11 @@ import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
+import DeleteData from "../../Child/Entry_List/Delete/DeleteData";
+import Upload from "../../Child/Entry_List/Upload/Upload";
+import Action from "../../Child/Entry_List/Action/Action";
+import FingerData from "../../Child/Entry_List/Auth/FingerData";
+import ViewFingerAndUpdate from "../../Child/Entry_List/View/ViewFingerAndUpdate";
 
 function List() {
   //api data fetch
@@ -154,22 +159,28 @@ function List() {
                         <td colSpan="6">
                           <div className="dropdown-content">
                             <div className="dropdown-title">
-                              <h3 className="status">Admin Remark</h3>
-                              <span className="span">{item.Purpose}</span>
-                              <h3 className="status ">
-                                Created On:
-                                <span className="text-blue-600 ">
+                              <h3 className="status border-b-2 m-1">
+                                Admin Remark
+                              </h3>
+                              <h3 className="status border-b-2 m-1">
+                                Applied on
+                                <span className="text-md font-medium ml-2 ">
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              <h3 className="status">Status</h3>
-                              <span className="span">{item.status}</span>
-                              <div className="Action-container">
-                                {/* <Action />
+                              <h3 className="status border-b-2 m-1 ">
+                                Status
+                                <span className="bg-yellow-400 px-2 py-1 text-white ml-5 rounded-sm ">
+                                  {item.status}
+                                </span>
+                              </h3>
+
+                              <div className="Action-container gap-1 ml-1">
+                                <Action />
                                 <FingerData />
                                 <ViewFingerAndUpdate />
                                 <DeleteData />
-                                <Upload /> */}
+                                <Upload />
                               </div>
                             </div>
                           </div>

@@ -8,7 +8,7 @@ import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import Slip from "../../../Components/Slip/Slip";
+ 
 import FingerData from "./Auth/FingerData";
 import ViewFingerAndUpdate from "./View/ViewFingerAndUpdate";
 import DeleteData from "./Delete/DeleteData";

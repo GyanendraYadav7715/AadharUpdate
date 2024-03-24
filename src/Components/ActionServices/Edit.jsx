@@ -98,7 +98,7 @@ const Edit = () => {
                   className="inputField select"
                   type="text"
                   value={formData.SelectedParent}
-                  onChange={(e) => handleChange(SelectedParent, e.target.value)}
+                  onChange={handleChange}
                 />
               </div>
               <div className="p-3">

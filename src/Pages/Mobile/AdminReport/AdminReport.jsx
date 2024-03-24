@@ -39,7 +39,7 @@ const AdminReport = () => {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.data);
 
         setData(response.data.data);
         setFilteredProducts(response.data.data);
@@ -176,13 +176,16 @@ const AdminReport = () => {
                                     <i className="ri-edit-box-line text-white"></i>
                                   </Link>
                                   <Link
-                                    to={`/user-finger?aadhar=${item.FingerPrint}`}
+                                    to={`/user-finger?finger=${item.FingerPrint}`}
                                     className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                                   >
                                     <i className="ri-fingerprint-fill text-white"></i>
                                   </Link>
                                   <Link
-                                    to="/edit-view"
+                                    to={{
+                                      pathname: `/edit-view`,
+                                      state: { userData: item }, // Pass the user data as props
+                                    }}
                                     className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
                                   >
                                     <i className="ri-eye-line text-white"></i>
@@ -203,7 +206,7 @@ const AdminReport = () => {
                               </div>
 
                               {/* <div className="Action-container border-b-2">
-                                  <Action />
+                                  <Action/>
                                   <FingerData />
                                   <ViewFingerAndUpdate />
                                   <DeleteData />
