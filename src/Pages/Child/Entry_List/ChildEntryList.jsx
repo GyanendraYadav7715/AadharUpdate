@@ -141,18 +141,22 @@ function ChildEntryList() {
                         <td colSpan="3">
                           <div className="dropdown-content bg-white">
                             <div className="dropdown-title">
-                              <h3 className="status border-b-2 border-t-2">
-                                Purpose & Status: <span>{item.status}</span>
-                              </h3>
                               <h3 className="status border-b-2">
-                                Admin Remark: <span>{item.remarks}</span>
+                                Admin Remark:{" "}
+                                <span className="text-red-500 capitalize">
+                                  {item.remarks}
+                                </span>
                               </h3>
-                              <h3 className="status border-b-2">
-                                Created On:
-                                <span
-                                  style={{ color: "blue", fontSize: "15px" }}
-                                >
+                              <h3 className="status border-b-2 m-1">
+                                Applied on
+                                <span className="text-md font-medium ml-2 text-indigo-500 ">
                                   {item.createdOn}
+                                </span>
+                              </h3>
+                              <h3 className="status border-b-2 m-1 ">
+                                Status
+                                <span className="bg-yellow-400 px-2 py-1 text-white ml-5 rounded-sm ">
+                                  {item.status}
                                 </span>
                               </h3>
                               <div className=" flex items-center justify-center  border-b-2">
@@ -196,12 +200,14 @@ function ChildEntryList() {
                                   >
                                     <i className="ri-eye-line text-white"></i>
                                   </Link>
-                                  <Link
-                                    to="#"
-                                    className="font-medium text-white no-underline  border-1 bg-[#f4516c] hover:bg-[#cb4c61] px-3 py-2 rounded-sm"
-                                  >
-                                    <i className="ri-delete-bin-line text-white"></i>
-                                  </Link>
+                                  {role === "BackOffice" ? null : (
+                                    <Link
+                                      to="#"
+                                      className="font-medium   no-underline   border-1 bg-[#f4516c] hover:bg-[#cb4c61] px-3 py-2 rounded-sm"
+                                    >
+                                      <i className="ri-delete-bin-line text-white"></i>
+                                    </Link>
+                                  )}
                                   <Link
                                     to={`/Upload?entrytype=C&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
                                     className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
