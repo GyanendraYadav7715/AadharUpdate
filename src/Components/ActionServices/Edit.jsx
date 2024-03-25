@@ -66,17 +66,9 @@ const Edit = () => {
     { title: "Edit Customer Status" },
   ];
 
-  const mylinks = [
-    {
-      to: "/viewuser",
-      text: "View Customer",
-      icon: "ri-team-line text-white text-2xl",
-    },
-  ];
-
   return (
     <>
-      <Breadcrumb title={title} links={links} mylinks={mylinks} />
+      <Breadcrumb title={title} links={links} />
       <div className="p-3 sm:ml-64 bg-gray-100">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <div className="grid grid-cols-1 gap-4 mb-4 ">
