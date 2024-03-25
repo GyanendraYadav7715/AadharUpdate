@@ -92,13 +92,13 @@ const PersonEntry = () => {
         Address: "",
         Proof: [{ POI: "" }, { POB: "" }, { POA: "" }],
         FingerPrint: [
-          { FingerPrint1: "KJ" },
-          { FingerPrint2: "KJ" },
-          { FingerPrint3: "LJ" },
-          { FingerPrint4: "KJ" },
-          { FingerPrint5: "KJ" },
+          { FingerPrint1: "" },
+          { FingerPrint2: "" },
+          { FingerPrint3: "" },
+          { FingerPrint4: "" },
+          { FingerPrint5: "" },
         ],
-      });
+      })
     } catch (error) {
       // Show error message
       toast.error(error.response.data.message);
