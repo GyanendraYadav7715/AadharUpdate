@@ -1,13 +1,26 @@
 import React from "react";
 import Breadcrumb from "../BreadCrumb/Breadcrumb";
-import { CustomInput2 } from "../CustomeInput/CustomInput";
 import { useLocation } from "react-router-dom";
+import { CustomInput2 } from "../CustomeInput/CustomInput";
 const EditView = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const name = searchParams.get("name");
+  const fname = searchParams.get("fname");
+  const dob = searchParams.get("dob");
+  const aadhar = searchParams.get("aadhar");
+  const mobile = searchParams.get("mobile");
+  const email = searchParams.get("email");
+  const FingerPrint1 = searchParams.get("FingerPrint1");
+  const FingerPrint2 = searchParams.get("FingerPrint2");
+  const FingerPrint3 = searchParams.get("FingerPrint3");
+  const FingerPrint4 = searchParams.get("FingerPrint4");
+  const FingerPrint5 = searchParams.get("FingerPrint5");
+  const purpose = searchParams.get("purpose");
+  const POI = searchParams.get("POI")
+  const POA = searchParams.get("POA");
+    const POB = searchParams.get("POB");
 
-   const location = useLocation();
-   const searchParams = new URLSearchParams(location.search);
-   
- 
   const title = "Edit Customer";
   const links = [
     { title: "Home", href: "/backoffice" },
@@ -22,20 +35,21 @@ const EditView = () => {
     },
   ];
   const downloadPDF = (url, color) => {
-    // Create a temporary anchor element
+    //Create a temporary anchor element
     const link = document.createElement("a");
     link.href = url;
     link.download = `document_${color}.pdf`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    
   };
   const images = [
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
+    FingerPrint1,
+    FingerPrint2,
+    FingerPrint3,
+    FingerPrint4,
+    FingerPrint5,
   ];
 
   return (
@@ -45,10 +59,10 @@ const EditView = () => {
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <div className="grid grid-cols-1 gap-4 mb-4 ">
             <h3 className="text-2xl font-semibold">Edit Customer</h3>
-            <div className="flex justify-start gap-3 mt-3">
+            <div className="flex justify-start gap-3 mt-3 ml-8">
               <button
                 onClick={() =>
-                  downloadPDF("https://example.com/green.pdf", "green")
+                  downloadPDF( POI, "green")
                 }
                 className="px-5 py-2 border border-green-400 bg-green-500 hover:bg-green-600 text-white rounded-md hover:duration-150"
               >
@@ -56,7 +70,7 @@ const EditView = () => {
               </button>
               <button
                 onClick={() =>
-                  downloadPDF("https://example.com/blue.pdf", "blue")
+                  downloadPDF( POA, "blue")
                 }
                 className="px-5 py-2 border border-blue-400 bg-blue-500 hover:bg-blue-600 text-white rounded-md hover:duration-150"
               >
@@ -64,7 +78,7 @@ const EditView = () => {
               </button>
               <button
                 onClick={() =>
-                  downloadPDF("https://example.com/pink.pdf", "pink")
+                  downloadPDF( POB, "pink")
                 }
                 className="px-5 py-2 border border-pink-400 bg-pink-500 hover:bg-pink-600 text-white rounded-md hover:duration-150"
               >
@@ -76,26 +90,29 @@ const EditView = () => {
                 label="Full Name"
                 type="text"
                 name="Name"
-                placeholder={userData.Name}
+                placeholder={name}
                 disabled
               />
               <CustomInput2
                 label="Father Name"
                 type="text"
                 name="FatherName"
-                placeholder={userData.FatherName}
+                placeholder={fname}
+                disabled
               />
               <CustomInput2
                 label="Date of Birth"
-                type="date"
+                type="text"
                 name="DOB"
-                placeholder={userData.DOA}
+                placeholder={dob}
+                disabled
               />
               <CustomInput2
                 label="Purpose"
                 type="text"
                 name="Purpose"
-                placeholder="Enter Purpose"
+                placeholder={purpose}
+                disabled
               />
               <div></div>
               <div></div>
@@ -103,26 +120,26 @@ const EditView = () => {
                 label="Aadhaar No."
                 type="tel"
                 name="AadhaarNo"
-                placeholder={userData.AadhaarNo}
-                maxLength={12}
+                placeholder={aadhar}
+                disabled
               />
 
               <CustomInput2
                 label="Mobile No."
-                type="tel"
+                type="text"
                 name="MobileNo"
-                placeholder={userData.MobileNo}
-                maxLength={10}
+                placeholder={mobile}
+                disabled
               />
               <CustomInput2
                 label="E-mail ID"
                 type="email"
                 name="Email"
-                placeholder={userData.Email}
+                placeholder={email}
               />
             </div>
 
-            <div className="container grid grid-cols-5">
+            <div className="container grid grid-cols-5 px-5">
               {images.map((imageUrl, index) => (
                 <img
                   key={index}

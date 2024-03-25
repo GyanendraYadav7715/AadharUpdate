@@ -1,26 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
 import "./Slip.css";
 
-function Slip() {
+function Slip({ fileUrl }) {
+  const handleDownload = () => {
+    // Implement download logic here
+    window.open(fileUrl, "_blank");
+  };
+
   return (
     <>
       <div id="Reciept">
-        <button id="Original" className="button">
+        <button id="Original" className="button" onClick={handleDownload}>
           Original Slip
         </button>
-        <button className="Progress button">In Progress</button>
       </div>
       <div>
         <div className="AckSlip">
-          <button className="Ackslip button">Ack Slip</button>
-        </div>
-
-        <div className="Action">
-          <h4 className="Action-text">Action</h4>
-          <Link to="/edit-customer" className="button">
-            <i className="ri-edit-2-fill pencil"></i>
-          </Link>
+          <button className="Ackslip button p-3 whitespace-nowrap" onClick={handleDownload}>
+            Ack Slip
+          </button>
         </div>
       </div>
     </>

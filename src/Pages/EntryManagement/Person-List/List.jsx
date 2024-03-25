@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Table from "react-bootstrap/Table";
+import { Link } from "react-router-dom";
 import { Local_Url } from "../../../constant/constant";
 import axios from "axios";
 import "./list.css";
@@ -59,6 +60,8 @@ function List() {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
+
+
         console.log(response.data);
 
         setData(response.data.data);
@@ -170,8 +173,21 @@ function List() {
                                     {item.createdOn}
                                   </span>
                                 </h3>
-                                <h3 className="status">Status</h3>
-                                <Slip  />
+                                <div className="flex items-center">
+                                  <h3 className="status flex items-center">
+                                    Status:
+                                    <button className="Progress button">
+                                      {item.status}
+                                    </button>
+                                  </h3>
+                                  <Slip fileUrl={item.oSlip} />
+                                </div>
+                                <div className="Action">
+                                  <h4 className="Action-text">Action</h4>
+                                  <Link to="/edit-customer" className="button">
+                                    <i className="ri-edit-2-fill pencil"></i>
+                                  </Link>
+                                </div>
                               </div>
                             </div>
                           </td>

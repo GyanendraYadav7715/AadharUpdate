@@ -55,6 +55,7 @@ import Edit from "./Components/ActionServices/Edit";
 import Finger from "./Components/ActionServices/Finger";
 import EditView from "./Components/ActionServices/EditView";
 import EditCustomer from "./Pages/EditCustomer/EditCustomer";
+import Upload from "./Components/ActionServices/Upload";
 
 const App = () => {
   return (
@@ -68,7 +69,7 @@ const App = () => {
 function Layout() {
   let location = useLocation();
 
-  const hideLayout = ["/", "/forget", "/user-finger"].includes(
+  const hideLayout = ["/", "/forget", "/user-finger", "/Upload"].includes(
     location.pathname
   );
 
@@ -124,6 +125,7 @@ function Layout() {
           <Route path="/user-finger" element={<Finger />} />
           <Route path="/edit-view" element={<EditView />} />
           <Route path="/edit-customer" element={<EditCustomer />} />
+          <Route path="/Upload" element={<Upload />} />
         </Route>
         {/* --------------------------------PROTECTED ROUTES ----------------------------------------------- */}
       </Routes>

@@ -176,24 +176,63 @@ function List() {
                               </h3>
                               <div className=" flex items-center justify-center gap-3 border-b-2">
                                 <h3 className="status">Action</h3>
-                                <div className="px-6 py-4 flex items-center justify-between gap-3">
+                                <div className="px-6 py-4 flex items-center justify-between gap-1">
                                   <Link
                                     to={`/user-edit?entrytype=D&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
-                                    className="font-medium text-blue-600 no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-md"
+                                    className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-edit-box-line text-white"></i>
                                   </Link>
-                                  
+                                  <Link
+                                    to={`/user-finger?aadhar=${item.AadhaarNo}`}
+                                    className="font-medium text-white no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
+                                  >
+                                    <i className="ri-fingerprint-fill text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to={`/edit-view?name=${item.Name}&fname=${
+                                      item.FatherName
+                                    }&dob=${item.DOB}&aadhar=${
+                                      item.AadhaarNo
+                                    }&mobile=${item.MobileNo}&email=${
+                                      item.Email
+                                    }&FingerPrint1=${
+                                      item.FingerPrint1
+                                    }&FingerPrint2=${
+                                      item.FingerPrint2
+                                    }&FingerPrint3=${
+                                      item.FingerPrint3
+                                    }&FingerPrint4=${
+                                      item.FingerPrint4
+                                    }&FingerPrint5=${
+                                      item.FingerPrint5
+                                    }&purpose=${
+                                      item.Purpose
+                                    }&POI=${encodeURIComponent(
+                                      item.POI
+                                    )}&POB=${encodeURIComponent(
+                                      item.POB
+                                    )}&POA=${encodeURIComponent(item.POA)}`}
+                                    className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
+                                  >
+                                    <i className="ri-eye-line text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to="#"
+                                    className="font-medium text-white no-underline  border-1 bg-[#f4516c] hover:bg-[#cb4c61] px-3 py-2 rounded-sm"
+                                  >
+                                    <i className="ri-delete-bin-line text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to={`/Upload?entrytype=D&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
+                                    className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
+                                  >
+                                    Upload
+                                  </Link>
                                 </div>
                               </div>
 
-                              <div className="Action-container gap-1 ml-1">
-                                <Action />
-                                <FingerData />
-                                <ViewFingerAndUpdate />
-                                <DeleteData />
-                                <Upload />
-                              </div>
+                               
                             </div>
                           </div>
                         </td>

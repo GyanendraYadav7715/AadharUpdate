@@ -37,6 +37,7 @@ function Protected() {
       "/user-finger",
       "/edit-view",
       "/edit-customer",
+      "/Upload",
     ],
     BackOffice: [
       "/backoffice",
@@ -46,6 +47,7 @@ function Protected() {
       "/user-edit",
       "/user-finger",
       "/edit-view",
+      "/Upload",
     ],
   };
 

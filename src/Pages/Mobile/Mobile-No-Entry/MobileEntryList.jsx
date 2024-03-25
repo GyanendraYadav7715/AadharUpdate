@@ -9,7 +9,7 @@ import { Local_Url } from "../../../constant/constant";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Slip from "../../../Components/Slip/Slip";
- 
+import { Link } from "react-router-dom"; 
 
 function ViewChildData() {
   const [data, setData] = useState([]);
@@ -143,10 +143,22 @@ function ViewChildData() {
                                 </span>
                               </h3>
 
-                              <h3 className="status">Status</h3>
+                              <div className="flex items-center">
+                                <h3 className="status flex items-center">
+                                  Status:
+                                  <button className="Progress button">
+                                    {item.status}
+                                  </button>
+                                </h3>
+                                <Slip fileUrl={item.oSlip} />
+                              </div>
+                              <div className="Action">
+                                <h4 className="Action-text">Action</h4>
+                                <Link to="/edit-customer" className="button">
+                                  <i className="ri-edit-2-fill pencil"></i>
+                                </Link>
+                              </div>
                             </div>
-
-                            <Slip/>
                           </div>
                         </td>
                       </tr>

@@ -8,11 +8,9 @@ import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
-import Upload from "../../../Components/ActionServices/Upload";
 import { Local_Url } from "../../../constant/constant";
 
 const AdminReport = () => {
-  const [showUploadPopup, setShowUploadPopup] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [data, setData] = useState([]);
@@ -48,19 +46,6 @@ const AdminReport = () => {
         console.log("Something Went Wrong");
       });
   }, []);
-  const handleUploadButtonClick = () => {
-    setShowUploadPopup(true);
-  };
-
-  const handleSubmit = () => {
-    alert("Thanks");
-    // Logic to handle form submission goes here
-    setShowUploadPopup(false); // Close the popup after submission
-  };
-
-  const handleCancel = () => {
-    setShowUploadPopup(false); // Close the popup when cancel is clicked
-  };
 
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
@@ -126,7 +111,7 @@ const AdminReport = () => {
                           <span className="span">Name: {item.Name}</span>
                           <br />
                           <span className="span">
-                            Father Name: {item.ParentName}
+                            Father Name: {item.FatherName}
                           </span>
                           <br />
                           <span className="span">
@@ -167,50 +152,43 @@ const AdminReport = () => {
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              <div className=" flex items-center justify-center gap-3 border-b-2">
+                              <div className=" flex items-center justify-center  border-b-2">
                                 <h3 className="status">Action</h3>
-                                <div className="px-6 py-4 border flex items-center justify-between gap-3">
+                                <div className="px-6 py-4 border flex items-center justify-between gap-1">
                                   <Link
                                     to={`/user-edit?entrytype=M&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
-                                    className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
+                                    className="font-medium   no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-edit-box-line text-white"></i>
                                   </Link>
 
                                   <Link
                                     to={`/user-finger?aadhar=${item.AadhaarNo}`}
-                                    className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
+                                    className="font-medium   no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-fingerprint-fill text-white"></i>
                                   </Link>
                                   <Link
-                                    to={`/edit-view?`}
-                                    className="font-medium text-blue-600 no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
+                                    to={`/edit-view?name=${item.Name}&fname=${item.FatherName}&dob=${item.DOA}&aadhar=${item.AadhaarNo}&mobile=${item.MobileNo}&email=${item.Email}&FingerPrint1=${item.FingerPrint1}&FingerPrint2=${item.FingerPrint2}&FingerPrint3=${item.FingerPrint3}&FingerPrint4=${item.FingerPrint4}&FingerPrint5=${item.FingerPrint5}`}
+                                    className="font-medium   no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-eye-line text-white"></i>
                                   </Link>
                                   <Link
                                     to="#"
-                                    className="font-medium text-blue-600 no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
+                                    className="font-medium   no-underline   border-1 bg-[#f4516c] hover:bg-[#cb4c61] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-delete-bin-line text-white"></i>
                                   </Link>
-                                  <button
-                                    onClick={handleUploadButtonClick}
-                                    className="font-medium text-white no-underline border-1 bg-green-600 px-6 py-3 rounded-md"
+
+                                  <Link
+                                    to={`/Upload?entrytype=M&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
+                                    className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     Upload
-                                  </button>
+                                  </Link>
                                 </div>
                               </div>
-
-                              {/* <div className="Action-container border-b-2">
-                                  <Action/>
-                                  <FingerData />
-                                  <ViewFingerAndUpdate />
-                                  <DeleteData />
-                                  <Upload />
-                                </div> */}
                             </div>
                           </div>
                         </td>
@@ -229,32 +207,9 @@ const AdminReport = () => {
           </Table>
         </div>
       </div>
-      {showUploadPopup && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-8 rounded-lg shadow-md w-1/4">
-            <h2 className="text-xl font-semibold mb-4">
-              Upload Acknowledgement Slip
-            </h2>
-            <Upload />
-            <div className="flex justify-end mt-6">
-              <button
-                onClick={handleCancel}
-                className="px-4 py-2 mr-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSubmit}
-                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };
 
 export default AdminReport;
+ 

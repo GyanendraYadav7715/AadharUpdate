@@ -155,14 +155,58 @@ function ChildEntryList() {
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              <div className=" flex items-center justify-center gap-3 border-b-2">
+                              <div className=" flex items-center justify-center  border-b-2">
                                 <h3 className="status">Action</h3>
-                                <div className="px-6 py-4 flex items-center justify-between gap-3">
+                                <div className="px-6 py-4 flex items-center justify-between gap-1">
                                   <Link
                                     to={`/user-edit?entrytype=C&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
-                                    className="font-medium text-blue-600 no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-md"
+                                    className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-edit-box-line text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to={`/user-finger?aadhar=${item.Parent_AadhaarNo}`}
+                                    className="font-medium text-white no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
+                                  >
+                                    <i className="ri-fingerprint-fill text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to={`/edit-view?name=${item.Name}&fname=${
+                                      item.ParentName
+                                    }&dob=${item.DOB}&aadhar=${
+                                      item.Parent_AadhaarNo
+                                    }&mobile=${item.MobileNo}&email=${
+                                      item.Email
+                                    }&FingerPrint1=${
+                                      item.FingerPrint.FingerPrint1
+                                    }&FingerPrint2=${
+                                      item.FingerPrint2
+                                    }&FingerPrint3=${
+                                      item.FingerPrint3
+                                    }&FingerPrint4=${
+                                      item.FingerPrint4
+                                    }&FingerPrint5=${
+                                      item.FingerPrint5
+                                    }&POI=${encodeURIComponent(
+                                      item.POI
+                                    )}&POB=${encodeURIComponent(
+                                      item.POB
+                                    )}&POA=${encodeURIComponent(item.POA)}`}
+                                    className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
+                                  >
+                                    <i className="ri-eye-line text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to="#"
+                                    className="font-medium text-white no-underline  border-1 bg-[#f4516c] hover:bg-[#cb4c61] px-3 py-2 rounded-sm"
+                                  >
+                                    <i className="ri-delete-bin-line text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to={`/Upload?entrytype=C&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
+                                    className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
+                                  >
+                                    Upload
                                   </Link>
                                 </div>
                               </div>
