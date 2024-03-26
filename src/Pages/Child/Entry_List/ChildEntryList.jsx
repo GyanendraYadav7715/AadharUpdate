@@ -141,88 +141,37 @@ function ChildEntryList() {
                         <td colSpan="3">
                           <div className="dropdown-content bg-white">
                             <div className="dropdown-title">
-                              {item.status === "Completed" ? (
-                                <h3 className="status border-b-2 m-1">
-                                  Admin Remark
-                                  <span className="text-amber-400 capitalize ml-3">
-                                    {item.remarks}
-                                  </span>
-                                </h3>
-                              ) : (
-                                <h3 className="status border-b-2 m-1">
-                                  Admin Remark:
-                                  <span className="text-red-500 capitalize">
-                                    {item.remarks}
-                                  </span>
-                                </h3>
-                              )}
+                              <h3 className="status border-b-2 m-1">
+                                Admin Remark
+                                <span
+                                  className={` ${
+                                    item.status === "Completed"
+                                      ? "text-amber-400"
+                                      : "text-red-500"
+                                  } capitalize ml-3`}
+                                >
+                                  {item.remarks}
+                                </span>
+                              </h3>
                               <h3 className="status border-b-2 m-1">
                                 Applied on
                                 <span className="text-md font-medium ml-2 text-indigo-500 ">
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              {item.status === "completed" ? (
-                                <h3 className="status border-b-2 m-1 ">
-                                  Status
-                                  <span className="bg-yellow-400 px-2 py-1 text-white ml-5 rounded-sm ">
-                                    {item.status}
-                                  </span>
-                                </h3>
-                              ) : (
-                                <h3 className="status border-b-2 m-1 ">
-                                  Status
-                                  <span className="bg-[#f4516c] px-2 py-1 text-white ml-5 rounded-sm ">
-                                    {item.status}
-                                  </span>
-                                </h3>
-                              )}
-                              {/* <h3 className="status border-b-2 m-1 ">
-                                Fingerprint:
-                                <span className=" px-2 py-1 text-black ml-5 rounded-sm ">
-                                  {item.FingerPrint.map(
-                                    (fingerprint, fingerprintIndex) => (
-                                      <li key={fingerprintIndex}>
-                                        {Object.keys(fingerprint).map((key) => (
-                                          <div key={key}>
-                                            {`${key}: ${fingerprint[key]}`}
-                                          </div>
-                                        ))}
-                                      </li>
-                                    )
-                                  )}
+                              <h3 className="status border-b-2 m-1 ">
+                                Status
+                                <span
+                                  className={`${
+                                    item.status === "Completed"
+                                      ? "bg-yellow-400"
+                                      : "bg-[#f4516c]"
+                                  } px-2 py-1 text-white ml-5 rounded-sm `}
+                                >
+                                  {item.status}
                                 </span>
                               </h3>
 
-                              <h3 className="status border-b-2 m-1 ">
-                                proof:
-                                <span className=" px-2 py-1 text-black ml-5 rounded-sm ">
-                                  {item.Proof.map(
-                                    (fingerprint, fingerprintIndex) => (
-                                      <li key={fingerprintIndex}>
-                                        {Object.keys(fingerprint).map((key) => (
-                                          <div key={key}>
-                                            {`${key}: ${fingerprint[key]}`}
-                                          </div>
-                                        ))}
-                                      </li>
-                                    )
-                                  )}
-                                  {item.Proof.map((item, itemIndex) => (
-                                    <div key={itemIndex}>
-                                      <h2>Item {itemIndex + 1}</h2>
-                                       <li key={fingerprintIndex}></li>
-                                      <ul>
-                                        {Object.keys(item).map((key) => (
-                                          <li key={key}>
-                                            <a href={item[key]}>{key}</a>
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  ))}
-                                </span>
-                              </h3> */}
                               <div className=" flex items-center  border-b-2">
                                 <h3 className="status">Action</h3>
                                 <div className="px-6 py-4 flex items-center justify-between gap-1">
@@ -233,7 +182,11 @@ function ChildEntryList() {
                                     <i className="ri-edit-box-line text-white"></i>
                                   </Link>
                                   <Link
-                                    to={`/user-finger?aadhar=${item.Parent_AadhaarNo}`}
+                                    to={`/user-finger?aadhar=${
+                                      item.Parent_AadhaarNo
+                                    }&fingerprints=${encodeURIComponent(
+                                      JSON.stringify(item.FingerPrint)
+                                    )}`}
                                     className="font-medium text-white no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-fingerprint-fill text-white"></i>
@@ -245,21 +198,11 @@ function ChildEntryList() {
                                       item.Parent_AadhaarNo
                                     }&mobile=${item.MobileNo}&email=${
                                       item.Email
-                                    }&FingerPrint1=${
-                                      item.FingerPrint.FingerPrint1
-                                    }&FingerPrint2=${
-                                      item.FingerPrint2
-                                    }&FingerPrint3=${
-                                      item.FingerPrint3
-                                    }&FingerPrint4=${
-                                      item.FingerPrint4
-                                    }&FingerPrint5=${
-                                      item.FingerPrint5
-                                    }&POI=${encodeURIComponent(
-                                      item.POI
-                                    )}&POB=${encodeURIComponent(
-                                      item.POB
-                                    )}&POA=${encodeURIComponent(item.POA)}`}
+                                    }&fingerprints=${encodeURIComponent(
+                                      JSON.stringify(item.FingerPrint)
+                                    )}&proof=${encodeURIComponent(
+                                      JSON.stringify(item.Proof)
+                                    )}`}
                                     className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-eye-line text-white"></i>
@@ -273,7 +216,11 @@ function ChildEntryList() {
                                     </Link>
                                   )}
                                   <Link
-                                    to={`/Upload?entrytype=C&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
+                                    to={`/Upload?entrytype=C&apply=${
+                                      item.appliedBy
+                                    }&time=${item.timeStamp}&type=${
+                                      item.User_type
+                                    }&route=${"/child-entry-list"}`}
                                     className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     Upload

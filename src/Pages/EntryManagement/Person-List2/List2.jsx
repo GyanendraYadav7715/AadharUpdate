@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 import { Local_Url } from "../../../constant/constant";
 import axios from "axios";
 import "../Person-List/list.css";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
@@ -13,7 +13,7 @@ import SearchElement from "../../../Components/SearchElement/SearchElement";
  
 
 function List() {
-  //api data fetch
+ 
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,7 +58,7 @@ function List() {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.data);
 
         setData(response.data.data);
         setFilteredProducts(response.data.data);
@@ -155,42 +155,36 @@ function List() {
                         <td colSpan="6">
                           <div className="dropdown-content">
                             <div className="dropdown-title">
-                              {item.status === "Completed" ? (
-                                <h3 className="status border-b-2 m-1">
-                                  Admin Remark
-                                  <span className="text-amber-400 capitalize ml-3">
-                                    {item.remarks}
-                                  </span>
-                                </h3>
-                              ) : (
-                                <h3 className="status border-b-2 m-1">
-                                  Admin Remark:
-                                  <span className="text-red-500 capitalize">
-                                    {item.remarks}
-                                  </span>
-                                </h3>
-                              )}
+                              <h3 className="status border-b-2 m-1">
+                                Admin Remark
+                                <span
+                                  className={` ${
+                                    item.status === "Completed"
+                                      ? "text-amber-400"
+                                      : "text-red-500"
+                                  } capitalize ml-3`}
+                                >
+                                  {item.remarks}
+                                </span>
+                              </h3>
                               <h3 className="status border-b-2 m-1">
                                 Applied on
                                 <span className="text-md font-medium ml-2 text-indigo-500 ">
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              {item.status === "Completed" ? (
-                                <h3 className="status border-b-2 m-1 ">
-                                  Status
-                                  <span className="bg-yellow-400 px-2 py-1 text-white ml-5 rounded-sm ">
-                                    {item.status}
-                                  </span>
-                                </h3>
-                              ) : (
-                                <h3 className="status border-b-2 m-1 ">
-                                  Status
-                                  <span className="bg-[#f4516c] px-2 py-1 text-white ml-5 rounded-sm ">
-                                    {item.status}
-                                  </span>
-                                </h3>
-                              )}
+                              <h3 className="status border-b-2 m-1 ">
+                                Status
+                                <span
+                                  className={`${
+                                    item.status === "Completed"
+                                      ? "bg-yellow-400"
+                                      : "bg-[#f4516c]"
+                                  } px-2 py-1 text-white ml-5 rounded-sm `}
+                                >
+                                  {item.status}
+                                </span>
+                              </h3>
                               <div className=" flex items-center justify-center gap-3 border-b-2">
                                 <h3 className="status">Action</h3>
                                 <div className="px-6 py-4 flex items-center justify-between gap-1">
@@ -201,7 +195,11 @@ function List() {
                                     <i className="ri-edit-box-line text-white"></i>
                                   </Link>
                                   <Link
-                                    to={`/user-finger?aadhar=${item.AadhaarNo}`}
+                                    to={`/user-finger?aadhar=${
+                                      item.AadhaarNo
+                                    }&fingerprints=${encodeURIComponent(
+                                      JSON.stringify(item.FingerPrint)
+                                    )}`}
                                     className="font-medium text-white no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-fingerprint-fill text-white"></i>
@@ -213,23 +211,9 @@ function List() {
                                       item.AadhaarNo
                                     }&mobile=${item.MobileNo}&email=${
                                       item.Email
-                                    }&FingerPrint1=${
-                                      item.FingerPrint1
-                                    }&FingerPrint2=${
-                                      item.FingerPrint2
-                                    }&FingerPrint3=${
-                                      item.FingerPrint3
-                                    }&FingerPrint4=${
-                                      item.FingerPrint4
-                                    }&FingerPrint5=${
-                                      item.FingerPrint5
-                                    }&purpose=${
-                                      item.Purpose
-                                    }&POI=${encodeURIComponent(
-                                      item.POI
-                                    )}&POB=${encodeURIComponent(
-                                      item.POB
-                                    )}&POA=${encodeURIComponent(item.POA)}`}
+                                    }&fingerprints=${encodeURIComponent(
+                                      JSON.stringify(item.FingerPrint)
+                                    )}&proof=${encodeURIComponent(JSON.stringify(item.Proof))}`}
                                     className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-eye-line text-white"></i>
@@ -243,7 +227,11 @@ function List() {
                                     </Link>
                                   )}
                                   <Link
-                                    to={`/Upload?entrytype=D&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
+                                    to={`/Upload?entrytype=D&apply=${
+                                      item.appliedBy
+                                    }&time=${item.timeStamp}&type=${
+                                      item.User_type
+                                    }&route=${"/list2"}`}
                                     className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     Upload

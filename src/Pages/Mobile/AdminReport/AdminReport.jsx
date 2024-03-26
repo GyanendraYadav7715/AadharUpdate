@@ -38,12 +38,7 @@ const AdminReport = () => {
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
         console.log(response.data.data);
-        console.log(response.data.data[0].FingerPrint);
-        // console.log(response.data.data[0].FingerPrint[0].FingerPrint1);
-        // console.log(response.data.data[0].FingerPrint[1].FingerPrint2);
-        // console.log(response.data.data[0].FingerPrint[2].FingerPrint3);
-        // console.log(response.data.data[0].FingerPrint[3].FingerPrint4);
-        // console.log(response.data.data[0].FingerPrint[4].FingerPrint5);
+
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -139,55 +134,58 @@ const AdminReport = () => {
                         <td colSpan="4">
                           <div className="dropdown-content">
                             <div className="dropdown-title">
-                              {item.status === "Completed" ? (
-                                <h3 className="status border-b-2 m-1">
-                                  Admin Remark
-                                  <span className="text-amber-400 capitalize ml-3">
-                                    {item.remarks}
-                                  </span>
-                                </h3>
-                              ) : (
-                                <h3 className="status border-b-2 m-1">
-                                  Admin Remark:
-                                  <span className="text-red-500 capitalize">
-                                    {item.remarks}
-                                  </span>
-                                </h3>
-                              )}
+                              <h3 className="status border-b-2 m-1">
+                                Admin Remark
+                                <span
+                                  className={` ${
+                                    item.status === "Completed"
+                                      ? "text-amber-400"
+                                      : "text-red-500"
+                                  } capitalize ml-3`}
+                                >
+                                  {item.remarks}
+                                </span>
+                              </h3>
+
                               <h3 className="status border-b-2 m-1">
                                 Applied on
                                 <span className="text-md font-medium ml-2 text-indigo-500 ">
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              {item.status === "completed" ? (
-                                <h3 className="status border-b-2 m-1 ">
-                                  Status
-                                  <span className="bg-yellow-400 px-2 py-1 text-white ml-5 rounded-sm ">
-                                    {item.status}
-                                  </span>
-                                </h3>
-                              ) : (
-                                <h3 className="status border-b-2 m-1 ">
-                                  Status
-                                  <span className="bg-[#f4516c] px-2 py-1 text-white ml-5 rounded-sm ">
-                                    {item.status}
-                                  </span>
-                                </h3>
-                              )}
 
-                              {/* <h3 className="status border-b-2 m-1 ">
-                                <span className=" px-2 py-1 text-black ml-5 rounded-sm ">
-                                  {item.FingerPrint.map(
-                                    (fingerprint, fingerprintIndex) => (
-                                      <li key={fingerprintIndex}>
-                                        {Object.keys(fingerprint).map((key) => (
-                                          <div key={key}>
-                                            {`${key}: ${fingerprint[key]}`}
-                                          </div>
-                                        ))}
-                                      </li>
-                                    )
+                              <h3 className="status border-b-2 m-1 ">
+                                Status
+                                <span
+                                  className={`${
+                                    item.status === "Completed"
+                                      ? "bg-yellow-400"
+                                      : "bg-[#f4516c]"
+                                  } px-2 py-1 text-white ml-5 rounded-sm `}
+                                >
+                                  {item.status}
+                                </span>
+                              </h3>
+                              {/* <h3 className="status border-b-2 m-1">
+                                <span className="text-md font-medium ml-2 text-indigo-500">
+                                  {item.FingerPrint && (
+                                    <ul>
+                                      {item.FingerPrint && (
+                                        <ul>
+                                          {item.FingerPrint.map(
+                                            (fingerprint, idx) => (
+                                              <li key={idx}>
+                                                {fingerprint.FingerPrint1},
+                                                {fingerprint.FingerPrint2},
+                                                {fingerprint.FingerPrint3},
+                                                {fingerprint.FingerPrint4},
+                                                {fingerprint.FingerPrint5}
+                                              </li>
+                                            )
+                                          )}
+                                        </ul>
+                                      )}
+                                    </ul>
                                   )}
                                 </span>
                               </h3> */}
@@ -205,20 +203,23 @@ const AdminReport = () => {
                                   <Link
                                     to={`/user-finger?aadhar=${
                                       item.AadhaarNo
-                                    }&Finger=${item.FingerPrint.map(
-                                      (fingerprint, fingerprintIndex) => (
-                                        <li key={fingerprintIndex}>
-                                          Fingerprint {fingerprintIndex + 1}:
-                                          {fingerprint.FingerPrint1}
-                                        </li>
-                                      )
+                                    }&fingerprints=${encodeURIComponent(
+                                      JSON.stringify(item.FingerPrint)
                                     )}`}
                                     className="font-medium   no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-fingerprint-fill text-white"></i>
                                   </Link>
                                   <Link
-                                    to={`/edit-view?name=${item.Name}&fname=${item.FatherName}&dob=${item.DOA}&aadhar=${item.AadhaarNo}&mobile=${item.MobileNo}&email=${item.Email}&FingerPrint1=${item.FingerPrint1}&FingerPrint2=${item.FingerPrint2}&FingerPrint3=${item.FingerPrint3}&FingerPrint4=${item.FingerPrint4}&FingerPrint5=${item.FingerPrint5}`}
+                                    to={`/edit-view?name=${item.Name}&fname=${
+                                      item.FatherName
+                                    }&dob=${item.DOA}&aadhar=${
+                                      item.AadhaarNo
+                                    }&mobile=${item.MobileNo}&email=${
+                                      item.Email
+                                    }&fingerprints=${encodeURIComponent(
+                                      JSON.stringify(item.FingerPrint)
+                                    )}`}
                                     className="font-medium   no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-eye-line text-white"></i>
@@ -233,7 +234,11 @@ const AdminReport = () => {
                                   )}
 
                                   <Link
-                                    to={`/Upload?entrytype=M&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
+                                    to={`/Upload?entrytype=M&apply=${
+                                      item.appliedBy
+                                    }&time=${item.timeStamp}&type=${
+                                      item.User_type
+                                    }&route=${"/adminreport"}`}
                                     className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     Upload

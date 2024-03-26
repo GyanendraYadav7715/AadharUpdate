@@ -14,6 +14,7 @@ const Upload = () => {
    const apply = searchParams.get("apply");
    const time = searchParams.get("time");
   const type = searchParams.get("type");
+  const route = searchParams.get("route");
   
   
   const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ const Upload = () => {
       toast.success(response.data.message);
       
       setTimeout(() => {
-         navigate("/adminreport");
+         navigate(route);
       }, 200);
        
     } catch (error) {
@@ -48,7 +49,7 @@ const Upload = () => {
   };
 
   const handleCancel = () => {
-     navigate("/adminreport");
+      navigate(route);
      
   };
 
