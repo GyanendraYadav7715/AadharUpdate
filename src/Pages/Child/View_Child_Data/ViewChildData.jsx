@@ -1,5 +1,5 @@
 import "./view_child_data.css";
-
+import { Link } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
@@ -89,7 +89,7 @@ function ViewChildData() {
             <thead>
               <tr>
                 <th>S.N.</th>
-                <th> Child Name</th>
+                <th>Child Name</th>
                 <th>DOB</th>
                 <th>Aadhaar No.</th>
                 <th>Mobile No.</th>
@@ -124,7 +124,7 @@ function ViewChildData() {
                         {index + 1}
                       </td>
                       <td>{item.Name}</td>
-                      <td>{item.dateofbirth}</td>
+                      <td>{item.DOB}</td>
                       <td>{item.Parent_AadhaarNo}</td>
                       <td>{item.MobileNo}</td>
                       <td>{item.Email}</td>
@@ -134,7 +134,6 @@ function ViewChildData() {
                     {selectedRow === index && (
                       <tr>
                         <td colSpan="6" style={{ backgroundColor: "white" }}>
-                         
                           <div className="dropdown-content">
                             <div className="dropdown-title">
                               <h3 className="status">
@@ -145,11 +144,33 @@ function ViewChildData() {
                                   {item.createdOn}
                                 </span>
                               </h3>
-
-                              <h3 className="status">Status</h3>
+                              <div className="flex items-center">
+                                <h3 className="status flex items-center">
+                                  Status:
+                                  <button className="Progress button">
+                                    {item.status}
+                                  </button>
+                                </h3>
+                                <Slip fileUrl={item.oSlip} />
+                              </div>
+                              {item.status === "complete" ? (
+                                <div className="flex  items-center  ">
+                                  <h4 className="Action-text">Action</h4>
+                                  <img
+                                    className="size-16 object-cover rounded-full ml-3"
+                                    src="https://cdn.dribbble.com/users/4358240/screenshots/14825308/media/84f51703b2bfc69f7e8bb066897e26e0.gif"
+                                    alt="Uploaded File"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="Action">
+                                  <h4 className="Action-text">Action</h4>
+                                  <Link to="/edit-customer" className="button">
+                                    <i className="ri-edit-2-fill pencil"></i>
+                                  </Link>
+                                </div>
+                              )}
                             </div>
-
-                            <Slip />
                           </div>
                         </td>
                       </tr>

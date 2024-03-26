@@ -1,5 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 import "./PersonEntry.css";
 import Box from "../../../Components/FingerPrint/FingerPrint";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
@@ -7,17 +8,8 @@ import { Local_Url } from "../../../constant/constant";
 import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import FileUpload from "../../../Components/FileUpload/FileUpload";
 
- 
 const PersonEntry = () => {
-  const userData = localStorage.getItem("user");
-  let role = "";
-  if (userData) {
-    
-    const userObj = JSON.parse(userData);
-    
-    role = userObj.role;
-  }
-
+  // Initialize state for form data
   const [formData, setFormData] = useState({
     Purpose: "",
     Name: "",
@@ -27,32 +19,33 @@ const PersonEntry = () => {
     MobileNo: "",
     Email: "",
     Address: "",
-    Proof: [{ POI: "" }, { POB: "" }, { POA: "" }],
+    Proof: [{ POI: "", POB: "", POA: "" }],
     FingerPrint: [
-      { FingerPrint1: "" },
-      { FingerPrint2: "" },
-      { FingerPrint3: "" },
-      { FingerPrint4: "" },
-      { FingerPrint5: "" },
+      {
+        FingerPrint1: "",
+        FingerPrint2: "",
+        FingerPrint3: "",
+        FingerPrint4: "",
+        FingerPrint5: "",
+      },
     ],
   });
 
-  //FORM DATA DATE CREATION
+  // Function to format current date
   const formatCurrentDate = () => {
     const date = new Date();
-    const formattedDate = `${date.getFullYear()}-${String(
-      date.getMonth() + 1
-    ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} ${String(
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")} ${String(
       date.getHours()
     ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(
       date.getSeconds()
     ).padStart(2, "0")}`;
-    return formattedDate;
   };
 
-  //HANDLE FORM IN THE CONSOLE
+  // Handle input change for form fields
   const handleInputChange = (name, value) => {
-    console.log(`Handling input for ${name}: ${value}`);
     setFormData({
       ...formData,
       [name]: value,
@@ -60,25 +53,33 @@ const PersonEntry = () => {
     });
   };
 
-  //SUBMITING THE FORM WITH WHOLE DATA
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = localStorage.getItem("user");
-    const userObj = JSON.parse(data);
-    formData.userName = userObj.Username;
-    formData.userType = userObj.User_type;
-    // Access the role property
-    role = userObj.User_type;
 
+    // Validate required fields
     if (!formData.Purpose || !formData.Email || !formData.MobileNo) {
-      return  toast.error("Please fill all the required fields");
+      return toast.error("Please fill all the required fields");
     }
 
     try {
+      // Get user data from local storage
+      const userData = JSON.parse(localStorage.getItem("user"));
+      formData.userName = userData.Username;
+      formData.userType = userData.User_type;
+
+      // Make API request
       const apiUrl = `${Local_Url}/api/v1/retailer/create-user`;
       const response = await axios.post(apiUrl, formData);
-      //console.log("Form submitted successfully:", response.data);
-       toast.success(response.data.message);
+
+      // Show success message
+      toast.success(response.data.message);
+
+      //After successs reload the page
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+
       // Reset form data
       setFormData({
         Purpose: "",
@@ -97,9 +98,9 @@ const PersonEntry = () => {
           { FingerPrint4: "" },
           { FingerPrint5: "" },
         ],
-      });
+      })
     } catch (error) {
-      //console.error("Error submitting form:", error.message);
+      // Show error message
       toast.error(error.response.data.message);
     }
   };
@@ -140,7 +141,7 @@ const PersonEntry = () => {
               <CustomInput
                 onChange={handleInputChange}
                 label="Full Name"
-                type="fullname"
+                type="text"
                 value={formData.Name}
                 name="Name"
                 placeholder="Enter Name"
@@ -148,7 +149,7 @@ const PersonEntry = () => {
               <CustomInput
                 onChange={handleInputChange}
                 label="Father Name"
-                type="fullname"
+                type="text"
                 value={formData.FatherName}
                 name="FatherName"
                 placeholder="Father Name"
@@ -187,47 +188,46 @@ const PersonEntry = () => {
                 placeholder="example@update.com"
                 value={formData.Email}
               />
-               
-                <FileUpload
-                  title="POI"
-                  name="POI"
-                  onFileUpload={(imageUrl) =>
-                    setFormData((prevFormData) => ({
-                      ...prevFormData,
-                      Proof: {
-                        ...prevFormData.Proof,
-                        POI: imageUrl,
-                      },
-                    }))
-                  }
-                />
-                <FileUpload
-                  title="POB"
-                  name="POB"
-                  onFileUpload={(imageUrl) =>
-                    setFormData((prevFormData) => ({
-                      ...prevFormData,
-                      Proof: {
-                        ...prevFormData.Proof,
-                        POB: imageUrl,
-                      },
-                    }))
-                  }
-                />
-                <FileUpload
-                  title="POA"
-                  name="POA"
-                  onFileUpload={(imageUrl) =>
-                    setFormData((prevFormData) => ({
-                      ...prevFormData,
-                      Proof: {
-                        ...prevFormData.Proof,
-                        POA: imageUrl,
-                      },
-                    }))
-                  }
-                />
-             
+
+              <FileUpload
+                title="POI"
+                name="POI"
+                onFileUpload={(imageUrl) =>
+                  setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    Proof: {
+                      ...prevFormData.Proof,
+                      POI: imageUrl,
+                    },
+                  }))
+                }
+              />
+              <FileUpload
+                title="POB"
+                name="POB"
+                onFileUpload={(imageUrl) =>
+                  setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    Proof: {
+                      ...prevFormData.Proof,
+                      POB: imageUrl,
+                    },
+                  }))
+                }
+              />
+              <FileUpload
+                title="POA"
+                name="POA"
+                onFileUpload={(imageUrl) =>
+                  setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    Proof: {
+                      ...prevFormData.Proof,
+                      POA: imageUrl,
+                    },
+                  }))
+                }
+              />
             </div>
             <div className="PurposeGrid Address">
               <CustomInput

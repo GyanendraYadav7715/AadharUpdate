@@ -7,6 +7,7 @@ import { CustomInput } from "../../../Components/CustomeInput/CustomInput";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const MobileNoUpdate = () => {
   const [currentDate, setCurrentDate] = useState("");
 
@@ -16,6 +17,26 @@ const MobileNoUpdate = () => {
     setCurrentDate(date);
   }, []);
 
+  // State to manage form data
+  const [formData, setFormData] = useState({
+    Name: "",
+    FatherName: "",
+    DOA: currentDate,
+    AadhaarNo: "",
+    MobileNo: "",
+    Email: "",
+    FingerPrint: [
+      {
+        FingerPrint1: "",
+        FingerPrint2: "",
+        FingerPrint3: "",
+        FingerPrint4: "",
+        FingerPrint5: "",
+      },
+    ],
+  });
+
+  //set the current date int te formdata
   useEffect(() => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -23,18 +44,90 @@ const MobileNoUpdate = () => {
     }));
   }, [currentDate]);
 
-  const userData = localStorage.getItem("user");
-  let role = "";
-  if (userData) {
-    // Parse JSON string to object
-    const userObj = JSON.parse(userData);
-    // Access the role property
-    role = userObj.userType;
-  }
+  // Function to format current date
+  const formatCurrentDate = () => {
+    const date = new Date();
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")} ${String(
+      date.getHours()
+    ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(
+      date.getSeconds()
+    ).padStart(2, "0")}`;
+  };
+
+  // Function to handle form input changes
+  const handleInputChange = (name, value) => {
+    setFormData({
+      ...formData,
+      [name]: value,
+      createdOn: formatCurrentDate(),
+    });
+  };
+
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.Name || !formData.Email || !formData.MobileNo) {
+      return toast.error("Please fill all the required fields.");
+    }
+
+    try {
+      // Get user data from localStorage
+      const userData = JSON.parse(localStorage.getItem("user"));
+      formData.userName = userData.Username;
+      formData.userType = userData.User_type;
+
+      const apiUrl = `${Local_Url}/api/v1/retailer/createMobileUser`;
+      const response = await axios.post(apiUrl, formData);
+
+      toast.success(response.data.message);
+
+      // Reload the page after successful submission
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+
+      // Reset form data
+      setFormData({
+        ...formData,
+        Name: "",
+        FatherName: "",
+        AadhaarNo: "",
+        MobileNo: "",
+        Email: "",
+        FingerPrint: [
+          {
+            FingerPrint1: "",
+            FingerPrint2: "",
+            FingerPrint3: "",
+            FingerPrint4: "",
+            FingerPrint5: "",
+          },
+        ],
+      });
+    } catch (error) {
+      // Handle submission error
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An error occurred while submitting the form.");
+      }
+    }
+  };
+  const userData = JSON.parse(localStorage.getItem("user"));
+  let role = userData.userType;
+
   const title = "Mobile Update";
   const links = [
     { title: "Home", href: role === "retailer" ? "/retailer" : "/superadmin" },
-    { title: "Mobile Update", href: "" },
+    { title: "Mobile Update" },
   ];
 
   const mylinks = [
@@ -45,98 +138,6 @@ const MobileNoUpdate = () => {
     },
   ];
 
-  // State to manage form data
-  const [formData, setFormData] = useState({
-    Name: "",
-    FatherName: "",
-    DOA: currentDate,
-    AadhaarNo: "",
-    MobileNo: "",
-    Email: "",
-
-    FingerPrint: [
-      {
-        FingerPrint1: " ",
-      },
-      {
-        FingerPrint2: " ",
-      },
-      {
-        FingerPrint3: " ",
-      },
-      {
-        FingerPrint4: " ",
-      },
-      {
-        FingerPrint5: "",
-      },
-    ],
-  });
-
-  // Function to handle form input changes
-  const handleInputChange = (name, value) => {
-    console.log(`Handling input for ${name}: ${value}`);
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  // Function to handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = localStorage.getItem("user");
-    const userObj = JSON.parse(data);
-    formData.userName = userObj.Username;
-    formData.userType = userObj.User_type;
-    // Access the role property
-    role = userObj.User_type;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      DOA: currentDate,
-    }));
-    console.log(
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        DOA: currentDate,
-      }))
-    );
-
-    if (!formData.Name || !formData.Email || !formData.MobileNo) {
-      return toast.error("Please fill all the required fields.");
-    }
-
-    try {
-      
-      const apiUrl = `${Local_Url}/api/v1/retailer/createMobileUser`;
-
-      const response = await axios.post(apiUrl, formData);
-
-      //console.log("Form submitted successfully:", response.data);
-      toast.success(response.data.message);
-      // Optionally, reset the form after submission
-      setFormData({
-        Name: "",
-        FatherName: "",
-        DOA: "",
-        AadhaarNo: "",
-        MobileNo: "",
-        Email: "",
-        FingerPrint: [
-          { FingerPrint1: "" },
-          { FingerPrint2: "" },
-          { FingerPrint3: "" },
-          { FingerPrint4: "" },
-          { FingerPrint5: "" },
-        ],
-      });
-    } catch (error) {
-      // Handle submission error
-      //console.error("Error submitting form:", error.message);
-      toast.error(error.response.data.message)
-    }
-  };
-
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
@@ -146,7 +147,7 @@ const MobileNoUpdate = () => {
             <CustomInput
               onChange={handleInputChange}
               label="Full Name"
-              type="fullname"
+              type="text"
               value={formData.Name}
               name="Name"
               placeholder="Enter Name"
@@ -154,7 +155,7 @@ const MobileNoUpdate = () => {
             <CustomInput
               onChange={handleInputChange}
               label="Father Name"
-              type="fullname"
+              type=""
               value={formData.FatherName}
               name="FatherName"
               placeholder="Father Name"

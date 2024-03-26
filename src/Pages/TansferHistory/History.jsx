@@ -9,7 +9,6 @@ import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 import { Local_Url } from "../../constant/constant";
 
 const History = () => {
-  //const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [data, setData] = useState([]);
   const tableRef = useRef(null);
@@ -50,21 +49,24 @@ const History = () => {
     { title: "Home", href: "/superadmin" },
     { title: "View Balance Transfer History", href: "" },
   ];
-   const mylinks = [
-     {
-       to: "/balance_transfer",
-       text: "Token Transfer",
-       icon: "ri-money-rupee-circle-line text-2xl ",
-     },
-     
-   ];
+
+  // Additional links for breadcrumb
+  const mylinks = [
+    {
+      to: "/balance_transfer",
+      text: "Token Transfer",
+      icon: "ri-money-rupee-circle-line text-2xl ",
+    },
+  ];
 
   return (
     <>
+      {/* Breadcrumb component */}
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
       <div className="p-4 sm:ml-64 mb-20">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white  ">
           <div className="flex items-center justify-between mb-4">
+            {/* Download and search buttons */}
             <div>
               <CopyButton data={data} />
               <ExcelButton data={data} filename={"history.xlsx"} />
@@ -73,6 +75,7 @@ const History = () => {
             </div>
             <SearchElement onSearch={handleSearch} />
           </div>
+          {/* Table for displaying transfer history */}
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table
               className="w-full text-sm text-left rtl:text-right text-black shadow-sm"
@@ -102,6 +105,7 @@ const History = () => {
               </thead>
               <tbody>
                 {data.length > 0 ? (
+                  // Mapping through filtered data to display rows
                   memoizedFilteredProducts.map((product, index) => (
                     <tr
                       key={index}
@@ -122,6 +126,7 @@ const History = () => {
                     </tr>
                   ))
                 ) : (
+                  // Render message when no records found
                   <tr>
                     <td colSpan="6">
                       <h1 className="list-record text-center text-3xl">

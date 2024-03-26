@@ -1,10 +1,10 @@
 import React,{useState,useEffect} from "react";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
-import Banner from "../../Components/Banner";
+import Banner from "../../Components/Banner/Banner";
 import axios from "axios";
 import { Local_Url } from "../../constant/constant";
 
-const Dashboard = () => {
+const RetailerDashboard = () => {
   const userData = localStorage.getItem("user");
   const [userName, setUserName] = useState("");
   const [statistics, setStatistics] = useState({
@@ -36,16 +36,16 @@ const Dashboard = () => {
           { params: queryParams }
         );
         setStatistics({
-          balance: response.data.Balance,
-          totalApplication: response.data.dtotalApplication,
-          totalApplicationCompleted: response.data.dcompleted,
-          totalApplicationRejected: response.data.drejectApl,
-          totalChildApplication: response.data.ctotalApplication,
-          totalChildApplicationCompleted: response.data.ccompleted,
-          totalChildApplicationRejected: response.data.crejectApl,
-          totalMobileApplication: response.data.mtotalApplication,
-          totalMobileApplicationCompleted: response.data.mcompleted,
-          totalMobileApplicationRejected: response.data.mrejectApl,
+          balance: response.data.data.Balance,
+          totalApplication: response.data.data.dtotalApplication,
+          totalApplicationCompleted: response.data.data.dcompleted,
+          totalApplicationRejected: response.data.data.drejectApl,
+          totalChildApplication: response.data.data.ctotalApplication,
+          totalChildApplicationCompleted: response.data.data.ccompleted,
+          totalChildApplicationRejected: response.data.data.crejectApl,
+          totalMobileApplication: response.data.data.mtotalApplication,
+          totalMobileApplicationCompleted: response.data.data.mcompleted,
+          totalMobileApplicationRejected: response.data.data.mrejectApl,
         });
       } catch (error) {
          console.error("Error fetching data: ", error);
@@ -168,4 +168,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default RetailerDashboard;

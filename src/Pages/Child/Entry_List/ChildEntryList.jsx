@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import { Local_Url } from "../../../constant/constant";
@@ -8,41 +9,25 @@ import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
-import Slip from "../../../Components/Slip/Slip";
-import FingerData from "./Auth/FingerData";
-import ViewFingerAndUpdate from "./View/ViewFingerAndUpdate";
-import DeleteData from "./Delete/DeleteData";
-import Upload from "./Upload/Upload";
-import Action from "./Action/Action";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
+ 
 
 function ChildEntryList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
   const tableRef = useRef(null);
-  const userData = localStorage.getItem("user");
-  let role = "";
-  let userName = "";
+  const [searchQuery, setSearchQuery] = useState("");
 
-  if (userData) {
-    const userObj = JSON.parse(userData);
-    role = userObj.role;
-    userName = userObj.Username;
-  }
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const role = userData.User_type;
+  const userName = userData.Username;
 
   const title = "View Child Entry";
   const links =
-    role === "Admin"
-      ? [
-          { title: "Home", href: "/superadmin" },
-          { title: "View Child Data"  },
-        ]
-      : [
-          { title: "Home", href: "/retailer" },
-          { title: "View Child Data"  },
-        ];
+    role === "Superadmin"
+      ? [{ title: "Home", href: "/superadmin" }, { title: "View Child Data" }]
+      : [{ title: "Home", href: "/backoffice" }, { title: "View Child Data" }];
   const mylinks = [
     {
       to: "/new-entry",
@@ -51,21 +36,20 @@ function ChildEntryList() {
     },
   ];
 
-const fetchData = async () => {
-  try {
-    const apiUrl = `${Local_Url}/api/v1/retailer/child-users`;
-    const response = await axios.get(apiUrl, {
-      params: { userName: userName },
-    });
+  const fetchData = async () => {
+    const apiUrl = `${Local_Url}/api/v1/admin/cAllAdminData`;
+    axios
+      .get(apiUrl, { params: { userName: userName } })
+      .then((response) => {
+        console.log(response.data);
 
-    setData(response.data.data);
-    setFilteredProducts(response.data.data);
-    console.log(response.data);
-
-  } catch (error) {
-    setError("Something went wrong");
-  }
-};
+        setData(response.data.data);
+        setFilteredProducts(response.data.data);
+      })
+      .catch((err) => {
+        console.log("Something Went Wrong");
+      });
+  };
 
   useEffect(() => {
     fetchData();
@@ -74,6 +58,7 @@ const fetchData = async () => {
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
+
   const handleSearch = (query) => {
     setSearchQuery(query);
     const filtered = data.filter((product) =>
@@ -85,7 +70,6 @@ const fetchData = async () => {
     setFilteredProducts(filtered);
   };
 
-
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
@@ -94,9 +78,9 @@ const fetchData = async () => {
           <div className="Download-Button flex items-center justify-between">
             <div>
               <CopyButton data={data} />
-              <ExcelButton data={data} filename={"ChildEntyList.xlsx"} />
-              <CSVButton data={data} filename={"ChildEntyList.csv"} />
-              <PDFButton tableRef={tableRef} filename={"ChildEntyList.pdf"} />
+              <ExcelButton data={data} filename={"ChildEntryList.xlsx"} />
+              <CSVButton data={data} filename={"ChildEntryList.csv"} />
+              <PDFButton tableRef={tableRef} filename={"ChildEntryList.pdf"} />
             </div>
             <SearchElement onSearch={handleSearch} />
           </div>
@@ -105,6 +89,7 @@ const fetchData = async () => {
               <tr>
                 <th>S.NO.</th>
                 <th>Applied By</th>
+                <th>Aadhaar Card Details</th>
               </tr>
             </thead>
             <tbody>
@@ -123,49 +108,124 @@ const fetchData = async () => {
                                 ? "ri-close-fill child"
                                 : "ri-add-fill child"
                             }
-                          ></i>{" "}
+                          ></i>
                           {index + 1}
                         </div>
                       </td>
-                      <td>{userName}</td>
+                      <td>{item.AppliedBy}</td>
+                      <td>
+                        <div className="text-left">
+                          <span className="span">Name: {item.Name}</span>
+                          <br />
+                          <span className="span">
+                            Father Name: {item.ParentName}
+                          </span>
+                          <br />
+                          <span className="span">
+                            Aadhaar No: {item.Parent_AadhaarNo}
+                          </span>
+                          <br />
+                          <span className="span">
+                            Mobile No: {item.MobileNo}
+                          </span>
+                          <br />
+                          <span className="span">E-mail: {item.Email}</span>
+                          <br />
+                          <span className="span">Address: {item.Address}</span>
+                        </div>
+                      </td>
+                      <td>{}</td>
                     </tr>
                     {selectedRow === index && (
                       <tr>
-                        <td colSpan="6">
-                          <div className="dropdown-content">
+                        <td colSpan="3">
+                          <div className="dropdown-content bg-white">
                             <div className="dropdown-title">
-                              <h3 className="status">Aadhaar Card Details:</h3>
-                              <Slip item={item} />
-                              <span className="span">Name: {item.Name}</span>
-                              <span className="span">
-                                Father Name: {item.ParentName}
-                              </span>
-                              <span className="span">
-                                Aadhaar No: {item.Parent_AadhaarNo}
-                              </span>
-                              <span className="span">
-                                Mobile No: {item.MobileNo}
-                              </span>
-                              <span className="span">E-mail: {item.Email}</span>
-                              <span className="span">
-                                Address: {item.Address}
-                              </span>
-                              <h3 className="status">Purpose & Status</h3>
-                              <h3 className="status">Admin Remark</h3>
-                              <h3 className="status">
-                                Created On:
+                              <h3 className="status border-b-2 m-1">
+                                Admin Remark
                                 <span
-                                  style={{ color: "blue", fontSize: "15px" }}
+                                  className={` ${
+                                    item.status === "Completed"
+                                      ? "text-amber-400"
+                                      : "text-red-500"
+                                  } capitalize ml-3`}
                                 >
+                                  {item.remarks}
+                                </span>
+                              </h3>
+                              <h3 className="status border-b-2 m-1">
+                                Applied on
+                                <span className="text-md font-medium ml-2 text-indigo-500 ">
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              <div className="Action-container">
-                                <Action />
-                                <FingerData />
-                                <ViewFingerAndUpdate />
-                                <DeleteData />
-                                <Upload />
+                              <h3 className="status border-b-2 m-1 ">
+                                Status
+                                <span
+                                  className={`${
+                                    item.status === "Completed"
+                                      ? "bg-yellow-400"
+                                      : "bg-[#f4516c]"
+                                  } px-2 py-1 text-white ml-5 rounded-sm `}
+                                >
+                                  {item.status}
+                                </span>
+                              </h3>
+
+                              <div className=" flex items-center  border-b-2">
+                                <h3 className="status">Action</h3>
+                                <div className="px-6 py-4 flex items-center justify-between gap-1">
+                                  <Link
+                                    to={`/user-edit?entrytype=C&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
+                                    className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
+                                  >
+                                    <i className="ri-edit-box-line text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to={`/user-finger?aadhar=${
+                                      item.Parent_AadhaarNo
+                                    }&fingerprints=${encodeURIComponent(
+                                      JSON.stringify(item.FingerPrint)
+                                    )}`}
+                                    className="font-medium text-white no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
+                                  >
+                                    <i className="ri-fingerprint-fill text-white"></i>
+                                  </Link>
+                                  <Link
+                                    to={`/edit-view?name=${item.Name}&fname=${
+                                      item.ParentName
+                                    }&dob=${item.DOB}&aadhar=${
+                                      item.Parent_AadhaarNo
+                                    }&mobile=${item.MobileNo}&email=${
+                                      item.Email
+                                    }&fingerprints=${encodeURIComponent(
+                                      JSON.stringify(item.FingerPrint)
+                                    )}&proof=${encodeURIComponent(
+                                      JSON.stringify(item.Proof)
+                                    )}`}
+                                    className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
+                                  >
+                                    <i className="ri-eye-line text-white"></i>
+                                  </Link>
+                                  {role === "BackOffice" ? null : (
+                                    <Link
+                                      to="#"
+                                      className="font-medium   no-underline   border-1 bg-[#f4516c] hover:bg-[#cb4c61] px-3 py-2 rounded-sm"
+                                    >
+                                      <i className="ri-delete-bin-line text-white"></i>
+                                    </Link>
+                                  )}
+                                  <Link
+                                    to={`/Upload?entrytype=C&apply=${
+                                      item.appliedBy
+                                    }&time=${item.timeStamp}&type=${
+                                      item.User_type
+                                    }&route=${"/child-entry-list"}`}
+                                    className="font-medium text-white no-underline  border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
+                                  >
+                                    Upload
+                                  </Link>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -176,7 +236,7 @@ const fetchData = async () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6">
+                  <td colSpan="2">
                     <h1 className="list-record">Record Not Found 😞</h1>
                   </td>
                 </tr>

@@ -45,7 +45,7 @@ import ViewChildData from "./Pages/Child/View_Child_Data/ViewChildData";
 //    ---------------------------MOBILE WORKING ROUTES-------------------------------
 
 import MobileNoUpdate from "./Pages/Mobile/Mobile-Update/MobileNoUpdate";
-import MobileData from "./Pages/Mobile/MobileData/MobileData";
+ 
 import AdminReport from "./Pages/Mobile/AdminReport/AdminReport";
 import MobileEntryList from "./Pages/Mobile/Mobile-No-Entry/MobileEntryList";
 
@@ -55,6 +55,8 @@ import Edit from "./Components/ActionServices/Edit";
 import Finger from "./Components/ActionServices/Finger";
 import EditView from "./Components/ActionServices/EditView";
 import EditCustomer from "./Pages/EditCustomer/EditCustomer";
+import Upload from "./Components/ActionServices/Upload";
+import EditViewM from "./Components/ActionServices/EditViewM";
 
 const App = () => {
   return (
@@ -68,7 +70,7 @@ const App = () => {
 function Layout() {
   let location = useLocation();
 
-  const hideLayout = ["/", "/forget", "/user-finger"].includes(
+  const hideLayout = ["/", "/forget", "/user-finger", "/Upload"].includes(
     location.pathname
   );
 
@@ -115,7 +117,7 @@ function Layout() {
           <Route path="/ViewChildData" element={<ViewChildData />} />
           {/*    ---------------------------MOBILE WORKING ROUTES------------------------------- */}
           <Route path="/mobileupdate" element={<MobileNoUpdate />} />
-          <Route path="/mobiledata" element={<MobileData />} />
+
           <Route path="/adminreport" element={<AdminReport />} />
           <Route path="/mobile-list" element={<MobileEntryList />} />
 
@@ -124,6 +126,8 @@ function Layout() {
           <Route path="/user-finger" element={<Finger />} />
           <Route path="/edit-view" element={<EditView />} />
           <Route path="/edit-customer" element={<EditCustomer />} />
+          <Route path="/Upload" element={<Upload />} />
+          <Route path="/edit-viewm" element={<EditViewM />} />
         </Route>
         {/* --------------------------------PROTECTED ROUTES ----------------------------------------------- */}
       </Routes>

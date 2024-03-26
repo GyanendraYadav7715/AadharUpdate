@@ -11,6 +11,15 @@ const Box = ({ onFingerprintUpload }) => {
   const [fingerprintCaptured, setFingerprintCaptured] = useState(false);
   //const [fingerprintCaptured, setFingerprintCaptured] = useState(true);
   const [image, setImage] = useState("");
+
+  // check userName 
+  const userData = localStorage.getItem("user");
+  let userName = "";
+
+  if (userData) {
+    const userObj = JSON.parse(userData);
+    userName = userObj.Username;
+  }
   const captureFingerAndUpload = async () => {
     if (captureCount < 5 && !isLoading) {
       setIsLoading(true);
@@ -51,18 +60,15 @@ const Box = ({ onFingerprintUpload }) => {
 
   const uploadToS3 = async (imageBlob) => {
     const formData = new FormData();
-    formData.append("image", imageBlob, `fingerprint_${Date.now()}.jpg`);
-
-  
-    
-    
-
+    formData.append("document", imageBlob, `f_${Date.now()}.jpg`);
+     
     try {
       const response = await axios.post(
-        `${Local_Url}/api/v1/retailer/retailer-fingerdata`,
+        `${Local_Url}/api/v1/retailer/retailer-fingerdata?userName=${userName}`,
         formData
         
       );
+
       const image = response.data.imageUrl;
       setImage(image);
       console.log("Fingerprint uploaded successfully:", response.data.imageUrl);

@@ -7,7 +7,7 @@ import queryString from "query-string";
 const EditView = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const { fingerprints, proof } = queryString.parse(location.search);
+  const { fingerprints, } = queryString.parse(location.search);
   const name = searchParams.get("name");
   const fname = searchParams.get("fname");
   const dob = searchParams.get("dob");
@@ -16,7 +16,7 @@ const EditView = () => {
   const email = searchParams.get("email");
   const purpose = searchParams.get("purpose");
   const finger = JSON.parse(decodeURIComponent(fingerprints));
-  const Proof = JSON.parse(decodeURIComponent(proof));
+//   const Proof = JSON.parse(decodeURIComponent(proof));
 
   //FINGER PRINT ALL WORK
   const fingerprintUrls = finger.map((fingerprint) => {
@@ -26,14 +26,14 @@ const EditView = () => {
   const images = fingerprintUrls.flat();
 
   //PROOF ALL WORK
-  const ProoftUrls = Proof.map((proofs) => {
-    const { _id, ...proofsWithoutId } = proofs; // Exclude _id
-    return Object.values(proofsWithoutId);
-  });
-  const PDF = ProoftUrls.flat();
-  const POA = PDF[0];
-  const POB = PDF[1];
-  const POI = PDF[2];
+//   const ProoftUrls = Proof.map((proofs) => {
+//     const { _id, ...proofsWithoutId } = proofs; // Exclude _id
+//     return Object.values(proofsWithoutId);
+//   });
+//   const PDF = ProoftUrls.flat();
+//   const POA = PDF[0];
+//   const POB = PDF[1];
+//   const POI = PDF[2];
 
   const title = "Edit Customer";
   const links = [

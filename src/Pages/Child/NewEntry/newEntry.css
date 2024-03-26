@@ -1,18 +1,14 @@
-
-.select{
-    padding: .5rem;
+.select {
+    padding: 0.5rem;
 }
 
-.child-header{
+.child-header {
     justify-content: left;
-        display: flex;
-        /* border: 1px solid green; */
-        position: absolute;
-      margin-top: 5px;
-
+    display: flex;
+    position: absolute;
+    margin-top: 5px;
 }
 
-.child-header-title{
-text-align: center;
-    
+.child-header-title {
+    text-align: center;
 }

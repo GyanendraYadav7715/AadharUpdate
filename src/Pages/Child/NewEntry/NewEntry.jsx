@@ -7,16 +7,119 @@ import Information from "../../../Components/Information/Information";
 import { Select } from "../../../Components/Selection/Select";
 import { Local_Url } from "../../../constant/constant";
 import FileUpload from "../../../Components/FileUpload/FileUpload";
- import { toast } from "react-toastify";
- import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const NewEntry = () => {
-  const userData = localStorage.getItem("user");
-  let role = "";
-  if (userData) {
-    const userObj = JSON.parse(userData);
-    role = userObj.role;
-  }
+const ChlidEntry = () => {
+  // Initialize state for form data
+  const [formData, setFormData] = useState({
+    Name: "",
+    SelectedParent: "",
+    ParentName: "",
+    DOB: "",
+    Gender: "",
+    Parent_AadhaarNo: "",
+    MobileNo: "",
+    Email: "",
+    Address: "",
+    Proof: [{ POI: "", POB: "", POA: "" }],
+    FingerPrint: [
+      {
+        FingerPrint1: "",
+        FingerPrint2: "",
+        FingerPrint3: "",
+        FingerPrint4: "",
+        FingerPrint5: "",
+      },
+    ],
+  });
+
+  // Function to format current date
+  const formatCurrentDate = () => {
+    const date = new Date();
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")} ${String(
+      date.getHours()
+    ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(
+      date.getSeconds()
+    ).padStart(2, "0")}`;
+  };
+
+  // Handle input change for form fields
+  const handleInputChange = (name, value) => {
+    setFormData({
+      ...formData,
+      [name]: value,
+      createdOn: formatCurrentDate(),
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validate required fields
+    if (
+      !formData.Name ||
+      !formData.Parent_AadhaarNo ||
+      !formData.Email ||
+      !formData.MobileNo
+    ) {
+      return toast.error("Please fill all the required fields.");
+    }
+
+    try {
+      // Get user data from local storage
+      const userData = JSON.parse(localStorage.getItem("user"));
+      formData.userName = userData.Username;
+      formData.userType = userData.User_type;
+
+      // Make API request
+      const apiUrl = `${Local_Url}/api/v1/retailer/create-child-user`;
+      const response = await axios.post(apiUrl, formData);
+
+      // Show success message
+      toast.success(response.data.message);
+
+      //After successs reload the page
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+
+      // Reset form data
+      setFormData({
+        ...formData,
+        Name: "",
+        SelectedParent: "",
+        ParentName: "",
+        DOB: "",
+        Gender: "",
+        Parent_AadhaarNo: "",
+        MobileNo: "",
+        Email: "",
+        Address: "",
+        userName: "",
+        userType: "retailer",
+        Proof: [{ POI: "", POB: "", POA: "" }],
+        FingerPrint: [
+          {
+            FingerPrint1: "",
+            FingerPrint2: "",
+            FingerPrint3: "",
+            FingerPrint4: "",
+            FingerPrint5: "",
+          },
+        ],
+      });
+    } catch (error) {
+      // Show error message
+      toast.error(error.response.data.message);
+    }
+  };
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const role = userData.User_type;
 
   const title = "Child Enrollment System";
   const links =
@@ -38,92 +141,6 @@ const NewEntry = () => {
     },
   ];
 
-  const [formData, setFormData] = useState({
-    Name: "",
-    SelectedParent: "",
-    ParentName: "",
-    DOB: "",
-    Gender: "",
-    Parent_AadhaarNo: "",
-    MobileNo: "",
-    Email: "",
-    Address: "",
-    
-    Proof: [{ POI: "" }, { POB: "" }, { POA: "" }],
-    FingerPrint: [
-      { FingerPrint1: "" },
-      { FingerPrint2: "" },
-      { FingerPrint3: "" },
-      { FingerPrint4: "" },
-      { FingerPrint5: "" },
-    ],
-  });
-
-  const formatCurrentDate = () => {
-    const date = new Date();
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-      2,
-      "0"
-    )}-${String(date.getDate()).padStart(2, "0")} ${String(
-      date.getHours()
-    ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(
-      date.getSeconds()
-    ).padStart(2, "0")}`;
-  };
-
-  const handleInputChange = (name, value) => {
-    setFormData({
-      ...formData,
-      [name]: value,
-      createdOn: formatCurrentDate(),
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = localStorage.getItem("user");
-    const userObj = JSON.parse(data);
-    formData.userName = userObj.Username;
-    formData.userType = userObj.User_type;
-    role = userObj.User_type;
-
-    if (!formData.Name || !formData.Email || !formData.MobileNo) {
-      return toast.error("Please fill all the required fields.");
-    }
-
-    try {
-      const apiUrl = `${Local_Url}/api/v1/retailer/create-child-user`;
-      const response = await axios.post(apiUrl, formData);
-      //console.log("Form submitted successfully:", response.data);
-      toast.success(response.data.message);
-      setFormData({
-        ...formData,
-        Name: "",
-        SelectedParent: "",
-        ParentName: "",
-        DOB: "",
-        Gender: "",
-        Parent_AadhaarNo: "",
-        MobileNo: "",
-        Email: "",
-        Address: "",
-        userName: "",
-        userType: "retailer",
-        Proof: [{ POI: "" }, { POB: "" }, { POA: "" }],
-        FingerPrint: [
-          { FingerPrint1: "" },
-          { FingerPrint2: "" },
-          { FingerPrint3: "" },
-          { FingerPrint4: "" },
-          { FingerPrint5: "" },
-        ],
-      });
-    } catch (error) {
-     // console.error("Error submitting form:", error.message);
-       toast.error(error.response.data.message);
-    }
-  };
-
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
@@ -138,7 +155,7 @@ const NewEntry = () => {
               <CustomInput
                 onChange={handleInputChange}
                 label="Child Name"
-                type="fullname"
+                type="text"
                 value={formData.Name}
                 name="Name"
                 placeholder="Full Name"
@@ -147,7 +164,7 @@ const NewEntry = () => {
               <CustomInput
                 onChange={handleInputChange}
                 label="Father Name / Mother Name"
-                type="fullname"
+                type="text"
                 value={formData.ParentName}
                 name="ParentName"
                 placeholder="Enter Parents Name"
@@ -260,7 +277,13 @@ const NewEntry = () => {
                   }))
                 }
               />
-
+              <CustomInput
+                label="Mobile No."
+                onChange={handleInputChange}
+                type="tel"
+                value={formData.MobileNo}
+                name="MobileNo"
+              />
               <CustomInput
                 onChange={handleInputChange}
                 label="E-mail ID"
@@ -279,9 +302,10 @@ const NewEntry = () => {
                 placeholder="House No, Village, City Name, District, State"
                 value={formData.Address}
               />
+              <div className="empty-space"></div>
+              <div className="empty-space"></div>
 
               <CustomInput
-                label="Address"
                 onChange={handleInputChange}
                 type="text"
                 name="Address_in_hindi"
@@ -317,4 +341,4 @@ const NewEntry = () => {
   );
 };
 
-export default NewEntry;
+export default ChlidEntry;

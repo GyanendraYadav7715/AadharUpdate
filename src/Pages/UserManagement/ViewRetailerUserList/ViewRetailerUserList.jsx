@@ -18,13 +18,14 @@ const ViewRetailerUserList = () => {
   const [data, setData] = useState([]);
   const tableRef = useRef();
 
+  //Geting data from api
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
           `${Local_Url}/api/v1/admin/get-all-retailer`
         );
-        console.log(response.data);
+
         const responseData = response.data.data.map((user) => ({
           ...user,
           status: "Active",
@@ -32,13 +33,14 @@ const ViewRetailerUserList = () => {
         setData(responseData);
         setFilteredProducts(responseData);
       } catch (error) {
-        console.error("Something went wrong while fetching data:", error);
+        console.error(error);
       }
     };
 
     fetchData();
   }, []);
 
+  //handle-search
   useEffect(() => {
     const filtered = data.filter((product) =>
       Object.values(product)
@@ -48,6 +50,8 @@ const ViewRetailerUserList = () => {
     );
     setFilteredProducts(filtered);
   }, [searchQuery, data]);
+
+  //  handle edit status the of the user
 
   const handleStatusEdit = async (Username, isUserblocked) => {
     try {
@@ -81,6 +85,8 @@ const ViewRetailerUserList = () => {
       console.error("Error updating user status:", error);
     }
   };
+
+  //Activating dropdown figure
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
@@ -167,37 +173,43 @@ const ViewRetailerUserList = () => {
                           {/* Dropdown content */}
                           <div className="dropdown-content">
                             <div className="dropdown-title">
-                              <h3 className="status">
-                                Status
+                              {/* Status Handaler in the Dropdown */}
+                              <h3 className="status border-b-2 border-t-2 flex items-center  gap-3">
+                                <span className="font-bold text-lg">
+                                  Status
+                                </span>
                                 <span
-                                  style={{
-                                    color: "blue",
-                                    fontSize: "15px",
-                                  }}
+                                  className="text-white hover:bg-[#77b652] border-1 bg-[#88d05e] px-2 py-1  rounded-sm "
+                                  style={{ fontsize: "15px" }}
                                 >
                                   {product.status}
                                 </span>
                               </h3>
-                              <h3 className="status">Action</h3>
-
-                              <div className="px-6 py-4 gap-2 flex items-center justify-between">
-                                <button
-                                  onClick={() =>
-                                    handleStatusEdit(product.Username, "false")
-                                  }
-                                  className="font-medium text-white no-underline hover:underline border-1 bg-green-600 px-3 py-3 rounded-md"
-                                >
-                                  Activate
-                                </button>
-                                <button
-                                  onClick={() =>
-                                    handleStatusEdit(product.Username, "true")
-                                  }
-                                  className="font-medium text-white no-underline hover:underline border-1 bg-red-600 px-3 py-3 rounded-md"
-                                >
-                                  Deactivate
-                                </button>
-                              </div>
+                              {/* Action manegement in the dropdown */}
+                              <h3 className="status font-bold text-lg flex justify-center items-center  border-b-2 ">
+                                Action
+                                <div className="px-6 py-4 gap-2 flex items-center justify-between">
+                                  <button
+                                    onClick={() =>
+                                      handleStatusEdit(
+                                        product.Username,
+                                        "false"
+                                      )
+                                    }
+                                    className="font-medium text-white no-underline hover:bg-[#77b652] border-1 bg-[#88d05e] p-2 rounded-sm"
+                                  >
+                                    Activate
+                                  </button>
+                                  <button
+                                    onClick={() =>
+                                      handleStatusEdit(product.Username, "true")
+                                    }
+                                    className="font-medium text-white no-underline hover:bg-[#d45469] border-1 bg-[#f5627a] p-2 rounded-sm"
+                                  >
+                                    Deactivate
+                                  </button>
+                                </div>
+                              </h3>
                             </div>
                           </div>
                         </td>

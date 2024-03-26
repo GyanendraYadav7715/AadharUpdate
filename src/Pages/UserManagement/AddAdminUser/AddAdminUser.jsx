@@ -23,27 +23,14 @@ const AddAdminUser = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-     const validateFullName = (fullName) => {
-       const words = fullName.split(" ");
-       for (let i = 0; i < words.length; i++) {
-         if (!/^[A-Z]/.test(words[i])) {
-           return false;
-         }
-       }
-
-       return /^[A-Za-z]+(?: [A-Za-z]+)*$/.test(fullName);
-     };
-
+      
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
-  const validateUsername = (username) =>
-    /^[A-Za-z0-9_-]+$/.test(username) &&
-    username.length >= 3 &&
-    username.length <= 16;
+  
 
   const validateMobileNumber = (Phone_n) => /^\d{10}$/.test(Phone_n);
 
-  const validatePassword = (password) => password.length >= 6;
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,21 +52,13 @@ const AddAdminUser = () => {
       return toast.error("Please enter a valid Mobile No");
     }
 
-    if (!validateFullName(formData.Name)) {
-      return toast.error("Please enter a valid full name");
-    }
+    
 
     if (!validateEmail(formData.Email)) {
       return toast.error("Please enter a valid email address.");
     }
 
-    if (!validateUsername(formData.Username)) {
-      return toast.error("Please enter a valid Username.");
-    }
-
-    if (!validatePassword(formData.Password)) {
-      return toast.error("Please enter a valid Password.");
-    }
+   
 
     const userData = JSON.parse(localStorage.getItem("user"));
     formData.superAdminUser = userData ? userData.Username : "";
@@ -132,20 +111,20 @@ const AddAdminUser = () => {
                 name="Name"
                 value={formData.Name}
                 onChange={handleInputChange}
-                type="fullname"
+                type="text"
                 placeholder="Full Name"
                 maxLength={50}
-                validate={validateFullName}
+                // validate={validateFullName}
               />
               <CustomInput
                 label="Username"
                 name="Username"
                 value={formData.Username}
                 onChange={handleInputChange}
-                type="username"
+                type="text"
                 placeholder="UP_#$_E1"
                 maxLength={16}
-                validate={validateUsername}
+                // validate={validateUsername}
               />
               <CustomInput
                 label="Email"
@@ -192,7 +171,7 @@ const AddAdminUser = () => {
                 name="Password"
                 type="password"
                 placeholder="Password"
-                validate={validatePassword}
+                // validate={validatePassword}
               />
             </div>
             <div className="mb-6">

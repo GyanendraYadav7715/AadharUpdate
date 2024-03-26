@@ -1,83 +1,94 @@
- import React from "react";
+import React, {  useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Local_Url } from "../../constant/constant";
+import FileUpload from "../FileUpload/FileUpload";
 
- class FileUpload extends React.Component {
-   // Function to handle file selection
-   handleFileSelect = (event) => {
-     const files = event.target.files;  
+const Upload = () => {
+  const navigate =useNavigate()
+   const location = useLocation();
+   const searchParams = new URLSearchParams(location.search);
+   const entrytype = searchParams.get("entrytype");
+   const apply = searchParams.get("apply");
+   const time = searchParams.get("time");
+  const type = searchParams.get("type");
+  const route = searchParams.get("route");
+  
+  
+  const [formData, setFormData] = useState({
+    appliedBy: apply,
+    timestamp: time,
+    User_type: type,
+    entryType: entrytype,
+    oSlip: "",
      
-     console.log(files);
-   };
+  });
 
-   // Function to handle drag over
-   handleDragOver = (event) => {
-     event.preventDefault();
-     event.stopPropagation();
+  const handleSubmit = async () => {
+    if (!formData.oSlip) {
+      return toast.error("Please fill all the required fields");
+    }
+
+    try {
+      const apiUrl = `${Local_Url}/api/v1/admin/uploadOSlip`;
+      const response = await axios.post(apiUrl, formData);
+
+      console.log(response.data);
+      // Show success message
+      toast.success(response.data.message);
       
-     event.target.classList.add("border-blue-500");  
-   };
+      setTimeout(() => {
+         navigate(route);
+      }, 200);
+       
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
 
-   // Function to handle drag leave
-   handleDragLeave = (event) => {
-     event.preventDefault();
-     event.stopPropagation();
-      
-     event.target.classList.remove("border-blue-500");  
-   };
+  const handleCancel = () => {
+      navigate(route);
+     
+  };
 
-   // Function to handle drop
-   handleDrop = (event) => {
-     event.preventDefault();
-     event.stopPropagation();
-     event.target.classList.remove("border-blue-500"); 
-     const files = event.dataTransfer.files;  
-      
-     console.log(files);
-   };
+  return (
+    <>
+      <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-md w-1/4">
+          <h2 className="text-xl font-semibold mb-4">
+            Upload Acknowledgement Slip
+          </h2>
+          <FileUpload
+            name="Acknowledgement Slip"
+            onFileUpload={(imageUrl) =>
+              setFormData((prevFormData) => ({
+                ...prevFormData,
 
-   render() {
-     return (
-       <div className="flex items-center justify-center w-full">
-         <label
-           htmlFor="dropzone-file"
-           className="dropzone flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100 "
-           onDragOver={this.handleDragOver}
-           onDragLeave={this.handleDragLeave}
-           onDrop={this.handleDrop}
-         >
-           <div className="flex flex-col items-center justify-center pt-5 pb-6">
-             <svg
-               className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-               aria-hidden="true"
-               xmlns="http://www.w3.org/2000/svg"
-               fill="none"
-               viewBox="0 0 20 16"
-             >
-               <path
-                 stroke="currentColor"
-                 strokeLinecap="round"
-                 strokeLinejoin="round"
-                 strokeWidth="2"
-                 d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-               />
-             </svg>
-             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-               <span className="font-semibold">Click to upload</span> or drag
-               and drop
-             </p>
-             <p className="text-xs text-gray-500 dark:text-gray-400">
-               SVG, PNG, JPG or GIF (MAX. 800x400px)
-             </p>
-           </div>
-           <input
-             id="dropzone-file"
-             type="file"
-             className="hidden"
-             onChange={this.handleFileSelect}
-           />
-         </label>
-       </div>
-     );
-   }
- }
+                oSlip: imageUrl,
+              }))
+            }
+          />
 
- export default FileUpload;
+          <div className="flex justify-end mt-6">
+            <button
+              onClick={handleCancel}
+              className="px-4 py-2 mr-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSubmit}
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Upload;
