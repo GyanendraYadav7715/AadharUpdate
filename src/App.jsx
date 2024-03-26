@@ -56,6 +56,7 @@ import Finger from "./Components/ActionServices/Finger";
 import EditView from "./Components/ActionServices/EditView";
 import EditCustomer from "./Pages/EditCustomer/EditCustomer";
 import Upload from "./Components/ActionServices/Upload";
+import EditViewM from "./Components/ActionServices/EditViewM";
 
 const App = () => {
   return (
@@ -116,7 +117,7 @@ function Layout() {
           <Route path="/ViewChildData" element={<ViewChildData />} />
           {/*    ---------------------------MOBILE WORKING ROUTES------------------------------- */}
           <Route path="/mobileupdate" element={<MobileNoUpdate />} />
-           
+
           <Route path="/adminreport" element={<AdminReport />} />
           <Route path="/mobile-list" element={<MobileEntryList />} />
 
@@ -126,6 +127,7 @@ function Layout() {
           <Route path="/edit-view" element={<EditView />} />
           <Route path="/edit-customer" element={<EditCustomer />} />
           <Route path="/Upload" element={<Upload />} />
+          <Route path="/edit-viewm" element={<EditViewM />} />
         </Route>
         {/* --------------------------------PROTECTED ROUTES ----------------------------------------------- */}
       </Routes>

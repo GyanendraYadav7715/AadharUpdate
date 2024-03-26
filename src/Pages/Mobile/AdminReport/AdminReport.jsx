@@ -211,7 +211,7 @@ const AdminReport = () => {
                                     <i className="ri-fingerprint-fill text-white"></i>
                                   </Link>
                                   <Link
-                                    to={`/edit-view?name=${item.Name}&fname=${
+                                    to={`/edit-viewm?name=${item.Name}&fname=${
                                       item.FatherName
                                     }&dob=${item.DOA}&aadhar=${
                                       item.AadhaarNo
@@ -219,6 +219,8 @@ const AdminReport = () => {
                                       item.Email
                                     }&fingerprints=${encodeURIComponent(
                                       JSON.stringify(item.FingerPrint)
+                                    )}&proof=${encodeURIComponent(
+                                      JSON.stringify(item.Proof)
                                     )}`}
                                     className="font-medium   no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
