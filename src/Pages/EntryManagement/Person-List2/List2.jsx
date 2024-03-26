@@ -155,24 +155,42 @@ function List() {
                         <td colSpan="6">
                           <div className="dropdown-content">
                             <div className="dropdown-title">
-                              <h3 className="status border-b-2 m-1">
-                                Admin Remark:{" "}
-                                <span className="text-red-500 capitalize">
-                                  {item.remarks}
-                                </span>
-                              </h3>
+                              {item.status === "Completed" ? (
+                                <h3 className="status border-b-2 m-1">
+                                  Admin Remark
+                                  <span className="text-amber-400 capitalize ml-3">
+                                    {item.remarks}
+                                  </span>
+                                </h3>
+                              ) : (
+                                <h3 className="status border-b-2 m-1">
+                                  Admin Remark:
+                                  <span className="text-red-500 capitalize">
+                                    {item.remarks}
+                                  </span>
+                                </h3>
+                              )}
                               <h3 className="status border-b-2 m-1">
                                 Applied on
                                 <span className="text-md font-medium ml-2 text-indigo-500 ">
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              <h3 className="status border-b-2 m-1 ">
-                                Status
-                                <span className="bg-yellow-400 px-2 py-1 text-white ml-5 rounded-sm ">
-                                  {item.status}
-                                </span>
-                              </h3>
+                              {item.status === "Completed" ? (
+                                <h3 className="status border-b-2 m-1 ">
+                                  Status
+                                  <span className="bg-yellow-400 px-2 py-1 text-white ml-5 rounded-sm ">
+                                    {item.status}
+                                  </span>
+                                </h3>
+                              ) : (
+                                <h3 className="status border-b-2 m-1 ">
+                                  Status
+                                  <span className="bg-[#f4516c] px-2 py-1 text-white ml-5 rounded-sm ">
+                                    {item.status}
+                                  </span>
+                                </h3>
+                              )}
                               <div className=" flex items-center justify-center gap-3 border-b-2">
                                 <h3 className="status">Action</h3>
                                 <div className="px-6 py-4 flex items-center justify-between gap-1">

@@ -19,7 +19,7 @@ const EditView = () => {
   const purpose = searchParams.get("purpose");
   const POI = searchParams.get("POI")
   const POA = searchParams.get("POA");
-    const POB = searchParams.get("POB");
+  const POB = searchParams.get("POB");
 
   const title = "Edit Customer";
   const links = [

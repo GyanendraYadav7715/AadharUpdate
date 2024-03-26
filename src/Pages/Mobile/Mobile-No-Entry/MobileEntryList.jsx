@@ -9,7 +9,7 @@ import { Local_Url } from "../../../constant/constant";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Slip from "../../../Components/Slip/Slip";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 
 function ViewChildData() {
   const [data, setData] = useState([]);
@@ -57,7 +57,7 @@ function ViewChildData() {
       .catch((err) => {
         console.log("Something Went Wrong");
       });
-  },[]);
+  }, []);
 
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
@@ -69,7 +69,6 @@ function ViewChildData() {
     );
     setFilteredUsers(filtered);
   };
- 
 
   return (
     <>
@@ -152,12 +151,23 @@ function ViewChildData() {
                                 </h3>
                                 <Slip fileUrl={item.oSlip} />
                               </div>
-                              <div className="Action">
-                                <h4 className="Action-text">Action</h4>
-                                <Link to="/edit-customer" className="button">
-                                  <i className="ri-edit-2-fill pencil"></i>
-                                </Link>
-                              </div>
+                              {item.status === "complete" ? (
+                                <div className="flex  items-center  ">
+                                  <h4 className="Action-text">Action</h4>
+                                  <img
+                                    className="size-16 object-cover rounded-full ml-3"
+                                    src="https://cdn.dribbble.com/users/4358240/screenshots/14825308/media/84f51703b2bfc69f7e8bb066897e26e0.gif"
+                                    alt="Uploaded File"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="Action">
+                                  <h4 className="Action-text">Action</h4>
+                                  <Link to="/edit-customer" className="button">
+                                    <i className="ri-edit-2-fill pencil"></i>
+                                  </Link>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </td>

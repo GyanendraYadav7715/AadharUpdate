@@ -45,7 +45,7 @@ import ViewChildData from "./Pages/Child/View_Child_Data/ViewChildData";
 //    ---------------------------MOBILE WORKING ROUTES-------------------------------
 
 import MobileNoUpdate from "./Pages/Mobile/Mobile-Update/MobileNoUpdate";
-import MobileData from "./Pages/Mobile/MobileData/MobileData";
+ 
 import AdminReport from "./Pages/Mobile/AdminReport/AdminReport";
 import MobileEntryList from "./Pages/Mobile/Mobile-No-Entry/MobileEntryList";
 
@@ -116,7 +116,7 @@ function Layout() {
           <Route path="/ViewChildData" element={<ViewChildData />} />
           {/*    ---------------------------MOBILE WORKING ROUTES------------------------------- */}
           <Route path="/mobileupdate" element={<MobileNoUpdate />} />
-          <Route path="/mobiledata" element={<MobileData />} />
+           
           <Route path="/adminreport" element={<AdminReport />} />
           <Route path="/mobile-list" element={<MobileEntryList />} />
 

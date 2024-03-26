@@ -38,7 +38,12 @@ const AdminReport = () => {
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
         console.log(response.data.data);
-
+        console.log(response.data.data[0].FingerPrint);
+        // console.log(response.data.data[0].FingerPrint[0].FingerPrint1);
+        // console.log(response.data.data[0].FingerPrint[1].FingerPrint2);
+        // console.log(response.data.data[0].FingerPrint[2].FingerPrint3);
+        // console.log(response.data.data[0].FingerPrint[3].FingerPrint4);
+        // console.log(response.data.data[0].FingerPrint[4].FingerPrint5);
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -101,7 +106,7 @@ const AdminReport = () => {
                                 ? "ri-close-fill child"
                                 : "ri-add-fill child"
                             }
-                          ></i>{" "}
+                          ></i>
                           {index + 1}
                         </div>
                       </td>
@@ -134,24 +139,59 @@ const AdminReport = () => {
                         <td colSpan="4">
                           <div className="dropdown-content">
                             <div className="dropdown-title">
-                              <h3 className="status border-b-2 m-1">
-                                Admin Remark:{" "}
-                                <span className="text-red-500 capitalize">
-                                  {item.remarks}
-                                </span>
-                              </h3>
+                              {item.status === "Completed" ? (
+                                <h3 className="status border-b-2 m-1">
+                                  Admin Remark
+                                  <span className="text-amber-400 capitalize ml-3">
+                                    {item.remarks}
+                                  </span>
+                                </h3>
+                              ) : (
+                                <h3 className="status border-b-2 m-1">
+                                  Admin Remark:
+                                  <span className="text-red-500 capitalize">
+                                    {item.remarks}
+                                  </span>
+                                </h3>
+                              )}
                               <h3 className="status border-b-2 m-1">
                                 Applied on
                                 <span className="text-md font-medium ml-2 text-indigo-500 ">
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              <h3 className="status border-b-2 m-1 ">
-                                Status
-                                <span className="bg-yellow-400 px-2 py-1 text-white ml-5 rounded-sm ">
-                                  {item.status}
+                              {item.status === "completed" ? (
+                                <h3 className="status border-b-2 m-1 ">
+                                  Status
+                                  <span className="bg-yellow-400 px-2 py-1 text-white ml-5 rounded-sm ">
+                                    {item.status}
+                                  </span>
+                                </h3>
+                              ) : (
+                                <h3 className="status border-b-2 m-1 ">
+                                  Status
+                                  <span className="bg-[#f4516c] px-2 py-1 text-white ml-5 rounded-sm ">
+                                    {item.status}
+                                  </span>
+                                </h3>
+                              )}
+
+                              {/* <h3 className="status border-b-2 m-1 ">
+                                <span className=" px-2 py-1 text-black ml-5 rounded-sm ">
+                                  {item.FingerPrint.map(
+                                    (fingerprint, fingerprintIndex) => (
+                                      <li key={fingerprintIndex}>
+                                        {Object.keys(fingerprint).map((key) => (
+                                          <div key={key}>
+                                            {`${key}: ${fingerprint[key]}`}
+                                          </div>
+                                        ))}
+                                      </li>
+                                    )
+                                  )}
                                 </span>
-                              </h3>
+                              </h3> */}
+
                               <div className=" flex items-center justify-center  border-b-2">
                                 <h3 className="status">Action</h3>
                                 <div className="px-6 py-4  flex items-center justify-between gap-1">
@@ -163,7 +203,16 @@ const AdminReport = () => {
                                   </Link>
 
                                   <Link
-                                    to={`/user-finger?aadhar=${item.AadhaarNo}`}
+                                    to={`/user-finger?aadhar=${
+                                      item.AadhaarNo
+                                    }&Finger=${item.FingerPrint.map(
+                                      (fingerprint, fingerprintIndex) => (
+                                        <li key={fingerprintIndex}>
+                                          Fingerprint {fingerprintIndex + 1}:
+                                          {fingerprint.FingerPrint1}
+                                        </li>
+                                      )
+                                    )}`}
                                     className="font-medium   no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-fingerprint-fill text-white"></i>

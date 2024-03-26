@@ -35,6 +35,7 @@ const DashBoard = () => {
           `${Local_Url}/api/v1/admin/adminDashboard`,
           { params: queryParams }
         );
+        console.log(response.data);
         setStatistics({
 
           balance: response.data.data.Balance,
@@ -50,7 +51,7 @@ const DashBoard = () => {
           totalMobileApplicationRejected: response.data.data.mrejectApl,
         });
       } catch (error) {
-        console.error("Error fetching data: ", error);
+        console.log(error);
       }
     };
 

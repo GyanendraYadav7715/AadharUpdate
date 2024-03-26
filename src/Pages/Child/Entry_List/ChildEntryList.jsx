@@ -108,7 +108,7 @@ function ChildEntryList() {
                                 ? "ri-close-fill child"
                                 : "ri-add-fill child"
                             }
-                          ></i>{" "}
+                          ></i>
                           {index + 1}
                         </div>
                       </td>
@@ -141,25 +141,89 @@ function ChildEntryList() {
                         <td colSpan="3">
                           <div className="dropdown-content bg-white">
                             <div className="dropdown-title">
-                              <h3 className="status border-b-2">
-                                Admin Remark:{" "}
-                                <span className="text-red-500 capitalize">
-                                  {item.remarks}
-                                </span>
-                              </h3>
+                              {item.status === "Completed" ? (
+                                <h3 className="status border-b-2 m-1">
+                                  Admin Remark
+                                  <span className="text-amber-400 capitalize ml-3">
+                                    {item.remarks}
+                                  </span>
+                                </h3>
+                              ) : (
+                                <h3 className="status border-b-2 m-1">
+                                  Admin Remark:
+                                  <span className="text-red-500 capitalize">
+                                    {item.remarks}
+                                  </span>
+                                </h3>
+                              )}
                               <h3 className="status border-b-2 m-1">
                                 Applied on
                                 <span className="text-md font-medium ml-2 text-indigo-500 ">
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              <h3 className="status border-b-2 m-1 ">
-                                Status
-                                <span className="bg-yellow-400 px-2 py-1 text-white ml-5 rounded-sm ">
-                                  {item.status}
+                              {item.status === "completed" ? (
+                                <h3 className="status border-b-2 m-1 ">
+                                  Status
+                                  <span className="bg-yellow-400 px-2 py-1 text-white ml-5 rounded-sm ">
+                                    {item.status}
+                                  </span>
+                                </h3>
+                              ) : (
+                                <h3 className="status border-b-2 m-1 ">
+                                  Status
+                                  <span className="bg-[#f4516c] px-2 py-1 text-white ml-5 rounded-sm ">
+                                    {item.status}
+                                  </span>
+                                </h3>
+                              )}
+                              {/* <h3 className="status border-b-2 m-1 ">
+                                Fingerprint:
+                                <span className=" px-2 py-1 text-black ml-5 rounded-sm ">
+                                  {item.FingerPrint.map(
+                                    (fingerprint, fingerprintIndex) => (
+                                      <li key={fingerprintIndex}>
+                                        {Object.keys(fingerprint).map((key) => (
+                                          <div key={key}>
+                                            {`${key}: ${fingerprint[key]}`}
+                                          </div>
+                                        ))}
+                                      </li>
+                                    )
+                                  )}
                                 </span>
                               </h3>
-                              <div className=" flex items-center justify-center  border-b-2">
+
+                              <h3 className="status border-b-2 m-1 ">
+                                proof:
+                                <span className=" px-2 py-1 text-black ml-5 rounded-sm ">
+                                  {item.Proof.map(
+                                    (fingerprint, fingerprintIndex) => (
+                                      <li key={fingerprintIndex}>
+                                        {Object.keys(fingerprint).map((key) => (
+                                          <div key={key}>
+                                            {`${key}: ${fingerprint[key]}`}
+                                          </div>
+                                        ))}
+                                      </li>
+                                    )
+                                  )}
+                                  {item.Proof.map((item, itemIndex) => (
+                                    <div key={itemIndex}>
+                                      <h2>Item {itemIndex + 1}</h2>
+                                       <li key={fingerprintIndex}></li>
+                                      <ul>
+                                        {Object.keys(item).map((key) => (
+                                          <li key={key}>
+                                            <a href={item[key]}>{key}</a>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  ))}
+                                </span>
+                              </h3> */}
+                              <div className=" flex items-center  border-b-2">
                                 <h3 className="status">Action</h3>
                                 <div className="px-6 py-4 flex items-center justify-between gap-1">
                                   <Link

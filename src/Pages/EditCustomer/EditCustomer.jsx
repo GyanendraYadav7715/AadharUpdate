@@ -109,6 +109,7 @@ const EditCustomer = () => {
                 name="AadhaarNo"
                 placeholder="3456765434567"
                 value={formData.AadhaarNo}
+                
               />
               <CustomInput
                 onChange={handleInputChange}
