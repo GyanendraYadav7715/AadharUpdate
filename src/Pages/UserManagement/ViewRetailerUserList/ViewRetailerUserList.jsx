@@ -100,7 +100,7 @@ const ViewRetailerUserList = () => {
             <tbody>
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((product, index) => (
-                  <React.Fragment key={product.id}>
+                  <React.Fragment key={`product_${index}`}>
                     <tr>
                       <td>
                         <div
@@ -129,7 +129,7 @@ const ViewRetailerUserList = () => {
                       <td>{product.Balance}</td>
                     </tr>
                     {selectedRow === index && (
-                      <tr>
+                      <tr key={`details_${index}`}>
                         <td colSpan="6" style={{ backgroundColor: "white" }}>
                           {/* Dropdown content */}
                           <div className="dropdown-content">
@@ -170,7 +170,7 @@ const ViewRetailerUserList = () => {
                   </React.Fragment>
                 ))
               ) : (
-                <tr>
+                <tr key="no_records">
                   <td colSpan="9">
                     <h1 className="list-record text-center text-3xl">
                       Record Not Found😞

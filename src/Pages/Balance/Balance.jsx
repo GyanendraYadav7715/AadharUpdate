@@ -6,14 +6,16 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Balance = () => {
+   
   const [formData, setFormData] = useState({
     Username: "",
     amount: "",
     User_type: "Superadmin",
   });
-
+ 
   const { Username, amount } = formData;
 
+   
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevFormData) => ({
@@ -22,9 +24,11 @@ const Balance = () => {
     }));
   };
 
+   
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+     
     if (Username.trim() === "" || amount.trim() === "") {
       toast.error("Please fill all the fields");
       return;
@@ -37,21 +41,25 @@ const Balance = () => {
 
       toast.success(response.data.message);
 
+       
       setFormData({
         Username: "",
         amount: "",
       });
     } catch (error) {
+       
       toast.error(error.response.data.message);
     }
   };
 
+  
   const title = "Balance Transfer";
   const links = [
     { title: "Home", href: "/superadmin" },
     { title: "Balance Transfer" },
   ];
 
+  
   const mylinks = [
     {
       to: "/history",
@@ -113,7 +121,7 @@ const Balance = () => {
 
               <div className="pl-3">
                 <button
-                  className="Submit-button whitespace-nowrap bg-[#3f9e04] hover:bg-[#3f9e04d3]"
+                  className="Submit-button whitespace-nowrap bg-[#71b944] hover:bg-[#67a83e]"
                   type="submit"
                 >
                   <i className="ri-save-fill"> </i>

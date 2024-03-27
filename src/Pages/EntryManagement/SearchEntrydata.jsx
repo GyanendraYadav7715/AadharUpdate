@@ -124,11 +124,11 @@ const SearchEntrydata = () => {
               </div>
               <div className="pl-3">
                 <button
-                  className="Submit-button whitespace-nowrap bg-[#3f9e04] hover:bg-[#3f9e04d3]"
+                  className="Submit-button whitespace-nowrap bg-[#71b944] hover:bg-[#67a83e]"
                   type="submit"
                 >
-                  <i class="ri-save-fill"> </i>
-                  Get Details
+                  <i className="ri-save-fill"> </i>
+                  Search
                 </button>
               </div>
             </form>

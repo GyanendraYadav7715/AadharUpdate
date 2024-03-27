@@ -193,7 +193,7 @@ const AddAdminUser = () => {
             </div>
 
             <button
-              className="Submit-button whitespace-nowrap bg-[#3f9e04] hover:bg-[#3f9e04d3]"
+              className="Submit-button whitespace-nowrap bg-[#71b944] hover:bg-[#67a83e] ml-1"
               type="submit"
               onClick={handleSubmit}
             >

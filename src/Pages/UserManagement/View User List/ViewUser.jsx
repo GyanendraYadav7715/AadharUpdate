@@ -124,7 +124,7 @@ const ViewUser = () => {
             <tbody>
               {filteredUsers.length > 0 ? (
                 filteredUsers.map((user, index) => (
-                  <React.Fragment key={user.id}>
+                  <React.Fragment key={`item_${index}`}>
                     <tr>
                       <td>
                         <div
@@ -155,7 +155,7 @@ const ViewUser = () => {
                       <td>0</td>
                     </tr>
                     {selectedRow === index && (
-                      <tr>
+                      <tr key={`details_${index}`}>
                         <td colSpan="9" style={{ backgroundColor: "white" }}>
                           <div className="dropdown-content">
                             <div className="dropdown-title">
@@ -198,7 +198,7 @@ const ViewUser = () => {
                   </React.Fragment>
                 ))
               ) : (
-                <tr>
+                <tr key="no_records">
                   <td colSpan="11">
                     <h1 className="list-record text-center text-3xl">
                       Record Not Found😞

@@ -56,13 +56,13 @@ const EditStatus = () => {
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
-      <div className="p-1 sm:ml-64">
-        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-gray-300">
+      <div className="p-3 sm:ml-64">
+        <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <div className="grid grid-cols-1 gap-4 mb-4 ">
             <h3 className="text-2xl font-semibold">Update Retailer Status</h3>
             <form
-              className="flex flex-col items-start w-full border p-9 rounded-sm bg-white "
               onSubmit={handleSubmit}
+              className="flex flex-col items-start w-full border-[#00000047] border-2 p-9 rounded-md bg-white"
             >
               <div className="  w-full">
                 <div className="mb-6">
@@ -84,10 +84,10 @@ const EditStatus = () => {
               </div>
               <div>
                 <button
-                  className="Submit-button whitespace-nowrap bg-green-600"
+                  className="Submit-button whitespace-nowrap bg-[#71b944] hover:bg-[#67a83e] ml-1"
                   type="submit"
                 >
-                  <i class="ri-save-fill"> </i>
+                  <i className="ri-save-fill"> </i>
                   Submit
                 </button>
               </div>
