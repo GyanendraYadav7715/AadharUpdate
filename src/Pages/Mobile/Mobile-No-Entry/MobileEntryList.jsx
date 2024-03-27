@@ -151,7 +151,7 @@ function ViewChildData() {
                                 </h3>
                                 <Slip fileUrl={item.oSlip} />
                               </div>
-                              {item.status === "complete" ? (
+                              {item.status === "Completed" ? (
                                 <div className="flex  items-center  ">
                                   <h4 className="Action-text">Action</h4>
                                   <img

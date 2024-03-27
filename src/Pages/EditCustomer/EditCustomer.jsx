@@ -1,20 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
-
 import { Local_Url } from "../../constant/constant";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 import { CustomInput } from "../../Components/CustomeInput/CustomInput";
-//import { CustomInput2 } from "../../Components/CustomeInput/CustomInput2";
+import { CustomInput2 } from "../../Components/CustomeInput/CustomInput";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const EditCustomer = () => {
-  const userData = localStorage.getItem("user");
-  let role;
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const role = userData.User_type;
 
-  if (userData) {
-    const userObj = JSON.parse(userData);
-    role = userObj.role;
-  }
   const title = "Edit Customer";
   const links =
     role === "Superadmin"
@@ -22,15 +17,19 @@ const EditCustomer = () => {
       : role === "Retailer"
       ? [{ title: "Home", href: "/reatiler" }, { title: "Edit Customer" }]
       : [{ title: "Home", href: "/backoffice" }, { title: "Edit Customer" }];
- const mylinks = [
-   {
-     to: "/viewuser",
-     text: "View Customer",
-     icon: "ri-team-line text-white text-2xl ",
-   },
- ];
+  const mylinks = [
+    {
+      to: "/viewuser",
+      text: "View Customer",
+      icon: "ri-team-line text-white text-2xl ",
+    },
+  ];
   const [formData, setFormData] = useState({
+    appliedBy: "",
+    timestamp: "",
+    entryType: "",
     Name: "",
+    FatherName: "",
     DOB: "",
     AadhaarNo: "",
     MobileNo: "",
@@ -46,19 +45,24 @@ const EditCustomer = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = localStorage.getItem("user");
-    const userObj = JSON.parse(data);
-    formData.userName = userObj.Username;
-    formData.userType = userObj.User_type;
-    // Access the role property
-    role = userObj.User_type;
+    // const data = localStorage.getItem("user");
+    // const userObj = JSON.parse(data);
+    // formData.userName = userObj.Username;
+    // formData.userType = userObj.User_type;
+    // // Access the role property
+    // role = userObj.User_type;
 
-    if (!formData.Name || !formData.Email || !formData.MobileNo) {
+    if (
+      !formData.Name ||
+      !formData.Email ||
+      !formData.MobileNo ||
+      formData.FatherName
+    ) {
       return toast.error("Please fill all the required fields.");
     }
 
     try {
-      const apiUrl = `${Local_Url}/api/v1/edit-customer`;
+      const apiUrl = `${Local_Url}/api/v1/admin/editRetailerUser`;
 
       const response = await axios.post(apiUrl, formData);
 
@@ -66,12 +70,16 @@ const EditCustomer = () => {
       toast.success(response.data.message);
 
       setFormData({
+        appliedBy: "",
+        timestamp: "",
+        entryType: "",
         Name: "",
+        FatherName: "PP",
         DOB: "",
         AadhaarNo: "",
         MobileNo: "",
         Email: "",
-        Purpose: "",
+        Purpose: "PP",
       });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -102,14 +110,12 @@ const EditCustomer = () => {
                 placeholder=""
                 value={formData.DOB}
               />
-              <CustomInput
-                onChange={handleInputChange}
-                label="Aadhar No."
-                type=" number"
+              <CustomInput2
+                label="Aadhaar No."
+                type="tel"
                 name="AadhaarNo"
-                placeholder="3456765434567"
-                value={formData.AadhaarNo}
-                
+                placeholder="hfhfhfhfh"
+                disabled
               />
               <CustomInput
                 onChange={handleInputChange}

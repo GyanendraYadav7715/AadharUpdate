@@ -12,12 +12,12 @@ import Slip from "../../../Components/Slip/Slip";
 import { Local_Url } from "../../../constant/constant";
 
 function ViewChildData() {
-  const userData = localStorage.getItem("user");
+  const userData = JSON.parse(localStorage.getItem("user"));
   let role = "";
   let userName = "";
 
   if (userData) {
-    const userObj = JSON.parse(userData);
+    const userObj = (userData);
     role = userObj.role;
     userName = userObj.Username;
   }
@@ -153,7 +153,7 @@ function ViewChildData() {
                                 </h3>
                                 <Slip fileUrl={item.oSlip} />
                               </div>
-                              {item.status === "complete" ? (
+                              {item.status === "Completed" ? (
                                 <div className="flex  items-center  ">
                                   <h4 className="Action-text">Action</h4>
                                   <img

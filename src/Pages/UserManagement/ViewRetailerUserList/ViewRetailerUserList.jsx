@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
@@ -7,8 +8,6 @@ import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { Local_Url } from "../../../constant/constant";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Table from "react-bootstrap/Table";
 
 const ViewRetailerUserList = () => {
@@ -26,10 +25,7 @@ const ViewRetailerUserList = () => {
           `${Local_Url}/api/v1/admin/get-all-retailer`
         );
 
-        const responseData = response.data.data.map((user) => ({
-          ...user,
-          status: "Active",
-        }));
+        const responseData = response.data.data;
         setData(responseData);
         setFilteredProducts(responseData);
       } catch (error) {
@@ -50,41 +46,6 @@ const ViewRetailerUserList = () => {
     );
     setFilteredProducts(filtered);
   }, [searchQuery, data]);
-
-  //  handle edit status the of the user
-
-  const handleStatusEdit = async (Username, isUserblocked) => {
-    try {
-      const response = await axios.post(
-        `${Local_Url}/api/v1/admin/block-retailer`,
-        {
-          Username,
-          User_type: "Retailer",
-          isUserblocked,
-        }
-      );
-      console.log(response.data);
-
-      const toastMessage =
-        isUserblocked === "true"
-          ? "User is Deactivated successfully"
-          : "User is Activated successfully";
-      toast.success(toastMessage);
-
-      const updatedProducts = filteredProducts.map((product) => {
-        if (product.Username === Username) {
-          return {
-            ...product,
-            status: isUserblocked === "true" ? "Inactive" : "Active",
-          };
-        }
-        return product;
-      });
-      setFilteredProducts(updatedProducts);
-    } catch (error) {
-      console.error("Error updating user status:", error);
-    }
-  };
 
   //Activating dropdown figure
   const handleIconClick = (index) => {
@@ -174,41 +135,32 @@ const ViewRetailerUserList = () => {
                           <div className="dropdown-content">
                             <div className="dropdown-title">
                               {/* Status Handaler in the Dropdown */}
-                              <h3 className="status border-b-2 border-t-2 flex items-center  gap-3">
-                                <span className="font-bold text-lg">
+                              <h3 className="status border-b-2 border-t-2 flex items-center  gap-3 ">
+                                <span className="font-bold text-lg ">
                                   Status
                                 </span>
                                 <span
-                                  className="text-white hover:bg-[#77b652] border-1 bg-[#88d05e] px-2 py-1  rounded-sm "
+                                  className={`text-white ${
+                                    product.isUserblocked === true
+                                      ? "bg-[#f4516c] hover:bg-[#cb4c61]"
+                                      : "bg-[#71b944] hover:bg-[#67a83e]"
+                                  }   border-1 px-2 py-1  rounded-sm `}
                                   style={{ fontsize: "15px" }}
                                 >
-                                  {product.status}
+                                  {product.isUserblocked === true
+                                    ? "Inactive"
+                                    : "Active"}
                                 </span>
                               </h3>
                               {/* Action manegement in the dropdown */}
-                              <h3 className="status font-bold text-lg flex justify-center items-center  border-b-2 ">
+                              <h3 className="status font-bold text-lg flex  gap-3 items-center  border-b-2 ">
                                 Action
-                                <div className="px-6 py-4 gap-2 flex items-center justify-between">
-                                  <button
-                                    onClick={() =>
-                                      handleStatusEdit(
-                                        product.Username,
-                                        "false"
-                                      )
-                                    }
-                                    className="font-medium text-white no-underline hover:bg-[#77b652] border-1 bg-[#88d05e] p-2 rounded-sm"
-                                  >
-                                    Activate
-                                  </button>
-                                  <button
-                                    onClick={() =>
-                                      handleStatusEdit(product.Username, "true")
-                                    }
-                                    className="font-medium text-white no-underline hover:bg-[#d45469] border-1 bg-[#f5627a] p-2 rounded-sm"
-                                  >
-                                    Deactivate
-                                  </button>
-                                </div>
+                                <Link
+                                  to={`/editstatus?username=${product.Username}`}
+                                  className="font-medium   no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
+                                >
+                                  <i className="ri-edit-box-line text-white"></i>
+                                </Link>
                               </h3>
                             </div>
                           </div>

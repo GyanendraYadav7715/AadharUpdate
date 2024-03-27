@@ -39,6 +39,7 @@ function Protected() {
       "/edit-customer",
       "/Upload",
       "/edit-viewm",
+      "/editstatus",
     ],
     BackOffice: [
       "/backoffice",

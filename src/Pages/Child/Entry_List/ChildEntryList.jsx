@@ -10,7 +10,9 @@ import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
- 
+import ConfirmationDialog from "../../../Components/ConfirmationDialog/ConfirmationDialog";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
 
 function ChildEntryList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -54,6 +56,35 @@ function ChildEntryList() {
   useEffect(() => {
     fetchData();
   }, []);
+   const deleteUser = async (apply, time) => {
+     toast.info(
+       <ConfirmationDialog
+         message="Are you sure you want to delete this user?"
+         onConfirm={async () => {
+           try {
+             await axios.delete(`${Local_Url}/api/v1/admin/deleteRUser`, {
+               appliedBy: apply,
+               timestamp: time,
+               entryType: "C",
+             });
+
+             const updatedUsers = data.filter(
+               (data) => data.timeStamp !== time
+             );
+
+             setData(updatedUsers);
+             setFilteredProducts(updatedUsers);
+           } catch (error) {
+             toast.error(error.message);
+           }
+         }}
+         onDismiss={() => toast.dismiss()}
+       />,
+       {
+         autoClose: false, // Prevent auto-closing of toast until confirmation
+       }
+     );
+   };
 
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
@@ -208,12 +239,17 @@ function ChildEntryList() {
                                     <i className="ri-eye-line text-white"></i>
                                   </Link>
                                   {role === "BackOffice" ? null : (
-                                    <Link
-                                      to="#"
+                                    <button
+                                      onClick={() =>
+                                        deleteUser(
+                                          item.appliedBy,
+                                          item.timeStamp
+                                        )
+                                      }
                                       className="font-medium   no-underline   border-1 bg-[#f4516c] hover:bg-[#cb4c61] px-3 py-2 rounded-sm"
                                     >
                                       <i className="ri-delete-bin-line text-white"></i>
-                                    </Link>
+                                    </button>
                                   )}
                                   <Link
                                     to={`/Upload?entrytype=C&apply=${
@@ -236,7 +272,7 @@ function ChildEntryList() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="2">
+                  <td colSpan="3">
                     <h1 className="list-record">Record Not Found 😞</h1>
                   </td>
                 </tr>

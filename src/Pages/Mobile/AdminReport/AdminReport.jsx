@@ -9,7 +9,9 @@ import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import { Local_Url } from "../../../constant/constant";
-
+import ConfirmationDialog from "../../../Components/ConfirmationDialog/ConfirmationDialog";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AdminReport = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -46,6 +48,36 @@ const AdminReport = () => {
         console.log("Something Went Wrong");
       });
   }, []);
+
+  const deleteUser = async ( apply,time) => {
+    toast.info(
+      <ConfirmationDialog
+        message="Are you sure you want to delete this user?"
+        onConfirm={async () => {
+          try {
+            await axios.delete(`${Local_Url}/api/v1/admin/deleteRUser`, {
+              appliedBy: apply,
+              timestamp: time,
+              entryType: "M",  
+            });
+
+            const updatedUsers = data.filter(
+              (data) => data.timeStamp !==  time
+            );
+
+            setData(updatedUsers);
+            setFilteredProducts(updatedUsers);
+          } catch (error) {
+            toast.error(error.message);
+          }
+        }}
+        onDismiss={() => toast.dismiss()}
+      />,
+      {
+        autoClose: false, // Prevent auto-closing of toast until confirmation
+      }
+    );
+  };
 
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
@@ -166,33 +198,11 @@ const AdminReport = () => {
                                   {item.status}
                                 </span>
                               </h3>
-                              {/* <h3 className="status border-b-2 m-1">
-                                <span className="text-md font-medium ml-2 text-indigo-500">
-                                  {item.FingerPrint && (
-                                    <ul>
-                                      {item.FingerPrint && (
-                                        <ul>
-                                          {item.FingerPrint.map(
-                                            (fingerprint, idx) => (
-                                              <li key={idx}>
-                                                {fingerprint.FingerPrint1},
-                                                {fingerprint.FingerPrint2},
-                                                {fingerprint.FingerPrint3},
-                                                {fingerprint.FingerPrint4},
-                                                {fingerprint.FingerPrint5}
-                                              </li>
-                                            )
-                                          )}
-                                        </ul>
-                                      )}
-                                    </ul>
-                                  )}
-                                </span>
-                              </h3> */}
 
                               <div className=" flex items-center justify-center  border-b-2">
                                 <h3 className="status">Action</h3>
                                 <div className="px-6 py-4  flex items-center justify-between gap-1">
+                                  {/* THIS LINK IS MANAGE  TO ADMIN REMARK POINT */}
                                   <Link
                                     to={`/user-edit?entrytype=M&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
                                     className="font-medium   no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
@@ -200,6 +210,7 @@ const AdminReport = () => {
                                     <i className="ri-edit-box-line text-white"></i>
                                   </Link>
 
+                                  {/* THIS LINK IS MANAGE FOR SHOWING FINGERPRINTDATA */}
                                   <Link
                                     to={`/user-finger?aadhar=${
                                       item.AadhaarNo
@@ -210,6 +221,8 @@ const AdminReport = () => {
                                   >
                                     <i className="ri-fingerprint-fill text-white"></i>
                                   </Link>
+
+                                  {/* THIS LINK IS MANAGE FOR SHOWING  USERDATA */}
                                   <Link
                                     to={`/edit-viewm?name=${item.Name}&fname=${
                                       item.FatherName
@@ -226,15 +239,24 @@ const AdminReport = () => {
                                   >
                                     <i className="ri-eye-line text-white"></i>
                                   </Link>
+
+                                  {/* THIS BUTTON IS MANGE TO DELETE USER */}
+
                                   {role === "BackOffice" ? null : (
-                                    <Link
-                                      to="#"
+                                    <button
+                                      onClick={() =>
+                                        deleteUser(
+                                          item.appliedBy,
+                                          item.timeStamp
+                                        )
+                                      }
                                       className="font-medium   no-underline   border-1 bg-[#f4516c] hover:bg-[#cb4c61] px-3 py-2 rounded-sm"
                                     >
                                       <i className="ri-delete-bin-line text-white"></i>
-                                    </Link>
+                                    </button>
                                   )}
 
+                                  {/* THIS LINK IS MANAGE TO UPLOAD  ORIGINAL SLIP */}
                                   <Link
                                     to={`/Upload?entrytype=M&apply=${
                                       item.appliedBy
