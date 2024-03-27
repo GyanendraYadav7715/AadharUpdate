@@ -180,7 +180,7 @@ function List() {
                                       {item.status}
                                     </button>
                                   </h3>
-                                  <Slip fileUrl={item.oSlip} />
+                                    <Slip fileUrl={item.oSlip} mobileUserData={item} />
                                 </div>
                               )}
                               {item.status === "Completed" ? (
