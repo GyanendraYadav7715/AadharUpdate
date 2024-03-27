@@ -1,8 +1,9 @@
 import React from "react";
-
+import axios from 'axios';
+import { Local_Url } from "../../constant/constant";
 import "./Slip.css";
 
-function Slip({ fileUrl })
+function Slip({ fileUrl , mobileUserData })
 
 
 {
