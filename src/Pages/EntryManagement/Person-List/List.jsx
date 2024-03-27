@@ -60,7 +60,7 @@ function List() {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
-        console.log(response.data);
+        
 
         setData(response.data.data);
         setFilteredProducts(response.data.data);
@@ -83,7 +83,7 @@ function List() {
     );
     setFilteredProducts(filtered);
   };
-  // if (role === "Retailer")
+
   return (
     <>
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
@@ -116,7 +116,7 @@ function List() {
             <tbody>
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((item, index) => (
-                  <React.Fragment key={item.id}>
+                  <React.Fragment key={`item_${index}`}>
                     <tr>
                       <td>
                         <div
@@ -146,8 +146,8 @@ function List() {
                       <td>{item.Email}</td>
                     </tr>
                     {selectedRow === index && (
-                      <tr>
-                        <td colSpan="6" style={{ backgroundColor: "white" }}>
+                      <tr key={`details_${index}`}>
+                        <td colSpan="8" style={{ backgroundColor: "white" }}>
                           {/* Dropdown content */}
                           <div className="dropdown-content">
                             <div className="dropdown-title">
@@ -170,7 +170,10 @@ function List() {
                                       {item.status}
                                     </button>
                                   </h3>
-                                  <Slip fileUrl={item.oSlip} />
+                                  <Slip
+                                    fileUrl={item.oSlip}
+                                    mobileUserData={item}
+                                  />
                                 </div>
                               ) : (
                                 <div className="flex items-center">
@@ -180,7 +183,10 @@ function List() {
                                       {item.status}
                                     </button>
                                   </h3>
-                                  <Slip fileUrl={item.oSlip} />
+                                  <Slip
+                                    fileUrl={item.oSlip}
+                                    mobileUserData={item}
+                                  />
                                 </div>
                               )}
                               {item.status === "Completed" ? (
@@ -211,7 +217,7 @@ function List() {
                   </React.Fragment>
                 ))
               ) : (
-                <tr>
+                <tr key="no_records">
                   <td colSpan="8">
                     <h1 className="list-record">Record Not Found😞</h1>
                   </td>

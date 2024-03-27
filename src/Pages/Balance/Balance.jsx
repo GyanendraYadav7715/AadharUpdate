@@ -6,17 +6,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Balance = () => {
-  // State variables for form data
   const [formData, setFormData] = useState({
     Username: "",
     amount: "",
     User_type: "Superadmin",
   });
 
-  // Destructuring form data for easier access
   const { Username, amount } = formData;
 
-  // Handle input change
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevFormData) => ({
@@ -25,11 +22,9 @@ const Balance = () => {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if fields are empty
     if (Username.trim() === "" || amount.trim() === "") {
       toast.error("Please fill all the fields");
       return;
@@ -42,25 +37,21 @@ const Balance = () => {
 
       toast.success(response.data.message);
 
-      // Reset form data after successful submission
       setFormData({
         Username: "",
         amount: "",
       });
     } catch (error) {
-       
       toast.error(error.response.data.message);
     }
   };
 
-  // Breadcrumb data
   const title = "Balance Transfer";
   const links = [
     { title: "Home", href: "/superadmin" },
     { title: "Balance Transfer" },
   ];
 
-  // Additional links for breadcrumb
   const mylinks = [
     {
       to: "/history",
@@ -71,22 +62,18 @@ const Balance = () => {
 
   return (
     <>
-      {/* Breadcrumb component */}
       <Breadcrumb title={title} links={links} mylinks={mylinks} />
 
-      {/* Main content */}
       <div className="p-4 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <div className="grid grid-cols-1 gap-4 mb-4 ">
             <h3 className="text-2xl font-semibold">Balance Transfer</h3>
 
-            {/* Balance Transfer form */}
             <form
               onSubmit={handleSubmit}
               className="flex flex-col items-start w-full border-[#00000047] border-2 p-9 rounded-md bg-white"
             >
               <div className="flex justify-between items-center w-full">
-                {/* Username input */}
                 <div className="mb-5 w-1/2 p-6">
                   <label
                     htmlFor="Username"
@@ -105,7 +92,6 @@ const Balance = () => {
                   />
                 </div>
 
-                {/* Amount input */}
                 <div className="mb-5 w-1/2 p-6">
                   <label
                     htmlFor="amount"
@@ -125,13 +111,12 @@ const Balance = () => {
                 </div>
               </div>
 
-              {/* Submit button */}
               <div className="pl-3">
                 <button
                   className="Submit-button whitespace-nowrap bg-[#3f9e04] hover:bg-[#3f9e04d3]"
                   type="submit"
                 >
-                  <i class="ri-save-fill"> </i>
+                  <i className="ri-save-fill"> </i>
                   Submit
                 </button>
               </div>

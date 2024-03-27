@@ -23,32 +23,35 @@ const RetailerDashboard = () => {
   useEffect(() => {
     if (userData) {
       const userObj = JSON.parse(userData);
-      setUserName(userObj.Username);
+      const username = userObj.Username;
+      setUserName(username);
     }
   }, [userData]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const queryParams = { userName };
-        const response = await axios.get(
-          `${Local_Url}/api/v1/retailer/allDRetailerData`,
-          { params: queryParams }
-        );
-        setStatistics({
-          balance: response.data.data.Balance,
-          totalApplication: response.data.data.dtotalApplication,
-          totalApplicationCompleted: response.data.data.dcompleted,
-          totalApplicationRejected: response.data.data.drejectApl,
-          totalChildApplication: response.data.data.ctotalApplication,
-          totalChildApplicationCompleted: response.data.data.ccompleted,
-          totalChildApplicationRejected: response.data.data.crejectApl,
-          totalMobileApplication: response.data.data.mtotalApplication,
-          totalMobileApplicationCompleted: response.data.data.mcompleted,
-          totalMobileApplicationRejected: response.data.data.mrejectApl,
-        });
+        if (userName) {
+          const response = await axios.get(
+            `${Local_Url}/api/v1/retailer/allDRetailerData`,
+            { params: { userName } }
+          );
+
+          setStatistics({
+            balance: response.data.data.Balance,
+            totalApplication: response.data.data.dtotalApplication,
+            totalApplicationCompleted: response.data.data.dcompleted,
+            totalApplicationRejected: response.data.data.drejectApl,
+            totalChildApplication: response.data.data.ctotalApplication,
+            totalChildApplicationCompleted: response.data.data.ccompleted,
+            totalChildApplicationRejected: response.data.data.crejectApl,
+            totalMobileApplication: response.data.data.mtotalApplication,
+            totalMobileApplicationCompleted: response.data.data.mcompleted,
+            totalMobileApplicationRejected: response.data.data.mrejectApl,
+          });
+        }
       } catch (error) {
-         console.error("Error fetching data: ", error);
+        console.error("Error fetching data: ", error);
       }
     };
 

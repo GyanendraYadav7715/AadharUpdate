@@ -45,7 +45,7 @@ function ViewChildData() {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
-        console.log(response.data.data);
+         
         setData(response.data.data);
       })
       .catch((err) => {
@@ -56,13 +56,14 @@ function ViewChildData() {
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    const filtered = users.filter((user) =>
-      Object.values(user).join(" ").toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredUsers(filtered);
-  };
+const handleSearch = (query) => {
+  setSearchQuery(query);
+  const filtered = data.filter((item) =>
+    Object.values(item).join(" ").toLowerCase().includes(query.toLowerCase())
+  );
+  setData(filtered);
+};
+
 
   return (
     <>
@@ -143,7 +144,10 @@ function ViewChildData() {
                                     {item.status}
                                   </button>
                                 </h3>
-                                <Slip fileUrl={item.oSlip} />
+                                <Slip
+                                  fileUrl={item.oSlip}
+                                  mobileUserData={item}
+                                />
                               </div>
                               {item.status === "Completed" ? (
                                 <div className="flex  items-center  ">

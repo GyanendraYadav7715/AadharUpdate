@@ -330,7 +330,7 @@ const ChlidEntry = () => {
                 />
               ))}
               <button onClick={handleSubmit} className="Submit-button">
-                <i class="ri-save-fill"> </i>
+                <i className="ri-save-fill"></i>
                 Submit
               </button>
             </div>

@@ -1,4 +1,3 @@
- 
 export const Select = ({
   label,
   value,
@@ -21,7 +20,9 @@ export const Select = ({
         name={name}
       >
         {options.map((option) => (
-          <option value={option.value}>{option.label}</option>
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
         ))}
       </select>
     </div>

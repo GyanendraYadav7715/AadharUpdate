@@ -39,8 +39,6 @@ const AdminReport = () => {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
-        console.log(response.data.data);
-
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -49,7 +47,7 @@ const AdminReport = () => {
       });
   }, []);
 
-  const deleteUser = async ( apply,time) => {
+  const deleteUser = async (apply, time) => {
     toast.info(
       <ConfirmationDialog
         message="Are you sure you want to delete this user?"
@@ -58,12 +56,10 @@ const AdminReport = () => {
             await axios.delete(`${Local_Url}/api/v1/admin/deleteRUser`, {
               appliedBy: apply,
               timestamp: time,
-              entryType: "M",  
+              entryType: "M",
             });
 
-            const updatedUsers = data.filter(
-              (data) => data.timeStamp !==  time
-            );
+            const updatedUsers = data.filter((data) => data.timeStamp !== time);
 
             setData(updatedUsers);
             setFilteredProducts(updatedUsers);

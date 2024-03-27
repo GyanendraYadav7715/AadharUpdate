@@ -12,7 +12,7 @@ import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import ConfirmationDialog from "../../../Components/ConfirmationDialog/ConfirmationDialog";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 
 function ChildEntryList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -43,8 +43,6 @@ function ChildEntryList() {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
-        console.log(response.data);
-
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -56,35 +54,33 @@ function ChildEntryList() {
   useEffect(() => {
     fetchData();
   }, []);
-   const deleteUser = async (apply, time) => {
-     toast.info(
-       <ConfirmationDialog
-         message="Are you sure you want to delete this user?"
-         onConfirm={async () => {
-           try {
-             await axios.delete(`${Local_Url}/api/v1/admin/deleteRUser`, {
-               appliedBy: apply,
-               timestamp: time,
-               entryType: "C",
-             });
+  const deleteUser = async (apply, time) => {
+    toast.info(
+      <ConfirmationDialog
+        message="Are you sure you want to delete this user?"
+        onConfirm={async () => {
+          try {
+            await axios.delete(`${Local_Url}/api/v1/admin/deleteRUser`, {
+              appliedBy: apply,
+              timestamp: time,
+              entryType: "C",
+            });
 
-             const updatedUsers = data.filter(
-               (data) => data.timeStamp !== time
-             );
+            const updatedUsers = data.filter((data) => data.timeStamp !== time);
 
-             setData(updatedUsers);
-             setFilteredProducts(updatedUsers);
-           } catch (error) {
-             toast.error(error.message);
-           }
-         }}
-         onDismiss={() => toast.dismiss()}
-       />,
-       {
-         autoClose: false, // Prevent auto-closing of toast until confirmation
-       }
-     );
-   };
+            setData(updatedUsers);
+            setFilteredProducts(updatedUsers);
+          } catch (error) {
+            toast.error(error.message);
+          }
+        }}
+        onDismiss={() => toast.dismiss()}
+      />,
+      {
+        autoClose: false, // Prevent auto-closing of toast until confirmation
+      }
+    );
+  };
 
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);

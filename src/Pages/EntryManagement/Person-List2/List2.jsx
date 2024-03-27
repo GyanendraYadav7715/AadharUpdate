@@ -12,10 +12,9 @@ import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import ConfirmationDialog from "../../../Components/ConfirmationDialog/ConfirmationDialog";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 
 function List() {
- 
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -60,8 +59,6 @@ function List() {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
-        console.log(response.data.data);
-
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -97,7 +94,6 @@ function List() {
       }
     );
   };
-  
 
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
