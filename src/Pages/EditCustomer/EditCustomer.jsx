@@ -1,21 +1,30 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Local_Url } from "../../constant/constant";
 import Breadcrumb from "../../Components/BreadCrumb/Breadcrumb";
 import { CustomInput } from "../../Components/CustomeInput/CustomInput";
 import { CustomInput2 } from "../../Components/CustomeInput/CustomInput";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const EditCustomer = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
   const role = userData.User_type;
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const entrytype = searchParams.get("entrytype");
+  const apply = searchParams.get("apply");
+  const time = searchParams.get("time");
+  const aadhar = searchParams.get("aadhar");
 
   const title = "Edit Customer";
   const links =
     role === "Superadmin"
       ? [{ title: "Home", href: "/superadmin" }, { title: "Edit Customer" }]
       : role === "Retailer"
-      ? [{ title: "Home", href: "/reatiler" }, { title: "Edit Customer" }]
+      ? [{ title: "Home", href: "/retailer" }, { title: "Edit Customer" }]
       : [{ title: "Home", href: "/backoffice" }, { title: "Edit Customer" }];
   const mylinks = [
     {
@@ -24,39 +33,35 @@ const EditCustomer = () => {
       icon: "ri-team-line text-white text-2xl ",
     },
   ];
+
   const [formData, setFormData] = useState({
-    appliedBy: "",
-    timestamp: "",
-    entryType: "",
+    appliedBy: apply || "", // Set default value to empty string if null
+    timestamp: time || "", // Set default value to empty string if null
+    entryType: entrytype || "", // Set default value to empty string if null
     Name: "",
     FatherName: "",
     DOB: "",
-    AadhaarNo: "",
+    AadhaarNo: aadhar || "", // Set default value to empty string if null
     MobileNo: "",
     Email: "",
     Purpose: "",
   });
+
   const handleInputChange = (name, value) => {
     setFormData({
       ...formData,
       [name]: value,
-      createdOn: formatCurrentDate(),
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const data = localStorage.getItem("user");
-    // const userObj = JSON.parse(data);
-    // formData.userName = userObj.Username;
-    // formData.userType = userObj.User_type;
-    // // Access the role property
-    // role = userObj.User_type;
 
     if (
       !formData.Name ||
       !formData.Email ||
       !formData.MobileNo ||
-      formData.FatherName
+      !formData.FatherName
     ) {
       return toast.error("Please fill all the required fields.");
     }
@@ -66,7 +71,6 @@ const EditCustomer = () => {
 
       const response = await axios.post(apiUrl, formData);
 
-      //console.log("Form submitted successfully:", response.data);
       toast.success(response.data.message);
 
       setFormData({
@@ -74,15 +78,15 @@ const EditCustomer = () => {
         timestamp: "",
         entryType: "",
         Name: "",
-        FatherName: "PP",
+        FatherName: "",
         DOB: "",
-        AadhaarNo: "",
+        AadhaarNo: aadhar || "", // Set default value to empty string if null
         MobileNo: "",
         Email: "",
-        Purpose: "PP",
+        Purpose: "",
       });
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "An error occurred.");
     }
   };
 
@@ -104,6 +108,14 @@ const EditCustomer = () => {
               />
               <CustomInput
                 onChange={handleInputChange}
+                label="Father's Name"
+                type="text"
+                value={formData.FatherName}
+                name="FatherName"
+                placeholder="Father's Name"
+              />
+              <CustomInput
+                onChange={handleInputChange}
                 label="Date of Birth"
                 type="date"
                 name="DOB"
@@ -114,7 +126,7 @@ const EditCustomer = () => {
                 label="Aadhaar No."
                 type="tel"
                 name="AadhaarNo"
-                placeholder="hfhfhfhfh"
+                placeholder={aadhar || "Aadhaar No."} // Set placeholder text if aadhar is null
                 disabled
               />
               <CustomInput
@@ -134,6 +146,7 @@ const EditCustomer = () => {
                 placeholder="example@update.com"
                 value={formData.Email}
               />
+
               <CustomInput
                 onChange={handleInputChange}
                 label="Purpose"
@@ -143,7 +156,9 @@ const EditCustomer = () => {
                 placeholder="Enter Purpose"
                 required
               />
-              <button onClick={handleSubmit} className="Submit-button">
+              <div className="empty-space"></div>
+              <div className="empty-space"></div>
+              <button onClick={handleSubmit} className="Submit-button ml-1">
                 <i className="ri-save-fill"></i> Submit
               </button>
             </div>

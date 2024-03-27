@@ -10,7 +10,7 @@ import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import Slip from "../../../Components/Slip/Slip";
 import { Local_Url } from "../../../constant/constant";
-
+ 
 function ViewChildData() {
   const userData = JSON.parse(localStorage.getItem("user"));
   let role = "";
@@ -165,7 +165,10 @@ function ViewChildData() {
                               ) : (
                                 <div className="Action">
                                   <h4 className="Action-text">Action</h4>
-                                  <Link to="/edit-customer" className="button">
+                                  <Link
+                                    to={`/edit-customer?aadhar=${item.Parent_AadhaarNo}&entrytype=C&apply=${item.appliedBy}&time=${item.timeStamp}`}
+                                    className="button"
+                                  >
                                     <i className="ri-edit-2-fill pencil"></i>
                                   </Link>
                                 </div>

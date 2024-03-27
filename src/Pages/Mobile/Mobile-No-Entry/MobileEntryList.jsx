@@ -16,16 +16,9 @@ function ViewChildData() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
 
-  const userData = localStorage.getItem("user");
-  let role = "";
-  let userName = "";
-  if (userData) {
-    // Parse JSON string to object
-    const userObj = JSON.parse(userData);
-    // Access the role property
-    role = userObj.role;
-    userName = userObj.Username;
-  }
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const role = userData.User_type;
+  const userName = userData.Username;
 
   const title = "Mobile Data";
   const links =
@@ -52,6 +45,7 @@ function ViewChildData() {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
+        console.log(response.data.data);
         setData(response.data.data);
       })
       .catch((err) => {
@@ -163,7 +157,10 @@ function ViewChildData() {
                               ) : (
                                 <div className="Action">
                                   <h4 className="Action-text">Action</h4>
-                                  <Link to="/edit-customer" className="button">
+                                  <Link
+                                    to={`/edit-customer?aadhar=${item.AadhaarNo}&entrytype=M&apply=${item.appliedBy}&time=${item.timeStamp}`}
+                                    className="button"
+                                  >
                                     <i className="ri-edit-2-fill pencil"></i>
                                   </Link>
                                 </div>
