@@ -9,11 +9,14 @@ import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
 import { Local_Url } from "../../../constant/constant";
-
+import StyledAlert from "../../../Components/ConfirmationDialog/StyledAlert";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AdminReport = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [data, setData] = useState([]);
+  const [userToDelete, setUserToDelete] = useState(null);
   const userData = JSON.parse(localStorage.getItem("user"));
   let role = userData.User_type;
   let userName = userData.Username;
@@ -37,8 +40,6 @@ const AdminReport = () => {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
-        console.log(response.data.data);
-
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -46,6 +47,35 @@ const AdminReport = () => {
         console.log("Something Went Wrong");
       });
   }, []);
+
+  // Set user to delete
+  const confirmDeleteUser = (item) => {
+    setUserToDelete(item);
+  };
+
+  // Delete user
+  const deleteUser = async () => {
+    try {
+      const { appliedBy, timeStamp } = userToDelete;
+
+      const response = await axios.delete(
+        `${Local_Url}/api/v1/admin/deleteRUser`,
+        {
+          data: { appliedBy: appliedBy, timestamp: timeStamp, entryType: "M" },
+        }
+      );
+
+      const updatedData = data.filter(
+        (user) => user.appliedBy !== appliedBy || user.timeStamp !== timeStamp
+      );
+      setData(updatedData);
+      setFilteredProducts(updatedData);
+      setUserToDelete(null); // Clear userToDelete state
+      toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
@@ -166,33 +196,11 @@ const AdminReport = () => {
                                   {item.status}
                                 </span>
                               </h3>
-                              {/* <h3 className="status border-b-2 m-1">
-                                <span className="text-md font-medium ml-2 text-indigo-500">
-                                  {item.FingerPrint && (
-                                    <ul>
-                                      {item.FingerPrint && (
-                                        <ul>
-                                          {item.FingerPrint.map(
-                                            (fingerprint, idx) => (
-                                              <li key={idx}>
-                                                {fingerprint.FingerPrint1},
-                                                {fingerprint.FingerPrint2},
-                                                {fingerprint.FingerPrint3},
-                                                {fingerprint.FingerPrint4},
-                                                {fingerprint.FingerPrint5}
-                                              </li>
-                                            )
-                                          )}
-                                        </ul>
-                                      )}
-                                    </ul>
-                                  )}
-                                </span>
-                              </h3> */}
 
                               <div className=" flex items-center justify-center  border-b-2">
                                 <h3 className="status">Action</h3>
                                 <div className="px-6 py-4  flex items-center justify-between gap-1">
+                                  {/* THIS LINK IS MANAGE  TO ADMIN REMARK POINT */}
                                   <Link
                                     to={`/user-edit?entrytype=M&apply=${item.appliedBy}&time=${item.timeStamp}&type=${item.User_type}`}
                                     className="font-medium   no-underline   border-1 bg-[#71b944] hover:bg-[#67a83e] px-3 py-2 rounded-sm"
@@ -200,6 +208,7 @@ const AdminReport = () => {
                                     <i className="ri-edit-box-line text-white"></i>
                                   </Link>
 
+                                  {/* THIS LINK IS MANAGE FOR SHOWING FINGERPRINTDATA */}
                                   <Link
                                     to={`/user-finger?aadhar=${
                                       item.AadhaarNo
@@ -210,6 +219,8 @@ const AdminReport = () => {
                                   >
                                     <i className="ri-fingerprint-fill text-white"></i>
                                   </Link>
+
+                                  {/* THIS LINK IS MANAGE FOR SHOWING  USERDATA */}
                                   <Link
                                     to={`/edit-viewm?name=${item.Name}&fname=${
                                       item.FatherName
@@ -226,15 +237,19 @@ const AdminReport = () => {
                                   >
                                     <i className="ri-eye-line text-white"></i>
                                   </Link>
+
+                                  {/* THIS BUTTON IS MANGE TO DELETE USER */}
+
                                   {role === "BackOffice" ? null : (
-                                    <Link
-                                      to="#"
+                                    <button
+                                      onClick={() => confirmDeleteUser(item)}
                                       className="font-medium   no-underline   border-1 bg-[#f4516c] hover:bg-[#cb4c61] px-3 py-2 rounded-sm"
                                     >
                                       <i className="ri-delete-bin-line text-white"></i>
-                                    </Link>
+                                    </button>
                                   )}
 
+                                  {/* THIS LINK IS MANAGE TO UPLOAD  ORIGINAL SLIP */}
                                   <Link
                                     to={`/Upload?entrytype=M&apply=${
                                       item.appliedBy
@@ -265,6 +280,14 @@ const AdminReport = () => {
           </Table>
         </div>
       </div>
+      {userToDelete && (
+        <StyledAlert
+          title="Confirmation"
+          message="Are you sure want to delete this user?"
+          onConfirm={deleteUser}
+          onClose={() => setUserToDelete(null)} // Clear userToDelete state if cancel or close
+        />
+      )}
     </>
   );
 };

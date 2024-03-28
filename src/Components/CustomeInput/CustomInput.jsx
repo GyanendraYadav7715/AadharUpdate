@@ -149,8 +149,8 @@ export const CustomInput2 = ({
   type,
   name,
   placeholder,
-
-  disabled,
+  disabled
+   
 }) => {
   return (
     <div className="inputContainer">

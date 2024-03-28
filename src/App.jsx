@@ -45,7 +45,7 @@ import ViewChildData from "./Pages/Child/View_Child_Data/ViewChildData";
 //    ---------------------------MOBILE WORKING ROUTES-------------------------------
 
 import MobileNoUpdate from "./Pages/Mobile/Mobile-Update/MobileNoUpdate";
- 
+
 import AdminReport from "./Pages/Mobile/AdminReport/AdminReport";
 import MobileEntryList from "./Pages/Mobile/Mobile-No-Entry/MobileEntryList";
 
@@ -57,6 +57,7 @@ import EditView from "./Components/ActionServices/EditView";
 import EditCustomer from "./Pages/EditCustomer/EditCustomer";
 import Upload from "./Components/ActionServices/Upload";
 import EditViewM from "./Components/ActionServices/EditViewM";
+import EditStatus from "./Pages/EditStatus/EditStatus";
 
 const App = () => {
   return (
@@ -128,6 +129,7 @@ function Layout() {
           <Route path="/edit-customer" element={<EditCustomer />} />
           <Route path="/Upload" element={<Upload />} />
           <Route path="/edit-viewm" element={<EditViewM />} />
+          <Route path="/editstatus" element={<EditStatus />} />
         </Route>
         {/* --------------------------------PROTECTED ROUTES ----------------------------------------------- */}
       </Routes>

@@ -13,9 +13,11 @@ const RetailerDashboard = () => {
     totalApplicationCompleted: 0,
     totalApplicationRejected: 0,
     totalChildApplication: 0,
+    totalChildApplicationProgress: 0,
     totalChildApplicationCompleted: 0,
     totalChildApplicationRejected: 0,
     totalMobileApplication: 0,
+    totalMobileApplicationProgress: 0,
     totalMobileApplicationCompleted: 0,
     totalMobileApplicationRejected: 0,
   });
@@ -23,32 +25,38 @@ const RetailerDashboard = () => {
   useEffect(() => {
     if (userData) {
       const userObj = JSON.parse(userData);
-      setUserName(userObj.Username);
+      const username = userObj.Username;
+      setUserName(username);
     }
   }, [userData]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const queryParams = { userName };
-        const response = await axios.get(
-          `${Local_Url}/api/v1/retailer/allDRetailerData`,
-          { params: queryParams }
-        );
-        setStatistics({
-          balance: response.data.data.Balance,
-          totalApplication: response.data.data.dtotalApplication,
-          totalApplicationCompleted: response.data.data.dcompleted,
-          totalApplicationRejected: response.data.data.drejectApl,
-          totalChildApplication: response.data.data.ctotalApplication,
-          totalChildApplicationCompleted: response.data.data.ccompleted,
-          totalChildApplicationRejected: response.data.data.crejectApl,
-          totalMobileApplication: response.data.data.mtotalApplication,
-          totalMobileApplicationCompleted: response.data.data.mcompleted,
-          totalMobileApplicationRejected: response.data.data.mrejectApl,
-        });
+        if (userName) {
+          const response = await axios.get(
+            `${Local_Url}/api/v1/retailer/allDRetailerData`,
+            { params: { userName } }
+          );
+
+          setStatistics({
+            balance: response.data.data.Balance || 0,
+            totalApplication: response.data.data.dtotalApplication || 0,
+            totalApplicationProgress: response.data.data.dinProgress || 0,
+            totalApplicationCompleted: response.data.data.dcompleted || 0,
+            totalApplicationRejected: response.data.data.drejectApl || 0,
+            totalChildApplication: response.data.data.ctotalApplication || 0,
+            totalChildApplicationCompleted: response.data.data.ccompleted || 0,
+            totalChildApplicationProgress: response.data.data.cinProgress || 0,
+            totalChildApplicationRejected: response.data.data.crejectApl || 0,
+            totalMobileApplication: response.data.data.mtotalApplication || 0,
+            totalMobileApplicationCompleted: response.data.data.mcompleted || 0,
+            totalMobileApplicationRejected: response.data.data.mrejectApl || 0,
+            totalMobileApplicationProgress: response.data.data.minProgress || 0,
+          });
+        }
       } catch (error) {
-         console.error("Error fetching data: ", error);
+        console.error("Error fetching data: ", error);
       }
     };
 
@@ -96,10 +104,30 @@ const RetailerDashboard = () => {
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <div className="mb-8">
             <h2 className="text-2xl font-semibold mb-4 border-b border-black pb-4">
+                Balance
+            </h2>
+            <div className="grid grid-cols-1 gap-4 pb-4">
+              {renderStatistics("Main Balance", statistics.balance, "blue")}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 sr-only">
+              {renderStatistics(
+                "Child Balance",
+                0,
+                "green"
+              )}
+              {renderStatistics(
+                "Mobile Balance",
+                0,
+                "green"
+              )}
+            </div>
+          </div>
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4 border-b border-black pb-4">
               Demographic System Management
             </h2>
             <div className="grid grid-cols-2 gap-4">
-              {renderStatistics("Main Wallet", statistics.balance, "blue")}
               {renderStatistics(
                 "Total Applications",
                 statistics.totalApplication,
@@ -111,9 +139,14 @@ const RetailerDashboard = () => {
                 "green"
               )}
               {renderStatistics(
+                "Total Inprogress",
+                statistics.totalApplicationProgress,
+                "blue"
+              )}
+              {renderStatistics(
                 "Total Rejected",
                 statistics.totalApplicationRejected,
-                "blue"
+                "pink"
               )}
             </div>
           </div>
@@ -133,9 +166,14 @@ const RetailerDashboard = () => {
                 "green"
               )}
               {renderStatistics(
+                "Total Child Inprogress",
+                statistics.totalChildApplicationProgress,
+                "blue"
+              )}
+              {renderStatistics(
                 "Total Child Rejected",
                 statistics.totalChildApplicationRejected,
-                "blue"
+                "pink"
               )}
             </div>
           </div>
@@ -155,9 +193,14 @@ const RetailerDashboard = () => {
                 "green"
               )}
               {renderStatistics(
+                "Total Mobile Inprogress",
+                statistics.totalMobileApplicationProgress,
+                "blue"
+              )}
+              {renderStatistics(
                 "Total Mobile Rejected",
                 statistics.totalMobileApplicationRejected,
-                "blue"
+                "pink"
               )}
             </div>
           </div>

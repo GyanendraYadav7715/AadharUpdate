@@ -4,59 +4,68 @@ import { Local_Url } from "../../constant/constant";
 import axios from "axios";
 
 const DashBoard = () => {
-  const userData = localStorage.getItem("user");
-  const [userName, setUserName] = useState("");
   const [statistics, setStatistics] = useState({
     balance: 0,
     totalUsers: 0,
     totalApplication: 0,
+    totalApplicationProgress: 0,
     totalApplicationCompleted: 0,
     totalApplicationRejected: 0,
     totalChildApplication: 0,
+    totalChildApplicationProgress: 0,
     totalChildApplicationCompleted: 0,
     totalChildApplicationRejected: 0,
     totalMobileApplication: 0,
+    totalMobileApplicationProgress: 0,
     totalMobileApplicationCompleted: 0,
     totalMobileApplicationRejected: 0,
   });
 
   useEffect(() => {
-    if (userData) {
-      const userObj = JSON.parse(userData);
-      setUserName(userObj.Username);
-    }
-  }, [userData]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const queryParams = { userName };
-        const response = await axios.get(
-          `${Local_Url}/api/v1/admin/adminDashboard`,
-          { params: queryParams }
-        );
-        console.log(response.data);
-        setStatistics({
-
-          balance: response.data.data.Balance,
-          totalUsers: response.data.data.totalApplication,
-          totalApplication: response.data.data.dtotalApplication,
-          totalApplicationCompleted: response.data.data.dcompleted,
-          totalApplicationRejected: response.data.data.drejectApl,
-          totalChildApplication: response.data.data.ctotalApplication,
-          totalChildApplicationCompleted: response.data.data.ccompleted,
-          totalChildApplicationRejected: response.data.data.crejectApl,
-          totalMobileApplication: response.data.data.mtotalApplication,
-          totalMobileApplicationCompleted: response.data.data.mcompleted,
-          totalMobileApplicationRejected: response.data.data.mrejectApl,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     fetchData();
-  }, [userName]);
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const userData = localStorage.getItem("user");
+      if (!userData) return;
+      const userObj = JSON.parse(userData);
+      const queryParams = { userName: userObj.Username };
+      const response = await axios.get(
+        `${Local_Url}/api/v1/admin/adminDashboard`,
+        { params: queryParams }
+      );
+      const responseData = response.data.data;
+      setStatistics({
+        balance: responseData.Balance || 0,
+        totalUsers: responseData.totalApplication || 0,
+        totalApplication: responseData.dtotalApplication || 0,
+        totalApplicationCompleted: responseData.dcompleted || 0,
+        totalApplicationRejected: responseData.drejectApl || 0,
+        totalApplicationProgress: responseData.dinProgress || 0,
+        totalChildApplication: responseData.ctotalApplication || 0,
+        totalChildApplicationCompleted: responseData.ccompleted || 0,
+        totalChildApplicationRejected: responseData.crejectApl || 0,
+        totalChildApplicationProgress: responseData.cinProgress || 0,
+        totalMobileApplication: responseData.mtotalApplication || 0,
+        totalMobileApplicationCompleted: responseData.mcompleted || 0,
+        totalMobileApplicationRejected: responseData.mrejectApl || 0,
+        totalMobileApplicationProgress: responseData.minProgress || 0,
+      });
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+
+  const renderStatistics = (title, value, color) => (
+    <div
+      className={`flex flex-col items-center justify-center rounded bg-${color}-500 h-32 p-4`}
+    >
+      <h4 className="text-white">{value}</h4>
+      <p className="text-lg text-white">{title}</p>
+    </div>
+  );
+
   const title = "Dashboard";
   const links = [
     { title: "Home", href: "/superadmin" },
@@ -70,14 +79,6 @@ const DashBoard = () => {
       icon: "ri-add-line text-white text-2xl ",
     },
   ];
-  const renderStatistics = (title, value, color) => (
-    <div
-      className={`flex flex-col items-center justify-center rounded bg-${color}-500 h-32 p-4`}
-    >
-      <h4 className="text-white">{value}</h4>
-      <p className="text-lg text-white">{title}</p>
-    </div>
-  );
 
   return (
     <>
@@ -88,7 +89,6 @@ const DashBoard = () => {
             <h2 className="text-2xl font-semibold mb-4 border-b border-black pb-4">
               Wallet & Users
             </h2>
-
             <div className="grid grid-cols-2 gap-4">
               {renderStatistics("Main Wallet", statistics.balance, "blue")}
               {renderStatistics("Total Users", statistics.totalUsers, "blue")}
@@ -110,9 +110,14 @@ const DashBoard = () => {
                 "green"
               )}
               {renderStatistics(
+                "Total Inprogress",
+                statistics.totalApplicationProgress,
+                "blue"
+              )}
+              {renderStatistics(
                 "Total Rejected",
                 statistics.totalApplicationRejected,
-                "blue"
+                "pink"
               )}
             </div>
           </div>
@@ -132,9 +137,14 @@ const DashBoard = () => {
                 "green"
               )}
               {renderStatistics(
+                "Total Child Inprogress",
+                statistics.totalChildApplicationProgress,
+                "blue"
+              )}
+              {renderStatistics(
                 "Total Child Rejected",
                 statistics.totalChildApplicationRejected,
-                "blue"
+                "pink"
               )}
             </div>
           </div>
@@ -153,10 +163,16 @@ const DashBoard = () => {
                 statistics.totalMobileApplicationCompleted,
                 "green"
               )}
+
+              {renderStatistics(
+                "Total Mobile Inprogress",
+                statistics.totalMobileApplicationProgress,
+                "blue"
+              )}
               {renderStatistics(
                 "Total Mobile Rejected",
                 statistics.totalMobileApplicationRejected,
-                "blue"
+                "pink"
               )}
             </div>
           </div>

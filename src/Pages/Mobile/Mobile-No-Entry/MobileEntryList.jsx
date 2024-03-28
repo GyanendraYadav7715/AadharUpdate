@@ -16,16 +16,9 @@ function ViewChildData() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
 
-  const userData = localStorage.getItem("user");
-  let role = "";
-  let userName = "";
-  if (userData) {
-    // Parse JSON string to object
-    const userObj = JSON.parse(userData);
-    // Access the role property
-    role = userObj.role;
-    userName = userObj.Username;
-  }
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const role = userData.User_type;
+  const userName = userData.Username;
 
   const title = "Mobile Data";
   const links =
@@ -52,6 +45,7 @@ function ViewChildData() {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
+         
         setData(response.data.data);
       })
       .catch((err) => {
@@ -62,13 +56,14 @@ function ViewChildData() {
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    const filtered = users.filter((user) =>
-      Object.values(user).join(" ").toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredUsers(filtered);
-  };
+const handleSearch = (query) => {
+  setSearchQuery(query);
+  const filtered = data.filter((item) =>
+    Object.values(item).join(" ").toLowerCase().includes(query.toLowerCase())
+  );
+  setData(filtered);
+};
+
 
   return (
     <>
@@ -149,13 +144,16 @@ function ViewChildData() {
                                     {item.status}
                                   </button>
                                 </h3>
-                                <Slip fileUrl={item.oSlip} />
+                                <Slip
+                                  fileUrl={item.oSlip}
+                                  mobileUserData={item}
+                                />
                               </div>
-                              {item.status === "complete" ? (
+                              {item.status === "Completed" ? (
                                 <div className="flex  items-center  ">
                                   <h4 className="Action-text">Action</h4>
                                   <img
-                                    className="size-16 object-cover rounded-full ml-3"
+                                    className="size-8 object-cover rounded-full ml-3 mt-3"
                                     src="https://cdn.dribbble.com/users/4358240/screenshots/14825308/media/84f51703b2bfc69f7e8bb066897e26e0.gif"
                                     alt="Uploaded File"
                                   />
@@ -163,7 +161,10 @@ function ViewChildData() {
                               ) : (
                                 <div className="Action">
                                   <h4 className="Action-text">Action</h4>
-                                  <Link to="/edit-customer" className="button">
+                                  <Link
+                                    to={`/edit-customer?aadhar=${item.AadhaarNo}&entrytype=M&apply=${item.appliedBy}&time=${item.timeStamp}`}
+                                    className="button"
+                                  >
                                     <i className="ri-edit-2-fill pencil"></i>
                                   </Link>
                                 </div>

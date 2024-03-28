@@ -102,7 +102,7 @@ const UserLimit = () => {
                   className="Submit-button whitespace-nowrap bg-[#3f9e04] hover:bg-[#3f9e04d3]"
                   type="submit"
                 >
-                  <i class="ri-save-fill"> </i>
+                  <i className="ri-save-fill"> </i>
                   Submit
                 </button>
               </div>

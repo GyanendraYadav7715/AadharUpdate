@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import loginlogo from "../../public/loginlogo.webp";
+import loginlogo from "/loginlogo.webp";
 import { FaRegCopyright } from "react-icons/fa";
 import { RiUser2Line, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { Local_Url } from "../constant/constant";

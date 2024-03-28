@@ -10,7 +10,9 @@ import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
- 
+import StyledAlert from "../../../Components/ConfirmationDialog/StyledAlert";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ChildEntryList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -18,7 +20,7 @@ function ChildEntryList() {
   const [selectedRow, setSelectedRow] = useState(null);
   const tableRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [userToDelete, setUserToDelete] = useState(null); // Track user to delete
   const userData = JSON.parse(localStorage.getItem("user"));
   const role = userData.User_type;
   const userName = userData.Username;
@@ -41,8 +43,6 @@ function ChildEntryList() {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
-        console.log(response.data);
-
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -54,7 +54,34 @@ function ChildEntryList() {
   useEffect(() => {
     fetchData();
   }, []);
+  // Set user to delete
+  const confirmDeleteUser = (item) => {
+    setUserToDelete(item);
+  };
 
+  // Delete user
+  const deleteUser = async () => {
+    try {
+      const { appliedBy, timeStamp } = userToDelete;
+
+       const response = await axios.delete(
+         `${Local_Url}/api/v1/admin/deleteRUser`,
+         {
+           data: { appliedBy: appliedBy, timestamp: timeStamp, entryType: "C" },
+         }
+       );
+
+      const updatedData = data.filter(
+        (user) => user.appliedBy !== appliedBy || user.timeStamp !== timeStamp
+      );
+      setData(updatedData);
+      setFilteredProducts(updatedData);
+      setUserToDelete(null); // Clear userToDelete state
+     toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
@@ -208,12 +235,12 @@ function ChildEntryList() {
                                     <i className="ri-eye-line text-white"></i>
                                   </Link>
                                   {role === "BackOffice" ? null : (
-                                    <Link
-                                      to="#"
+                                    <button
+                                      onClick={() => confirmDeleteUser(item)}
                                       className="font-medium   no-underline   border-1 bg-[#f4516c] hover:bg-[#cb4c61] px-3 py-2 rounded-sm"
                                     >
                                       <i className="ri-delete-bin-line text-white"></i>
-                                    </Link>
+                                    </button>
                                   )}
                                   <Link
                                     to={`/Upload?entrytype=C&apply=${
@@ -236,7 +263,7 @@ function ChildEntryList() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="2">
+                  <td colSpan="3">
                     <h1 className="list-record">Record Not Found 😞</h1>
                   </td>
                 </tr>
@@ -245,6 +272,14 @@ function ChildEntryList() {
           </Table>
         </div>
       </div>
+      {userToDelete && (
+        <StyledAlert
+          title="Confirmation"
+          message="Are you sure want to delete this user?"
+          onConfirm={deleteUser}
+          onClose={() => setUserToDelete(null)} // Clear userToDelete state if cancel or close
+        />
+      )}
     </>
   );
 }
