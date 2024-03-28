@@ -19,30 +19,24 @@ function List() {
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
-  const userData = localStorage.getItem("user");
-  let role = "";
-  let userName = "";
-  if (userData) {
-    const userObj = JSON.parse(userData);
-
-    role = userObj.User_type;
-    userName = userObj.Username;
-  }
+  const userData = JSON.parse(localStorage.getItem("user"));
+  let role = userData.User_type;
+  let userName = userData.Username;
   const title = role === "BackOffice" ? "View Customers Data" : "View Entry";
   const links =
     role === "Superadmin"
       ? [
           { title: "Home", href: "/superadmin" },
-          { title: "View Entry", href: "" },
+          { title: "View Entry" },
         ]
       : role === "Retailer"
       ? [
           { title: "Home", href: "/retailer" },
-          { title: "View Entry", href: "" },
+          { title: "View Entry"},
         ]
       : [
           { title: "Home", href: "/backoffice" },
-          { title: "View Customers Data", href: "" },
+          { title: "View Customers Data" },
         ];
   const mylinks = [
     {

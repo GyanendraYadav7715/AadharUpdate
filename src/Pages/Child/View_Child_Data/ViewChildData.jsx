@@ -10,14 +10,14 @@ import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import Slip from "../../../Components/Slip/Slip";
 import { Local_Url } from "../../../constant/constant";
- 
+
 function ViewChildData() {
   const userData = JSON.parse(localStorage.getItem("user"));
   let role = "";
   let userName = "";
 
   if (userData) {
-    const userObj = (userData);
+    const userObj = userData;
     role = userObj.role;
     userName = userObj.Username;
   }
@@ -29,14 +29,8 @@ function ViewChildData() {
   const title = "View Chid Data";
   const links =
     role === "Admin"
-      ? [
-          { title: "Home", href: "/superadmin" },
-          { title: "View Chid Data" },
-        ]
-      : [
-          { title: "Home", href: "/retailer" },
-          { title: "View Child Data" },
-        ];
+      ? [{ title: "Home", href: "/superadmin" }, { title: "View Chid Data" }]
+      : [{ title: "Home", href: "/retailer" }, { title: "View Child Data" }];
 
   const mylinks = [
     {
@@ -45,26 +39,23 @@ function ViewChildData() {
       icon: "ri-team-line text-white text-2xl ",
     },
   ];
-   
-  useEffect(() => {
-      
-      const apiUrl = `${Local_Url}/api/v1/retailer/child-users`;  ;
 
-       
-    axios.get(apiUrl, {
-      params: { userName: userName }
-    })
-      .then(response => {
-              
-            setData(response.data.data);
-            
-          })
-          .catch(err => {
-              console.log('Something Went Wrong');
-              setError(err);
-          });
+  useEffect(() => {
+    const apiUrl = `${Local_Url}/api/v1/retailer/child-users`;
+
+    axios
+      .get(apiUrl, {
+        params: { userName: userName },
+      })
+      .then((response) => {
+        setData(response.data.data);
+      })
+      .catch((err) => {
+        console.log("Something Went Wrong");
+        setError(err);
+      });
   }, []);
- 
+
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
@@ -160,7 +151,7 @@ function ViewChildData() {
                                 <div className="flex  items-center  ">
                                   <h4 className="Action-text">Action</h4>
                                   <img
-                                    className="size-12 object-cover rounded-full ml-3"
+                                    className="size-8 object-cover rounded-full ml-3 mt-3"
                                     src="https://cdn.dribbble.com/users/4358240/screenshots/14825308/media/84f51703b2bfc69f7e8bb066897e26e0.gif"
                                     alt="Uploaded File"
                                   />
