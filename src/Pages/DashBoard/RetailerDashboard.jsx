@@ -11,7 +11,6 @@ const RetailerDashboard = () => {
     balance: 0,
     totalApplication: 0,
     totalApplicationCompleted: 0,
-    totalApplicationCompleted: 0,
     totalApplicationRejected: 0,
     totalChildApplication: 0,
     totalChildApplicationProgress: 0,

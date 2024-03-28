@@ -19,7 +19,6 @@ const ViewUser = () => {
   const [users, setUsers] = useState([]);
   const tableRef = useRef(null);
 
-
   //geting dtat from api
   useEffect(() => {
     fetchData();
@@ -30,6 +29,7 @@ const ViewUser = () => {
       const response = await axios.get(
         `${Local_Url}/api/v1/admin/all-customers`
       );
+      console.log(response.data.data);
       setUsers(response.data.data);
       setFilteredUsers(response.data.data);
     } catch (error) {
@@ -45,8 +45,8 @@ const ViewUser = () => {
     );
     setFilteredUsers(filtered);
   };
-  
-  //For deteting the user 
+
+  //For deteting the user
   const deleteUser = async (deluser) => {
     toast.info(
       <ConfirmationDialog
@@ -159,23 +159,39 @@ const ViewUser = () => {
                         <td colSpan="9" style={{ backgroundColor: "white" }}>
                           <div className="dropdown-content">
                             <div className="dropdown-title">
+                              <h3 className="status border-b-2  flex items-center  gap-3 ">
+                                <span className="font-bold text-lg ">Role</span>
+                                <span
+                                  className={`bg-indigo-500 text-white  border-1 px-2 py-1  rounded-sm ml-6 `}
+                                  style={{ fontsize: "15px" }}
+                                >
+                                  {user.User_type}
+                                </span>
+                              </h3>
+
                               {/* Status Handaler in the Dropdown */}
-                              <h3 className="status border-b-2 border-t-2 flex items-center  gap-3">
-                                <span className="font-bold text-lg">
+                              <h3 className="status border-b-2  flex items-center  gap-3 ">
+                                <span className="font-bold text-lg ">
                                   Status
                                 </span>
                                 <span
-                                  className="text-white hover:bg-[#77b652] border-1 bg-[#88d05e] px-2 py-1  rounded-sm "
+                                  className={`text-white ${
+                                    user.isUserblocked === true
+                                      ? "bg-[#f4516c] hover:bg-[#cb4c61]"
+                                      : "bg-[#71b944] hover:bg-[#67a83e]"
+                                  }   border-1 px-2 py-1  rounded-sm  ml-3`}
                                   style={{ fontsize: "15px" }}
                                 >
-                                  {user.isUserblocked ? "Inactive" : "Active"}
+                                  {user.isUserblocked === true
+                                    ? "Inactive"
+                                    : "Active"}
                                 </span>
                               </h3>
 
                               {/* Action manegement in the dropdown */}
                               <h3 className="status font-bold text-lg flex justify-center items-center  border-b-2 ">
                                 Action
-                                <div className="px-6 py-4 gap-2 flex users-center justify-between">
+                                <div className="px-6 gap-2 flex users-center justify-between">
                                   <button
                                     className="font-medium  no-underline  border-1 hover:bg-[#77b652] border-1 bg-[#88d05e] px-3 py-2 rounded-sm"
                                     onClick={() => resetUser(user.Username)}

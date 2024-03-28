@@ -24,7 +24,7 @@ const ViewRetailerUserList = () => {
         const response = await axios.get(
           `${Local_Url}/api/v1/admin/get-all-retailer`
         );
-
+       
         const responseData = response.data.data;
         setData(responseData);
         setFilteredProducts(responseData);
@@ -135,7 +135,7 @@ const ViewRetailerUserList = () => {
                           <div className="dropdown-content">
                             <div className="dropdown-title">
                               {/* Status Handaler in the Dropdown */}
-                              <h3 className="status border-b-2 border-t-2 flex items-center  gap-3 ">
+                              <h3 className="status border-b-2  flex items-center  gap-3 ">
                                 <span className="font-bold text-lg ">
                                   Status
                                 </span>
