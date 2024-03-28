@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
-import { CaptureFinger } from "./mfs100";
+import { CaptureFinger, CalculateCapturePercentage } from "./mfs100";
 import { Local_Url } from "../../constant/constant";
 import Loder from "../Loder/Loder";
 import axios from "axios";
 
 const Box = ({ onFingerprintUpload }) => {
+  const [capturePercantage, setCapturePercantage] = useState(0)
   const [captureCount, setCaptureCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [fingerprintCaptured, setFingerprintCaptured] = useState(false);
@@ -34,6 +35,17 @@ const Box = ({ onFingerprintUpload }) => {
           const imageBlob = await convertBase64ToBlob(
             fingerData.data.BitmapData
           );
+
+
+          // Calculate capture percentage
+          const calculatedPercentage = CalculateCapturePercentage(
+            fingerData.data.Quality,
+            fingerData.data.Nfiq
+          );
+
+          console.log("Capture Percentage:", calculatedPercentage);
+          setCapturePercantage(calculatedPercentage);
+
           await uploadToS3(imageBlob);
           setCaptureCount((prevCount) => prevCount + 1);
           setFingerprintCaptured(true); // Update state to indicate fingerprint captured
@@ -61,7 +73,7 @@ const Box = ({ onFingerprintUpload }) => {
   const uploadToS3 = async (imageBlob) => {
     const formData = new FormData();
     formData.append("document", imageBlob, `f_${Date.now()}.jpg`);
-     
+
     try {
       const response = await axios.post(
         `${Local_Url}/api/v1/retailer/retailer-fingerdata?userName=${userName}`,
@@ -85,11 +97,12 @@ const Box = ({ onFingerprintUpload }) => {
         <div className="flex flex-col items-center justify-center">
           <img className="w-24 h-24 object-cover" src={image} alt="Box" />
 
-          <img
+          {/* <img
             className="w-12 h-12 object-cover rounded-full"
             src="https://cdn.dribbble.com/users/4358240/screenshots/14825308/media/84f51703b2bfc69f7e8bb066897e26e0.gif"
             alt="Uploaded File"
-          />
+          /> */}
+          <p className="mt-4 px-8 py-1.5 border border-blue-500 text-blue-500 rounded-md transition duration-300   whitespace-nowrap" >{capturePercantage}%</p>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center  ">
@@ -103,6 +116,7 @@ const Box = ({ onFingerprintUpload }) => {
             type="button"
             onClick={captureFingerAndUpload}
             disabled={captureCount >= 5}
+
           >
             {isLoading ? <Loder /> : "Click"}
           </button>

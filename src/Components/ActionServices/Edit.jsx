@@ -90,8 +90,8 @@ const Edit = () => {
                   label="Status"
                   options={[
                     { label: "Select Status", value: "No Status Selected" },
-                    { label: "Rejected", value: "Rejected" },
-                    { label: "Completed", value: "Completed" },
+                    { label: "Rejected", value: "rejected" },
+                    { label: "Completed", value: "completed" },
                   ]}
                   name="status"
                   className="inputField select"
