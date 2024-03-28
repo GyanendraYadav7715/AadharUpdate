@@ -3,14 +3,14 @@ import Table from "react-bootstrap/Table";
 import { Local_Url } from "../../../constant/constant";
 import axios from "axios";
 import "../Person-List/list.css";
-import { Link, json } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CopyButton from "../../../Components/DownloadAction/CopyButton";
 import PDFButton from "../../../Components/DownloadAction/PDFButton";
 import ExcelButton from "../../../Components/DownloadAction/ExcelButton";
 import CSVButton from "../../../Components/DownloadAction/CSVButton";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import SearchElement from "../../../Components/SearchElement/SearchElement";
-import ConfirmationDialog from "../../../Components/ConfirmationDialog/ConfirmationDialog";
+import StyledAlert from "../../../Components/ConfirmationDialog/StyledAlert";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -19,21 +19,16 @@ function List() {
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
+  const [userToDelete, setUserToDelete] = useState(null); // Track user to delete
   const userData = JSON.parse(localStorage.getItem("user"));
   let role = userData.User_type;
   let userName = userData.Username;
   const title = role === "BackOffice" ? "View Customers Data" : "View Entry";
   const links =
     role === "Superadmin"
-      ? [
-          { title: "Home", href: "/superadmin" },
-          { title: "View Entry" },
-        ]
+      ? [{ title: "Home", href: "/superadmin" }, { title: "View Entry" }]
       : role === "Retailer"
-      ? [
-          { title: "Home", href: "/retailer" },
-          { title: "View Entry"},
-        ]
+      ? [{ title: "Home", href: "/retailer" }, { title: "View Entry" }]
       : [
           { title: "Home", href: "/backoffice" },
           { title: "View Customers Data" },
@@ -61,37 +56,39 @@ function List() {
       });
   }, []);
 
-  const deleteUser = async (apply, time) => {
-    toast.info(
-      <ConfirmationDialog
-        message="Are you sure you want to delete this user?"
-        onConfirm={async () => {
-          try {
-            await axios.delete(`${Local_Url}/api/v1/admin/deleteRUser`, {
-              appliedBy: apply,
-              timestamp: time,
-              entryType: "D",
-            });
+  // Set user to delete
+  const confirmDeleteUser = (item) => {
+    setUserToDelete(item);
+  };
 
-            const updatedUsers = data.filter((data) => data.timeStamp !== time);
+  // Delete user
+  const deleteUser = async () => {
+    try {
+      const { appliedBy, timeStamp } = userToDelete;
 
-            setData(updatedUsers);
-            setFilteredProducts(updatedUsers);
-          } catch (error) {
-            toast.error(error.message);
-          }
-        }}
-        onDismiss={() => toast.dismiss()}
-      />,
-      {
-        autoClose: false, // Prevent auto-closing of toast until confirmation
-      }
-    );
+       const response = await axios.delete(
+         `${Local_Url}/api/v1/admin/deleteRUser`,
+         {
+           data: { appliedBy: appliedBy, timestamp: timeStamp, entryType: "D" },
+         }
+       );
+
+      const updatedData = data.filter(
+        (user) => user.appliedBy !== appliedBy || user.timeStamp !== timeStamp
+      );
+      setData(updatedData);
+      setFilteredProducts(updatedData);
+      setUserToDelete(null); // Clear userToDelete state
+      toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
+
   const handleSearch = (query) => {
     setSearchQuery(query);
     const filtered = data.filter((product) =>
@@ -243,12 +240,7 @@ function List() {
                                   </Link>
                                   {role === "BackOffice" ? null : (
                                     <button
-                                      onClick={() =>
-                                        deleteUser(
-                                          item.appliedBy,
-                                          item.timeStamp
-                                        )
-                                      }
+                                      onClick={() => confirmDeleteUser(item)}
                                       className="font-medium   no-underline   border-1 bg-[#f4516c] hover:bg-[#cb4c61] px-3 py-2 rounded-sm"
                                     >
                                       <i className="ri-delete-bin-line text-white"></i>
@@ -284,6 +276,15 @@ function List() {
           </Table>
         </div>
       </div>
+      {/* Render StyledAlert for confirming deletion */}
+      {userToDelete && (
+        <StyledAlert
+          title="Confirmation"
+          message="Are you sure want to delete this user?"
+          onConfirm={deleteUser}
+          onClose={() => setUserToDelete(null)} // Clear userToDelete state if cancel or close
+        />
+      )}
     </>
   );
 }
