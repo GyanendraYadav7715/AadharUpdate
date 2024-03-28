@@ -162,7 +162,7 @@ function List() {
                                   {item.createdOn}
                                 </span>
                               </h3>
-                              {item.status === "Completed" ? (
+                               
                                 <div className="flex items-center">
                                   <h3 className="status flex items-center">
                                     Status:
@@ -175,20 +175,7 @@ function List() {
                                     mobileUserData={item}
                                   />
                                 </div>
-                              ) : (
-                                <div className="flex items-center">
-                                  <h3 className="status flex items-center mr-2">
-                                    Status:
-                                    <button className="bg-[#f4516c]  p-3 text-white ml-5 rounded-sm ">
-                                      {item.status}
-                                    </button>
-                                  </h3>
-                                  <Slip
-                                    fileUrl={item.oSlip}
-                                    mobileUserData={item}
-                                  />
-                                </div>
-                              )}
+                               
                               {item.status === "Completed" ? (
                                 <div className="flex  items-center  ">
                                   <h4 className="Action-text">Action</h4>

@@ -160,7 +160,7 @@ function ViewChildData() {
                                 <div className="flex  items-center  ">
                                   <h4 className="Action-text">Action</h4>
                                   <img
-                                    className="size-16 object-cover rounded-full ml-3"
+                                    className="size-12 object-cover rounded-full ml-3"
                                     src="https://cdn.dribbble.com/users/4358240/screenshots/14825308/media/84f51703b2bfc69f7e8bb066897e26e0.gif"
                                     alt="Uploaded File"
                                   />

@@ -104,10 +104,23 @@ const RetailerDashboard = () => {
         <div className="p-4 border-2 border-gray-200 border-solid rounded-lg bg-white">
           <div className="mb-8">
             <h2 className="text-2xl font-semibold mb-4 border-b border-black pb-4">
-              Wallet & Balance
+                Balance
             </h2>
-            <div className="grid grid-cols-1 gap-4">
-              {renderStatistics("Main Wallet", statistics.balance, "blue")}
+            <div className="grid grid-cols-1 gap-4 pb-4">
+              {renderStatistics("Main Balance", statistics.balance, "blue")}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 sr-only">
+              {renderStatistics(
+                "Child Balance",
+                0,
+                "green"
+              )}
+              {renderStatistics(
+                "Mobile Balance",
+                0,
+                "green"
+              )}
             </div>
           </div>
           <div className="mb-8">
@@ -133,7 +146,7 @@ const RetailerDashboard = () => {
               {renderStatistics(
                 "Total Rejected",
                 statistics.totalApplicationRejected,
-                "blue"
+                "pink"
               )}
             </div>
           </div>
@@ -160,7 +173,7 @@ const RetailerDashboard = () => {
               {renderStatistics(
                 "Total Child Rejected",
                 statistics.totalChildApplicationRejected,
-                "blue"
+                "pink"
               )}
             </div>
           </div>
@@ -181,13 +194,13 @@ const RetailerDashboard = () => {
               )}
               {renderStatistics(
                 "Total Mobile Inprogress",
-                statistics.totalMobileApplicationRejected,
+                statistics.totalMobileApplicationProgress,
                 "blue"
               )}
               {renderStatistics(
                 "Total Mobile Rejected",
                 statistics.totalMobileApplicationRejected,
-                "blue"
+                "pink"
               )}
             </div>
           </div>

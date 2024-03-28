@@ -39,7 +39,6 @@ const DashBoard = () => {
       setStatistics({
         balance: responseData.Balance || 0,
         totalUsers: responseData.totalApplication || 0,
-
         totalApplication: responseData.dtotalApplication || 0,
         totalApplicationCompleted: responseData.dcompleted || 0,
         totalApplicationRejected: responseData.drejectApl || 0,
@@ -164,15 +163,16 @@ const DashBoard = () => {
                 statistics.totalMobileApplicationCompleted,
                 "green"
               )}
+
               {renderStatistics(
                 "Total Mobile Inprogress",
-                statistics.totalMobileApplicationRejected,
+                statistics.totalMobileApplicationProgress,
                 "blue"
               )}
               {renderStatistics(
                 "Total Mobile Rejected",
-                statistics.totalMobileApplicationProgress,
-                "blue"
+                statistics.totalMobileApplicationRejected,
+                "pink"
               )}
             </div>
           </div>

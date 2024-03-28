@@ -10,7 +10,7 @@ import SearchElement from "../../../Components/SearchElement/SearchElement";
 import Breadcrumb from "../../../Components/BreadCrumb/Breadcrumb";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ConfirmationDialog from "../../../Components/ConfirmationDialog/ConfirmationDialog";
+import StyledAlert from "../../../Components/ConfirmationDialog/StyledAlert";
 
 const ViewUser = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -18,8 +18,9 @@ const ViewUser = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [users, setUsers] = useState([]);
   const tableRef = useRef(null);
+  const [userToDelete, setUserToDelete] = useState(null); // Track user to delete
 
-  //geting dtat from api
+  // Fetch data from API
   useEffect(() => {
     fetchData();
   }, []);
@@ -37,7 +38,7 @@ const ViewUser = () => {
     }
   };
 
-  //handle the serach
+  // Handle search
   const handleSearch = (query) => {
     setSearchQuery(query);
     const filtered = users.filter((user) =>
@@ -46,34 +47,31 @@ const ViewUser = () => {
     setFilteredUsers(filtered);
   };
 
-  //For deteting the user
-  const deleteUser = async (deluser) => {
-    toast.info(
-      <ConfirmationDialog
-        message="Are you sure you want to delete this user?"
-        onConfirm={async () => {
-          try {
-            await axios.delete(`${Local_Url}/api/v1/admin/delete-customer`, {
-              params: { username: deluser },
-            });
-
-            const updatedUsers = users.filter(
-              (user) => user.Username !== deluser
-            );
-
-            setUsers(updatedUsers);
-            setFilteredUsers(updatedUsers);
-          } catch (error) {
-            toast.error(error.message);
-          }
-        }}
-        onDismiss={() => toast.dismiss()}
-      />,
-      {
-        autoClose: false, // Prevent auto-closing of toast until confirmation
-      }
-    );
+  // Set user to delete
+  const confirmDeleteUser = (user) => {
+    setUserToDelete(user);
   };
+
+  // Delete user
+  const deleteUser = async () => {
+    try {
+      await axios.delete(`${Local_Url}/api/v1/admin/delete-customer`, {
+        params: { username: userToDelete.Username },
+      });
+
+      const updatedUsers = users.filter(
+        (user) => user.Username !== userToDelete.Username
+      );
+      setUsers(updatedUsers);
+      setFilteredUsers(updatedUsers);
+      setUserToDelete(null); // Clear userToDelete state
+      toast.success("User deleted successfully");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  // Handle icon click to expand/collapse row details
   const handleIconClick = (index) => {
     setSelectedRow(selectedRow === index ? null : index);
   };
@@ -169,7 +167,7 @@ const ViewUser = () => {
                                 </span>
                               </h3>
 
-                              {/* Status Handaler in the Dropdown */}
+                              {/* Status Handler in the Dropdown */}
                               <h3 className="status border-b-2  flex items-center  gap-3 ">
                                 <span className="font-bold text-lg ">
                                   Status
@@ -188,7 +186,7 @@ const ViewUser = () => {
                                 </span>
                               </h3>
 
-                              {/* Action manegement in the dropdown */}
+                              {/* Action management in the dropdown */}
                               <h3 className="status font-bold text-lg flex justify-center items-center  border-b-2 ">
                                 Action
                                 <div className="px-6 gap-2 flex users-center justify-between">
@@ -199,7 +197,7 @@ const ViewUser = () => {
                                     <i className="ri-refresh-line text-white"></i>
                                   </button>
                                   <button
-                                    onClick={() => deleteUser(user.Username)}
+                                    onClick={() => confirmDeleteUser(user)}
                                     className="font-medium  no-underline   hover:bg-[#d45469] border-1 bg-[#f5627a] px-3 py-2 rounded-sm"
                                   >
                                     <i className="ri-delete-bin-line text-white"></i>
@@ -226,6 +224,15 @@ const ViewUser = () => {
           </Table>
         </div>
       </div>
+      {/* Render StyledAlert for confirming deletion */}
+      {userToDelete && (
+        <StyledAlert
+          title="Confirmation"
+          message="Are you sure want to delete this user?"
+          onConfirm={deleteUser}
+          onClose={() => setUserToDelete(null)} // Clear userToDelete state if cancel or close
+        />
+      )}
     </>
   );
 };
