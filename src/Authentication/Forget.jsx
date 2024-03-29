@@ -1,13 +1,17 @@
 import React, { useState, useCallback } from "react";
+import axios from "axios";  
 import { RiUser2Line, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import loginlogo from "/loginlogo.webp";
+import { Local_Url } from "../constant/constant";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Forget = () => {
   const [formData, setFormData] = useState({
     Username: "",
     newPassword: "",
-    // confirmpassword: "",
+    //confirmpassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -25,7 +29,7 @@ const Forget = () => {
       e.preventDefault();
 
       try {
-        const apiUrl = `${Local_Url}/api/v1/admin/resetPassword`;
+        const apiUrl = `${Local_Url}/api/v1/admin/resetPassword`;   
         const response = await axios.post(apiUrl, formData, {
           headers: {
             "Content-Type": "application/json",
@@ -33,8 +37,12 @@ const Forget = () => {
         });
 
         toast.success(response.data.message);
+        setFormData({
+          Username: "",
+          newPassword: "",
+        });
       } catch (error) {
-        toast.error(error.response.data.message);
+        toast.error(error.message); 
       }
     },
     [formData]
@@ -79,27 +87,6 @@ const Forget = () => {
                 type={showPassword ? "text" : "password"}
                 name="newPassword"
                 value={formData.newPassword}
-                onChange={handleInputChange}
-                className="w-full px-6 py-3 mb-5 border border-slate-600 rounded-lg font-medium"
-                placeholder="............"
-                required
-              />
-              <div
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                onClick={toggleShowPassword}
-              >
-                {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
-              </div>
-            </div>
-            {/* Password Input */}
-            <div className="relative sr-only">
-              <label htmlFor="password" className="mb-[1vh] ">
-                Confirm password
-              </label>
-              <input
-                type={showPassword ? "text" : "password"}
-                name="confirmpassword"
-                value={formData.confirmpassword}
                 onChange={handleInputChange}
                 className="w-full px-6 py-3 mb-5 border border-slate-600 rounded-lg font-medium"
                 placeholder="............"
