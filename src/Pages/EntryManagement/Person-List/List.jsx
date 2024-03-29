@@ -164,9 +164,17 @@ function List() {
                               <div className="flex items-center">
                                 <h3 className="status flex items-center">
                                   Status:
-                                  <button className="Progress button">
+                                  <span
+                                    className={`${
+                                      item.status === "inProgress"
+                                        ? "bg-yellow-400"
+                                        : item.status === "Completed"
+                                        ? "bg-[#71b944]"
+                                        : "bg-[#f4516c]"
+                                    } p-3 text-white ml-5 rounded-sm mr-3`}
+                                  >
                                     {item.status}
-                                  </button>
+                                  </span>
                                 </h3>
                                 <Slip
                                   fileUrl={item.oSlip}
