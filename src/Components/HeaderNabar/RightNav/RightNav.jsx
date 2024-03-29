@@ -4,6 +4,7 @@ import IPAddress from "../InternetProtocol/IPAddress";
 import { CiLogout } from "react-icons/ci";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { IoWifiOutline } from "react-icons/io5";
+import { CiUndo } from "react-icons/ci";
 
 const RightNav = () => {
   const navigate = useNavigate();
@@ -19,14 +20,12 @@ const RightNav = () => {
     localStorage.clear();
     navigate("/");
   };
+   const userData = JSON.parse(localStorage.getItem("user"));
+   const role = userData.User_type;
+   const userName = userData.Username;
 
-  const getUserRole = useMemo(() => {
-    const userData = localStorage.getItem("user");
-    return userData ? JSON.parse(userData).Username : "";
-  }, []);
-
-  const role = getUserRole;
-  const link =
+   
+   const link =
     role === "Superadmin"
       ? "/superadmin"
       : role === "Retailer"
@@ -59,7 +58,7 @@ const RightNav = () => {
             onMouseLeave={handleMouseLeave}
           >
             <div className="px-5 py-3">
-              <p className="text-base text-gray-900">{role}</p>
+              <p className="text-base text-gray-900">{userName}</p>
               <div className="flex items-center">
                 <IoWifiOutline className="text-red-700" />
                 <IPAddress />
@@ -69,16 +68,25 @@ const RightNav = () => {
               <li>
                 <Link
                   to={link}
-                  className="flex items-center px-1 py-2 text-sm text-gray-900 hover:bg-gray-50 no-underline gap-2"
+                  className="flex items-center px-1 py-2 text-sm text-gray-900 hover:bg-gray-50 no-underline gap-2 font-medium"
                   role="menuitem"
                 >
                   <LuLayoutDashboard /> Dashboard
                 </Link>
               </li>
               <li>
+                <Link
+                  to="/reset-password"
+                  className="flex items-center px-1 py-2 text-sm text-gray-900 hover:bg-gray-50 no-underline gap-2 font-medium sr-only"
+                  role="menuitem"
+                >
+                  <CiUndo /> Reset Password
+                </Link>
+              </li>
+              <li>
                 <button
                   onClick={handleLogout}
-                  className="px-1 py-2 text-sm text-gray-900 hover:bg-gray-50 no-underline gap-2 flex items-center"
+                  className="px-1 py-2 text-sm text-gray-900 hover:bg-gray-50 no-underline gap-2 flex items-center font-medium"
                   role="menuitem"
                 >
                   <CiLogout /> Log out
