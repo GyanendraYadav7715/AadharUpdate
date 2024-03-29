@@ -22,7 +22,7 @@ const RightNav = () => {
   };
    const userData = JSON.parse(localStorage.getItem("user"));
    const role = userData.User_type;
-   const userName = userData.Username;
+   const Name = userData.Name;
 
    
    const link =
@@ -58,7 +58,7 @@ const RightNav = () => {
             onMouseLeave={handleMouseLeave}
           >
             <div className="px-5 py-3">
-              <p className="text-base text-gray-900">{userName}</p>
+              <p className="text-base text-gray-900">{Name}</p>
               <div className="flex items-center">
                 <IoWifiOutline className="text-red-700" />
                 <IPAddress />

@@ -48,6 +48,7 @@ function List() {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
+        console.log(response.data)
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -144,7 +145,7 @@ function List() {
                           {index + 1}
                         </div>
                       </td>
-                      <td>{item.AppliedBy}</td>
+                      <td>{item.appliedBy}</td>
                       <td>
                         <div className="text-left">
                           <span className="span">Name: {item.Name}</span>

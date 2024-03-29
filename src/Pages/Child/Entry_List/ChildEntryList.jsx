@@ -139,7 +139,7 @@ function ChildEntryList() {
                           {index + 1}
                         </div>
                       </td>
-                      <td>{item.AppliedBy}</td>
+                      <td>{item.appliedBy}</td>
                       <td>
                         <div className="text-left">
                           <span className="span">Name: {item.Name}</span>

@@ -29,7 +29,7 @@ const Login = () => {
   const handleLogin = useCallback(
     async (e) => {
       e.preventDefault();
-      const { Username, User_type, loginIDMail } = formData;
+      const { Username, User_type } = formData;
 
       try {
         const apiUrl = `${Local_Url}/api/v1/admin/login`;
@@ -41,11 +41,12 @@ const Login = () => {
 
         if (response.status === 200) {
           const { redirect } = response.data;
-
+          const { Name } = response.data;
           localStorage.setItem(
             "user",
-            JSON.stringify({ Username, User_type, loginIDMail })
+            JSON.stringify({ Username, User_type, Name })
           );
+
           toast.success(response.data.message);
 
           navigate(redirect);
