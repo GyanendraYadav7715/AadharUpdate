@@ -196,8 +196,10 @@ function List() {
                                 Status
                                 <span
                                   className={`${
-                                    item.status === "Completed"
+                                    item.status === "inProgress"
                                       ? "bg-yellow-400"
+                                      : item.status === "Completed"
+                                      ? "bg-[#71b944]"
                                       : "bg-[#f4516c]"
                                   } px-2 py-1 text-white ml-5 rounded-sm `}
                                 >
