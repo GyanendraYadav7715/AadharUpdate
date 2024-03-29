@@ -142,7 +142,7 @@ function ViewChildData() {
                                     className={`${
                                       item.status === "inProgress"
                                         ? "bg-yellow-400"
-                                        : item.status === "Completed"
+                                        : item.status === "completed"
                                         ? "bg-[#71b944]"
                                         : "bg-[#f4516c]"
                                     } p-3 text-white ml-5 rounded-sm mr-3`}
@@ -155,7 +155,7 @@ function ViewChildData() {
                                   mobileUserData={item}
                                 />
                               </div>
-                              {item.status === "Completed" ? (
+                              {item.status === "completed" ? (
                                 <div className="flex  items-center  ">
                                   <h4 className="Action-text">Action</h4>
                                   <img

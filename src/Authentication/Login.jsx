@@ -16,7 +16,7 @@ const Login = () => {
     Username: "",
     Password: "",
     User_type: "",
-    Name: "" 
+     
   });
   const [showPassword, setShowPassword] = useState(false);
 

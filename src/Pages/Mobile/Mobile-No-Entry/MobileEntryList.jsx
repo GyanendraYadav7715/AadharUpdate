@@ -155,7 +155,7 @@ function ViewChildData() {
                                   mobileUserData={item}
                                 />
                               </div>
-                              {item.status === "Completed" ? (
+                              {item.status === "completed" ? (
                                 <div className="flex  items-center  ">
                                   <h4 className="Action-text">Action</h4>
                                   <img
