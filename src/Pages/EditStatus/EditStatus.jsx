@@ -77,8 +77,9 @@ const EditStatus = () => {
                     name=" isUserblocked"
                     className="bg-white border text-gray-900 text-sm rounded-sm inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                   >
-                    <option value="false">Actived</option>
-                    <option value="true">Deactived</option>
+                    <option  >Select</option>
+                    <option value="false">Active</option>
+                    <option value="true">Deactive</option>
                   </select>
                 </div>
               </div>

@@ -2,6 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const LeftNav = () => {
+
+   const userData = JSON.parse(localStorage.getItem("user"));
+  const role = userData.User_type;
+   const link =
+     role === "Superadmin"
+       ? "/superadmin"
+       : role === "Retailer"
+       ? "/retailer"
+       : "/backoffice";
   return (
     <>
       <div className="flex items-center justify-start rtl:justify-end">
@@ -27,7 +36,7 @@ const LeftNav = () => {
             />
           </svg>
         </button>
-        <Link to="/superadmin" className="flex ms-2 md:me-24">
+        <Link to={link} className="flex ms-2 md:me-24">
           <img
             src="https://uidai.gov.in/images/langPage/Page-1.svg"
             className="me-3 h-8 w-12 object-cover"

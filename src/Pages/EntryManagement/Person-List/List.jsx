@@ -60,8 +60,6 @@ function List() {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
-        
-
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -162,25 +160,25 @@ function List() {
                                   {item.createdOn}
                                 </span>
                               </h3>
-                               
-                                <div className="flex items-center">
-                                  <h3 className="status flex items-center">
-                                    Status:
-                                    <button className="Progress button">
-                                      {item.status}
-                                    </button>
-                                  </h3>
-                                  <Slip
-                                    fileUrl={item.oSlip}
-                                    mobileUserData={item}
-                                  />
-                                </div>
-                               
+
+                              <div className="flex items-center">
+                                <h3 className="status flex items-center">
+                                  Status:
+                                  <button className="Progress button">
+                                    {item.status}
+                                  </button>
+                                </h3>
+                                <Slip
+                                  fileUrl={item.oSlip}
+                                  mobileUserData={item}
+                                />
+                              </div>
+
                               {item.status === "Completed" ? (
-                                <div className="flex  items-center  ">
+                                <div className="flex  items-center justify-items-center  ">
                                   <h4 className="Action-text">Action</h4>
                                   <img
-                                    className="size-16 object-cover rounded-full ml-3"
+                                    className="size-8 object-cover rounded-full ml-3 mt-3"
                                     src="https://cdn.dribbble.com/users/4358240/screenshots/14825308/media/84f51703b2bfc69f7e8bb066897e26e0.gif"
                                     alt="Uploaded File"
                                   />
