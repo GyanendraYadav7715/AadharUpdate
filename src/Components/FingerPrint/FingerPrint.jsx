@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-<<<<<<< HEAD
-
-import { CaptureFinger, CalculateCapturePercentage } from "./mfs100";
-=======
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CaptureFinger } from "./mfs100";
->>>>>>> d9a4eb976d208019af1b039ad69f85eb5f156839
 import { Local_Url } from "../../constant/constant";
 import Loder from "../Loder/Loder";
 import axios from "axios";
