@@ -139,7 +139,7 @@ function ChildEntryList() {
                           {index + 1}
                         </div>
                       </td>
-                      <td>{item.AppliedBy}</td>
+                      <td>{item.appliedBy}</td>
                       <td>
                         <div className="text-left">
                           <span className="span">Name: {item.Name}</span>
@@ -172,7 +172,7 @@ function ChildEntryList() {
                                 Admin Remark
                                 <span
                                   className={` ${
-                                    item.status === "Completed"
+                                    item.status === "completed"
                                       ? "text-amber-400"
                                       : "text-red-500"
                                   } capitalize ml-3`}
@@ -190,8 +190,10 @@ function ChildEntryList() {
                                 Status
                                 <span
                                   className={`${
-                                    item.status === "Completed"
+                                    item.status === "inProgress"
                                       ? "bg-yellow-400"
+                                      : item.status === "completed"
+                                      ? "bg-[#71b944]"
                                       : "bg-[#f4516c]"
                                   } px-2 py-1 text-white ml-5 rounded-sm `}
                                 >

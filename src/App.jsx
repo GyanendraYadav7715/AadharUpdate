@@ -59,6 +59,10 @@ import Upload from "./Components/ActionServices/Upload";
 import EditViewM from "./Components/ActionServices/EditViewM";
 import EditStatus from "./Pages/EditStatus/EditStatus";
 
+//-------------------------------NEW POWER TO REST PASSWORD-----------------------------------------
+
+import Password from "./Pages/Password/Password";
+
 const App = () => {
   return (
     <>
@@ -71,9 +75,13 @@ const App = () => {
 function Layout() {
   let location = useLocation();
 
-  const hideLayout = ["/", "/forget", "/user-finger", "/Upload"].includes(
-    location.pathname
-  );
+  const hideLayout = [
+    "/",
+    "/forget",
+    "/user-finger",
+    "/Upload",
+    "/reset-password",
+  ].includes(location.pathname);
 
   return (
     <div>
@@ -99,14 +107,12 @@ function Layout() {
           <Route path="/user_limit" element={<Userlimit />} />
           <Route path="/history" element={<History />} />
           {/* --------------------------- ADMIN CREATE USERS AND MANITAINING WORKING  ROUTE------------------------------- */}
-
           <Route path="/adduser" element={<AddAdminUser />} />
           <Route path="/viewuser" element={<ViewUser />} />
           <Route
             path="/viewretaileruserlist"
             element={<ViewRetailerUserList />}
           />
-
           {/* --------------------------- PERSON WORKING  ROUTE------------------------------- */}
           <Route path="/add-customer" element={<PersonEntry />} />
           <Route path="/list" element={<List />} />
@@ -118,10 +124,8 @@ function Layout() {
           <Route path="/ViewChildData" element={<ViewChildData />} />
           {/*    ---------------------------MOBILE WORKING ROUTES------------------------------- */}
           <Route path="/mobileupdate" element={<MobileNoUpdate />} />
-
           <Route path="/adminreport" element={<AdminReport />} />
           <Route path="/mobile-list" element={<MobileEntryList />} />
-
           {/* --------------------------- BACKOFFICE WORK WITH ADMIN POWER ROUTE------------------------------- */}
           <Route path="/user-edit" element={<Edit />} />
           <Route path="/user-finger" element={<Finger />} />
@@ -130,6 +134,8 @@ function Layout() {
           <Route path="/Upload" element={<Upload />} />
           <Route path="/edit-viewm" element={<EditViewM />} />
           <Route path="/editstatus" element={<EditStatus />} />
+          {/* -------------------------------NEW POWER TO REST PASSWORD----------------------------------------- */}
+          <Route path="/reset-password" element={<Password />} />
         </Route>
         {/* --------------------------------PROTECTED ROUTES ----------------------------------------------- */}
       </Routes>

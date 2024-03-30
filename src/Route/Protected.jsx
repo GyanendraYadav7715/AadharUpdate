@@ -40,6 +40,7 @@ function Protected() {
       "/Upload",
       "/edit-viewm",
       "/editstatus",
+      "/reset-password",
     ],
     BackOffice: [
       "/backoffice",
