@@ -151,9 +151,8 @@ const Login = () => {
         </form>
 
         {/* Copyright */}
-        <p className="bg-blue-500 flex items-center justify-center text-white p-3 mt-[5vh] w-[90%] text-center rounded-lg text-lg tracking-wide">
-          Copyright
-          <FaRegCopyright /> 2022 newupdateseva
+        <p className="bg-blue-500  text-white p-3 mt-[5vh] w-[90%] text-center rounded-lg text-md tracking-wide whitespace-nowrap">
+          Copyright © 2024 aadharupdates.com
         </p>
       </div>
     </div>

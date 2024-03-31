@@ -116,8 +116,8 @@ const Forget = () => {
             Back
           </Link>
 
-          <p className="  text-black p-3 mt-[7vh] w-full text-center rounded-lg text-16">
-            Copyright © 2022 newupdateseva. All Rights Reserved.
+          <p className=" text-black p-3 mt-[7vh] w-full text-center">
+            Copyright © 2024 aadharupdates.com <br /> All Rights Reserved.
           </p>
         </div>
       </div>
