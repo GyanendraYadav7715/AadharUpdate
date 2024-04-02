@@ -5,7 +5,7 @@ import queryString from "query-string";
 
 const Finger = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [zoomLevel, setZoomLevel] = useState(100); // Initial zoom level
+  const [zoomLevel, setZoomLevel] = useState(60); // Initial zoom level
   const location = useLocation();
   const { fingerprints } = queryString.parse(location.search);
   const searchParams = new URLSearchParams(location.search);
@@ -41,7 +41,7 @@ const Finger = () => {
   };
 
   const resetZoom = () => {
-    setZoomLevel(100); // Reset zoom level to default (100%)
+    setZoomLevel(60); // Reset zoom level to default (100%)
   };
 
   const downloadImage = (imageUrl) => {
@@ -69,7 +69,7 @@ const Finger = () => {
           style={{ width: `${zoomLevel}%`, height: `${zoomLevel}%` }}
           className="object-cover"
         />
-        <span>{zoomLevel}%</span>
+        {/* <span>{zoomLevel}%</span> */}
         <button
           onClick={() => downloadImage(picture)}
           className="px-5 py-2 border border-red-50 bg-blue-500 hover:bg-blue-600 text-black rounded-md hover:duration-150 mt-6 w-40"
@@ -116,9 +116,9 @@ const Finger = () => {
           >
             Reset Zoom
           </button>{" "}
-          <span className="px-3 py-1 border border-red-50 bg-gray-100 hover:bg-gray-200 text-black rounded-md hover:duration-150">
+          {/* <span className="px-3 py-1 border border-red-50 bg-gray-100 hover:bg-gray-200 text-black rounded-md hover:duration-150">
             Zoom Level: {zoomLevel}%
-          </span>{" "}
+          </span>{" "} */}
         </div>
       </div>
       <div className="grid place-items-center mt-10">
@@ -131,9 +131,9 @@ const Finger = () => {
             Next <i className="ri-arrow-right-s-line"></i>
           </button>
         </div>
-        <p className="text-center">
+        {/* <p className="text-center">
           Page {currentPage} of {totalPages}
-        </p>
+        </p> */}
       </div>
     </div>
   );
