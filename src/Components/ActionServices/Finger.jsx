@@ -6,6 +6,8 @@ import queryString from "query-string";
 const Finger = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [zoomLevel, setZoomLevel] = useState(60); // Initial zoom level
+  const [invertImage, setInvertImage] = useState(false); // State for image inversion
+  const [brightnessLevel, setBrightnessLevel] = useState(100); // Initial brightness level
   const location = useLocation();
   const { fingerprints } = queryString.parse(location.search);
   const searchParams = new URLSearchParams(location.search);
@@ -58,26 +60,51 @@ const Finger = () => {
     navigate("/backoffice");
   };
 
+  const handleInvertImage = () => {
+    setInvertImage(!invertImage); // Toggle image inversion
+  };
+
+  const adjustBrightness = (value) => {
+    setBrightnessLevel(value); // Set brightness level
+  };
+
   const renderPictures = () => {
     const startIndex = (currentPage - 1) * picturesPerPage;
     const endIndex = startIndex + picturesPerPage;
     return pictures.slice(startIndex, endIndex).map((picture, index) => (
-      <div key={index} className="flex flex-col items-center mt-10">
-    
-          <img
-            src={picture}
-            alt={`Picture ${index}`}
-            style={{ width: `${zoomLevel}%`, height: `${zoomLevel}%`, filter: 'invert(1) grayscale(1)' }}
-            className="object-cover mix-blend-difference"
+      <div key={index} className="flex flex-col items-center">
+        <img
+          src={picture}
+          alt={`Picture ${index}`}
+          style={{
+            width: `${zoomLevel}%`,
+            height: `${zoomLevel}%`,
+            filter: `invert(${invertImage ? 1 : 0}) brightness(${brightnessLevel}%) contrast(150%)` // Apply inversion, brightness, and contrast
+          }}
+          className="object-cover"
+        />
+        <div className="flex gap-3 mt-3">
+          <button
+            onClick={() => downloadImage(picture)}
+            className="px-5 py-2 border border-red-50 bg-blue-500 hover:bg-blue-600 text-black rounded-md hover:duration-150"
+          >
+            Download
+          </button>
+          <button
+            onClick={handleInvertImage}
+            className="px-5 py-2 border border-red-50 bg-blue-500 hover:bg-blue-600 text-black rounded-md hover:duration-150"
+          >
+            {invertImage ? "Revert" : "Invert"} Image
+          </button>
+          <input
+            type="range"
+            min="0"
+            max="200"
+            value={brightnessLevel}
+            onChange={(e) => adjustBrightness(e.target.value)}
+            className="w-40"
           />
-        
-        {/* <span>{zoomLevel}%</span> */}
-        <button
-          onClick={() => downloadImage(picture)}
-          className="px-5 mt-32 py-2 border border-red-50 bg-blue-500 hover:bg-blue-600 text-black rounded-md hover:duration-150  w-40"
-        >
-          Download
-        </button>
+        </div>
       </div>
     ));
   };
@@ -117,10 +144,7 @@ const Finger = () => {
             className="px-3 py-1 border border-red-50 bg-gray-100 hover:bg-gray-200 text-black rounded-md hover:duration-150"
           >
             Reset Zoom
-          </button>{" "}
-          {/* <span className="px-3 py-1 border border-red-50 bg-gray-100 hover:bg-gray-200 text-black rounded-md hover:duration-150">
-            Zoom Level: {zoomLevel}%
-          </span>{" "} */}
+          </button>
         </div>
       </div>
       <div className="grid place-items-center mt-10">
@@ -133,9 +157,6 @@ const Finger = () => {
             Next <i className="ri-arrow-right-s-line"></i>
           </button>
         </div>
-        {/* <p className="text-center">
-          Page {currentPage} of {totalPages}
-        </p> */}
       </div>
     </div>
   );
