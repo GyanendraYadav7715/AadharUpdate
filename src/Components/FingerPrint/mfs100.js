@@ -7,6 +7,8 @@ function GetMFS100Info() {
   return GetMFS100Client("info");
 }
 
+
+
 function GetMFS100KeyInfo(key) {
   var MFS100Request = {
     Key: key,
