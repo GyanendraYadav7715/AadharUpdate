@@ -46,15 +46,15 @@ const Finger = () => {
     setZoomLevel(60); // Reset zoom level to default (100%)
   };
 
-  const downloadImage = (imageUrl) => {
-    // Create a temporary anchor element
-    const link = document.createElement("a");
-    link.href = imageUrl;
-    link.download = `picture_${currentPage}.jpg`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const downloadImage = (imageUrl) => {
+  //   // Create a temporary anchor element
+  //   const link = document.createElement("a");
+  //   link.href = imageUrl;
+  //   link.download = `picture_${currentPage}.jpg`;
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   const goto = () => {
     navigate("/backoffice");
@@ -84,12 +84,12 @@ const Finger = () => {
           className="object-cover"
         />
         <div className="flex gap-3 mt-3">
-          <button
+          {/* <button
             onClick={() => downloadImage(picture)}
             className="px-5 py-2 border border-red-50 bg-blue-500 hover:bg-blue-600 text-black rounded-md hover:duration-150"
           >
             Download
-          </button>
+          </button> */}
           <button
             onClick={handleInvertImage}
             className="px-5 py-2 border border-red-50 bg-blue-500 hover:bg-blue-600 text-black rounded-md hover:duration-150"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CaptureFinger, CalculateCapturePercentage } from "./mfs100";
+import { CaptureFinger , CalculateCapturePercentage } from "./mfs100";
 import { Local_Url } from "../../constant/constant";
 import Loder from "../Loder/Loder";
 import axios from "axios";
@@ -11,10 +11,8 @@ const Box = ({ onFingerprintUpload }) => {
   const [captureCount, setCaptureCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [fingerprintCaptured, setFingerprintCaptured] = useState(false);
-  //const [fingerprintCaptured, setFingerprintCaptured] = useState(true);
   const [image, setImage] = useState("");
 
-  // check userName 
   const userData = localStorage.getItem("user");
   let userName = "";
 
@@ -24,10 +22,10 @@ const Box = ({ onFingerprintUpload }) => {
   }
   const captureFinger = async () => {
     try {
-      const fingerData = await CaptureFinger();
+      const fingerData = await CaptureFinger(100 , 10);
 
       if (
-        fingerData.httpStatus &&
+        fingerData.httpStaus &&
         fingerData.data &&
         fingerData.data.BitmapData
       ) {
@@ -43,22 +41,24 @@ const Box = ({ onFingerprintUpload }) => {
         setCapturePercantage(calculatedPercentage);
 
         // Check if capture percentage is less than 50%
-        if (calculatedPercentage < 50) {
-         toast.error("Capture percentage is less than 50%. Please try again.");
+        if (calculatedPercentage < 60) {
+          toast.error("Capture percentage is less than 50%. Please try again.");
           return null; // Indicate that capture percentage is less than 50%
         }
 
         return imageBlob;
       } else {
-      
-  toast.error("Finger Not Found");
-  return null;
-}
+
+        toast.error("Capture Percentage Error");
+        return null;
+      }
     } catch (error) {
       console.error("Error capturing finger:", error);
       return null;
     }
   };
+
+  
 
   const captureFingerAndUpload = async () => {
     if (captureCount < 5 && !isLoading) {
@@ -78,7 +78,6 @@ const Box = ({ onFingerprintUpload }) => {
       }
     }
   };
-
 
   const convertBase64ToBlob = (base64Data) => {
     const byteCharacters = atob(base64Data);
@@ -102,9 +101,6 @@ const Box = ({ onFingerprintUpload }) => {
       const image = response.data.imageUrl;
       setImage(image);
 
-      // console.log("Fingerprint uploaded successfully:", response.data.imageUrl);
-
-      // Call the callback function with the URL of the uploaded fingerprint image
       onFingerprintUpload(response.data.imageUrl);
     } catch (error) {
       console.error("Error uploading fingerprint:", error);
