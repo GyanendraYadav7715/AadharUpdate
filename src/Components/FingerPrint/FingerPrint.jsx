@@ -7,6 +7,10 @@ import Loder from "../Loder/Loder";
 import axios from "axios";
 
 const Box = ({ onFingerprintUpload }) => {
+  const [fingerv2, setFingerv2] = useState({
+    base64Data: '',
+    userName : ''
+  })
   const [capturePercantage, setCapturePercantage] = useState(0)
   const [captureCount, setCaptureCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,8 +33,12 @@ const Box = ({ onFingerprintUpload }) => {
         fingerData.data &&
         fingerData.data.BitmapData
       ) {
-        const imageBlob = await convertBase64ToBlob(fingerData.data.BitmapData);
+       // const imageBlob = await convertBase64ToBlob(fingerData.data.BitmapData);
 
+        fingerv2.base64Data = fingerData.data.BitmapData;
+        // console.log(fingerData.data.BitmapData)
+        fingerv2.userName=userName
+       // setFingerv2(fingerData.data.BitmapData,userName)
         // Calculate capture percentage
         const calculatedPercentage = CalculateCapturePercentage(
           fingerData.data.Quality,
@@ -46,7 +54,7 @@ const Box = ({ onFingerprintUpload }) => {
           return null; // Indicate that capture percentage is less than 50%
         }
 
-        return imageBlob;
+        return true;
       } else {
 
         toast.error("Capture Percentage Error");
@@ -89,13 +97,13 @@ const Box = ({ onFingerprintUpload }) => {
   };
 
   const uploadToS3 = async (imageBlob) => {
-    const formData = new FormData();
-    formData.append("document", imageBlob, `f_${Date.now()}.jpg`);
+    // const formData = new FormData();
+    // formData.append("document", imageBlob, `f_${Date.now()}.jpg`);
 
     try {
       const response = await axios.post(
-        `${Local_Url}/api/v1/retailer/retailer-fingerdata?userName=${userName}`,
-        formData
+        `${Local_Url}/api/v2/retailer/retailer-fingerdata?userName=${userName}`,
+         fingerv2
       );
 
       const image = response.data.imageUrl;

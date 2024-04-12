@@ -7,7 +7,7 @@ const Finger = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [zoomLevel, setZoomLevel] = useState(60); // Initial zoom level
   const [invertImage, setInvertImage] = useState(false); // State for image inversion
-  const [brightnessLevel, setBrightnessLevel] = useState(100); // Initial brightness level
+  const [brightnessLevel, setBrightnessLevel] = useState(80); // Initial brightness level
   const location = useLocation();
   const { fingerprints } = queryString.parse(location.search);
   const searchParams = new URLSearchParams(location.search);
