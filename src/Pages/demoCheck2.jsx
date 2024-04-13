@@ -6,7 +6,7 @@ import { finger1,finger2,finger3 } from "../constant/dummyfinger";
 
 const DemoCheck2 = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [zoomLevel, setZoomLevel] = useState(30); // Initial zoom level
+    const [zoomLevel, setZoomLevel] = useState(27); // Initial zoom level
     const [invertImage, setInvertImage] = useState(false); // State for image inversion
     const [brightnessLevel, setBrightnessLevel] = useState(60);
     const [contrast, setContract] = useState(320);
@@ -133,7 +133,7 @@ const DemoCheck2 = () => {
                     <span> Sharpness</span>
                     <input
                         type="range"
-                        min="150"
+                        min="10"
                         max="500"
                         value={contrast}
                         onChange={(e) => adjustContrast(e.target.value)}

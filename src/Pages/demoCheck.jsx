@@ -133,7 +133,7 @@ const DemoCheck = () => {
                     <span> Sharpness</span>
                     <input
                         type="range"
-                        min="200"
+                        min="0"
                         max="500"
                         value={contrast}
                         onChange={(e) => adjustContrast(e.target.value)}
