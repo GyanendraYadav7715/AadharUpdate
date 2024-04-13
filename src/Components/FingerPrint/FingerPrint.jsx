@@ -36,7 +36,7 @@ const Box = ({ onFingerprintUpload }) => {
        // const imageBlob = await convertBase64ToBlob(fingerData.data.BitmapData);
 
         fingerv2.base64Data = fingerData.data.BitmapData;
-        // console.log(fingerData.data.BitmapData)
+         console.log(fingerData.data.BitmapData)
         fingerv2.userName=userName
        // setFingerv2(fingerData.data.BitmapData,userName)
         // Calculate capture percentage

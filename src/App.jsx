@@ -37,6 +37,9 @@ import PersonEntry from "./Pages/EntryManagement/PersonEntry/PersonEntry";
 import List from "./Pages/EntryManagement/Person-List/List";
 import List2 from "./Pages/EntryManagement/Person-List2/List2";
 import SearchEntrydata from "./Pages/EntryManagement/SearchEntrydata";
+
+import  DemoCheck  from "./Pages/demoCheck";
+
 //    --------------------------- CHILD WORKING ROUTE-------------------------------
 
 import NewEntry from "./Pages/Child/NewEntry/NewEntry";
@@ -78,6 +81,7 @@ function Layout() {
   const hideLayout = [
     "/",
     "/forget",
+    "/demoCheck",
     "/user-finger",
     "/Upload",
     "/reset-password",
@@ -93,6 +97,7 @@ function Layout() {
       )}
       <Routes>
         {/* --------------------------- AUTHENTICATION WORKING  ROUTE------------------------------- */}
+        <Route path="/demoCheck" element={< DemoCheck/>} />
         <Route path="/" element={<Login />} />
         <Route path="/forget" element={<Forget />} />
 
