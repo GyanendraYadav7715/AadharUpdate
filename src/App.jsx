@@ -38,7 +38,8 @@ import List from "./Pages/EntryManagement/Person-List/List";
 import List2 from "./Pages/EntryManagement/Person-List2/List2";
 import SearchEntrydata from "./Pages/EntryManagement/SearchEntrydata";
 
-import  DemoCheck  from "./Pages/demoCheck";
+import DemoCheck from "./Pages/demoCheck";
+import DemoCheck2 from "./Pages/demoCheck2";
 
 //    --------------------------- CHILD WORKING ROUTE-------------------------------
 
@@ -82,6 +83,7 @@ function Layout() {
     "/",
     "/forget",
     "/demoCheck",
+    "/demoCheck2",
     "/user-finger",
     "/Upload",
     "/reset-password",
@@ -97,7 +99,8 @@ function Layout() {
       )}
       <Routes>
         {/* --------------------------- AUTHENTICATION WORKING  ROUTE------------------------------- */}
-        <Route path="/demoCheck" element={< DemoCheck/>} />
+        <Route path="/demoCheck" element={< DemoCheck />} />
+        <Route path="/demoCheck2" element={< DemoCheck2 />} />
         <Route path="/" element={<Login />} />
         <Route path="/forget" element={<Forget />} />
 

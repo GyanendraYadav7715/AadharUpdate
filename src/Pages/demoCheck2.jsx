@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
-import { finger1,finger2,finger3 } from "../constant/constant";
+import { finger1,finger2,finger3 } from "../constant/dummyfinger";
 
-const DemoCheck = () => {
+const DemoCheck2 = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [zoomLevel, setZoomLevel] = useState(30); // Initial zoom level
     const [invertImage, setInvertImage] = useState(false); // State for image inversion
-    const [brightnessLevel, setBrightnessLevel] = useState(80);
-    const [contrast, setContract] = useState(250);
+    const [brightnessLevel, setBrightnessLevel] = useState(60);
+    const [contrast, setContract] = useState(320);
 
     
     // Initial brightness level
@@ -133,7 +133,7 @@ const DemoCheck = () => {
                     <span> Sharpness</span>
                     <input
                         type="range"
-                        min="200"
+                        min="150"
                         max="500"
                         value={contrast}
                         onChange={(e) => adjustContrast(e.target.value)}
@@ -152,13 +152,13 @@ const DemoCheck = () => {
     return (
         <div className="bg-black min-h-screen text-white px-5 md:px-10 lg:px-20 py-10">
             <h1 className="text-3xl md:text-4xl lg:text-3xl font-semibold tracking-wide mb-3">
-               User Inforomation (Name : Aakash)
+                User Inforomation  (Name : Ritik)
             </h1>
             <h1 className="text-2xl md:text-3xl lg:text-2xl font-semibold tracking-wide">
-               Aadhar Number :  <span>639050160900</span>
+               Aadhar Number :  <span>956664048359</span>
             </h1>
             <h1 className="text-2xl md:text-3xl lg:text-2xl font-semibold tracking-wide">
-              Number :  <span>7488692832</span>
+              Number :  <span>6393654550</span>
             </h1>
             <hr className="mt-3" />
 
@@ -224,4 +224,4 @@ const DemoCheck = () => {
     );
 };
 
-export default DemoCheck;
+export default DemoCheck2;
