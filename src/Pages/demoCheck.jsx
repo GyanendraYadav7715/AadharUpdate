@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
-import { finger1,finger2,finger3 } from "../constant/constant";
+import { finger1,finger2,finger3 } from "../constant/dummyfinger";
 
-const DemoCheck = () => {
+const DemoCheck2 = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [zoomLevel, setZoomLevel] = useState(30); // Initial zoom level
+    const [zoomLevel, setZoomLevel] = useState(27); // Initial zoom level
     const [invertImage, setInvertImage] = useState(false); // State for image inversion
-    const [brightnessLevel, setBrightnessLevel] = useState(80);
-    const [contrast, setContract] = useState(250);
+    const [brightnessLevel, setBrightnessLevel] = useState(60);
+    const [contrast, setContract] = useState(320);
 
     
     // Initial brightness level
@@ -87,34 +87,26 @@ const DemoCheck = () => {
     };
 
     const renderPictures = () => {
-        console.log(imageUrl)
         const startIndex = (currentPage - 1) * picturesPerPage;
         const endIndex = startIndex + picturesPerPage;
-    
-        return pictures.slice(0, 1).map((picture, index) => (
-            <div key={index} className="flex flex-col items-center">
-                <img src={'data:image/bmp;base64,' + imageUrl}
 
-                    // alt={`Picture ${index}`}
+        return pictures.slice(startIndex, endIndex).map((picture, index) => (
+            <div key={index} className="flex flex-col items-center">
+                <img
+                    src={'data:image/bmp;base64,' + imageUrl}
                     style={{
-                        objectFit: 'cover', // Center the image inside its container
+                        objectFit: 'cover',
                         objectPosition: 'center',
-                        display: 'block', // Set display to block to remove any default inline layout
-                        margin: 'auto' ,// Center the image horizontally and vertically
+                        display: 'block',
+                        margin: 'auto',
                         width: `${zoomLevel}%`,
                         height: `${zoomLevel}%`,
-                        filter: `invert(${invertImage ? 1 : 0}) brightness(${brightnessLevel}%)  contrast(${contrast}%)` // Apply inversion, 
-                        
+                        filter: `invert(${invertImage ? 1 : 0}) brightness(${brightnessLevel}%) contrast(${contrast}%)`,
+                        transform: 'scaleX(-1)' // Apply horizontal flip (mirror effect)
                     }}
                     className="object-cover"
                 />
                 <div className="flex gap-3 mt-3">
-                    {/* <button
-            onClick={() => downloadImage(picture)}
-            className="px-5 py-2 border border-red-50 bg-blue-500 hover:bg-blue-600 text-black rounded-md hover:duration-150"
-          >
-            Download
-          </button> */}
                     <button
                         onClick={handleInvertImage}
                         className="px-5 py-2 border border-red-50 bg-blue-500 hover:bg-blue-600 text-black rounded-md hover:duration-150"
@@ -133,18 +125,14 @@ const DemoCheck = () => {
                     <span> Sharpness</span>
                     <input
                         type="range"
-                        min="0"
+                        min="10"
                         max="500"
                         value={contrast}
                         onChange={(e) => adjustContrast(e.target.value)}
                         className="w-40"
-                        placeholder="helli" 
-                        title="sdklf"
+                      
                     />
-                    
                 </div>
-               
-               
             </div>
         ));
     };
@@ -152,13 +140,13 @@ const DemoCheck = () => {
     return (
         <div className="bg-black min-h-screen text-white px-5 md:px-10 lg:px-20 py-10">
             <h1 className="text-3xl md:text-4xl lg:text-3xl font-semibold tracking-wide mb-3">
-               User Inforomation (Name : Aakash)
+                User Inforomation  (Name : Ritik)
             </h1>
             <h1 className="text-2xl md:text-3xl lg:text-2xl font-semibold tracking-wide">
-               Aadhar Number :  <span>639050160900</span>
+               Aadhar Number :  <span>956664048359</span>
             </h1>
             <h1 className="text-2xl md:text-3xl lg:text-2xl font-semibold tracking-wide">
-              Number :  <span>7488692832</span>
+              Number :  <span>6393654550</span>
             </h1>
             <hr className="mt-3" />
 
@@ -224,4 +212,4 @@ const DemoCheck = () => {
     );
 };
 
-export default DemoCheck;
+export default DemoCheck2;

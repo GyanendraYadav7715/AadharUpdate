@@ -5,9 +5,12 @@ import queryString from "query-string";
 
 const Finger = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [zoomLevel, setZoomLevel] = useState(60); // Initial zoom level
+  const [zoomLevel, setZoomLevel] = useState(35); // Initial zoom level
   const [invertImage, setInvertImage] = useState(false); // State for image inversion
-  const [brightnessLevel, setBrightnessLevel] = useState(80); // Initial brightness level
+  const [brightnessLevel, setBrightnessLevel] = useState(80);
+  const [contrast, setContract] = useState(320);
+  
+  // Initial brightness level
   const location = useLocation();
   const { fingerprints } = queryString.parse(location.search);
   const searchParams = new URLSearchParams(location.search);
@@ -68,6 +71,10 @@ const Finger = () => {
     setBrightnessLevel(value); // Set brightness level
   };
 
+  const adjustContrast = (value) => {
+    setContract(value); // Set Contrast level
+  };
+
   const renderPictures = () => {
     const startIndex = (currentPage - 1) * picturesPerPage;
     const endIndex = startIndex + picturesPerPage;
@@ -77,9 +84,14 @@ const Finger = () => {
           src={picture}
           alt={`Picture ${index}`}
           style={{
+            objectFit: 'cover',
+            objectPosition: 'center',
+            display: 'block',
+            margin: 'auto',
             width: `${zoomLevel}%`,
             height: `${zoomLevel}%`,
-            filter: `invert(${invertImage ? 1 : 0}) brightness(${brightnessLevel}%) contrast(150%)` // Apply inversion, brightness, and contrast
+            filter: `invert(${invertImage ? 1 : 0}) brightness(${brightnessLevel}%) contrast(${contrast}%)`, // Apply inversion, brightness, and contrast
+            transform: 'scaleX(-1)' // Apply horizontal flip (mirror effect)
           }}
           className="object-cover"
         />
@@ -96,14 +108,33 @@ const Finger = () => {
           >
             {invertImage ? "Revert" : "Invert"} Image
           </button>
-          <input
+         
+          <div style={{display:'flex', flexDirection:'column'}}>
+            <input
+             
             type="range"
             min="0"
             max="200"
             value={brightnessLevel}
             onChange={(e) => adjustBrightness(e.target.value)}
-            className="w-40"
-          />
+              className="w-40  cursor-pointer"
+            />
+            <span> Glow image</span>
+
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+      
+          <input
+            type="range"
+            min="10"
+            max="500"
+            value={contrast}
+            onChange={(e) => adjustContrast(e.target.value)}
+            className="w-40 cursor-pointer"
+
+            />
+            <span> Sharpness</span>
+        </div>
         </div>
       </div>
     ));

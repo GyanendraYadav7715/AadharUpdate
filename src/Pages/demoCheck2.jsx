@@ -103,8 +103,8 @@ const DemoCheck2 = () => {
                         margin: 'auto' ,// Center the image horizontally and vertically
                         width: `${zoomLevel}%`,
                         height: `${zoomLevel}%`,
-                        filter: `invert(${invertImage ? 1 : 0}) brightness(${brightnessLevel}%)  contrast(${contrast}%)` // Apply inversion, 
-                        
+                        filter: `invert(${invertImage ? 1 : 0}) brightness(${brightnessLevel}%)  contrast(${contrast}%)`, // Apply inversion, 
+                          transform: 'scaleX(-1)'
                     }}
                     className="object-cover"
                 />
