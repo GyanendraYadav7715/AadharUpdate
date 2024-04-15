@@ -141,12 +141,12 @@ const Finger = () => {
   };
 
   return (
-    <div className="bg-black min-h-screen text-white px-5 md:px-10 lg:px-20 py-10">
-      <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-wide mb-3">
+    <div className="bg-black min-h-screen text-white px-5 md:px-10 lg:px-20 py-6">
+      <h1 className="text-3xl md:text-4xl lg:text-4xl font-semibold tracking-wide mb-3">
         p'S Finger Prints
       </h1>
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-wide">
-        <span>{aadhar}</span>Aadhar Number
+        <span>Aadhar Number : {aadhar}</span>
       </h1>
       <hr className="mt-3" />
 
