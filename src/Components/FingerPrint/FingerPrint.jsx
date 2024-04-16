@@ -52,6 +52,7 @@ const Box = ({ onFingerprintUpload }) => {
         // Check if capture percentage is less than 50%
         if (calculatedPercentage < 60) {
           toast.error("Capture percentage is less than 50%. Please try again.");
+          setFingerprintCaptured(false);
           return null; // Indicate that capture percentage is less than 50%
         }
 
