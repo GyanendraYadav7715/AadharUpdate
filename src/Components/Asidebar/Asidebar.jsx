@@ -38,7 +38,7 @@ const Asidebar = () => {
             </li>
           </ul>
 
-          {/* <ul className="px-2 mt-4 space-y-2 font-medium border-t border-gray-400 py-2"></ul> */}
+          <ul className="px-2 mt-4 space-y-2 font-medium border-t border-gray-400 py-2"></ul>
         </div>
       </aside>
     </>

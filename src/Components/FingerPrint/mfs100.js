@@ -1,15 +1,22 @@
-﻿import $ from "jquery";
-
+﻿import $ from 'jquery'
 var uri = "https://localhost:8003/mfs100/"; //Secure
 //var uri = "http://localhost:8004/mfs100/"; //Non-Secure
 
+var KeyFlag = "";
+var isGetSuccess = false;
+
 function GetMFS100Info() {
+  KeyFlag = "";
   return GetMFS100Client("info");
 }
 
 
 
 function GetMFS100KeyInfo(key) {
+  KeyFlag = key;
+  if (!PrepareScanner()) {
+    return getFalseRes();
+  }
   var MFS100Request = {
     Key: key,
   };
@@ -17,27 +24,22 @@ function GetMFS100KeyInfo(key) {
   return PostMFS100Client("keyinfo", jsondata);
 }
 
-function CaptureFinger(timeout) {
+function CaptureFinger(quality, timeout) {
+  if (!PrepareScanner()) {
+    return getFalseRes();
+  }
   var MFS100Request = {
-    Quality: 1,
-    TimeOut: 10,
+    Quality: quality,
+    TimeOut: timeout,
   };
   var jsondata = JSON.stringify(MFS100Request);
   return PostMFS100Client("capture", jsondata);
 }
 
-// Devyang Muti Finger Capture
-function CaptureMultiFinger(quality, timeout, nooffinger) {
-  var MFS100Request = {
-    Quality: 1,
-    TimeOut: timeout,
-    NoOfFinger: nooffinger,
-  };
-  var jsondata = JSON.stringify(MFS100Request);
-  return PostMFS100Client("capturewithdeduplicate", jsondata);
-}
-
 function VerifyFinger(ProbFMR, GalleryFMR) {
+  if (!PrepareScanner()) {
+    return getFalseRes();
+  }
   var MFS100Request = {
     ProbTemplate: ProbFMR,
     GalleryTemplate: GalleryFMR,
@@ -48,6 +50,9 @@ function VerifyFinger(ProbFMR, GalleryFMR) {
 }
 
 function MatchFinger(quality, timeout, GalleryFMR) {
+  if (!PrepareScanner()) {
+    return getFalseRes();
+  }
   var MFS100Request = {
     Quality: quality,
     TimeOut: timeout,
@@ -59,21 +64,45 @@ function MatchFinger(quality, timeout, GalleryFMR) {
 }
 
 function GetPidData(BiometricArray) {
+  if (!PrepareScanner()) {
+    return getFalseRes();
+  }
   var req = new MFS100Request(BiometricArray);
   var jsondata = JSON.stringify(req);
   return PostMFS100Client("getpiddata", jsondata);
 }
 
+function GetProtoPidData(BiometricArray) {
+  if (!PrepareScanner()) {
+    return getFalseRes();
+  }
+  var req = new MFS100Request(BiometricArray);
+  var jsondata = JSON.stringify(req);
+  return PostMFS100Client("getppiddata", jsondata);
+}
+
 function GetRbdData(BiometricArray) {
+  if (!PrepareScanner()) {
+    return getFalseRes();
+  }
   var req = new MFS100Request(BiometricArray);
   var jsondata = JSON.stringify(req);
   return PostMFS100Client("getrbddata", jsondata);
 }
 
+function GetProtoRbdData(BiometricArray) {
+  if (!PrepareScanner()) {
+    return getFalseRes();
+  }
+  var req = new MFS100Request(BiometricArray);
+  var jsondata = JSON.stringify(req);
+  return PostMFS100Client("getprbddata", jsondata);
+}
+
 function PostMFS100Client(method, jsonData) {
   var res;
   $.support.cors = true;
-  var httpStatus = false; // Corrected the variable name
+  var httpStaus = false;
   $.ajax({
     type: "POST",
     async: false,
@@ -84,11 +113,17 @@ function PostMFS100Client(method, jsonData) {
     dataType: "json",
     processData: false,
     success: function (data) {
-      httpStatus = true;
-      res = { httpStatus: httpStatus, data: data }; // Corrected the variable name
+      httpStaus = true;
+      res = {
+        httpStaus: httpStaus,
+        data: data,
+      };
     },
     error: function (jqXHR, ajaxOptions, thrownError) {
-      res = { httpStatus: httpStatus, err: getHttpError(jqXHR, thrownError) }; // Corrected the variable name
+      res = {
+        httpStaus: httpStaus,
+        err: getHttpError(jqXHR),
+      };
     },
   });
   return res;
@@ -97,7 +132,7 @@ function PostMFS100Client(method, jsonData) {
 function GetMFS100Client(method) {
   var res;
   $.support.cors = true;
-  var httpStatus = false; // Corrected the variable name
+  var httpStaus = false;
   $.ajax({
     type: "GET",
     async: false,
@@ -106,18 +141,23 @@ function GetMFS100Client(method) {
     contentType: "application/json; charset=utf-8",
     processData: false,
     success: function (data) {
-      httpStatus = true;
-      res = { httpStatus: httpStatus, data: data }; // Corrected the variable name
+      httpStaus = true;
+      res = {
+        httpStaus: httpStaus,
+        data: data,
+      };
     },
     error: function (jqXHR, ajaxOptions, thrownError) {
-      res = { httpStatus: httpStatus, err: getHttpError(jqXHR, thrownError) }; // Corrected the variable name
+      res = {
+        httpStaus: httpStaus,
+        err: getHttpError(jqXHR),
+      };
     },
   });
   return res;
 }
 
-function getHttpError(jqXHR, thrownError) {
-  // Added 'thrownError' parameter
+function getHttpError(jqXHR) {
   var err = "Unhandled Exception";
   if (jqXHR.status === 0) {
     err = "Service Unavailable";
@@ -151,6 +191,30 @@ function MFS100Request(BiometricArray) {
   this.Biometrics = BiometricArray;
 }
 
+function PrepareScanner() {
+  try {
+    if (!isGetSuccess) {
+      var resInfo = GetMFS100Client("info");
+      if (!resInfo.httpStaus) {
+        //alert(resInfo.err);
+        return false;
+      } else {
+        isGetSuccess = true;
+      }
+
+      if (KeyFlag != null && KeyFlag != "undefined" && KeyFlag.length > 0) {
+        var MFS100Request = {
+          Key: KeyFlag,
+        };
+        var jsondata = JSON.stringify(MFS100Request);
+        PostMFS100Client("keyinfo", jsondata);
+      }
+    }
+  } catch (e) {}
+  return true;
+}
+
+
 function CalculateCapturePercentage(quality, Nfiq) {
   // Assuming quality and Nfiq are in percentage scale, if not, adjust accordingly
   // You can adjust the weights of quality and Nfiq according to your requirement
@@ -159,6 +223,17 @@ function CalculateCapturePercentage(quality, Nfiq) {
 
   return capturePercentage;
 }
+
+function getFalseRes() {
+  var res;
+  res = {
+    httpStaus: false,
+    err: "Error while calling service",
+  };
+  return res;
+}
+
+
 
 export {
   CaptureFinger,

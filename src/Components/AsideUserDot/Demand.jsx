@@ -3,13 +3,13 @@ import Dot from "/green-dot.gif";
 import IPAddress from "../HeaderNabar/InternetProtocol/IPAddress";
 import wifi from "/IceZ.gif";
 
-const RightNav = () => {
+const Demand = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
 
   const Name = userData.Name;
 
   return (
-    <div className="border-b border-gray-400">
+    <div className="border-b border-gray-400 pb-2">
       <div className="flex flex-col items-center ms-3">
         <div className="flex">
           <button
@@ -17,14 +17,14 @@ const RightNav = () => {
             className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
           >
             <img
-              className="w-16 h-w-16 rounded-full"
+              className="w-14 h-w-16 rounded-full"
               src="https://cdn3d.iconscout.com/3d/premium/thumb/user-3711850-3105265.png"
               alt="user photo"
             />
           </button>
           <img src={Dot} alt="Dot" className="size-8 rounded-full" />
         </div>
-        <div className="mr-9 flex items-center ms-3">
+        <div className="mr-9 flex items-center">
           <div className="">
             <p className="text-base text-gray-900 text-center">{Name}</p>
             <p className="text-base font-semibold text-gray-900 text-center">
@@ -45,4 +45,4 @@ const RightNav = () => {
   );
 };
 
-export default RightNav;
+export default Demand;

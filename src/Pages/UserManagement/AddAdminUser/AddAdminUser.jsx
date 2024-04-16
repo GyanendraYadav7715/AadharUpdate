@@ -186,7 +186,7 @@ const AddAdminUser = () => {
                 className="bg-white border text-gray-900 text-sm rounded-sm inputField focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
               >
                 <option value="">Select One</option>
-                <option value="Sub Admin">Sub Admin</option>
+                {/* <option value="Sub Admin">Sub Admin</option> */}
                 <option value="Retailer">Retailer</option>
                 <option value="Back Office">Back Office</option>
               </select>

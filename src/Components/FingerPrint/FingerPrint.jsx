@@ -7,14 +7,16 @@ import Loder from "../Loder/Loder";
 import axios from "axios";
 
 const Box = ({ onFingerprintUpload }) => {
+  const [fingerv2, setFingerv2] = useState({
+    base64Data: '',
+    userName : ''
+  })
   const [capturePercantage, setCapturePercantage] = useState(0)
   const [captureCount, setCaptureCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [fingerprintCaptured, setFingerprintCaptured] = useState(false);
-  //const [fingerprintCaptured, setFingerprintCaptured] = useState(true);
   const [image, setImage] = useState("");
 
-  // check userName 
   const userData = localStorage.getItem("user");
   let userName = "";
 
@@ -22,40 +24,63 @@ const Box = ({ onFingerprintUpload }) => {
     const userObj = JSON.parse(userData);
     userName = userObj.Username;
   }
+  const captureFinger = async () => {
+    try {
+      const fingerData = await CaptureFinger(100 , 10);
+
+      if (
+        fingerData.httpStaus &&
+        fingerData.data &&
+        fingerData.data.BitmapData
+      ) {
+       // const imageBlob = await convertBase64ToBlob(fingerData.data.BitmapData);
+
+        fingerv2.base64Data = fingerData.data.BitmapData;
+         console.log(fingerData.data.BitmapData)
+        fingerv2.userName=userName
+       // setFingerv2(fingerData.data.BitmapData,userName)
+        // Calculate capture percentage
+        const calculatedPercentage = CalculateCapturePercentage(
+          fingerData.data.Quality,
+          fingerData.data.Nfiq
+        );
+
+        // console.log("Capture Percentage:", calculatedPercentage);
+        setCapturePercantage(calculatedPercentage);
+
+        // Check if capture percentage is less than 50%
+        if (calculatedPercentage < 60) {
+          toast.error("Capture percentage is less than 50%. Please try again.");
+          return null; // Indicate that capture percentage is less than 50%
+        }
+
+        return true;
+      } else {
+
+        toast.error("Capture Percentage Error");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error capturing finger:", error);
+      return null;
+    }
+  };
+
+  
+
   const captureFingerAndUpload = async () => {
     if (captureCount < 5 && !isLoading) {
       setIsLoading(true);
       try {
-        const fingerData = await CaptureFinger();
+        const imageBlob = await captureFinger();
 
-        if (
-          fingerData.httpStatus &&
-          fingerData.data &&
-          fingerData.data.BitmapData
-        ) {
-          const imageBlob = await convertBase64ToBlob(
-            fingerData.data.BitmapData
-          );
-
-
-          // Calculate capture percentage
-          const calculatedPercentage = CalculateCapturePercentage(
-            fingerData.data.Quality,
-            fingerData.data.Nfiq
-          );
-
-          console.log("Capture Percentage:", calculatedPercentage);
-          setCapturePercantage(calculatedPercentage);
-
+        if (imageBlob) {
           await uploadToS3(imageBlob);
           setCaptureCount((prevCount) => prevCount + 1);
           setFingerprintCaptured(true); // Update state to indicate fingerprint captured
-          console.log(fingerData);
-        } else {
-          toast.error("FingerPrint Not Found");
         }
       } catch (error) {
-        console.error("Error capturing finger:", error);
+        console.error("Error capturing or uploading finger:", error);
       } finally {
         setIsLoading(false);
       }
@@ -72,21 +97,18 @@ const Box = ({ onFingerprintUpload }) => {
   };
 
   const uploadToS3 = async (imageBlob) => {
-    const formData = new FormData();
-    formData.append("document", imageBlob, `f_${Date.now()}.jpg`);
+    // const formData = new FormData();
+    // formData.append("document", imageBlob, `f_${Date.now()}.jpg`);
 
     try {
       const response = await axios.post(
-        `${Local_Url}/api/v1/retailer/retailer-fingerdata?userName=${userName}`,
-        formData
-        
+        `${Local_Url}/api/v2/retailer/retailer-fingerdata?userName=${userName}`,
+         fingerv2
       );
 
       const image = response.data.imageUrl;
       setImage(image);
-      console.log("Fingerprint uploaded successfully:", response.data.imageUrl);
 
-      // Call the callback function with the URL of the uploaded fingerprint image
       onFingerprintUpload(response.data.imageUrl);
     } catch (error) {
       console.error("Error uploading fingerprint:", error);
