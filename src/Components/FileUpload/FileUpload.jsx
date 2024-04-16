@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Local_Url } from "../../constant/constant";
+import greentick from "/greentick.gif";
+import fileprocess from "/filepr.gif"
+import fileupload from "/fileupload.gif";
 
 const FileUpload = ({ title, name, onFileUpload }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +69,8 @@ const FileUpload = ({ title, name, onFileUpload }) => {
         <div className="flex flex-col items-center justify-center">
           <img
             className="w-32 h-32 object-cover rounded-full"
-            src="https://cdn.dribbble.com/users/4358240/screenshots/14825308/media/84f51703b2bfc69f7e8bb066897e26e0.gif"
+             src="https://cdn.dribbble.com/users/4358240/screenshots/14825308/media/84f51703b2bfc69f7e8bb066897e26e0.gif"
+             
             alt="Uploaded File"
           />
         </div>
@@ -86,13 +90,15 @@ const FileUpload = ({ title, name, onFileUpload }) => {
             {isLoading ? (
               <img
                 className="w-24 h-24 object-cover rounded-full"
-                src="https://i.gifer.com/origin/7d/7d3a8639eb21b4dd2572653b476daf7a.gif"
+                // src="https://i.gifer.com/origin/7d/7d3a8639eb21b4dd2572653b476daf7a.gif"
+                src={fileprocess}
                 alt="Uploading File"
               />
             ) : (
               <img
                 className="w-24 h-24 object-cover rounded-full"
-                src="https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-08-190_512.gif"
+                // src="https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-08-190_512.gif"
+                src={fileupload}
                 alt="Upload File"
               />
             )}

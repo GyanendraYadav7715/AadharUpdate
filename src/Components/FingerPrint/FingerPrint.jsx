@@ -5,6 +5,7 @@ import { CaptureFinger , CalculateCapturePercentage } from "./mfs100";
 import { Local_Url } from "../../constant/constant";
 import Loder from "../Loder/Loder";
 import axios from "axios";
+import finger from "/finger.gif";
 
 const Box = ({ onFingerprintUpload }) => {
   const [fingerv2, setFingerv2] = useState({
@@ -126,13 +127,16 @@ const Box = ({ onFingerprintUpload }) => {
             src="https://cdn.dribbble.com/users/4358240/screenshots/14825308/media/84f51703b2bfc69f7e8bb066897e26e0.gif"
             alt="Uploaded File"
           /> */}
-          <p className="mt-4 px-8 py-1.5 border border-blue-500 text-blue-500 rounded-md transition duration-300   whitespace-nowrap" >{capturePercantage}%</p>
+          <p className="mt-4 px-8 py-1.5 border border-blue-500 text-blue-500 rounded-md transition duration-300   whitespace-nowrap">
+            {capturePercantage}%
+          </p>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center  ">
           <img
             className="w-32 h-32 object-cover rounded-full"
-            src="https://i.pinimg.com/originals/4b/ae/55/4bae5522eab2c92ae104801515cec7c6.gif"
+            // src="https://i.pinimg.com/originals/4b/ae/55/4bae5522eab2c92ae104801515cec7c6.gif"
+            src={finger}
             alt="Box"
           />
           <button
@@ -140,7 +144,6 @@ const Box = ({ onFingerprintUpload }) => {
             type="button"
             onClick={captureFingerAndUpload}
             disabled={captureCount >= 5}
-
           >
             {isLoading ? <Loder /> : "Click"}
           </button>
