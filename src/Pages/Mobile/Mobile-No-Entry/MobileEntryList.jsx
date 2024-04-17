@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 function ViewChildData() {
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
 
   const userData = JSON.parse(localStorage.getItem("user"));
@@ -46,6 +47,7 @@ function ViewChildData() {
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
         setData(response.data.data);
+        setFilteredProducts(response.data.data)
       })
       .catch((err) => {
         console.log("Something Went Wrong");
@@ -60,7 +62,7 @@ function ViewChildData() {
     const filtered = data.filter((item) =>
       Object.values(item).join(" ").toLowerCase().includes(query.toLowerCase())
     );
-    setData(filtered);
+    setFilteredProducts(filtered);
   };
 
   return (
@@ -91,8 +93,8 @@ function ViewChildData() {
             </thead>
 
             <tbody>
-              {data.length > 0 ? (
-                data.map((item, index) => (
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((item, index) => (
                   <React.Fragment key={item._id}>
                     <tr>
                       <td>

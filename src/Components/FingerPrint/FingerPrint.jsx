@@ -51,6 +51,8 @@ const Box = ({ onFingerprintUpload }) => {
         // Check if capture percentage is less than 50%
         if (calculatedPercentage < 60) {
           toast.error("Capture percentage is less than 50%. Please try again.");
+    setFingerprintCaptured(false)
+
           return null; // Indicate that capture percentage is less than 50%
         }
 
@@ -127,6 +129,15 @@ const Box = ({ onFingerprintUpload }) => {
             alt="Uploaded File"
           /> */}
           <p className="mt-4 px-8 py-1.5 border border-blue-500 text-blue-500 rounded-md transition duration-300   whitespace-nowrap" >{capturePercantage}%</p>
+          <button
+            className="mt-4 px-8 py-1.5 border border-blue-500 text-blue-500 rounded-md transition duration-300 hover:bg-[#17a2b8] hover:text-white whitespace-nowrap"
+            type="button"
+            onClick={captureFingerAndUpload}
+            disabled={captureCount >= 5}
+
+          >
+            {isLoading ? <Loder /> : "Click"}
+          </button>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center  ">

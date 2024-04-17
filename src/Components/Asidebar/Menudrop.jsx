@@ -38,7 +38,7 @@ const Dropdown = ({ title, items, iconClass }) => {
             <Link
               to={item.link}
               className="flex items-center w-full py-2 px-8  text-black transition duration-75 rounded-lg    hover:bg-gray-200 no-underline"
-              download="Form.pdf"
+           
             >
               {item.label}
             </Link>
