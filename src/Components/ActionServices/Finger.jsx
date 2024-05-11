@@ -91,7 +91,7 @@ const Finger = () => {
             width: `${zoomLevel}%`,
             height: `${zoomLevel}%`,
             filter: `invert(${invertImage ? 1 : 0}) brightness(${brightnessLevel}%) contrast(${contrast}%)`, // Apply inversion, brightness, and contrast
-            // transform: 'scaleX(-1)'
+             transform: 'scaleX(-1)'
             // Apply horizontal flip (mirror effect)
           }}
           className="object-cover"
