@@ -16,7 +16,7 @@ const AdminReport = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [data, setData] = useState([]);
-   const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("")
   const [userToDelete, setUserToDelete] = useState(null);
   const userData = JSON.parse(localStorage.getItem("user"));
   let role = userData.User_type;
