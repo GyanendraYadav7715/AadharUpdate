@@ -92,6 +92,7 @@ const Edit = () => {
                     { label: "Select Status", value: "No Status Selected" },
                     { label: "Rejected", value: "rejected" },
                     { label: "Completed", value: "completed" },
+                    { label: "Inprogress", value: "inProgress" },
                   ]}
                   name="status"
                   className="inputField select"
