@@ -15,7 +15,7 @@ function ViewChildData() {
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
-
+ const [filteredProducts, setFilteredProducts] = useState([]);
   const userData = JSON.parse(localStorage.getItem("user"));
   const role = userData.User_type;
   const userName = userData.Username;
@@ -46,6 +46,7 @@ function ViewChildData() {
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
         setData(response.data.data);
+         setFilteredProducts(response.data.data);
       })
       .catch((err) => {
         console.log("Something Went Wrong");
@@ -60,7 +61,7 @@ function ViewChildData() {
     const filtered = data.filter((item) =>
       Object.values(item).join(" ").toLowerCase().includes(query.toLowerCase())
     );
-    setData(filtered);
+     setFilteredProducts(filtered);
   };
 
   return (

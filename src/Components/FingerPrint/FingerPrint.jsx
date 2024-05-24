@@ -131,6 +131,7 @@ const Box = ({ onFingerprintUpload }) => {
           <p className="mt-4 px-8 py-1.5 border border-blue-500 text-blue-500 rounded-md transition duration-300   whitespace-nowrap">
             {capturePercantage}%
           </p>
+          
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center  ">

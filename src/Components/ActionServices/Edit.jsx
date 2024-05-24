@@ -90,6 +90,7 @@ const Edit = () => {
                   label="Status"
                   options={[
                     { label: "Select Status", value: "No Status Selected" },
+                    { label: "Inprogress", value: "inprogress" },
                     { label: "Rejected", value: "rejected" },
                     { label: "Completed", value: "completed" },
                   ]}

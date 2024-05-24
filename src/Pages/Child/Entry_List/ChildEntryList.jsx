@@ -190,7 +190,7 @@ function ChildEntryList() {
                                 Status
                                 <span
                                   className={`${
-                                    item.status === "inProgress"
+                                    item.status === "inprogress"
                                       ? "bg-yellow-400"
                                       : item.status === "completed"
                                       ? "bg-[#71b944]"

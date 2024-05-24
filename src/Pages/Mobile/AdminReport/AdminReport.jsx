@@ -41,6 +41,7 @@ const AdminReport = () => {
     axios
       .get(apiUrl, { params: { userName: userName } })
       .then((response) => {
+        console.log(response.data.data);
         setData(response.data.data);
         setFilteredProducts(response.data.data);
       })
@@ -189,7 +190,7 @@ const AdminReport = () => {
                                 Status
                                 <span
                                   className={`${
-                                    item.status === "inProgress"
+                                    item.status === "inprogress"
                                       ? "bg-yellow-400"
                                       : item.status === "completed"
                                       ? "bg-[#71b944]"
