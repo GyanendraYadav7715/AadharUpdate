@@ -29,7 +29,7 @@ const Forget = () => {
       e.preventDefault();
 
       try {
-        const apiUrl = `${Local_Url}/api/v1/admin/resetPassword`;   
+        // const apiUrl = `${Local_Url}/api/v1/admin/resetPassword`;   
         const response = await axios.post(apiUrl, formData, {
           headers: {
             "Content-Type": "application/json",

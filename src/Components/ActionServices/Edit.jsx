@@ -15,6 +15,10 @@ const Edit = () => {
   const time = searchParams.get("time");
   const type = searchParams.get("type");
 
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const role = userData.User_type;
+  const Name = userData.Username;
+
   const [formData, setFormData] = useState({
     appliedBy: apply,
     timestamp: time,
@@ -22,6 +26,8 @@ const Edit = () => {
     entryType: entrytype,
     status: "",
     remarks: "",
+    name: Name,
+    namerole: role,
   });
 
   const { remarks, status } = formData;

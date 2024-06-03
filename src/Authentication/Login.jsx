@@ -16,7 +16,6 @@ const Login = () => {
     Username: "",
     Password: "",
     User_type: "",
-     
   });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -27,35 +26,61 @@ const Login = () => {
   }, []);
 
   // Handle login form submission
+  // Handle login form submission
   const handleLogin = useCallback(
     async (e) => {
       e.preventDefault();
       const { Username, User_type } = formData;
 
-      try {
-        const apiUrl = `${Local_Url}/api/v1/admin/login`;
-        const response = await axios.post(apiUrl, formData, {
-          headers: {
-            "Content-Type": "application/json",
+      // Get user's location
+      if (navigator.geolocation) {
+        console.log(navigator.geolocation);
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            console.log(position);
+            const { latitude, longitude } = position.coords;
+            try {
+              const apiUrl = `${Local_Url}/api/v1/admin/login`;
+              const response = await axios.post(
+                apiUrl,
+                { ...formData, latitude, longitude },
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+
+              if (response.status === 200) {
+                const { redirect, Name } = response.data;
+                localStorage.setItem(
+                 "user",
+                 JSON.stringify({
+                   Username,
+                   User_type,
+                   Name,
+                   latitude,
+                   longitude,
+                 })
+               );
+
+                toast.success(response.data.message);
+                navigate(redirect);
+              } else {
+                throw new Error(response.data.message || "Login failed");
+              }
+            } catch (error) {
+              toast.error(error.response.data.message);
+            }
           },
-        });
-
-        if (response.status === 200) {
-          const { redirect } = response.data;
-          const { Name } = response.data;
-          localStorage.setItem(
-            "user",
-            JSON.stringify({ Username, User_type, Name })
-          );
-
-          toast.success(response.data.message);
-
-          navigate(redirect);
-        } else {
-          throw new Error(response.data.message || "Login failed");
-        }
-      } catch (error) {
-        toast.error(error.response.data.message);
+          (error) => {
+            toast.error(
+              "Failed to get location. Please enable location services."
+            );
+          }
+        );
+      } else {
+        toast.error("Geolocation is not supported by this browser.");
       }
     },
     [formData, navigate]

@@ -8,8 +8,9 @@ const IPAddressDisplay = () => {
         const fetchIpAddress = async () => {
             try {
                 const response = await axios.get('https://api.ipify.org?format=json');
+                    // console.log(response);
                 setIpAddress(response.data.ip);
-                // console.log(response);
+                
             } catch (error) {
                 console.error('Error fetching IP address:', error.message);
             }

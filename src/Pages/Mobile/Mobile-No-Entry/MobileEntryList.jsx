@@ -16,7 +16,7 @@ function ViewChildData() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
- const [filteredProducts, setFilteredProducts] = useState([]);
+ 
   const userData = JSON.parse(localStorage.getItem("user"));
   const role = userData.User_type;
   const userName = userData.Username;
